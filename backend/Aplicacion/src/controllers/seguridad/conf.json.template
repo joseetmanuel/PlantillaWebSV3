@@ -1,0 +1,9 @@
+{
+    "user": "sa",
+    "port": 1433,
+    "password": "S0p0rt3",
+    "server": "192.168.20.71",
+    "connectionTimeout": 60000,
+    "requestTimeout": 60000,
+    "database": "Seguridad"
+}

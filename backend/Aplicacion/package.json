@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API Webpack SISCO",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "node ./dist/backend.js"
+  },
+  "author": "Alan Rosales Chávez",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mssql": "^4.3.0",
+    "swig": "^1.4.2",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
+  }
+}
