@@ -3,7 +3,12 @@
 .app-logo {
   height: $logo-height;
   width: $logo-width;
-  background: url('../utils/images/logo-inverse.png');
+  background: url('../utils/images/sisco.png');
+}
+
+.app-logo img{
+  height: 45px;
+  width: 120px;
 }
 
 .app-logo-inverse {
