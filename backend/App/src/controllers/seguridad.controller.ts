@@ -21,27 +21,14 @@ import * as mail from '../helpers/mail.helpler';
 @JsonController('/seguridad')
 export class SeguridadController {
     private repository: SeguridadRepository;
-
     constructor( repository: SeguridadRepository) {
         this.repository = repository;
     }
 
     // ************ Servicios GET ************
-    @Get('/GetCatalogo')
-    GetCatalogo(@Req() req: Request) {
-        return this.repository.GetCatalogo(req.query);
-    }
-
     // ************ Servicios POST ************
-    @Post('/PostLogin')
-    PostLogin(@Body() body: Request) {
-        return this.repository.PostLogin(body);
-    }
-    
     // ************ Servicios PUT ************
-
     // ************ Servicios DELETE ************
-
 }
 
 

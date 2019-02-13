@@ -25,7 +25,6 @@ export class ObjetoRepository {
     }
 
    // ************ Servicios GET ************
-
    /**
      * Plantilla de ejemplo para un servicio GET
      * @summary Objetivo del metodo 
@@ -33,8 +32,20 @@ export class ObjetoRepository {
      * @returns { nombreVarible tipoVariable descripción }
      *  
      */
-    getServicio(query: any): PromiseLike<{}> {
-        return this.query.spExecute(query, "[Excepcion].[SEL_EXCEPCIONPORID_SP]")
+    getConsultaSinParametros(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[esquema].[SEL_TABLA_SINPARAMETROS_SP]")
+    }
+
+    /**
+     * Plantilla de ejemplo para un servicio GET
+     * @summary Objetivo del metodo 
+     * @param query { nombreVarible tipoVariable descripción }   
+     * @returns { nombreVarible tipoVariable descripción }
+     *  
+     */
+
+    getConsultaConParametros(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[esquema].[SEL_TABLA_CONPARAMETROS_SP]")
     }
 
    // ************ Servicios POST ************

@@ -1,14 +1,23 @@
 import 'reflect-metadata';
 import { createExpressServer, useContainer, Action, UnauthorizedError } from 'routing-controllers';
 import { Container, ContainerInstance } from 'typedi';
+import { default as config } from './config';
 
 /**
  * @summary En este archivo van todos los metodos referentes a ...
- * localhost:{{port}}/almacen/...
+ * localhost:{{port}}/objeto/...
  */
 import { ObjetoRepository } from './repository/objeto.repository';
 import { ObjetoController } from './controllers/objeto.controller';
 Container.get(ObjetoRepository)
+
+/**
+ * @summary En este archivo van todos los metodos referentes a los clientes
+ * localhost:{{port}}/cliente/...
+ */
+import { ClienteRepository } from './repository/cliente.repository';
+import { ClienteController } from './controllers/cliente.controller';
+Container.get(ClienteRepository)
 
 
 /**
@@ -20,20 +29,24 @@ import { SeguridadController, SeguridadMiddleware } from './controllers/segurida
 Container.get(SeguridadRepository);
 
 
-
 useContainer(Container);
 // generamos el Express
 const app = createExpressServer({
     cors: true,
     controllers: [ // Cada uno de los controlests de arriba
         ObjetoController,
+        ClienteController,
         SeguridadController
     ],
     middlewares: [SeguridadMiddleware]
 });
 
+//obtenemos el puerto del conf
+const env: string = process.env.NODE_ENV || 'development';
+const conf: any = (config as any)[env]; 
+
 // si no se asigna puerto desde el servidor de aplicación
-const PORT = process.env.PORT || 4050;
+const PORT = process.env.PORT || conf.port;
 
 app.listen(PORT);
 console.log(`Running local server on http://localhost:${PORT}`);
