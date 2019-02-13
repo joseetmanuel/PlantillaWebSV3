@@ -1,5 +1,5 @@
 // DEMO
-@import "elements/theme-options";
+@import "./elements/theme-options";
 
 // Icons demo
 
@@ -69,7 +69,7 @@
 // Slick slider
 
 .slider-item {
-  background: $gray-300;
+  background: $gray-100;
   @include border-radius($border-radius);
   color: $gray-600;
   font-size: 36px;

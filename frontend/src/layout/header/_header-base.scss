@@ -70,12 +70,12 @@
 
 // Header Modifiers
 
-@import "modifiers/fixed-header";
-@import "modifiers/header-dots";
-@import "modifiers/header-megamenu";
-@import "modifiers/header-buttons";
+@import "./modifiers/fixed-header";
+@import "./modifiers/header-dots";
+@import "./modifiers/header-megamenu";
+@import "./modifiers/header-buttons";
 
 // Header Themes
 
-@import "themes/header-light";
-@import "themes/header-dark";
+@import "./themes/header-light";
+@import "./themes/header-dark";

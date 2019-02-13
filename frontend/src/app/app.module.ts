@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { PanelComponent } from './panel/panel.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -15,13 +16,14 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     HeaderComponent,
     LoginComponent,
     PanelComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [ForgotPasswordComponent]
+  bootstrap: [PanelComponent]
 })
 export class AppModule { }
