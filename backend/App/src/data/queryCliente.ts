@@ -1,5 +1,5 @@
 import * as sql from 'mssql';
-import { default as confDB } from './config';
+import { default as confDB } from './configCliente';
 import * as Q from 'q';
 
 
