@@ -20,9 +20,8 @@ BEGIN
 
 	INSERT INTO [ClienteLog].[cliente].[Contrato]
 		SELECT TOP 1  
-				[idContrato],
 				[idCliente],
-				[numero],
+				[numeroContrato],
 				[descripcion],
 				[fechaInicio],
 				[fechaFin],

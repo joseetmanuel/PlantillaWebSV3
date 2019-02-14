@@ -3,9 +3,9 @@ GO
 
 /****** 
  =============================================
- Author: Gerardo Zamudio
+ Author: José Etmanuel
  Create date: 12/02/2019
- Description: el objetivo es: Guardar el registro antes de ser Eliminado de la tabla EmpresaDocumento
+ Description: el objetivo es: Guardar el registro antes de ser Eliminado de la tabla Cliente
  ============== Versionamiento ================
  ******/
 
@@ -13,21 +13,21 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TRIGGER [empresa].[DEL_EMPRESADOCUMENTO_LOG_TG]
-   ON  [empresa].[EmpresaDocumento]
+CREATE TRIGGER [cliente].[DEL_CLIENTEDOCUMENTO_LOG_TG]
+   ON  [cliente].[ClienteDocumento]
    AFTER DELETE
 AS 
 BEGIN
 	SET NOCOUNT ON;
 
-	INSERT INTO [ClienteLog].[empresa].[EmpresaDocumento]
+	INSERT INTO [ClienteLog].[cliente].[ClienteDocumento]
 		SELECT TOP 1  
-				[idEmpresaDocumento],
-				[rfcEmpresa],
+				[idClienteDocumento],
+				[idCliente],
 				[idTipoDocumento],
 				[idDocumento],
 				[idUsuario],
 				2,
 				getdate()
 			FROM deleted;
-END	
+END

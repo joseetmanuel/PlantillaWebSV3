@@ -21,7 +21,7 @@ BEGIN
 	INSERT INTO [ClienteLog].[empresa].[EmpresaDocumento]
 		SELECT TOP 1  
 				[idEmpresaDocumento],
-				[idEmpresa],
+				[rfcEmpresa],
 				[idTipoDocumento],
 				[idDocumento],
 				[idUsuario],				

@@ -1,19 +1,16 @@
 USE [Cliente]
 GO
-
-/****** Object:  StoredProcedure [cliente].[SEL_CONTRATOPORID_SP]    Script Date: 12/02/2019 06:18:11 p. m. ******/
+/****** Object:  StoredProcedure [empresa].[SEL_EMPRESAPORRFC_SP]    Script Date: 13/02/2019 04:25:42 p. m. ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
 
 
 -- =============================================
 -- Author:		<Gerardo Zamudio>
 -- Create date: <12/02/2019>
--- Description:	<Obtener todos los registros de Contrato por idContrato >
+-- Description:	<Obtener todos los registros de la Empresa por rfcEmpresa >
 -- =============================================
 /*
 	Fecha		Autor	Descripción 
@@ -21,23 +18,20 @@ GO
 
 	*- Testing...
 	DECLARE @salida varchar(max) ;
-	EXEC [cliente].[SEL_CONTRATOPORID_SP]
-		@idContrato = 3,
+	EXEC [empresa].[SEL_EMPRESAPORRFC_SP]
+		@rfcEmpresa = '457',
 		@err = @salida OUTPUT;
 	SELECT @salida AS salida;
 */
 -- =============================================
-CREATE PROCEDURE [cliente].[SEL_CONTRATOPORID_SP]
-	@idContrato				int,
+CREATE PROCEDURE [empresa].[SEL_EMPRESAPORRFC_SP]
+	@rfcEmpresa				nvarchar(13),
 	@err					varchar(max) OUTPUT
 AS
 
 BEGIN
 	 SET @err = '';
 
-	SELECT * FROM [cliente].[Contrato]
-	WHERE idContrato = @idContrato
+	SELECT * FROM [empresa].[Empresa]
+	WHERE rfcEmpresa = @rfcEmpresa
 END
-GO
-
-
