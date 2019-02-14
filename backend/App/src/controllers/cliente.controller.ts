@@ -22,7 +22,7 @@ export class ClienteController {
         this.repository = repository;
     }
 
-    // ************ Servicios GET ************
+    // ************ Servicios GET ************ 
     @Get('/getDelay')
     getDelay(@Req() req: Request) {        
         return this.repository.getDelay(req.query);
@@ -50,7 +50,7 @@ export class ClienteController {
         return this.repository.postInserta(body);
     }
     
-    // ************ Servicios PUT ************
+    // ************ Servicios PUT ************ 
 
     // ************ Servicios DELETE ************
     
