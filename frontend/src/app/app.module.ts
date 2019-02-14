@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { PanelComponent } from './panel/panel.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { VentasComponent } from './ventas/ventas.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     PanelComponent,
     ForgotPasswordComponent,
-    NavbarComponent
+    NavbarComponent,
+    VentasComponent
   ],
   imports: [
     BrowserModule,
