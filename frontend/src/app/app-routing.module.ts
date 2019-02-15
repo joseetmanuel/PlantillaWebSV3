@@ -5,6 +5,7 @@ import { LoginComponent} from './login/login.component';
 import { ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import { VentasComponent} from './ventas/ventas.component';
 import { ClientesComponent} from './clientes/clientes.component';
+
 const routes: Routes = [
   {path: '', component: PanelComponent},
   {path: 'login', component: LoginComponent },
