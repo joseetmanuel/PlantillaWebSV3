@@ -1,43 +1,54 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
-<div class="center">
-    <div class="col-md-12">
-        <div class="main-card mb-3 card">
-            <div class="card-body"><h5 class="card-title">Panel de Control</h5>
-                <a routerLink="/ventas">Hola</a>
-                <div class="slick-slider-responsive">
-                    <div>
-                        <div id="parque" class="slider-item ">Parque Vehicular</div>
-                    </div>
-                    <div>
-                        <div id="gps" class="slider-item">GPS</div>
-                    </div>
-                    <div>
-                        <div id="mantenimiento" class="slider-item">Mantenimiento</div>
-                    </div>
-                    <div>
-                        <div id="configurador" class="slider-item">Configurador</div>
-                    </div>
-                    <div>
-                        <div id="partidas" class="slider-item">Partidas</div>
-                    </div>
-                    <div>
-                        <div id="talleres" class="slider-item">Talleres</div>
-                    </div>
-                    <div>
-                        <div class="slider-item">7</div>
-                    </div>
-                    <div>
-                        <div class="slider-item">8</div>
-                    </div>
-                    <div>
-                        <div class="slider-item">9</div>
-                    </div>
-                    <div>
-                        <div class="slider-item">10</div>
-                    </div>
-                </div>
+<div class="fondo">
+        <div class="top">
+                <div class="titulo">Panel de Control</div>
+                <div id="centrado" class="container">
+                        <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <div class="slick-slider-responsive" data-slick='{"slidesToShow": 6, "slidesToScroll": 1, "dots": false}'>
+                                            <div class="bordes">
+                                                <div id="parque" class="slider-item "></div>
+                                                <p class="parque">Parque Vehicular</p>
+                                            </div>
+                                            <div class="bordes">
+                                                <div id="gps" class="slider-item"></div>
+                                                <p class="gps">GPS</p>
+                                            </div>
+                                            <div class="bordes">
+                                                <div id="mantenimiento" class="slider-item"></div>
+                                                <p class="mantenimiento">Mantenimiento</p>
+                                            </div>
+                                            <div class="bordes">
+                                                <div id="configurador" class="slider-item"></div>
+                                                <p class="configurador">Configurador</p>
+                                            </div>
+                                            <div class="bordes">
+                                                <div id="partidas" class="slider-item"></div>
+                                                <p class="partidas">Partidas</p>
+                                            </div>
+                                            <div class="bordes">
+                                                <div id="talleres" class="slider-item"></div>
+                                                <p class="talleres">Talleres</p>
+                                            </div>
+                                            <div routerLink="/ventas" class="bordes">
+                                                <div id="clientes" class="slider-item"></div>
+                                                <p class="clientes">Clientes</p>
+                                            </div>
+                                            <div>
+                                                <div class="slider-item">8</div>
+                                            </div>
+                                            <div>
+                                                <div class="slider-item">9</div>
+                                            </div>
+                                            <div>
+                                                <div class="slider-item">10</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>  
             </div>
-        </div>
-    </div>    
+            <div class="bot"></div>
 </div>

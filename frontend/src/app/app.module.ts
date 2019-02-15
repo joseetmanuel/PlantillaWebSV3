@@ -9,6 +9,7 @@ import { PanelComponent } from './panel/panel.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 
 @NgModule({
@@ -19,13 +20,14 @@ import { VentasComponent } from './ventas/ventas.component';
     PanelComponent,
     ForgotPasswordComponent,
     NavbarComponent,
-    VentasComponent
+    VentasComponent,
+    ClientesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [PanelComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
