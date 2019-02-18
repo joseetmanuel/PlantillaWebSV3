@@ -32,7 +32,7 @@ export class EmpresaRepository {
 
 
     getEmpresas(query:any):PromiseLike<{}>{
-        return this.query.spExecute(query, "[empresa].SEL_EMPRESA_SP");
+        return this.query.spExecute(query, "[empresa].[SEL_EMPRESA_SP]");
     }
 
     getEmpresaPorRfc(query: any): PromiseLike<{}> {

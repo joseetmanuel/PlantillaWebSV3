@@ -31,36 +31,111 @@ export class ClienteController {
     }
 
 
-    
+
     @Get('/getClientes')
-    getClientes(@Req() req:Request){
+    // #region documentación
+    /*
+    Nombre:         getClientes
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          15/02/2019
+    Descripción:    Obtener todos los Clientes
+    SP:             [cliente].[SEL_CLIENTE_SP]
+    Url:            http://localhost:1000/cliente/getClientes
+    Wiki:           ...
+    */
+    // #endregion
+    getClientes(@Req() req: Request) {
         return this.repository.getClientes(req.query)
     }
 
+
     @Get('/getClientePorId')
+    // #region documentación
+    /*
+    Nombre:         getClientePorId
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtener a un cliente por idCliente
+    SP:             [cliente].[SEL_CLIENTEPORID_SP]
+    Url:            http://localhost:1000/cliente/getClientePorId?idCliente=1
+    Wiki:           ...
+    */
+    // #endregion
     getClientePorId(@Req() req: Request) {
         return this.repository.getClientePorId(req.query);
     }
 
+
     @Get('/getContratos')
-    getContratos(@Req() req:Request){
+    // #region documentación
+    /*
+    Nombre:         getContratos
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtener todos los Contratos
+    SP:             [cliente].[SEL_CONTRATO_SP]
+    Url:            http://localhost:1000/cliente/getContratos
+    Wiki:           ...
+    */
+    // #endregion
+    getContratos(@Req() req: Request) {
         return this.repository.getContratos(req.query);
     }
+
+
     @Get('/getContratoPorNumero')
-    getContratoPorNumero(@Req() req:Request){
+    // #region documentación
+    /*
+    Nombre:         getContratoPorNumero
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtener a un contrato por numeroContrato
+    SP:             [cliente].[SEL_CONTRATOPORNUMERO_SP]
+    Url:            http://localhost:1000/cliente/getContratoPorNumero?numeroContrato=1
+    Wiki:           ...
+    */
+    // #endregion
+    getContratoPorNumero(@Req() req: Request) {
         return this.repository.getContratoPorNumero(req.query)
     }
 
+
     @Get('/getClienteEntidad')
-    getClienteEntidad(@Req() req:Request){
+    // #region documentación
+    /*
+    Nombre:         getClienteEntidad
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtener todos los ClienteEntidad
+    SP:             [cliente].[SEL_CLIENTEENTIDAD_SP]
+    Url:            http://localhost:1000/cliente/getClienteEntidad
+    Wiki:           ...
+    */
+    // #endregion
+    getClienteEntidad(@Req() req: Request) {
         return this.repository.getClienteEntidad(req.query)
     }
+
+
     @Get('/getClienteEntidadPorRfc')
-    getClienteEntidadPorRfc(@Req() req:Request){
+    // #region documentación
+    /*
+    Nombre:         getClienteEntidadPorRfc
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtener a un cliente entidad por rfcClienteEntidad
+    SP:             [cliente].[SEL_CLIENTEENTIDADPORRFC_SP]
+    Url:            http://localhost:1000/cliente/getClienteEntidadPorRfc?rfcClienteEntidad=1
+    Wiki:           ...
+    */
+    // #endregion
+    getClienteEntidadPorRfc(@Req() req: Request) {
         return this.repository.getClienteEntidadPorRfc(req.query);
     }
 
+    
     // ************ Servicios POST ************
+    
     @Post('/postInserta')
     postInserta(@Body() body: Request) {
         return this.repository.postInserta(body);
@@ -68,43 +143,154 @@ export class ClienteController {
 
 
     @Post('/postInsertaCliente')
-    postInsertaCliente(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         postInsertaCliente
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Insertar un Cliente
+    SP:             [cliente].[INS_CLIENTE_SP]
+    Url:            http://localhost:1000/cliente/postInsertaCliente
+    Wiki:           ...
+    */
+    // #endregion
+    postInsertaCliente(@Body() body: Request) {
         return this.repository.postInsertaCliente(body);
     }
+
+
     @Post('/postInsertaContrato')
-    postInsertaContrato(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         postInsertaContrato
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Insertar un Contrato
+    SP:             [cliente].[INS_CONTRATO_SP]
+    Url:            http://localhost:1000/cliente/postInsertaContrato
+    Wiki:           ...
+    */
+    // #endregion
+    postInsertaContrato(@Body() body: Request) {
         return this.repository.postInsertaContrato(body);
     }
+
+
     @Post('/postInsertaClienteEntidad')
-    postInsertaClienteEntidad(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         postInsertaClienteEntidad
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Insertar un Cliente Entidad
+    SP:             [cliente].[INS_CLIENTEENTIDAD_SP]
+    Url:            http://localhost:1000/cliente/postInsertaClienteEntidad
+    Wiki:           ...
+    */
+    // #endregion
+    postInsertaClienteEntidad(@Body() body: Request) {
         return this.repository.postInsertaClienteEntidad(body);
     }
 
     // ************ Servicios PUT ************ 
     @Put('/putActualizaCliente')
-    putActualizaCliente(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         putActualizaCliente
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Actualiza un Cliente
+    SP:             [cliente].[UPD_CLIENTE_SP]
+    Url:            http://localhost:1000/cliente/putActualizaCliente
+    Wiki:           ...
+    */
+    // #endregion
+    putActualizaCliente(@Body() body: Request) {
         return this.repository.putActualizaCliente(body);
     }
+
+
     @Put('/putActualizaContrato')
-    putActualizaContrato(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         putActualizaContrato
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Actualiza un Contrato
+    SP:             [cliente].[UPD_CONTRATO_SP]
+    Url:            http://localhost:1000/cliente/putActualizaContrato
+    Wiki:           ...
+    */
+    // #endregion
+    putActualizaContrato(@Body() body: Request) {
         return this.repository.putActualizaContrato(body);
     }
+
+
     @Put('/putActualizaClienteEntidad')
-    putActualizaClienteEntidad(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         putActualizaClienteEntidad
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Actualiza un ClienteEntidad
+    SP:             [cliente].[UPD_CLIENTEENTIDAD_SP]
+    Url:            http://localhost:1000/cliente/putActualizaClienteEntidad
+    Wiki:           ...
+    */
+    // #endregion
+    putActualizaClienteEntidad(@Body() body: Request) {
         return this.repository.putActualizaClienteEntidad(body);
     }
 
     // ************ Servicios DELETE ************
     @Delete('/deleteCliente')
-    deleteCliente(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         deleteCliente
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Elimina un Cliente
+    SP:             [cliente].[DEL_CLIENTE_SP]
+    Url:            http://localhost:1000/cliente/deleteCliente
+    Wiki:           ...
+    */
+    // #endregion
+    deleteCliente(@Body() body: Request) {
         return this.repository.deleteCliente(body);
     }
+
+
     @Delete('/deleteContrato')
-    deleteContrato(@Body() body:Request){
+     // #region documentación
+    /*
+    Nombre:         deleteContrato
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Elimina un Contrato
+    SP:             [cliente].[DEL_CONTRATO_SP]
+    Url:            http://localhost:1000/cliente/deleteContrato
+    Wiki:           ...
+    */
+    // #endregion
+    deleteContrato(@Body() body: Request) {
         return this.repository.deleteContrato(body);
     }
+
+
     @Delete('/deleteClienteEntidad')
-    deleteClienteEntidad(@Body() body:Request){
+    // #region documentación
+    /*
+    Nombre:         deleteClienteEntidad
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Elimina un ClienteEntidad
+    SP:             [cliente].[DEL_CLIENTEENTIDAD_SP]
+    Url:            http://localhost:1000/cliente/deleteClienteEntidad
+    Wiki:           ...
+    */
+    // #endregion
+    deleteClienteEntidad(@Body() body: Request) {
         return this.repository.deleteClienteEntidad(body);
     }
 }
