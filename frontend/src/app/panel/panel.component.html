@@ -1,13 +1,17 @@
-<div class="fondo">
+<div class="d-none d-lg-block fondo">
         <div class="top">
-                <div class="titulo">Panel de Control</div>
+                <div class="d-none d-lg-block titulo">Panel de Control</div>
                 <div id="centrado" class="container">
-                        <div class="col-md-12">
+                        <div class=" d-none d-lg-block col-md-12">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
                                         <div class="slick-slider-responsive" data-slick='{"slidesToShow": 6, "slidesToScroll": 1, "dots": false}'>
                                             <div class="bordes">
-                                                <div id="parque" class="slider-item "></div>
+                                                
+                                                <div id="parque" class="slider-item ">
+                                                        <div class="badge badge-dot badge-dot-md badge-danger notificaciones">Danger</div>
+                                                        <div class="badge badge-dot badge-dot-md badge-warning notificaciones">Warning</div>
+                                                </div>
                                                 <p class="parque">Parque Vehicular</p>
                                             </div>
                                             <div class="bordes">
@@ -47,7 +51,57 @@
                                     </div>
                                 </div>
                             </div>
-                </div>  
+                </div>
             </div>
-            <div class="bot"></div>
+            <div class="d-none d-lg-block bot"></div>
 </div>
+
+<div class="d-lg-none col-md-12">
+        <div class="grid-titulo">Panel de Control</div>
+        <div class="main-card mb-3 card grid-centrado">
+            <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-6 col-sm-6 grid-parque">
+                                <img src="../../assets/images/iconos-sisco/parque.png">
+                                <p>Parque Vehicular</p>
+                            </div>
+                            <div class="col-6 col-sm-6 grid-gps">
+                                <img src="../../assets/images/iconos-sisco/gps.png">
+                                <p>GPS</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-6 col-sm-6 grid-mantenimiento">
+                                    <img src="../../assets/images/iconos-sisco/mantenimiento.png">
+                                    <p>Mantenimiento</p>
+                                </div>
+                                <div class="col-6 col-sm-6 grid-configurador">
+                                    <img src="../../assets/images/iconos-sisco/configurador.png">
+                                    <p>Configurador</p>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-6 col-sm-6 grid-partidas">
+                                    <img src="../../assets/images/iconos-sisco/partidas.png">
+                                    <p>Partidas</p>
+                                </div>
+                                <div class="col-6 col-sm-6 grid-talleres">
+                                    <img src="../../assets/images/iconos-sisco/talleres.png">
+                                    <p>Talleres</p>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div routerLink="/ventas" class="col-6 col-sm-6 grid-clientes">
+                                    <img src="../../assets/images/iconos-sisco/clientes.png">
+                                    <p>Clientes</p>
+                                </div>
+                                <div class="col-6 col-sm-6 grid-otro">
+                                    <img src="../../assets/images/iconos-sisco/gps.png">
+                                    <p>Otro</p>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
