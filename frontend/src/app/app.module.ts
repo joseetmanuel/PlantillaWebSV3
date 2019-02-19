@@ -10,6 +10,10 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { AddClienteComponent } from './add-cliente/add-cliente.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { MaterialModule } from './angular-material';
 
 
 @NgModule({
@@ -21,11 +25,16 @@ import { ClientesComponent } from './clientes/clientes.component';
     ForgotPasswordComponent,
     NavbarComponent,
     VentasComponent,
-    ClientesComponent
+    ClientesComponent,
+    AddClienteComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule, 
+    MatCheckboxModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
