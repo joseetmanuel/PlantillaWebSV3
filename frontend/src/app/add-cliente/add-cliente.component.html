@@ -4,90 +4,141 @@
       <div class="xx">
         <mat-card>
           REGISTRO CLIENTE
+          
           <div class="row">
-            <div class="col-8">
-              <label>Nombre del Cliente</label>
-              <input type="text" class="form-control">
-            </div>
             <div class="col-4">
               <label>RFC Empresa</label>
+              <select name="" id="" class="form-control">
+                <option value="" disabled selected>Empresas</option>
+              </select>
+            </div>
+            <div class="col-8">
+              <label>Nombre Cliente</label>
               <input type="text" class="form-control">
             </div>
           </div>
+          
           <hr>
           REGISTRO RAZÓN SOCIAL
-          <br><br>
+          
           <div class="row">
+              <div class='col-4'>
+                  <mat-button-toggle-group #group="matButtonToggleGroup">
+                    <mat-button-toggle value="left"> Física </mat-button-toggle>
+                    <mat-button-toggle value="center"> Moral </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
             <div class="col-8">
               <label>Razón Social</label>
               <input type="text" class="form-control">
             </div>
-            <div class="col-4">
-              <label>RFC Cliente</label>
-              <input type="text" class="form-control">
-            </div>
-
+            
             <div class="col-12">
+              
               <label>Nombre Comercial</label>
               <div class="row">
                 <div class="col-8">
                   <input type="text" class="form-control">
                 </div>
-                <div class="col-2">
-                  <input type="radio" name="tipo" value="Física"> Física
-                </div>
-                <div class="col-2">
-                  <input type="radio" name="tipo" value="Moral"> Moral
-                </div>
+               <div class="col-4">
+              <label>RFC Cliente</label>
+              <input type="text" class="form-control">
+            </div>
               </div>
             </div>
 
             <div class="col-8">
+              
               <label>Persona Contacto</label>
               <input type="text" class="form-control">
             </div>
-
             <div class="col-6">
+              
               <label>Teléfono</label>
               <input type="text" class="col-6" class="form-control">
             </div>
             <div class="col-6">
+              
               <label>Correo Electronico</label>
               <input type="text" class="form-control">
             </div>
 
-            <div class="col-6">
-              <label>Calle</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-3">
-              <label>No. Int.</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-3">
-              <label>No. Ext.</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-12">
-              Selecciona
-              <div class="row">
+            <div class='col-12'>
+              
+              <div class='row'>
                 <div class="col-6">
-                  <select name="" id="" class="form-control">
-                    <option value="Estado" disabled selected>Estado</option>
-                  </select>
-                </div>
-                <div class="col-6">
-                  <select name="" id="" class="form-control">
-                    <option value="Ciudad" disabled selected>Ciudad</option>
-                  </select>
+                  <label>Código Postal</label>
+                  <input type="text" class="form-control">
                 </div>
               </div>
             </div>
 
+            <div class="col-12">
+              
+              <div class="row">
+                <div class="col-6">
+                  <label>Estado</label>
+                  <input type="text" disabled class="form-control">
+                </div>
+                <div class="col-6">
+                  <label>Municipio</label>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="col-6">
+                  
+                  <label>Tipo de Acentamiento</label>
+                  <input type="text" class='form-control'>
+                </div>
+                <div class="col-6">
+                  
+                  <label>Acentamiento</label>
+                  <input type="text" class='form-control'>
+                </div>
+              </div>
+            </div>
+            <div class='col-6'>
+              
+              <label>Tipo Viavilidad</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class='col-6'>
+              
+              <label>Viavilidad</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class='col-12'>
+              
+              <div class='row'>
+                <div class='col-6'>
+                  <div class='row'>
+                    <div class='col-6'>
+                      <input type="radio" name='num'> Numero
+                    </div>
+                    <div class='col-6'>
+                      <input type="radio" name='num'> Manzana
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              
+              <label>No. Int.</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-3">
+              
+              <label>No. Ext.</label>
+              <input type="text" class="form-control">
+            </div>
+
+
           </div>
           <div class="row">
             <div class="col-12 text-center">
-                <button class="mb-2 mr-2 btn btn-outline-2x btn-outline-primary">Primary</button>
+              
+              <button class="boton mb-2 mr-2 btn btn-outline-primary">Agregar</button>
             </div>
           </div>
         </mat-card>
