@@ -14,6 +14,7 @@ import { AddClienteComponent } from './add-cliente/add-cliente.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { MaterialModule } from './angular-material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -34,7 +35,9 @@ import { MaterialModule } from './angular-material';
     BrowserAnimationsModule,
     MatButtonModule, 
     MatCheckboxModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

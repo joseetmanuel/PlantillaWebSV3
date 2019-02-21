@@ -1,148 +1,222 @@
-<div class="app-main__outer">
-  <div class="app-main__inner">
+<div class="app-main__outer ">
+  <div class="app-main__inner ">
     <div class="col-sm-12 col-md-12 col-xl-12">
-      <div class="xx">
-        <mat-card>
-          REGISTRO CLIENTE
-          
+      <mat-card>
+        <div [formGroup]="profileForm">
           <div class="row">
-            <div class="col-4">
-              <label>RFC Empresa</label>
-              <select name="" id="" class="form-control">
-                <option value="" disabled selected>Empresas</option>
-              </select>
-            </div>
-            <div class="col-8">
-              <label>Nombre Cliente</label>
-              <input type="text" class="form-control">
+            <div class="col-sm-12 col-md-12 col-xl-12 title">
+              <span>REGISTRO CLIENTE</span>
             </div>
           </div>
-          
+
+          <div class="row">
+            <div class="col-sm-12 col-md-4 col-xl-4">
+
+              <mat-form-field class='all'>
+                <mat-select placeholder="RFC Empresa" formControlName="empresa" [errorStateMatcher]="matcher">
+                  <mat-option *ngFor='let empresa of empresa' [value]="empresa">
+                    {{empresa}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-8 col-xl-8">
+              <mat-form-field class="all">
+                <input matInput placeholder="Nombre Cliente" formControlName="nombreCliente"
+                  [errorStateMatcher]="matcher">
+                <!-- <mat-error *ngIf="errorNombreCliente.hasError('pattern') && !errorNombreCliente.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error> -->
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
           <hr>
-          REGISTRO RAZÓN SOCIAL
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 title">
+              <span>REGISTRO RAZÓN SOCIAL</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class='col-sm-12 col-md-4 col-xl-4 text-center'>
+              <mat-button-toggle-group #group="matButtonToggleGroup">
+                <mat-button-toggle value="left" class='all'> Física </mat-button-toggle>
+                <mat-button-toggle value="center" class='all'> Moral </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div class="col-sm-12 col-md-8 col-xl-8">
+              <mat-form-field class="all">
+                <input matInput placeholder="Razón Social" formControlName="razonSocial" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-8 col-xl-8">
+              <mat-form-field class="all">
+                <input matInput placeholder="Nombre Comercial" formControlName="nombreComercial"
+                  [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-4 col-xl-4">
+              <mat-form-field class="all">
+                <input matInput placeholder="RFC Cliente" formControlName="rfcCliente" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-8 col-xl-8">
+              <mat-form-field class="all">
+                <input matInput placeholder="Persona Contacto">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class='row'>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Teléfono">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Correo Electronico">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Códico Postal" formControlName="cp" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Estado" formControlName="estado" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Município" formControlName="municipio" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Tipo Asentameinto" formControlName="tipoAsentamiento"
+                  [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                <input matInput placeholder="Asentameinto" formControlName="asentamiento" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='col-sm-12 col-md-6 col-xl-6'>
+              <mat-form-field class="all">
+                <input matInput placeholder="Tipo Vialidad" formControlName="tipoVialidad"
+                  [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class='col-sm-12 col-md-6 col-xl-6'>
+              <mat-form-field class="all">
+                <input matInput placeholder="Vialidad" formControlName="vialidad" [errorStateMatcher]="matcher">
+                <mat-error>
+                  El campo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-sm-12 col-md-12 col-xl-12'>
+              <mat-button-toggle-group #group2="matButtonToggleGroup">
+                <mat-button-toggle (click)='tipoVivienda(group2.value)' value="numero" class='all'>Numero
+                </mat-button-toggle>
+                <mat-button-toggle (click)='tipoVivienda(group2.value)' value="manzana" class='all'>Manzana
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+          <section *ngIf='tipo == "numero"'>
+            <div class='row'>
+              <div class="col-sm-12 col-md-6 col-xl-6">
+                <mat-form-field class="all">
+                  <input matInput placeholder="No. Int.">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-6 col-xl-6">
+                <mat-form-field class="all">
+                  <input matInput placeholder="No. Ext">
+                </mat-form-field>
+              </div>
+            </div>
+          </section>
+          <section *ngIf='tipo == "manzana"'>
+            <div class='row'>
+              <div class="col-sm-12 col-md-12 col-xl-12">
+                <mat-form-field class="all">
+                  <input matInput placeholder="Lote">
+                </mat-form-field>
+              </div>
+            </div>
+          </section>
+
+
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+              <button class="mb-2 mr-2 btn btn-outline-primary">Agregar</button>
+            </div>
+          </div>
           
-          <div class="row">
-              <div class='col-4'>
-                  <mat-button-toggle-group #group="matButtonToggleGroup">
-                    <mat-button-toggle value="left"> Física </mat-button-toggle>
-                    <mat-button-toggle value="center"> Moral </mat-button-toggle>
-                  </mat-button-toggle-group>
-                </div>
-            <div class="col-8">
-              <label>Razón Social</label>
-              <input type="text" class="form-control">
-            </div>
-            
-            <div class="col-12">
-              
-              <label>Nombre Comercial</label>
-              <div class="row">
-                <div class="col-8">
-                  <input type="text" class="form-control">
-                </div>
-               <div class="col-4">
-              <label>RFC Cliente</label>
-              <input type="text" class="form-control">
-            </div>
-              </div>
-            </div>
+        </div>
+        <!-- <input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No"
+           data-onstyle="success" data-offstyle="danger" [(ngModel)]="theCheckbox" 
+           (change)="toggleVisibility($event)"> -->
+           <input type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" 
+           data-onstyle="success" data-offstyle="danger" [(ngModel)]="theCheckbox" 
+           (change)="toggleVisibility($event)">
+      </mat-card>
 
-            <div class="col-8">
-              
-              <label>Persona Contacto</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-6">
-              
-              <label>Teléfono</label>
-              <input type="text" class="col-6" class="form-control">
-            </div>
-            <div class="col-6">
-              
-              <label>Correo Electronico</label>
-              <input type="text" class="form-control">
-            </div>
-
-            <div class='col-12'>
-              
-              <div class='row'>
-                <div class="col-6">
-                  <label>Código Postal</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12">
-              
-              <div class="row">
-                <div class="col-6">
-                  <label>Estado</label>
-                  <input type="text" disabled class="form-control">
-                </div>
-                <div class="col-6">
-                  <label>Municipio</label>
-                  <input type="text" class="form-control">
-                </div>
-
-                <div class="col-6">
-                  
-                  <label>Tipo de Acentamiento</label>
-                  <input type="text" class='form-control'>
-                </div>
-                <div class="col-6">
-                  
-                  <label>Acentamiento</label>
-                  <input type="text" class='form-control'>
-                </div>
-              </div>
-            </div>
-            <div class='col-6'>
-              
-              <label>Tipo Viavilidad</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class='col-6'>
-              
-              <label>Viavilidad</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class='col-12'>
-              
-              <div class='row'>
-                <div class='col-6'>
-                  <div class='row'>
-                    <div class='col-6'>
-                      <input type="radio" name='num'> Numero
-                    </div>
-                    <div class='col-6'>
-                      <input type="radio" name='num'> Manzana
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              
-              <label>No. Int.</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="col-3">
-              
-              <label>No. Ext.</label>
-              <input type="text" class="form-control">
-            </div>
-
-
-          </div>
-          <div class="row">
-            <div class="col-12 text-center">
-              
-              <button class="boton mb-2 mr-2 btn btn-outline-primary">Agregar</button>
-            </div>
-          </div>
-        </mat-card>
-      </div>
     </div>
   </div>
 </div>
