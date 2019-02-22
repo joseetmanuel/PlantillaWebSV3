@@ -2,7 +2,7 @@
   <div class="app-main__inner ">
     <div class="col-sm-12 col-md-12 col-xl-12">
       <mat-card>
-        <div [formGroup]="profileForm">
+        <div [formGroup]="clienteForm">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 title">
               <span>REGISTRO CLIENTE</span>
@@ -13,9 +13,9 @@
             <div class="col-sm-12 col-md-4 col-xl-4">
 
               <mat-form-field class='all'>
-                <mat-select placeholder="RFC Empresa" formControlName="empresa" [errorStateMatcher]="matcher">
-                  <mat-option *ngFor='let empresa of empresa' [value]="empresa">
-                    {{empresa}}
+                <mat-select placeholder="RFC Empresa" formControlName="rfcEmpresa" [errorStateMatcher]="matcher">
+                  <mat-option *ngFor='let empresa of empresa' [value]="empresa.rfcEmpresa">
+                    {{empresa.rfcEmpresa}}
                   </mat-option>
                 </mat-select>
                 <mat-error>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-sm-12 col-md-8 col-xl-8">
               <mat-form-field class="all">
-                <input matInput placeholder="Nombre Cliente" formControlName="nombreCliente"
+                <input matInput placeholder="Nombre Cliente" formControlName="nombre"
                   [errorStateMatcher]="matcher">
                 <!-- <mat-error *ngIf="errorNombreCliente.hasError('pattern') && !errorNombreCliente.hasError('required')">
                       Please enter a valid email address
@@ -36,8 +36,17 @@
               </mat-form-field>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+              <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+                btn-outline-primary" (click) = 'guardarCliente()'>Agregar<i class="pe-7s-diskette btn-icon-wrapper"> </i></button>
+            </div>
+          </div>
+        </div>
 
-          <hr>
+        <hr>
+
+        <div [formGroup]="clienteEntidadForm">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 title">
               <span>REGISTRO RAZÓN SOCIAL</span>
@@ -45,9 +54,9 @@
           </div>
           <div class="row">
             <div class='col-sm-12 col-md-4 col-xl-4 text-center'>
-              <mat-button-toggle-group #group="matButtonToggleGroup">
-                <mat-button-toggle value="left" class='all'> Física </mat-button-toggle>
-                <mat-button-toggle value="center" class='all'> Moral </mat-button-toggle>
+              <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="tipoPersona">
+                <mat-button-toggle value="Física" class='all'> Física </mat-button-toggle>
+                <mat-button-toggle value="Moral" class='all'> Moral </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
             <div class="col-sm-12 col-md-8 col-xl-8">
@@ -101,7 +110,7 @@
           <div class='row'>
             <div class="col-sm-12 col-md-6 col-xl-6">
               <mat-form-field class="all">
-                <input matInput placeholder="Códico Postal" formControlName="cp" [errorStateMatcher]="matcher">
+                <input matInput placeholder="Códico Postal" (keydown) = 'getCP($event)' formControlName="cp" [errorStateMatcher]="matcher">
                 <mat-error>
                   El campo es <strong>requerido</strong>
                 </mat-error>
@@ -167,7 +176,7 @@
             </div>
           </div>
           <div class='row'>
-            <div class='col-sm-12 col-md-12 col-xl-12'>
+            <div class='tog col-sm-12 col-md-12 col-xl-12'>
               <mat-button-toggle-group #group2="matButtonToggleGroup">
                 <mat-button-toggle (click)='tipoVivienda(group2.value)' value="numero" class='all'>Numero
                 </mat-button-toggle>
@@ -176,7 +185,7 @@
               </mat-button-toggle-group>
             </div>
           </div>
-          <section *ngIf='tipo == "numero"'>
+          <div *ngIf='tipo == "numero"'>
             <div class='row'>
               <div class="col-sm-12 col-md-6 col-xl-6">
                 <mat-form-field class="all">
@@ -189,32 +198,37 @@
                 </mat-form-field>
               </div>
             </div>
-          </section>
-          <section *ngIf='tipo == "manzana"'>
+          </div>
+          <div *ngIf='tipo == "manzana"'>
             <div class='row'>
-              <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="col-sm-12 col-md-6 col-xl-6">
+                <mat-form-field class="all">
+                  <input matInput placeholder="Manzana">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-6 col-xl-6">
                 <mat-form-field class="all">
                   <input matInput placeholder="Lote">
                 </mat-form-field>
               </div>
             </div>
-          </section>
-
-
-
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-              <button class="mb-2 mr-2 btn btn-outline-primary">Agregar</button>
-            </div>
           </div>
-          
         </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+            <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+              btn-outline-primary" (click) = 'otro()' >Agregar<i class="pe-7s-diskette btn-icon-wrapper"> </i></button>
+          </div>
+        </div>
+
+
         <!-- <input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No"
            data-onstyle="success" data-offstyle="danger" [(ngModel)]="theCheckbox" 
            (change)="toggleVisibility($event)"> -->
-           <input type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" 
-           data-onstyle="success" data-offstyle="danger" [(ngModel)]="theCheckbox" 
-           (change)="toggleVisibility($event)">
+        <!-- <input id='tog' type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" 
+           data-onstyle="success" data-offstyle="danger"> -->
+
       </mat-card>
 
     </div>

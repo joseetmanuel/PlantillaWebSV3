@@ -30,6 +30,15 @@ Container.get(EmpresaRepository)
 
 
 /**
+ * @summary En este archivo van todos los metodos referentes a Common
+ * localhost:{{port}}/cliente/...
+ */
+import { CommonRepository } from './repository/common.repository';
+import { CommonController } from './controllers/common.controller';
+Container.get(CommonRepository)
+
+
+/**
  * @summary En este archivo van todos los metodos referentes a la seguridad (logins) el sistema 
  * localhost:{{port}}/seguridad/...
  */
@@ -46,7 +55,8 @@ const app = createExpressServer({
         ObjetoController,
         ClienteController,
         SeguridadController,
-        EmpresaController
+        EmpresaController,
+        CommonController
     ],
     middlewares: [SeguridadMiddleware]
 });
