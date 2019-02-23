@@ -25,23 +25,38 @@ export class CommonController {
     }
 
     // ************ Servicios GET ************ 
-
-
-    // ************ Servicios POST ************
-    @Post('/postSearchCp')
+    @Get('/getTipoVialidad')
     // #region documentación
     /*
-    Nombre:         postSearchCp
+    Nombre:         getTipoVialidad
     Autor:          Gerardo Zamudio Gonzalez
     Fecha:          18/02/2019
-    Descripción:    Insertar una Empresa
-    SP:             [empresa].[INS_EMPRESA_SP]
-    Url:            http://localhost:1000/empresa/postInsertaEmpresa
+    Descripción:    Ontiene todos los TipoVialidad
+    SP:             [direccion].[SEL_TIPOVIALIDAD_SP]
+    Url:            http://localhost:1000/empresa/getTipoVialidad
     Wiki:           ...
     */
     // #endregion
-    postSearchCp(@Body() body: Request) {
-        return this.repository.postSearchCp(body);
+    getTipoVialidad(@Req() req:Request){
+        return this.repository.getTipoVialidad(req.query);
+    }
+
+
+    // ************ Servicios POST ************
+    @Post('/postCpAutocomplete')
+    // #region documentación
+    /*
+    Nombre:         postCpAutocomplete
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Obtiene el Estado y el Municipio por CP
+    SP:             [direccion].[SEL_CPAUTOCIMPLETE_SP]
+    Url:            http://localhost:1000/comnon/postCpAutocomplete
+    Wiki:           ...
+    */
+    // #endregion
+    postCpAutocomplete(@Body() body: Request) {
+        return this.repository.postCpAutocomplete(body);
     }
 
 

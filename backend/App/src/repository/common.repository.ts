@@ -22,20 +22,14 @@ export class CommonRepository {
 
     // ************ Servicios GET ************
 
-    /**
-      * Plantilla de ejemplo para un servicio GET
-      * @summary Objetivo del metodo 
-      * @param query { nombreVarible tipoVariable descripción }   
-      * @returns { nombreVarible tipoVariable descripción }
-      *  
-      */
-
-    
+    getTipoVialidad(query:any): PromiseLike <{}> {
+        return this.query.spExecute(query, "[direccion].[SEL_TIPOVIALIDAD_SP]");
+    }    
 
     // ************ Servicios POST ************
 
-    postSearchCp(body: any): PromiseLike<{}> {
-        return this.query.spExecute(body, "[direccion].[SEL_GETCPBYKEYWORD_SP]")
+    postCpAutocomplete(body: any): PromiseLike<{}> {
+        return this.query.spExecute(body, "[direccion].[SEL_CPAUTOCIMPLETE_SP]")
     }
 
     // ************ Servicios PUT ************

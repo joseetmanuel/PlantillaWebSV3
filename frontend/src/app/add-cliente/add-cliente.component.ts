@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormGroupDirective, NgForm, Validators, FormBui
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ClienteService } from './add-cliente.service';
 import { EmpresaService } from './empresa.service';
+import { CommonService } from './common.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -15,11 +16,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-add-cliente',
   templateUrl: './add-cliente.component.html',
   styleUrls: ['./add-cliente.component.sass'],
-  providers: [ClienteService, EmpresaService]
+  providers: [ClienteService, EmpresaService, CommonService]
 })
 export class AddClienteComponent implements OnInit {
   public empresa;
   public tipo = '';
+  public municipios;
+  public tipoVialidades;
+  @ViewChild('cp') cp;
+  @ViewChild('municipio') municipio;
 
 
   clienteForm = this.fb.group({
@@ -50,12 +55,19 @@ export class AddClienteComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private _clienteService: ClienteService,
-    private _empresaService: EmpresaService) {
+    private _empresaService: EmpresaService,
+    private _commonService: CommonService) {
   }
 
   ngOnInit() {
-    this._empresaService.getEmpresas().subscribe(res=>{
+    this._empresaService.getEmpresas().subscribe(res => {
       this.empresa = res['recordsets'][0];
+    }, error => {
+      console.log(error)
+    })
+
+    this._commonService.getTipoVialidad().subscribe(res=>{
+      this.tipoVialidades = res['recordsets'][0];
     },error=>{
       console.log(error)
     })
@@ -68,19 +80,43 @@ export class AddClienteComponent implements OnInit {
 
   guardarCliente() {
     let usuario = this.clienteForm.value;
-    this._clienteService.postInsertaCliente(usuario).subscribe(res=>{
+    this._clienteService.postInsertaCliente(usuario).subscribe(res => {
       console.log(res['recordsets'])
-    },error=>{
+    }, error => {
       console.log(error);
     })
   }
 
-  getCp(e){
-    console.log(e.key);
+  
+  getCp() {
+    if (this.clienteEntidadForm.controls['cp'].value) {
+      let data = {
+        cp: this.clienteEntidadForm.controls['cp'].value
+      }
+      this._commonService.postCpAutocomplete(data).subscribe(
+        resp => {
+          if(resp['recordsets'][0] < 1){
+            console.log('bonita')
+          }
+          else{
+            this.municipios  = resp['recordsets'][0];
+            this.clienteEntidadForm.controls['estado'].setValue(resp['recordsets'][0][0]['nombreEstado'])
+            this.clienteEntidadForm.controls['municipio'].setValue(resp['recordsets'][0][0]['nombreMunicipio'])
+          }
+        }, error => {
+          console.log(error)
+        })
+    }
+  }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.cp.nativeElement.blur();
+    }
   }
 
   otro() {
-    console.log(this.clienteEntidadForm.value)
+    console.log(this.clienteEntidadForm.valueChanges)
   }
 
 }
