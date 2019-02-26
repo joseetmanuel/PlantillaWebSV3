@@ -1,261 +1,255 @@
-<div class="app-main__outer ">
-  <div class="app-main__inner ">
-    <div class="col-sm-12 col-md-12 col-xl-12">
-      <mat-card>
-        <div [formGroup]="clienteForm">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 title">
-              <span>REGISTRO CLIENTE</span>
-            </div>
-          </div>
+<div class="app-main__outer title">
+    <div class="app-main__inner ">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <mat-card>
+                <div [formGroup]="clienteForm">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12">
+                            <span>REGISTRO CLIENTE</span>
+                        </div>
+                    </div>
 
-          <div class="row">
-            <div class="col-sm-12 col-md-4 col-xl-4">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 col-xl-4">
 
-              <mat-form-field class='all'>
-                <mat-select placeholder="RFC Empresa" formControlName="rfcEmpresa" [errorStateMatcher]="matcher">
-                  <mat-option *ngFor='let empresa of empresa' [value]="empresa.rfcEmpresa">
-                    {{empresa.rfcEmpresa}}
-                  </mat-option>
-                </mat-select>
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-8 col-xl-8">
-              <mat-form-field class="all">
-                <input matInput placeholder="Nombre Cliente" formControlName="nombre" [errorStateMatcher]="matcher">
-                <!-- <mat-error *ngIf="errorNombreCliente.hasError('pattern') && !errorNombreCliente.hasError('required')">
+                            <mat-form-field class='all'>
+                                <mat-select placeholder="RFC Empresa" formControlName="rfcEmpresa" [errorStateMatcher]="matcher">
+                                    <mat-option *ngFor='let empresa of empresa' [value]="empresa.rfcEmpresa">
+                                        {{empresa.rfcEmpresa}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-12 col-md-8 col-xl-8">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Nombre Cliente" formControlName="nombre" [errorStateMatcher]="matcher">
+                                <!-- <mat-error *ngIf="errorNombreCliente.hasError('pattern') && !errorNombreCliente.hasError('required')">
                       Please enter a valid email address
                     </mat-error> -->
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-              <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                            <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                 btn-outline-primary" (click)='guardarCliente()'>Agregar<i class="pe-7s-diskette btn-icon-wrapper">
                 </i></button>
-            </div>
-          </div>
-        </div>
+                        </div>
+                    </div>
+                </div>
 
-        <hr>
+                <hr>
 
 
 
-        <div *ngIf='idCliente > 0'  [formGroup]="clienteEntidadForm">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 title">
-              <span>REGISTRO RAZÓN SOCIAL</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class='col-sm-12 col-md-4 col-xl-4 text-center'>
-              <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="tipoPersona">
-                <mat-button-toggle value="1" class='all'> Física </mat-button-toggle>
-                <mat-button-toggle value="4" class='all'> Moral </mat-button-toggle>
-              </mat-button-toggle-group>
-            </div>
-            <div class="col-sm-12 col-md-8 col-xl-8">
-              <mat-form-field class="all">
-                <input matInput placeholder="Razón Social" formControlName="razonSocial" [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-8 col-xl-8">
-              <mat-form-field class="all">
-                <input matInput placeholder="Nombre Comercial" formControlName="nombreComercial"
-                  [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-4 col-xl-4">
-              <mat-form-field class="all">
-                <input matInput placeholder="RFC Cliente" formControlName="rfcCliente" [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-8 col-xl-8">
-              <mat-form-field class="all">
-                <input matInput placeholder="Persona Contacto" formControlName='personaContacto'>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class='row'>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input matInput placeholder="Teléfono" formControlName='telefono'>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input matInput placeholder="Correo Electronico" formControlName='email'>
-                <mat-error>
-                    Por favor, da un correo Valido
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+                <div *ngIf='idCliente > 0' [formGroup]="clienteEntidadForm">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12 title">
+                            <span>REGISTRO RAZÓN SOCIAL</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-sm-12 col-md-4 col-xl-4 text-center'>
+                            <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="tipoPersona">
+                                <mat-button-toggle value="1" class='all'> Física </mat-button-toggle>
+                                <mat-button-toggle value="4" class='all'> Moral </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                        <div class="col-sm-12 col-md-8 col-xl-8">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Razón Social" formControlName="razonSocial" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8 col-xl-8">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Nombre Comercial" formControlName="nombreComercial" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-xl-4">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="RFC Cliente" formControlName="rfcCliente" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8 col-xl-8">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Persona Contacto" formControlName='personaContacto'>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Teléfono" formControlName='telefono'>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Correo Electronico" formControlName='email'>
+                                <mat-error>
+                                    Por favor, da un correo Valido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
-          <div class='row'>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input #cp matInput placeholder="Códico Postal" (focusout)="getCp()" (keydown)="onKeydown($event)"
-                  formControlName="cp" [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input matInput placeholder="Estado" formControlName="estado" [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input #municipio matInput placeholder="Município" formControlName="municipio"
-                  [errorStateMatcher]="matcher">
-                <!-- <mat-select placeholder="Municipio" formControlName="municipio" [errorStateMatcher]="matcher">
+                    <div class='row'>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input #cp matInput placeholder="Códico Postal" (focusout)="getCp()" (keydown)="onKeydown($event)" formControlName="cp" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Estado" formControlName="estado" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input #municipio matInput placeholder="Município" formControlName="municipio" [errorStateMatcher]="matcher">
+                                <!-- <mat-select placeholder="Municipio" formControlName="municipio" [errorStateMatcher]="matcher">
                   <mat-option *ngFor='let municipio of municipios' [value]="municipio.nombreMunicipio">
                     {{municipio.nombreMunicipio}}
                   </mat-option>
                 </mat-select> -->
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
-          <div class='row'>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <mat-select placeholder="Tipo Asentamiento" formControlName="tipoAsentamiento"
-                  [errorStateMatcher]="matcher">
-                  <mat-option *ngFor='let tipoAsentamiento of tipoAsentamientos'
-                    [value]="tipoAsentamiento.idTipoAsentamiento">
-                    {{tipoAsentamiento.nombre}}
-                  </mat-option>
-                </mat-select>
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6 col-xl-6">
-              <mat-form-field class="all">
-                <input matInput placeholder="Asentameinto" formControlName="asentamiento" [matAutocomplete]="auto"
-                  [errorStateMatcher]="matcher">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let asentamiento of asentamientos" [value]="asentamiento.nombreAsentamiento">
-                    {{asentamiento.nombreAsentamiento}}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+                    <div class='row'>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <mat-select placeholder="Tipo Asentamiento" formControlName="tipoAsentamiento" [errorStateMatcher]="matcher">
+                                    <mat-option *ngFor='let tipoAsentamiento of tipoAsentamientos' [value]="tipoAsentamiento.idTipoAsentamiento">
+                                        {{tipoAsentamiento.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-xl-6">
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Asentameinto" formControlName="asentamiento" [matAutocomplete]="auto" [errorStateMatcher]="matcher">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let asentamiento of asentamientos" [value]="asentamiento.nombreAsentamiento">
+                                        {{asentamiento.nombreAsentamiento}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
 
-          <div class='row'>
-            <div class='col-sm-12 col-md-6 col-xl-6'>
-              <mat-form-field class="all">
-                <mat-select placeholder="Tipo Vialidad" formControlName="tipoVialidad" [errorStateMatcher]="matcher">
-                  <mat-option *ngFor='let tipoVialidad of tipoVialidades' [value]="tipoVialidad.idTipoVialidad">
-                    {{tipoVialidad.nombre}}
-                  </mat-option>
-                </mat-select>
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class='col-sm-12 col-md-6 col-xl-6'>
-              <mat-form-field class="all">
-                <input matInput placeholder="Vialidad" formControlName="vialidad" [errorStateMatcher]="matcher">
-                <mat-error>
-                  El campo es <strong>requerido</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class='row'>
-            <div class='tog col-sm-12 col-md-12 col-xl-12'>
-              <mat-button-toggle-group #group2="matButtonToggleGroup">
-                <mat-button-toggle (click)='tipoVivienda(1)' value="numero" class='all'>Numero
-                </mat-button-toggle>
-                <mat-button-toggle (click)='tipoVivienda(0)' value="manzana" class='all'>Manzana
-                </mat-button-toggle>
-              </mat-button-toggle-group>
-            </div>
-          </div>
-          <div *ngIf='tipo == 1'>
-            <div class='row'>
-              <div class="col-sm-12 col-md-6 col-xl-6">
-                <mat-form-field class="all">
-                  <input matInput placeholder="No. Ext" formControlName='numeroExterior'>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-md-6 col-xl-6">
-                <mat-form-field class="all">
-                    <input matInput placeholder="No. Int." formControlName='numeroInterior'>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div *ngIf='tipo == 0'>
-            <div class='row'>
-              <div class="col-sm-12 col-md-6 col-xl-6">
-                <mat-form-field class="all">
-                  <input matInput placeholder="Manzana" formControlName='mz'>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-md-6 col-xl-6">
-                <mat-form-field class="all">
-                  <input matInput placeholder="Lote" formControlName='lt'>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-              <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+                    <div class='row'>
+                        <div class='col-sm-12 col-md-6 col-xl-6'>
+                            <mat-form-field class="all">
+                                <mat-select placeholder="Tipo Vialidad" formControlName="tipoVialidad" [errorStateMatcher]="matcher">
+                                    <mat-option *ngFor='let tipoVialidad of tipoVialidades' [value]="tipoVialidad.idTipoVialidad">
+                                        {{tipoVialidad.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class='col-sm-12 col-md-6 col-xl-6'>
+                            <mat-form-field class="all">
+                                <input matInput placeholder="Vialidad" formControlName="vialidad" [errorStateMatcher]="matcher">
+                                <mat-error>
+                                    El campo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='tog col-sm-12 col-md-12 col-xl-12'>
+                            <mat-button-toggle-group #group2="matButtonToggleGroup">
+                                <mat-button-toggle (click)='tipoVivienda(1)' value="numero" class='all'>Numero
+                                </mat-button-toggle>
+                                <mat-button-toggle (click)='tipoVivienda(0)' value="manzana" class='all'>Manzana
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+                    <div *ngIf='tipo == 1'>
+                        <div class='row'>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <mat-form-field class="all">
+                                    <input matInput placeholder="No. Ext" formControlName='numeroExterior'>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <mat-form-field class="all">
+                                    <input matInput placeholder="No. Int." formControlName='numeroInterior'>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf='tipo == 0'>
+                        <div class='row'>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <mat-form-field class="all">
+                                    <input matInput placeholder="Manzana" formControlName='mz'>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <mat-form-field class="all">
+                                    <input matInput placeholder="Lote" formControlName='lt'>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                            <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                 btn-outline-primary" (click)='otro()'>Agregar<i class="pe-7s-diskette btn-icon-wrapper"> </i></button>
-            </div>
-          </div>
-        </div>
+                        </div>
+                    </div>
+                </div>
 
 
-        <!-- <input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No"
+                <!-- <input type="checkbox" data-toggle="toggle" data-on="Yes" data-off="No"
            data-onstyle="success" data-offstyle="danger" [(ngModel)]="theCheckbox" 
            (change)="toggleVisibility($event)"> -->
-        <!-- <input id='tog' type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" 
+                <!-- <input id='tog' type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" 
            data-onstyle="success" data-offstyle="danger"> -->
 
-      </mat-card>
+            </mat-card>
 
+        </div>
     </div>
-  </div>
 </div>
