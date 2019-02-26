@@ -1,14 +1,15 @@
-<mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
-<div class="app-main__inner ">
+<div class="app-main__inner">
+    <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
-
                 <div class="page-title-icon clientes"></div>
                 <div>Clientes</div>
             </div>
         </div>
     </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <mat-card [ngClass]="{'desactiva': numero == 0 }">
 
@@ -40,7 +41,7 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 col-xl-12 title">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
                         <span>Datos Fiscales</span>
                     </div>
                 </div>
@@ -53,7 +54,7 @@
                     </div>
                     <div class="col-sm-12 col-md-8 col-xl-8">
                         <mat-form-field class="all">
-                            <input matInput placeholder="Razón Social *" formControlName="razonSocial" [errorStateMatcher]="matcher">
+                            <input matInput placeholder="Nombre Comercial *" formControlName="nombreComercial" [errorStateMatcher]="matcher">
                             <mat-error>
                                 El campo es <strong>requerido</strong>
                             </mat-error>
@@ -63,7 +64,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-8 col-xl-8">
                         <mat-form-field class="all">
-                            <input matInput placeholder="Nombre Comercial *" formControlName="nombreComercial" [errorStateMatcher]="matcher">
+                            <input matInput placeholder="Razón Social *" formControlName="razonSocial" [errorStateMatcher]="matcher">
                             <mat-error>
                                 El campo es <strong>requerido</strong>
                             </mat-error>
@@ -183,12 +184,12 @@
                 <div class='row'>
                     <div class="col-sm-12 col-md-6 col-xl-6">
                         <mat-form-field class="all">
-                            <input matInput placeholder="No. Ext/Mz" formControlName='numeroExterior'>
+                            <input matInput placeholder="No. Ext / Mz. Lt." formControlName='numeroExterior'>
                         </mat-form-field>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-6">
                         <mat-form-field class="all">
-                            <input matInput placeholder="No. Int/Lt" formControlName='numeroInterior'>
+                            <input matInput placeholder="No. Int" formControlName='numeroInterior'>
                         </mat-form-field>
                     </div>
                 </div>

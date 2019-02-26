@@ -45,7 +45,7 @@ export class AddClienteComponent implements OnInit {
     email: new FormControl('', [Validators.email, Validators.required]),
     cp: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
     estado: new FormControl({ value:'', disabled: true }, [Validators.required]),
-    municipio: new FormControl({ value: 'El municipio se llenará con su CP', disabled: true }, [Validators.required]),
+    municipio: new FormControl({ value: 'Se llenará con su CP', disabled: true }, [Validators.required]),
     tipoAsentamiento: new FormControl('', [Validators.required]),
     asentamiento: new FormControl({ value: 'Asentamiento', disabled: true }, [Validators.required]),
     tipoVialidad: new FormControl('', [Validators.required]),
