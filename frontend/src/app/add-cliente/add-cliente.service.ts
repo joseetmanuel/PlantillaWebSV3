@@ -16,5 +16,12 @@ export class ClienteService{
         let params = json;
 		let headers = new HttpHeaders({'Content-Type':'application/json'});
 		return this._http.post(this.url+'postInsertaCliente',params, {headers}).pipe(map(res=>res));
-	}
+    }
+    
+    postInsertaClienteEntidad(data){
+        let json = JSON.stringify(data);
+        let params = json;
+		let headers = new HttpHeaders({'Content-Type':'application/json'});
+		return this._http.post(this.url+'postInsertaClienteEntidad',params, {headers}).pipe(map(res=>res));
+    }
 }

@@ -24,7 +24,11 @@ export class CommonRepository {
 
     getTipoVialidad(query:any): PromiseLike <{}> {
         return this.query.spExecute(query, "[direccion].[SEL_TIPOVIALIDAD_SP]");
-    }    
+    }
+
+    getTipoAsentamiento(query:any): PromiseLike <{}> {
+        return this.query.spExecute(query, "[direccion].[SEL_TIPOASENTAMIENTO_SP]")
+    }
 
     // ************ Servicios POST ************
 

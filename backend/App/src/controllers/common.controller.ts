@@ -41,6 +41,22 @@ export class CommonController {
         return this.repository.getTipoVialidad(req.query);
     }
 
+    @Get('/getTipoAsentamiento')
+    // #region documentación
+    /*
+    Nombre:         getTipoAsentamiento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Ontiene todos los TipoAsentamiento
+    SP:             [direccion].[SEL_TIPOASENTAMIENTO_SP]
+    Url:            http://localhost:1000/empresa/getTipoAsentamiento
+    Wiki:           ...
+    */
+    // #endregion
+    getTipoAsentamiento(@Req() req:Request){
+        return this.repository.getTipoAsentamiento(req.query);
+    }
+
 
     // ************ Servicios POST ************
     @Post('/postCpAutocomplete')

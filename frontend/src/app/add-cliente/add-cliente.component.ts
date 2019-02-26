@@ -4,6 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { ClienteService } from './add-cliente.service';
 import { EmpresaService } from './empresa.service';
 import { CommonService } from './common.service';
+import { error } from 'util';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -20,12 +21,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AddClienteComponent implements OnInit {
   public empresa;
-  public tipo = '';
+  public tipo = 2;
   public municipios;
   public tipoVialidades;
+  public tipoAsentamientos;
+  public asentamientos;
+  public idCliente;
+  public idPais;
+  public idEstado;
+  public idMunicipio;
   @ViewChild('cp') cp;
   @ViewChild('municipio') municipio;
-
 
   clienteForm = this.fb.group({
     nombre: new FormControl('', [Validators.required]),
@@ -40,15 +46,18 @@ export class AddClienteComponent implements OnInit {
     rfcCliente: new FormControl('', [Validators.required]),
     personaContacto: new FormControl('', []),
     telefono: new FormControl('', []),
-    correoElectronico: new FormControl('', []),
+    email: new FormControl('', [Validators.email]),
     cp: new FormControl('', [Validators.required]),
     estado: new FormControl({ value: 'El estado se llenará con su CP', disabled: true }, [Validators.required]),
     municipio: new FormControl({ value: 'El municipio se llenará con su CP', disabled: true }, [Validators.required]),
     tipoAsentamiento: new FormControl('', [Validators.required]),
-    asentamiento: new FormControl('', [Validators.required]),
+    asentamiento: new FormControl({ value: 'Asentamiento', disabled: true }, [Validators.required]),
     tipoVialidad: new FormControl('', [Validators.required]),
     vialidad: new FormControl('', [Validators.required]),
-
+    numeroExterior: new FormControl('',[]),
+    numeroInterior: new FormControl('',[]),
+    mz: new FormControl('',[]),
+    lt: new FormControl('',[])
   })
 
   matcher = new MyErrorStateMatcher();
@@ -66,28 +75,43 @@ export class AddClienteComponent implements OnInit {
       console.log(error)
     })
 
-    this._commonService.getTipoVialidad().subscribe(res=>{
+    this._commonService.getTipoVialidad().subscribe(res => {
       this.tipoVialidades = res['recordsets'][0];
-    },error=>{
+    }, error => {
+      console.log(error)
+    })
+
+    this._commonService.getTipoAsentamiento().subscribe(res => {
+      this.tipoAsentamientos = res['recordsets'][0];
+    }, error => {
       console.log(error)
     })
   }
 
-  tipoVivienda(val) {
-    this.tipo = val
-    console.log(this.tipo)
+  tipoVivienda(numero) {
+    this.tipo = numero
+    if(numero == 0){
+      this.clienteEntidadForm.controls['numeroExterior'].setValue('');
+      this.clienteEntidadForm.controls['numeroInterior'].setValue('');
+    }
+    if(numero == 1){
+      this.clienteEntidadForm.controls['mz'].setValue('');
+      this.clienteEntidadForm.controls['lt'].setValue('');
+    }
   }
 
   guardarCliente() {
     let usuario = this.clienteForm.value;
     this._clienteService.postInsertaCliente(usuario).subscribe(res => {
       console.log(res['recordsets'])
+      this.idCliente = res['recordsets'][1][0]['idCliente'];
+      console.log(this.idCliente)
     }, error => {
       console.log(error);
     })
   }
 
-  
+
   getCp() {
     if (this.clienteEntidadForm.controls['cp'].value) {
       let data = {
@@ -95,13 +119,19 @@ export class AddClienteComponent implements OnInit {
       }
       this._commonService.postCpAutocomplete(data).subscribe(
         resp => {
-          if(resp['recordsets'][0] < 1){
+          if (resp['recordsets'][0] < 1) {
             console.log('bonita')
           }
-          else{
-            this.municipios  = resp['recordsets'][0];
+          else {
+            this.asentamientos = resp['recordsets'][0]
+            this.idPais = resp['recordsets'][0][0]['idPais'];
+            this.idEstado =  resp['recordsets'][0][0]['idEstado'];
+            this.idMunicipio =  resp['recordsets'][0][0]['idMunicipio'];
             this.clienteEntidadForm.controls['estado'].setValue(resp['recordsets'][0][0]['nombreEstado'])
             this.clienteEntidadForm.controls['municipio'].setValue(resp['recordsets'][0][0]['nombreMunicipio'])
+            this.clienteEntidadForm.get('asentamiento').enable();
+            this.clienteEntidadForm.controls['asentamiento'].setValue('')
+            console.log(this.asentamientos)
           }
         }, error => {
           console.log(error)
@@ -116,7 +146,35 @@ export class AddClienteComponent implements OnInit {
   }
 
   otro() {
-    console.log(this.clienteEntidadForm.valueChanges)
+    let data = {
+      idPais:this.idPais,
+      idEstado:this.idEstado,
+      idMunicipio:this.idMunicipio,
+      codigoPostal:this.clienteEntidadForm.controls['cp'].value,
+      idTipoAsentamiento:this.clienteEntidadForm.controls['tipoAsentamiento'].value,
+      asentamiento:this.clienteEntidadForm.controls['asentamiento'].value,
+      idTipoVialidad:this.clienteEntidadForm.controls['tipoVialidad'].value,
+      vialidad:this.clienteEntidadForm.controls['vialidad'].value,
+      numeroOMz:this.tipo,
+      numeroExterior:this.clienteEntidadForm.controls['numeroExterior'].value,
+      numeroInterior:this.clienteEntidadForm.controls['numeroInterior'].value,
+      mz:this.clienteEntidadForm.controls['mz'].value,
+      lt:this.clienteEntidadForm.controls['lt'].value,
+      idCliente: this.idCliente,
+      rfcClienteEntidad:this.clienteEntidadForm.controls['rfcCliente'].value,
+      razonSocial:this.clienteEntidadForm.controls['razonSocial'].value,
+      nombreComercial:this.clienteEntidadForm.controls['nombreComercial'].value,
+      idTipoPersona:this.clienteEntidadForm.controls['tipoPersona'].value,
+      personaContacto:this.clienteEntidadForm.controls['personaContacto'].value,
+      telefono:this.clienteEntidadForm.controls['telefono'].value,
+      email:this.clienteEntidadForm.controls['email'].value
+    }
+    this._clienteService.postInsertaClienteEntidad(data).subscribe(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+    console.log(data)
   }
 
 }

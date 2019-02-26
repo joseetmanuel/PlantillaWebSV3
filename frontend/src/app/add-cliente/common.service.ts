@@ -17,6 +17,11 @@ export class CommonService{
 		return this._http.get(this.url+'getTipoVialidad', {headers}).pipe(map(res=>res));
     }
 
+    getTipoAsentamiento(){
+        let headers = new HttpHeaders({'Content-Type':'application/json'});
+		return this._http.get(this.url+'getTipoAsentamiento', {headers}).pipe(map(res=>res));
+    }
+
 	postCpAutocomplete(cp){
         let json = JSON.stringify(cp);
         let params = json;
