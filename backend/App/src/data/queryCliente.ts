@@ -33,7 +33,7 @@ export class Query {
                         excepcion : err,
                         recordsets : null
                     }
-                    console.log(err)
+                    console.log(err )
                     dbConn.close();
                     deferred.reject(msj);
                 });

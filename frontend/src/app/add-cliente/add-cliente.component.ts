@@ -26,10 +26,11 @@ export class AddClienteComponent implements OnInit {
   public tipoVialidades;
   public tipoAsentamientos;
   public asentamientos;
-  public idCliente;
+  public idCliente = 0;
   public idPais;
   public idEstado;
   public idMunicipio;
+  public numero = 1;
   @ViewChild('cp') cp;
   @ViewChild('municipio') municipio;
 

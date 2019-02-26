@@ -37,7 +37,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-              <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+              <button *ngIf="idCliente == 0" class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                 btn-outline-primary" (click)='guardarCliente()'>Agregar<i class="pe-7s-diskette btn-icon-wrapper">
                 </i></button>
             </div>
@@ -48,7 +48,7 @@
 
 
 
-        <div *ngIf='idCliente > 0'  [formGroup]="clienteEntidadForm">
+        <div *ngIf='idCliente > 0' [formGroup]="clienteEntidadForm">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 title">
               <span>REGISTRO RAZÓN SOCIAL</span>
@@ -106,7 +106,7 @@
               <mat-form-field class="all">
                 <input matInput placeholder="Correo Electronico" formControlName='email'>
                 <mat-error>
-                    Por favor, da un correo Valido
+                  Por favor, da un correo Valido
                 </mat-error>
               </mat-form-field>
             </div>
@@ -220,7 +220,7 @@
               </div>
               <div class="col-sm-12 col-md-6 col-xl-6">
                 <mat-form-field class="all">
-                    <input matInput placeholder="No. Int." formControlName='numeroInterior'>
+                  <input matInput placeholder="No. Int." formControlName='numeroInterior'>
                 </mat-form-field>
               </div>
             </div>
@@ -256,6 +256,11 @@
 
       </mat-card>
 
+      
+
+
+
     </div>
   </div>
 </div>
+<mat-spinner *ngIf='numero == 0' class='centro'></mat-spinner>
