@@ -1,35 +1,15 @@
 export default {
-    "development" : // Seguridad 
+    "development" : 
     {
-        "host": "189.204.141.193",
-        "port": 1000,
-        "method": "POST",
-        "headers": {
-            "Content-Type":  "multipart/form-data"
-        }
+        "port": 1000
     },
     "production": {
-        "host": "189.204.141.193",
-        "port": 1000,
-        "method": "POST",
-        "headers": {
-            "Content-Type":  "multipart/form-data"
-        }
+        "port": 1000
     },
     "qa": {
-        "host": "189.204.141.193",
-        "port": 1000,
-        "method": "POST",
-        "headers": {
-            "Content-Type":  "multipart/form-data"
-        }
+        "port": 1000
     },
-    "training": {
-        "host": "189.204.141.193",
-        "port": 1000,
-        "method": "POST",
-        "headers": {
-            "Content-Type":  "multipart/form-data"
-        }
+    "training":{
+        "port": 1000
     }
 };

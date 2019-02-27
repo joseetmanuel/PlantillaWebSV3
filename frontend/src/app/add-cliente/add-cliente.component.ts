@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormGroupDirective, NgForm, Validators, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ClienteService } from './add-cliente.service';
-import { CommonService } from './common.service';
+import { CommonService } from '../services/common.service';
 import { error } from 'util';
 import { MatSnackBar } from '@angular/material';
 
@@ -134,9 +134,9 @@ export class AddClienteComponent implements OnInit {
 
   agregarClienteEntidad() {
     this.numero = 0;
-    let data = {
+    const data = {
       nombre: this.clienteEntidadForm.controls['nombre'].value,
-      idUsuario:this.clienteEntidadForm.controls['idUsuario'].value,
+      idUsuario: this.clienteEntidadForm.controls['idUsuario'].value,
       idPais: this.idPais,
       idEstado: this.idEstado,
       idMunicipio: this.idMunicipio,

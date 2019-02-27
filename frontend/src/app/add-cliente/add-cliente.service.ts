@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http'
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { GLOBAL } from '../services/global';
+import { GLOBAL } from '../services/config';
 
 @Injectable()
 export class ClienteService{

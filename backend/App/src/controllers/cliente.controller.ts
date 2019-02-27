@@ -40,8 +40,8 @@ export class ClienteController {
     Fecha:          15/02/2019
     Descripción:    Obtener todos los Clientes
     SP:             [cliente].[SEL_CLIENTE_SP]
-    Url:            http://localhost:1000/cliente/getClientes
-    Wiki:           ...
+    Url:            http://{server}:{port}/cliente/getClientes
+    Wiki:           https://github.com/joseetmanuel/PlantillaWeb/wiki/Cliente
     */
     // #endregion
     getClientes(@Req() req: Request) {
@@ -58,7 +58,7 @@ export class ClienteController {
     Descripción:    Obtener a un cliente por idCliente
     SP:             [cliente].[SEL_CLIENTEPORID_SP]
     Url:            http://localhost:1000/cliente/getClientePorId?idCliente=1
-    Wiki:           ...
+    Wiki:           https://github.com/joseetmanuel/PlantillaWeb/wiki/Cliente
     */
     // #endregion
     getClientePorId(@Req() req: Request) {
