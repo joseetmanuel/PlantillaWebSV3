@@ -193,12 +193,15 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-                        <button class="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
+                        <button class="btn-wide float-right mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                             btn-outline-primary" (click)='agregarClienteEntidad()' [disabled]="!clienteEntidadForm.valid">Agregar<i class="pe-7s-diskette btn-icon-wrapper">
-                            </i></button>
+                            </i>
+                        </button>
                     </div>
                 </div>
-                <p class='message'>Los campos con * son obligatórios</p>
+                <div *ngIf='!clienteEntidadForm.valid'>
+                    <p class='message'>Los campos con * son obligatórios</p>
+                </div> 
             </mat-card>
         </div>
 
