@@ -1,3 +1,3 @@
 export const GLOBAL = {
-    serviceUrul: 'http://localhost:1000'
+    serviceUrul: 'http://189.204.141.199:5117/'
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormGroupDirective, NgForm, Validators, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { ClienteService } from './add-cliente.service';
-import { CommonService } from '../services/common.service';
+import { SiscoV3Service } from '../services/siscov3.service';
 import { error } from 'util';
 import { MatSnackBar } from '@angular/material';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -17,7 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-add-cliente',
   templateUrl: './add-cliente.component.html',
   styleUrls: ['./add-cliente.component.sass'],
-  providers: [ClienteService, CommonService]
+  providers: [SiscoV3Service]
 })
 export class AddClienteComponent implements OnInit {
   public empresa;
@@ -53,33 +53,34 @@ export class AddClienteComponent implements OnInit {
     vialidad: new FormControl('', [Validators.required]),
     numeroExterior: new FormControl('', []),
     numeroInterior: new FormControl('', [])
-  })
+  });
 
   matcher = new MyErrorStateMatcher();
 
   constructor(private fb: FormBuilder,
-    private _clienteService: ClienteService,
     private snackBar: MatSnackBar,
-    private _commonService: CommonService) {
+    private _siscoV3Service: SiscoV3Service) {
   }
 
   ngOnInit() {
 
-    this._commonService.getTipoVialidad().subscribe(res => {
-      this.tipoVialidades = res['recordsets'][0];
-    }, error => {
-      console.log(error)
-    })
+    this._siscoV3Service.getService('common/getTipoVialidad').subscribe((res: any) => {
+      console.log(res.recordsets[0]);
+      this.tipoVialidades = res.recordsets[0];
+    }, (error: any) => {
+      console.log(error);
+    });
 
-    this._commonService.getTipoAsentamiento().subscribe(res => {
-      this.tipoAsentamientos = res['recordsets'][0];
-    }, error => {
-      console.log(error)
-    })
+    this._siscoV3Service.getService('common/getTipoAsentamiento').subscribe((res: any) => {
+      this.tipoAsentamientos = res.recordsets[0];
+    }, (error: any) => {
+      console.log(error);
+    });
+
   }
 
   tipoVivienda(numero) {
-    this.tipo = numero
+    this.tipo = numero;
     if (numero == 0) {
       this.clienteEntidadForm.controls['numeroExterior'].setValue('');
       this.clienteEntidadForm.controls['numeroInterior'].setValue('');
@@ -94,35 +95,31 @@ export class AddClienteComponent implements OnInit {
   getCp() {
     if (this.clienteEntidadForm.controls['cp'].value) {
       this.numero = 0;
-      let data = {
-        cp: this.clienteEntidadForm.controls['cp'].value
-      }
-      this._commonService.postCpAutocomplete(data).subscribe(
-        resp => {
-          if (resp['recordsets'][0] < 1) {
+      this._siscoV3Service.postService('common/postCpAutocomplete', {cp: this.clienteEntidadForm.controls['cp'].value}).subscribe(
+        (resp: any) => {
+          if (resp.recordsets[0] < 1) {
             this.snackBar.open('El Código Postal no es valido', 'Ok', {
               duration: 2000,
             });
             this.numero = 1;
             this.valCp = true;
-            this.clienteEntidadForm.controls['cp'].setValue('')
-          }
-          else {
+            this.clienteEntidadForm.controls['cp'].setValue('');
+          } else {
             this.numero = 1;
             this.valCp = false;
-            this.asentamientos = resp['recordsets'][0]
-            this.idPais = resp['recordsets'][0][0]['idPais'];
-            this.idEstado = resp['recordsets'][0][0]['idEstado'];
-            this.idMunicipio = resp['recordsets'][0][0]['idMunicipio'];
-            this.clienteEntidadForm.controls['estado'].setValue(resp['recordsets'][0][0]['nombreEstado'])
-            this.clienteEntidadForm.controls['municipio'].setValue(resp['recordsets'][0][0]['nombreMunicipio'])
+            this.asentamientos = resp.recordsets[0];
+            this.idPais = resp.recordsets[0][0]['idPais'];
+            this.idEstado = resp.recordsets[0][0]['idEstado'];
+            this.idMunicipio = resp.recordsets[0][0]['idMunicipio'];
+            this.clienteEntidadForm.controls['estado'].setValue(resp.recordsets[0][0]['nombreEstado'])
+            this.clienteEntidadForm.controls['municipio'].setValue(resp.recordsets[0][0]['nombreMunicipio'])
             this.clienteEntidadForm.get('asentamiento').enable();
-            this.clienteEntidadForm.controls['asentamiento'].setValue('')
-            console.log(this.asentamientos)
+            this.clienteEntidadForm.controls['asentamiento'].setValue('');
+            console.log(this.asentamientos);
           }
-        }, error => {
-          console.log(error)
-        })
+        }, (error: any) => {
+          console.log(error);
+        });
     }
   }
 
@@ -134,6 +131,7 @@ export class AddClienteComponent implements OnInit {
 
   agregarClienteEntidad() {
     this.numero = 0;
+    
     const data = {
       nombre: this.clienteEntidadForm.controls['nombre'].value,
       idUsuario: this.clienteEntidadForm.controls['idUsuario'].value,
@@ -155,19 +153,20 @@ export class AddClienteComponent implements OnInit {
       personaContacto: this.clienteEntidadForm.controls['personaContacto'].value,
       telefono: this.clienteEntidadForm.controls['telefono'].value,
       email: this.clienteEntidadForm.controls['email'].value
-    }
-    this._clienteService.postInsertaClienteEntidad(data).subscribe(res => {
-      console.log(res)
+    };
+
+    this._siscoV3Service.postService('cliente/postInsertaClienteEntidad', data).subscribe((res: any) => {
+      console.log(res);
       this.numero = 1;
       this.clienteEntidadForm.reset();
-    }, error => {
+    }, (error: any) => {
       this.snackBar.open('Ocurrio un Error!', 'Ok', {
         duration: 2000,
       });
       this.numero = 1;
-      console.log(error)
-    })
-    console.log(data)
+      console.log(error);
+    });
+    console.log(data);
   }
 
 }
