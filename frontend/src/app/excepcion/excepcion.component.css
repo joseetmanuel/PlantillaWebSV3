@@ -1,0 +1,54 @@
+.cardHeader{
+    background-color: #FFF8F9FA
+}
+
+.poss{
+    float: right;
+}
+
+.cont{
+    font-size: 10px;
+}
+
+.inLine{
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    color:blue;
+}
+
+.tipo{
+    background:#E6044C;
+    color: white;
+}
+
+.bordes{
+    border-radius: 10px 10px 10px 10px;
+    border: 1px solid #E6044C;
+}
+
+.bordes1{
+    border-radius: 10px 10px 10px 10px;
+    border: 1px solid blue;
+    background: white;
+}
+
+.punter{
+    cursor: pointer;
+}
+div.ex1 {
+    width: 100%;
+    height: 100px;
+    overflow: scroll;
+  }
+.icono{
+    font-size: 20px;
+}
+
+.contenido{
+    padding-top: 20px;
+}
+
+.fecha{
+    font-weight: bold;
+}

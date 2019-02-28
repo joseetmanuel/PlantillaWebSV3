@@ -1,0 +1,46 @@
+<div class="cardHeader">
+  <div class="container">
+    <span class="float-right">
+      <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
+    </span>
+    <mat-card-title>Título</mat-card-title>
+  </div>
+</div>
+<mat-card-content>
+  <p class="contenido">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda praesentium provident mollitia ducimus et
+    dolores dolore beatae ullam, quisquam voluptatem tempore reprehenderit, recusandae magni corrupti quasi repudiandae
+    culpa? Voluptatem, culpa? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo voluptas, possimus,
+    sapiente nesciunt alias numquam quos totam itaque recusandae enim velit quasi aut odio fugit vero sed commodi atque
+    tempora.
+  </p>
+</mat-card-content>
+<div class="row">
+  <div class="col-6">
+    <div class="inLine bordes tipo">
+      <mat-chip class="tipo">Tipo mensaje</mat-chip>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="poss">
+      <div class="punter">
+        <button class="btn inLine bordes1" (click)='enviar()'>
+          <i class="far fa-envelope"></i><span> Enviar Información</span>
+        </button>
+        <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 1' (click)="cambio()">Ver
+          más <i class="fas fa-chevron-down"></i></div>
+        <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 0' (click)="cambio()">Ver
+          menos <i class="fas fa-chevron-up"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="collapse" id="collapseExample">
+  <hr>
+  <p class='fecha'>05/02/2019 16:46</p>
+  <hr>
+  <div class="ex1">
+    <p>{{data.stack}}</p>
+  </div>
+</div>

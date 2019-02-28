@@ -16,6 +16,8 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { MaterialModule } from './angular-material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ExcepcionComponent } from './excepcion/excepcion.component';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 
 @NgModule({
@@ -28,6 +30,11 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     VentasComponent,
     ClientesComponent,
+    AddClienteComponent,
+    ExcepcionComponent
+  ],
+  entryComponents:[
+    ExcepcionComponent,
     AddClienteComponent
   ],
   imports: [
@@ -39,7 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
   providers: [],
   bootstrap: [AppComponent]
