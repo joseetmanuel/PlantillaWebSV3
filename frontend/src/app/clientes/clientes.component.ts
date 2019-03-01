@@ -9,11 +9,13 @@ import {
   IScroll,
   Toolbar
 } from '../interfaces'
+import { SiscoV3Service } from '../services/siscov3.service';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.sass', '../app.component.sass']
+  styleUrls: ['./clientes.component.sass', '../app.component.sass'],
+  providers: [SiscoV3Service]
 })
 export class ClientesComponent implements OnInit {
 
@@ -27,6 +29,7 @@ export class ClientesComponent implements OnInit {
   evento: string;
   toolbar: Toolbar[];
   data: [];
+  clientes = [];
 
   receiveMessage($event) {
     this.evento = $event.event;
@@ -70,7 +73,17 @@ export class ClientesComponent implements OnInit {
 
   }
 
-  constructor() { }
+  constructor(private _siscoV3Service:SiscoV3Service) {
+    _siscoV3Service.getService('cliente/getClientes').subscribe(
+      (res:any)=>{
+        this.clientes = res.recordsets[0];
+        console.log(this.clientes.length)
+        console.log(this.datos)
+      },(error:any)=>{
+        console.log(error);
+      }
+    )
+  }
 
   ngOnInit() {
     this.columns = [
@@ -82,7 +95,7 @@ export class ClientesComponent implements OnInit {
       },
       {
         caption: "idCliente",
-        dataField: "id",
+        dataField: "idCliente",
         hiddingPriority: "1"
       },
       {
@@ -95,11 +108,11 @@ export class ClientesComponent implements OnInit {
     //******************PARAMETROS DE TEMPLATE DE BOTONES**************** */
     
 
-    
+
     //******************PARAMETROS DE SUMMARIES**************** */
     this.summaries = [
       {
-        column: "id",
+        column: "idCliente",
         summaryType: "custom",
         displayFormat: "Check: {0}",
         name: "SelectedRowsSummary"
