@@ -3,22 +3,18 @@
     <span class="float-right">
       <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
     </span>
-    <mat-card-title>Título</mat-card-title>
+    <mat-card-title>Error</mat-card-title>
   </div>
 </div>
 <mat-card-content>
   <p class="contenido">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda praesentium provident mollitia ducimus et
-    dolores dolore beatae ullam, quisquam voluptatem tempore reprehenderit, recusandae magni corrupti quasi repudiandae
-    culpa? Voluptatem, culpa? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo voluptas, possimus,
-    sapiente nesciunt alias numquam quos totam itaque recusandae enim velit quasi aut odio fugit vero sed commodi atque
-    tempora.
+    Error de {{tipoMensaje}}
   </p>
 </mat-card-content>
 <div class="row">
   <div class="col-6">
     <div class="inLine bordes tipo">
-      <mat-chip class="tipo">Tipo mensaje</mat-chip>
+      <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
     </div>
   </div>
   <div class="col-6">
@@ -37,10 +33,10 @@
 </div>
 
 <div class="collapse" id="collapseExample">
-  <hr>
+  <!-- <hr>
   <p class='fecha'>05/02/2019 16:46</p>
-  <hr>
+  <hr> -->
   <div class="ex1">
-    <p>{{data.stack}}</p>
+    <pre class='otra'>{{data.stack}}</pre>
   </div>
 </div>

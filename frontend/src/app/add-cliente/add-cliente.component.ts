@@ -95,11 +95,17 @@ export class AddClienteComponent implements OnInit {
       this._siscoV3Service.getService('common/getTipoVialidad').subscribe(
         (res: any) => {
           // console.log(res.recordsets[0]);
-          this.tipoVialidades = res.recordsets[0];
+          if (res.err) {
+            this.excepciones(res.err, 4)
+          } else if (res.excepcion) {
+            this.excepciones(res.excepcion, 3)
+          } else {
+            this.tipoVialidades = res.recordsets[0];
+          }
         },
         (error: any) => {
           console.log(error);
-          this.excepciones(error,'add-cliente','error en el ngOnInit getTipoVialidad');
+          this.excepciones(error, 2);
           this.snackBar.open('Error al Conectar con el servidor.', 'Ok', {
             duration: 2000
           });
@@ -108,17 +114,22 @@ export class AddClienteComponent implements OnInit {
 
       this._siscoV3Service.getService('common/getTipoAsentamiento').subscribe(
         (res: any) => {
-          this.tipoAsentamientos = res.recordsets[0];
+          if (res.err) {
+            this.excepciones(res.err, 4)
+          } else if (res.excepcion) {
+            this.excepciones(res.excepcion, 3);
+          } else {
+            this.tipoAsentamientos = res.recordsets[0];
+          }
         },
         (error: any) => {
+          this.excepciones(error, 2)
           console.log(error);
-          this.snackBar.open('Error al Conectar con el servidor.', 'Ok', {
-            duration: 2000
-          });
         }
       );
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      this.excepciones(error, 1)
+      console.log(error)
     }
   }
 
@@ -129,36 +140,45 @@ export class AddClienteComponent implements OnInit {
         this._siscoV3Service
           .postService('common/postCpAutocomplete', {
             cp: this.clienteEntidadForm.controls['cp'].value
+            // cpj: this.clienteEntidadForm.controls['cp'].value
           })
           .subscribe(
-            (resp: any) => {
-              if (resp.recordsets[0] < 1) {
-                this.snackBar.open('El Código Postal no es valido', 'Ok', {
-                  duration: 2000
-                });
+            (res: any) => {
+              if (res.err) {
                 this.numero = 1;
-                this.valCp = true;
-                this.clienteEntidadForm.controls['cp'].setValue('');
+                this.excepciones(res.err, 4)
+              } else if (res.excepcion) {
+                this.numero = 1;
+                this.excepciones(res.excepcion, 3)
               } else {
-                this.numero = 1;
-                this.valCp = false;
-                this.asentamientos = resp.recordsets[0];
-                this.idPais = resp.recordsets[0][0]['idPais'];
-                this.idEstado = resp.recordsets[0][0]['idEstado'];
-                this.idMunicipio = resp.recordsets[0][0]['idMunicipio'];
-                this.clienteEntidadForm.controls['estado'].setValue(
-                  resp.recordsets[0][0]['nombreEstado']
-                );
-                this.clienteEntidadForm.controls['municipio'].setValue(
-                  resp.recordsets[0][0]['nombreMunicipio']
-                );
-                this.clienteEntidadForm.get('asentamiento').enable();
-                this.clienteEntidadForm.controls['asentamiento'].setValue('');
-                // console.log(this.asentamientos);
+                if (res.recordsets[0] < 1) {
+                  this.snackBar.open('El Código Postal no es valido', 'Ok', {
+                    duration: 2000
+                  });
+                  this.numero = 1;
+                  this.valCp = true;
+                  this.clienteEntidadForm.controls['cp'].setValue('');
+                } else {
+                  this.numero = 1;
+                  this.valCp = false;
+                  this.asentamientos = res.recordsets[0];
+                  this.idPais = res.recordsets[0][0]['idPais'];
+                  this.idEstado = res.recordsets[0][0]['idEstado'];
+                  this.idMunicipio = res.recordsets[0][0]['idMunicipio'];
+                  this.clienteEntidadForm.controls['estado'].setValue(
+                    res.recordsets[0][0]['nombreEstado']
+                  );
+                  this.clienteEntidadForm.controls['municipio'].setValue(
+                    res.recordsets[0][0]['nombreMunicipio']
+                  );
+                  this.clienteEntidadForm.get('asentamiento').enable();
+                  this.clienteEntidadForm.controls['asentamiento'].setValue('');
+                  // console.log(this.asentamientos);
+                }
               }
             },
             (error: any) => {
-              this.excepciones(error,'add-cliente','Error en el getCp postCpAutocomplete')
+              this.excepciones(error, 2)
               this.snackBar.open('Error al Conectar con el servidor.', 'Ok', {
                 duration: 2000
               });
@@ -167,8 +187,10 @@ export class AddClienteComponent implements OnInit {
             }
           );
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      this.numero = 1;
+      this.excepciones(error, 1)
+      console.log(error);
     }
   }
 
@@ -177,8 +199,9 @@ export class AddClienteComponent implements OnInit {
       if (event.key === 'Enter') {
         this.cp.nativeElement.blur();
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      this.excepciones(error, 1);
+      console.log(error);
     }
   }
 
@@ -210,48 +233,60 @@ export class AddClienteComponent implements OnInit {
         telefono: this.clienteEntidadForm.controls['telefono'].value,
         email: this.clienteEntidadForm.controls['email'].value
       };
-
       this._siscoV3Service
         .postService('cliente/postInsertaClienteEntidad', data)
         .subscribe(
           (res: any) => {
             // console.log(res);
-            this.numero = 1;
-            this.clienteEntidadForm.reset();
-            this.snackBar.open('Registro exitoso.', 'Ok', {
-              duration: 2000
-            });
+            if (res.err) {
+              this.numero = 1;
+              // error tipo base de datos
+              this.excepciones(res.err, 4)
+
+            } else if (res.excepcion) {
+              this.numero = 1;
+              // excepcion de conexion a la base de datos
+              this.excepciones(res.excepcion, 3);
+            } else {
+              this.numero = 1;
+              this.clienteEntidadForm.reset();
+              this.snackBar.open('Registro exitoso.', 'Ok', {
+                duration: 2000
+              });
+            }
           },
           (error: any) => {
-            this.snackBar.open('Ocurrio un Error!', 'Ok', {
-              duration: 2000
-            });
+            // error de no conexion al servicio
+            this.excepciones(error, 2);
+            //  this.excepciones()
             this.numero = 1;
             console.log(error);
           }
         );
       // console.log(data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      this.excepciones(error, 1);
+      // error en el metodo
+      console.log(error);
     }
   }
 
-  excepciones(stack, modulo?:string, mensaje?:string) {
+  excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
         width: '60%',
         data: {
-          idTipoExcepcion: 1,
+          idTipoExcepcion: tipoExcepcion,
           idUsuario: 1,
           idOperacion: 1,
           idAplicacion: 1,
-          moduloExcepcion: modulo,
-          mensajeExcepcion: mensaje,
+          moduloExcepcion: 'add-cliente.component',
+          mensajeExcepcion: '',
           stack: stack
         }
       });
 
-      dialogRef.afterClosed().subscribe((result:any) => {
+      dialogRef.afterClosed().subscribe((result: any) => {
         // console.log('The dialog was closed');
       });
 

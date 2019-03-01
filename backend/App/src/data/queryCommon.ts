@@ -22,14 +22,14 @@ export class Query {
             request.execute(SP).then((recordsets: sql.IProcedureResult<any>) => {
                     var msj = {
                         error : errSQL,
-                        excepcion : '',
+                        excepcion : undefined,
                         recordsets : recordsets.recordsets
                     }
                     dbConn.close();
                     deferred.resolve(msj);
                 }).catch((err) => {
                     var msj = {
-                        error : '',
+                        error : undefined,
                         excepcion : err,
                         recordsets : null
                     }

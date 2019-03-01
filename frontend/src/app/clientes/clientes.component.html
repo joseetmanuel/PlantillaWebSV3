@@ -1,5 +1,13 @@
 <div class="app-main__inner">
-    <div class="col-sm-12 col-md-12 col-xl-12 all2">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon clientes"></div>
+                <div>Clientes</div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-sm-12 col-md-12 col-xl-12 all2">
         <div class="mb-3 card">
             <div class="card-header-tab card-header">
                 <div>Clientes</div>
@@ -7,7 +15,8 @@
                     <div role="group" class="btn-group-sm btn-group">
                         <button class="btn-shadow  btn btn-dark">Editar</button>
                         <button type="button" class="btn-shadow  btn btn-dark">Eliminar</button>
-                        <button type="button" class="btn-shadow  btn btn-dark" [routerLink]="['/add-cliente']">Agregar</button>
+                        <button type="button" class="btn-shadow  btn btn-dark"
+                            [routerLink]="['/add-cliente']">Agregar</button>
                     </div>
                 </div>
             </div>
@@ -494,5 +503,23 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> -->
+    <div role="group" class="btn-group-sm btn-group">
+            <button class="btn-shadow  btn btn-dark">Editar</button>
+            <button type="button" class="btn-shadow  btn btn-dark">Eliminar</button>
+            <button type="button" class="btn-shadow  btn btn-dark"
+                [routerLink]="['/add-cliente']">Agregar</button>
+        </div>
+    <app-grid-component
+    [datos]="datos" 
+    [gridOptions]="gridOptions" 
+    [columns]="columns" 
+    [colButtons]="colButtons"
+    [exportExcel]="exportExcel" 
+    [summaries]="summaries" 
+    [searchPanel]="searchPanel" 
+    [scroll] = "scroll"
+    (messageEvent)="receiveMessage($event)"
+    [toolbar]="toolbar">
+    </app-grid-component>
 </div>

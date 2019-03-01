@@ -1,0 +1,86 @@
+<div>
+  <dx-data-grid #grid   id="gridContainer" [dataSource]="datos" [rowAlternationEnabled]="true"
+    [showBorders]="true" [columnAutoWidth]="true" [showRowLines]="true" [showColumnLines]="true"
+    [remoteOperations]="remoteOperations"  (onToolbarPreparing)="onToolbarPreparing($event)" keyExpr="id" 
+    (onSelectionChanged)="onSelectionChanged($event)">
+
+    <!-- <dxo-selection id="check" showCheckBoxesMode="always" mode="multiple"></dxo-selection> -->
+    
+
+    <!-- -------------------- PAGINACION ------------------------------------------>
+    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="gridOptions.pageSize" [showInfo]="true"></dxo-pager>
+    <dxo-paging [pageSize]="gridOptions.paginacion"></dxo-paging>
+
+    <!-- -------------------- FILTROS ------------------------------------------>
+
+    <dxo-search-panel [visible]="searchPanel.visible" [width]="searchPanel.width" [placeholder]="searchPanel.placeholder"></dxo-search-panel>
+    <dxo-header-filter [visible]="true" [allowSearch]="true" ></dxo-header-filter>
+    <dxo-filter-row [visible]="searchPanel.filterRow"></dxo-filter-row>
+    <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+
+    <!-- -------------------- SCROLL ------------------------------------------>
+
+    <dxo-scrolling [mode]="scroll.mode" [rowRenderingMode]="scroll.mode">
+    </dxo-scrolling>
+    <dxo-scrolling [columnRenderingMode]="scroll.mode"></dxo-scrolling>
+
+    <!-- -------------------- EXPORT ------------------------------------------>
+
+    <dxo-export [fileName]="exportExcel.fileName" [enabled]="exportExcel.enabled" [customizeExcelCell]="customizeExcelCell"></dxo-export>
+
+
+    <!-- -------------------- SUMMARY ------------------------------------------>
+
+    <!-- <dxo-summary [calculateCustomSummary]="calculateSelectedRow">
+      <dxi-total-item *ngFor="let summary of summaries" [showInColumn]="summary.column" [summaryType]="summary.summaryType"
+        [valueFormat]="summary.valueFormat"  [displayFormat]="summary.displayFormat" [name]="summary.name" ></dxi-total-item>
+    </dxo-summary> -->
+    <!-- -------------------- COLUMNAS ------------------------------------------>
+    
+    <dxi-column *ngFor="let column of columns" [dataField]="column.dataField" [caption]="column.caption" [width]="column.width"
+      [groupIndex]="column.groupIndex" [cellTemplate]="column.cellTemplate" [hidingPriority]="column.hiddingPriority">
+    </dxi-column>
+
+    <!-- -------------------- TEMPLATES ------------------------------------------>
+
+    <div *dxTemplate="let data of 'foto'" class="foto">
+      <img id="myImg" class="foto-ad" [src]="data.value" (click)="open(content)"/>
+      <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img style="width: 100%;" [src]="data.value">
+          </div>
+      </ng-template>
+    </div>
+
+    <div *dxTemplate="let btn of 'boton'" style="text-align: center;">
+      <ng-template #popContent>
+         <dx-button class="boton" *ngFor="let colbtn of colButtons" [icon]="colbtn.icon" [type]="colbtn.type" [text]="colbtn.name"
+        [disabled]="colbtn.disabled" (onClick)="onclick(colbtn.onClick, btn.data)">
+        </dx-button>
+     </ng-template>
+    <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"  popoverClass="pop-class">
+        <i class="ion-md-more"></i>
+    </button>
+    </div>
+
+    <div *dxTemplate="let data of 'checkbox'" style="text-align:center;">
+        <dx-check-box [value]="data.value" (onValueChanged)="checkBoxToggled($event, data)"></dx-check-box>
+    </div>
+
+    <div *dxTemplate="let data of 'totalGroupCount'">
+        <div class="informer">
+            <h2 class="count">{{datos.length}}</h2>
+            <span class="name">Registros</span>
+        </div>
+    </div>
+
+    <dxo-group-panel [visible]="true" *ngIf="columns.groupIndex"></dxo-group-panel>
+    <dxo-grouping #expand [autoExpandAll]="true" *ngIf="columns.groupIndex"></dxo-grouping>
+  </dx-data-grid>
+  
+</div>

@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { DevExtremeModule, 
+  DxDataGridModule, 
+  DxFileUploaderModule, 
+  DxCheckBoxModule, DxSelectBoxModule, DxButtonModule } from "devextreme-angular";
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -19,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExcepcionComponent } from './excepcion/excepcion.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
+import { GridComponentComponent } from './grid-component/grid-component.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +39,8 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     VentasComponent,
     ClientesComponent,
     AddClienteComponent,
-    ExcepcionComponent
+    ExcepcionComponent,
+    GridComponentComponent
   ],
   entryComponents:[
     ExcepcionComponent,
@@ -39,6 +48,12 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
   ],
   imports: [
     BrowserModule,
+    DevExtremeModule, 
+    DxDataGridModule,
+    DxFileUploaderModule,
+    DxCheckBoxModule,
+    DxSelectBoxModule,
+    DxButtonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule, 
@@ -47,7 +62,8 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

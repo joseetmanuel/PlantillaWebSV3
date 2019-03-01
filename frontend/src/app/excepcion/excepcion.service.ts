@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GLOBAL } from './config';
+import { GLOBAL } from '../services/config';
 
 @Injectable()
 export class ExcepcionService {

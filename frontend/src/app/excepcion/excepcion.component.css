@@ -38,9 +38,14 @@
 }
 div.ex1 {
     width: 100%;
-    height: 100px;
-    overflow: scroll;
+    height: 200px;
+    overflow: auto;
   }
+
+.otra{
+    overflow: visible;
+}
+
 .icono{
     font-size: 20px;
 }
