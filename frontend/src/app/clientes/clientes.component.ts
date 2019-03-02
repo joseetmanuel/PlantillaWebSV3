@@ -28,7 +28,7 @@ export class ClientesComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
-  data: [];
+  data: [1];
   clientes = [];
 
   receiveMessage($event) {
@@ -96,7 +96,8 @@ export class ClientesComponent implements OnInit {
       {
         caption: "idCliente",
         dataField: "idCliente",
-        hiddingPriority: "1"
+        hiddingPriority: "1",
+        width:100
       },
       {
         caption: "nombreCliente",

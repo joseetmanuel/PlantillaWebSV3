@@ -6,6 +6,7 @@ import { ForgotPasswordComponent} from './forgot-password/forgot-password.compon
 import { VentasComponent} from './ventas/ventas.component';
 import { ClientesComponent} from './clientes/clientes.component';
 import { AddClienteComponent } from './add-cliente/add-cliente.component';
+import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
 
 const routes: Routes = [
   {path: '', component: PanelComponent},
@@ -13,7 +14,9 @@ const routes: Routes = [
   {path: 'forgot', component: ForgotPasswordComponent },
   {path: 'ventas', component: VentasComponent },
   {path: 'clientes', component: ClientesComponent },
-  {path: 'add-cliente', component: AddClienteComponent }
+  {path: 'add-cliente', component: AddClienteComponent },
+  {path: 'edit-cliente/idCliente', component: EditClienteComponent }
+
 ];
 
 @NgModule({
