@@ -139,7 +139,7 @@ export class ClienteController {
     Nombre:         getClienteEntidadPorRfc
     Autor:          Gerardo Zamudio Gonzalez
     Fecha:          04/03/2019
-    Descripción:    Obtener a un cliente entidad por idCliente
+    Descripción:    Obtener a un cliente entidad por idClientee
     SP:             [cliente].[SEL_CLIENTEENTIDADPORIDCLIENTE_SP]
     Url:            http://localhost:1000/cliente/getClienteEntidadPorIdCliente?idCliente=35
     Wiki:           ...
