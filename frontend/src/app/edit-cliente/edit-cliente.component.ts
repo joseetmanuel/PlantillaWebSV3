@@ -11,11 +11,11 @@ import {
   IScroll,
   Toolbar
 } from '../interfaces'
-import { FormGroup } from '../../../node_modules/@angular/forms';
+import { FormGroup, FormControl, Validators } from '../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-edit-cliente',
-  templateUrl: '../add-cliente/add-cliente.component.html',
+  templateUrl: './edit-cliente.component.html',
   styleUrls: ['./edit-cliente.component.sass'],
   providers: [SiscoV3Service]
 })
@@ -33,7 +33,8 @@ export class EditClienteComponent implements OnInit {
   data: [1];
   cienteEntidad = [];
   documentos = [];
-  clienteEntidadForm = new FormGroup({
+  clienteForm = new FormGroup({
+    nombre: new FormControl('', [Validators.required])
   });
 
   receiveMessage($event) {
@@ -77,7 +78,8 @@ export class EditClienteComponent implements OnInit {
     _siscoV3Service.getService('cliente/getClientePorId?idCliente=' + this.idCliente).subscribe(
       (res: any) => {
         // console.log();
-        this.cliente = res.recordsets[0][0]
+        this.cliente = res.recordsets[0][0];
+        this.clienteForm.controls['nombre'].setValue(this.cliente.nombre);
         _siscoV3Service.getService('cliente/getClienteEntidadPorIdCliente?idCliente='+this.idCliente).subscribe(
           (res:any)=>{
             this.cienteEntidad = res.recordsets[0];
@@ -90,6 +92,21 @@ export class EditClienteComponent implements OnInit {
       }
     )
 
+  }
+
+  agregarCliente(){
+    this.cliente.nombre = this.clienteForm.controls['nombre'].value;
+    let data = {
+      hola:'ghj'
+    }
+    console.log(this.cliente);
+    this._siscoV3Service.putService('cliente/putActualizaCliente',this.cliente).subscribe(
+      (res:any)=>{
+        console.log(res)
+      }, (error:any)=>{
+        console.log(error)
+      }
+    )
   }
 
   ngOnInit() {

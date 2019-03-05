@@ -19,6 +19,7 @@ import { SiscoV3Service } from '../services/siscov3.service';
 })
 export class ClientesComponent implements OnInit {
 
+  datosevent;
   gridOptions: IGridOptions;
   columns: IColumns[];
   colButtons: IColButtons[];
@@ -28,58 +29,59 @@ export class ClientesComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
-  data: [1];
+  data: [];
   clientes = [];
 
   receiveMessage($event) {
     this.evento = $event.event;
-    this.data = $event.data;
-    console.log($event);
-
-    if (this.evento == "add") {
-      this.add(this.data);
+    // this.data = $event.data;
+    if ($event == "add") {
+      let senddata = {
+        event:$event
+      }
+      this.add(senddata);
     }
-    else if (this.evento == "edit") {
-      this.edit(this.data);
+    else if ($event == "edit") {
+      let senddata = {
+        event:$event,
+        data:this.datosevent
+      }
+      this.edit(senddata);
     }
-    else if (this.evento == "delete") {
-      this.delete(this.data);
+    else if ($event == "delete") {
+      let senddata = {
+        event:$event,
+        data:this.datosevent
+      }
+      this.delete(senddata);
     }
   }
 
-  datos = [{
-    "check": false,
-    "id": 1,
-    "nombre": "Edgar"
-  },
-  {
-    "check": false,
-    "id": 2,
-    "nombre": "otro"
-  }]
+  datosMessage($event) {
+    this.datosevent = $event.data
+  }
 
   //******************FUNCION AGREGAR**************** */
   add(data) {
-
+    console.log(data)
   }
 
   //******************FUNCION EDITAR**************** */
   edit(data) {
-
+    console.log(data)
   }
 
   //******************FUNCION BORRAR**************** */
   delete(data) {
-
+    console.log(data)
   }
 
-  constructor(private _siscoV3Service:SiscoV3Service) {
+  constructor(private _siscoV3Service: SiscoV3Service) {
     _siscoV3Service.getService('cliente/getClientes').subscribe(
-      (res:any)=>{
+      (res: any) => {
         this.clientes = res.recordsets[0];
         console.log(this.clientes.length)
-        console.log(this.datos)
-      },(error:any)=>{
+      }, (error: any) => {
         console.log(error);
       }
     )
@@ -91,13 +93,14 @@ export class ClientesComponent implements OnInit {
         caption: "Check",
         dataField: "check",
         cellTemplate: "checkbox",
-        hiddingPriority: "2"
+        hiddingPriority: "2",
+        width: 150
       },
       {
         caption: "idCliente",
         dataField: "idCliente",
         hiddingPriority: "1",
-        width:100
+        width: 150
       },
       {
         caption: "nombreCliente",
@@ -107,7 +110,7 @@ export class ClientesComponent implements OnInit {
     ]
 
     //******************PARAMETROS DE TEMPLATE DE BOTONES**************** */
-    
+
 
 
     //******************PARAMETROS DE SUMMARIES**************** */

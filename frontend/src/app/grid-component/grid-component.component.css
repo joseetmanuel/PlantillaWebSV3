@@ -20,16 +20,14 @@
     background: red;
 }
 
+.countcolor{
+    background-color: rgba(103, 171, 255, 0.6);
+}
 
 ::ng-deep #gridContainer .dx-datagrid-header-panel {
     padding: 0;
     background-color: rgba(85, 149, 222, 0.6);
 }
-
-::ng-deep #gridContainer .dx-datagrid-filter-panel {
-    
-}
-
 
 ::ng-deep #gridContainer .dx-datagrid-header-panel .dx-toolbar {
     margin: 0;
@@ -56,7 +54,7 @@
 
 ::ng-deep #gridContainer .informer {
     height: 70px;
-    width: 130px;
+    width: 40px;
     text-align: center;
     color: #fff;
 }

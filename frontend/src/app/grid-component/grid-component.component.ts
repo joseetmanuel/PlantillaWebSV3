@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { IGridOptions, IColumns, IColButtons, IExportExcel, ISummaries, ISearchPanel, IScroll, Toolbar } from '../interfaces'
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DxDataGridModule, DxDataGridComponent, getElement } from "devextreme-angular";
+
 
 
 
@@ -28,6 +30,8 @@ export class GridComponentComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<{ event: string, data: [] }>();
   remoteOperations: boolean;
+  @Output() datosevent = new EventEmitter<{data:[] }>();
+  
 
   constructor(config: NgbModalConfig, private modalService: NgbModal,private element: ElementRef,private renderer: Renderer2) {
     config.backdrop = 'static';
@@ -36,7 +40,6 @@ export class GridComponentComponent implements OnInit {
 
    ngAfterViewInit(){
     // console.log("grid:", this.grid.nativeElement);
-
        const div = this.grid.nativeElement.querySelector('.dx-datagrid-filter-panel');
        const parent = this.grid.nativeElement.querySelector('.dx-datagrid');
        const refChild = this.element.nativeElement.querySelector('.dx-datagrid-header-panel');
@@ -46,11 +49,6 @@ export class GridComponentComponent implements OnInit {
    open(content) {
     this.modalService.open(content);
   }
-
-  checkBoxToggled(e) {
-    console.log(e.value);
-   };
-
 
   ngOnInit() {
 
@@ -70,34 +68,67 @@ export class GridComponentComponent implements OnInit {
     this.messageEvent.emit({ event, data })
   }
 
-  //******************CONTADOR DE ITEMS SELECCINADOS**************** */
-  calculateSelectedRow(options) {
-    if (options.name === "SelectedRowsSummary") {
-        if (options.summaryProcess === "start") {
-            options.totalValue = 0;
-        } else if (options.summaryProcess === "calculate") {
-            if (options.component.isRowSelected(options.value.id)) {
-                options.totalValue++;
-            }
-        }
-    }
-}
+  //******************CONTADOR DE ITEMS SELECCINADOS Y DEVUELVE DATOS AL EMITER**************** */
+//   calculateSelectedRow(options) {
+//     if (options.name === "SelectedRowsSummary") {
+//         if (options.summaryProcess === "start") {
+//             options.totalValue = 0;
+//         } else if (options.summaryProcess === "calculate") {
+//             if (options.component.isRowSelected(options.value.id)) {
+//                 options.totalValue++;
+//             }
+//         }
+//     }
+// }
+
+public contador = 0;
 onSelectionChanged(e) {
-  e.component.refresh(true);
+  let data = e.selectedRowsData
+  this.datosevent.emit({ data })
+  let cont = [];
+  cont.push(e.selectedRowKeys)
+  this.contador = cont[0].length;
+  // console.log(this.toole.toolbarOptions.items)
+    for( let i=0;i< this.toole.toolbarOptions.items.length-1; i++){
+      if (this.toole.toolbarOptions.items[i].name){
+        if(cont[0].length >= 1 && this.toole.toolbarOptions.items[i].name == "simple"){
+          this.toole.toolbarOptions.items[i]['visible']=true; 
+          
+              if(cont[0].length >= 2  && this.toole.toolbarOptions.items[i].name2 == "multiple"){
+                this.toole.toolbarOptions.items[i]['visible']=false;
+                
+              }
+            } else{
+              // this.toole.toolbarOptions.items[i]['visible']=false;
+            }
+      }
+    }
+    
 }
 
 
 
 //******************CREACION DE TOOLBAR**************** */
-  onToolbarPreparing(e) {
+public toole;
+onToolbarPreparing(e) {
+  this.toole = e;
     e.toolbarOptions.items.unshift({
          location: 'before',
-         template: 'totalGroupCount'
-    }, 
+         template: 'Totalderegistros'
+    },{
+      location: 'before',
+      template: 'Contarseleccionados',
+      visible: false,
+      name: "simple"
+ }, 
     ...this.toolbar
   );
+
 }
 
-
+//***************COLUMN CHOOSER EVENT****************** */
+onContentReady(e){
+// console.log(e)
+}
 
 }

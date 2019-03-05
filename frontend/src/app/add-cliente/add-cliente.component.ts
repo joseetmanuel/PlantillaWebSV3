@@ -46,6 +46,8 @@ export class AddClienteComponent implements OnInit {
   @ViewChild('cp') cp;
   @ViewChild('municipio') municipio;
 
+  addCliente  = 'addCliente';
+
   clienteEntidadForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     idUsuario: new FormControl('1'),

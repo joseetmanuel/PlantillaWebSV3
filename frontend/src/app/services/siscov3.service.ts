@@ -22,4 +22,9 @@ export class SiscoV3Service {
     if (headers) { this.headers = headers; }
     return this.http.post(this.url + ruta, body, { headers: this.headers});
   }
+  
+  putService(ruta: string, body?: any, headers?: HttpHeaders) {
+    if (headers) { this.headers = headers; }
+    return this.http.put(this.url + ruta, body, { headers: this.headers});
+  }
 }

@@ -1,11 +1,16 @@
 <div>
-  <dx-data-grid #grid   id="gridContainer" [dataSource]="datos" [rowAlternationEnabled]="true"
+  <!--En caso de no mandar la prioridadd por parametros habilitar [columnHidingEnabled]="true" dentro de dx-data.grid-->
+  <dx-data-grid #grid   id="gridContainer" [dataSource]="datos"  [rowAlternationEnabled]="true"
     [showBorders]="true" [columnAutoWidth]="true" [showRowLines]="true" [showColumnLines]="true"
-    [remoteOperations]="remoteOperations"  (onToolbarPreparing)="onToolbarPreparing($event)" keyExpr="id" 
-    (onSelectionChanged)="onSelectionChanged($event)">
+    [remoteOperations]="remoteOperations"  (onToolbarPreparing)="onToolbarPreparing($event)"  
+    (onSelectionChanged)="onSelectionChanged($event)" (onContentReady)="onContentReady($event)">
 
-    <!-- <dxo-selection id="check" showCheckBoxesMode="always" mode="multiple"></dxo-selection> -->
-    
+    <!-- -------------------- CHECKBOX ------------------------------------------>
+    <dxo-selection mode="multiple"></dxo-selection>
+
+    <!-- -------------------- SELECCIONADOR DE COLUMNAS ------------------------------------------>
+    <dxo-column-chooser [enabled]="true" mode="select" ></dxo-column-chooser>
+
 
     <!-- -------------------- PAGINACION ------------------------------------------>
     <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="gridOptions.pageSize" [showInfo]="true"></dxo-pager>
@@ -20,8 +25,7 @@
 
     <!-- -------------------- SCROLL ------------------------------------------>
 
-    <dxo-scrolling [mode]="scroll.mode" [rowRenderingMode]="scroll.mode">
-    </dxo-scrolling>
+    <dxo-scrolling [mode]="scroll.mode" [rowRenderingMode]="scroll.mode"></dxo-scrolling>
     <dxo-scrolling [columnRenderingMode]="scroll.mode"></dxo-scrolling>
 
     <!-- -------------------- EXPORT ------------------------------------------>
@@ -41,7 +45,7 @@
       [groupIndex]="column.groupIndex" [cellTemplate]="column.cellTemplate" [hidingPriority]="column.hiddingPriority">
     </dxi-column>
 
-    <!-- -------------------- TEMPLATES ------------------------------------------>
+    <!-- -------------------- TEMPLATE FOTO ------------------------------------------>
 
     <div *dxTemplate="let data of 'foto'" class="foto">
       <img id="myImg" class="foto-ad" [src]="data.value" (click)="open(content)"/>
@@ -57,6 +61,7 @@
       </ng-template>
     </div>
 
+    <!-- -------------------- TEMPLATE BOTON ------------------------------------------>
     <div *dxTemplate="let btn of 'boton'" style="text-align: center;">
       <ng-template #popContent>
          <dx-button class="boton" *ngFor="let colbtn of colButtons" [icon]="colbtn.icon" [type]="colbtn.type" [text]="colbtn.name"
@@ -68,19 +73,23 @@
     </button>
     </div>
 
-    <div *dxTemplate="let data of 'checkbox'" style="text-align:center;">
-        <dx-check-box [value]="data.value" (onValueChanged)="checkBoxToggled($event, data)"></dx-check-box>
-    </div>
-
-    <div *dxTemplate="let data of 'totalGroupCount'">
+    <!-- -------------------- TEMPLATE TOTAL DE REGISTROS ------------------------------------------>
+    <div *dxTemplate="let data of 'Totalderegistros'">
         <div class="informer">
             <h2 class="count">{{datos.length}}</h2>
-            <span class="name">Registros</span>
+            <span class="name">Total</span>
+        </div>
+    </div>
+
+    <!-- -------------------- TEMPLATE REGISTROS SELECCIONADOS ------------------------------------------>
+    <div class="countcolor" *dxTemplate="let data of 'Contarseleccionados'">
+        <div class="informer">
+            <h2 class="count">{{contador}}</h2>
+            <span class="name">Selec</span>
         </div>
     </div>
 
     <dxo-group-panel [visible]="true" *ngIf="columns.groupIndex"></dxo-group-panel>
     <dxo-grouping #expand [autoExpandAll]="true" *ngIf="columns.groupIndex"></dxo-grouping>
   </dx-data-grid>
-  
 </div>
