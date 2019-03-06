@@ -1,13 +1,14 @@
 <div class="app-main__inner">
+    <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
   <div class="app-page-title">
     <div class="page-title-wrapper">
       <div class="page-title-heading">
         <div class="page-title-icon clientes"></div>
-        <div>Clientes/Edita-Cliente</div>
+        <div> <a [routerLink]="['/clientes']">Clientes</a> / Edita-Cliente </div>
       </div>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [ngClass]="{'desactiva': numero == 0 }">
     <mat-card class='cardMargin'>
       <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-12">

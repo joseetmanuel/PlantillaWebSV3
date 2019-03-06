@@ -35,6 +35,7 @@ export class EditClienteComponent implements OnInit {
   // data: [1];
   cienteEntidad = [];
   documentos = [];
+  public numero = 1;
   clienteForm = new FormGroup({
     nombre: new FormControl('', [Validators.required])
   });
@@ -95,6 +96,7 @@ export class EditClienteComponent implements OnInit {
     this.activatedRoute.params.subscribe(parametros => {
       this.idCliente = parametros.idCliente;
     });
+    this.numero = 0;
     _siscoV3Service.getService('cliente/getClientePorId?idCliente=' + this.idCliente).subscribe(
       (res: any) => {
         // console.log();
@@ -102,12 +104,15 @@ export class EditClienteComponent implements OnInit {
         this.clienteForm.controls['nombre'].setValue(this.cliente.nombre);
         _siscoV3Service.getService('cliente/getClienteEntidadPorIdCliente?idCliente=' + this.idCliente).subscribe(
           (res: any) => {
+            this.numero = 1;
             this.cienteEntidad = res.recordsets[0];
           }, (error: any) => {
+            this.numero = 1;
             console.log(error);
           }
         )
       }, (error: any) => {
+        this.numero = 1;
         console.log(error);
       }
     )
@@ -116,14 +121,14 @@ export class EditClienteComponent implements OnInit {
 
   agregarCliente() {
     this.cliente.nombre = this.clienteForm.controls['nombre'].value;
-    let data = {
-      hola: 'ghj'
-    }
-    console.log(this.cliente);
+    // console.log(this.cliente);
+    this.numero = 0;
     this._siscoV3Service.putService('cliente/putActualizaCliente', this.cliente).subscribe(
       (res: any) => {
+        this.numero = 1;
         console.log(res)
       }, (error: any) => {
+        this.numero = 1;
         console.log(error)
       }
     )

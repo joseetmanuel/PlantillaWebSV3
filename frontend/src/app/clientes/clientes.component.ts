@@ -32,6 +32,7 @@ export class ClientesComponent implements OnInit {
   toolbar: Toolbar[];
   // data: [];
   clientes = [];
+  public numero = 1;
 
   receiveMessage($event) {
     this.evento = $event.event;
@@ -63,6 +64,19 @@ export class ClientesComponent implements OnInit {
     // console.log(this.datosevent);
   }
 
+  constructor(private router: Router,private _siscoV3Service: SiscoV3Service) {
+    this.numero = 0;
+    _siscoV3Service.getService('cliente/getClientes').subscribe(
+      (res: any) => {
+        this.numero = 1;
+        this.clientes = res.recordsets[0];
+        // console.log(this.clientes.length)
+      }, (error: any) => {
+        console.log(error);
+      }
+    )
+  }
+
   //******************FUNCION AGREGAR**************** */
   add(data) {
     this.router.navigateByUrl("/add-cliente");
@@ -75,19 +89,33 @@ export class ClientesComponent implements OnInit {
 
   //******************FUNCION BORRAR**************** */
   delete(data) {
-    console.log(data)
+    let sisco = this._siscoV3Service;
+    // console.log(data.data)
+    let borrar = "<Ids>";
+    let cont = 0;
+    data.data.forEach(function(element,index,array){
+      borrar += "<idCliente>"+element.idCliente+"</idCliente>";
+      cont++;
+      if(cont === array.length){
+        borrar += "</Ids>";
+        sisco.deleteService("cliente/deleteCliente",borrar).subscribe(
+          (res:any)=>{
+            console.log(res);
+          }, (error:any)=>{
+            console.log(error);            
+          }
+        )
+       // console.log(borrar)
+      }
+    });
+
   }
 
-  constructor(private router: Router,private _siscoV3Service: SiscoV3Service) {
-    _siscoV3Service.getService('cliente/getClientes').subscribe(
-      (res: any) => {
-        this.clientes = res.recordsets[0];
-        // console.log(this.clientes.length)
-      }, (error: any) => {
-        console.log(error);
-      }
-    )
+  borrar(data){
+    
   }
+
+
 
   ngOnInit() {
     this.columns = [

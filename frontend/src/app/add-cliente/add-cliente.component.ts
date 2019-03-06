@@ -104,7 +104,7 @@ export class AddClienteComponent implements OnInit {
     private _siscoV3Service: SiscoV3Service
   ) {
     this.activatedRoute.params.subscribe(parametros => {
-
+      this.numero = 0;
       this.idCliente = parametros.idCliente;
       this.rfcClienteEntidad = parametros.rfcClienteEntidad;
       if (parametros.idCliente) {
@@ -113,7 +113,7 @@ export class AddClienteComponent implements OnInit {
           (res: any) => {
             this.numero = 1;
             this.datos = res.recordsets[0][0]
-            console.log(this.datos)
+            // console.log(this.datos)
           }, (error: any) => {
             this.numero = 1;
             console.log(error);
@@ -124,9 +124,9 @@ export class AddClienteComponent implements OnInit {
         this.numero = 0;
         _siscoV3Service.getService('cliente/getClienteEntidadConDireccion?rfcClienteEntidad=' + this.rfcClienteEntidad).subscribe(
           (res: any) => {
-            this.numero = 1;
+            
             this.datos = res.recordsets[0][0];
-            console.log(this.datos.idTipoPersona)
+            // console.log(this.datos.idTipoPersona)
             let num = this.datos.idTipoPersona;
             this.clienteForm.controls['nombre'].setValue(this.datos.nombre);
             this.clienteEntidadForm.controls['tipoPersona'].setValue(num.toString());
@@ -145,6 +145,7 @@ export class AddClienteComponent implements OnInit {
             this.clienteEntidadForm.controls['numeroInterior'].setValue(this.datos.numeroInterior);
             this.getCp();
             this.clienteEntidadForm.controls['asentamiento'].setValue(this.datos.asentamiento);
+            this.numero = 1;
           }, (error: any) => {
             this.numero = 1;
             console.log(error)
@@ -157,18 +158,23 @@ export class AddClienteComponent implements OnInit {
 
   ngOnInit() {
     try {
+      this.numero = 0;
       this._siscoV3Service.getService('common/getTipoVialidad').subscribe(
         (res: any) => {
           // console.log(res.recordsets[0]);
           if (res.err) {
+            this.numero = 1;
             this.excepciones(res.err, 4)
           } else if (res.excepcion) {
+            this.numero = 1;
             this.excepciones(res.excepcion, 3)
           } else {
+            this.numero = 1;
             this.tipoVialidades = res.recordsets[0];
           }
         },
         (error: any) => {
+          this.numero = 1;
           console.log(error);
           this.excepciones(error, 2);
           this.snackBar.open('Error al Conectar con el servidor.', 'Ok', {
@@ -176,18 +182,22 @@ export class AddClienteComponent implements OnInit {
           });
         }
       );
-
+      this.numero = 0;
       this._siscoV3Service.getService('common/getTipoAsentamiento').subscribe(
         (res: any) => {
           if (res.err) {
+            this.numero = 1;
             this.excepciones(res.err, 4)
           } else if (res.excepcion) {
+            this.numero = 1;
             this.excepciones(res.excepcion, 3);
           } else {
+            this.numero = 1;
             this.tipoAsentamientos = res.recordsets[0];
           }
         },
         (error: any) => {
+          this.numero = 1;
           this.excepciones(error, 2)
           console.log(error);
         }
@@ -276,6 +286,7 @@ export class AddClienteComponent implements OnInit {
     try {
       this.numero = 0;
       const data = {
+        idCliente: this.datos.idCliente,
         // nombre: this.clienteEntidadForm.controls['nombre'].value,
         // idUsuario: this.clienteEntidadForm.controls['idUsuario'].value,
         idPais: this.idPais,
@@ -339,15 +350,18 @@ export class AddClienteComponent implements OnInit {
   }
 
   agregarCliente() {
+    this.numero = 0;
     let data = {
       nombre: this.clienteForm.controls['nombre'].value,
       idUsuario: this.clienteForm.controls['idUsuario'].value,
     }
     this._siscoV3Service.postService('cliente/postInsertaCliente',data).subscribe(
       (res:any)=>{
-        console.log(res.recordsets[1][0].idCliente);
+        this.numero = 1;
+        // console.log(res.recordsets[1][0].idCliente);
         this.router.navigateByUrl("/edit-cliente/"+res.recordsets[1][0].idCliente);
       }, (error:any)=>{
+        this.numero = 1;
         console.log(error)
       }
     )
@@ -357,8 +371,10 @@ export class AddClienteComponent implements OnInit {
 
   modificarClienteEntidad() {
     try {
-      // this.numero = 0;
+      this.numero = 0;
       const data = {
+        idCliente:this.datos.idCliente,
+        idDireccion:this.datos.idDireccion,
         // nombre: this.clienteEntidadForm.controls['nombre'].value,
         // idUsuario: this.clienteEntidadForm.controls['idUsuario'].value,
         idPais: this.idPais,
@@ -378,41 +394,41 @@ export class AddClienteComponent implements OnInit {
         nombreComercial: this.clienteEntidadForm.controls['nombreComercial']
           .value,
         idTipoPersona: this.clienteEntidadForm.controls['tipoPersona'].value,
+        idLogo:this.datos.idLogo,
         personaContacto: this.clienteEntidadForm.controls['personaContacto']
           .value,
         telefono: this.clienteEntidadForm.controls['telefono'].value,
         email: this.clienteEntidadForm.controls['email'].value
       };
-      // this._siscoV3Service
-      //   .postService('cliente/postInsertaClienteEntidad', data)
-      //   .subscribe(
-      //     (res: any) => {
-      //       // console.log(res);
-      //       if (res.err) {
-      //         this.numero = 1;
-      //         // error tipo base de datos
-      //         this.excepciones(res.err, 4)
+      this._siscoV3Service
+        .putService('cliente/putActualizaDireccionClienteEntidad', data)
+        .subscribe(
+          (res: any) => {
+            // console.log(res);
+            if (res.err) {
+              this.numero = 1;
+              // error tipo base de datos
+              this.excepciones(res.err, 4)
 
-      //       } else if (res.excepcion) {
-      //         this.numero = 1;
-      //         // excepcion de conexion a la base de datos
-      //         this.excepciones(res.excepcion, 3);
-      //       } else {
-      //         this.numero = 1;
-      //         this.clienteEntidadForm.reset();
-      //         this.snackBar.open('Registro exitoso.', 'Ok', {
-      //           duration: 2000
-      //         });
-      //       }
-      //     },
-      //     (error: any) => {
-      //       // error de no conexion al servicio
-      //       this.excepciones(error, 2);
-      //       //  this.excepciones()
-      //       this.numero = 1;
-      //       console.log(error);
-      //     }
-      //   );
+            } else if (res.excepcion) {
+              this.numero = 1;
+              // excepcion de conexion a la base de datos
+              this.excepciones(res.excepcion, 3);
+            } else {
+              this.numero = 1;
+              this.snackBar.open('Actualizado con exitoso.', 'Ok', {
+                duration: 2000
+              });
+            }
+          },
+          (error: any) => {
+            // error de no conexion al servicio
+            this.excepciones(error, 2);
+            //  this.excepciones()
+            this.numero = 1;
+            console.log(error);
+          }
+        );
       console.log(data);
     } catch (error) {
       this.excepciones(error, 1);

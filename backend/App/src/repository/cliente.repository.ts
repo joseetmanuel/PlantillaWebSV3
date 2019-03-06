@@ -120,10 +120,15 @@ export class ClienteRepository {
         return this.query.spExecute(body, '[cliente].[UPD_CLIENTEENTIDAD_SP]')
     }
 
-    // ************ Servicios DELETE ************
-    deleteCliente(body:any):PromiseLike<{}>{
-        return this.query.spExecute(body, '[cliente].[DEL_CLIENTE_SP]')
+    putActualizaDireccionClienteEntidad(body:any):PromiseLike<{}>{
+        return this.query.spExecute(body, '[cliente].[UPD_DIRECCIONCLIENTEENTIDAD_SP]')
     }
+
+    // ************ Servicios DELETE ************
+    deleteCliente(query:any):PromiseLike<{}>{
+        return this.query.spExecute(query, '[cliente].[DEL_CLIENTE_SP]')
+    }
+
     deleteContrato(body:any):PromiseLike<{}>{
         return this.query.spExecute(body, '[cliente].[DEL_CONTRATO_SP]')
     }

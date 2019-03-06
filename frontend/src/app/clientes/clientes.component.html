@@ -1,4 +1,5 @@
-<div class="app-main__inner">
+<div class="app-main__inner" [ngClass]="{'desactiva': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
@@ -504,23 +505,13 @@
             </div>
         </div>
     </div> -->
-    <div role="group" class="btn-group-sm btn-group">
-            <button class="btn-shadow  btn btn-dark" [routerLink]="['/edit-cliente/35']">Editar</button>
-            <button type="button" class="btn-shadow  btn btn-dark">Eliminar</button>
-            <button type="button" class="btn-shadow  btn btn-dark"
-                [routerLink]="['/add-cliente']">Agregar</button>
-        </div>
-    <app-grid-component
-    [datos]="clientes" 
-    [gridOptions]="gridOptions" 
-    [columns]="columns" 
-    [colButtons]="colButtons"
-    [exportExcel]="exportExcel" 
-    [summaries]="summaries" 
-    [searchPanel]="searchPanel" 
-    [scroll] = "scroll"
-    (messageEvent)="receiveMessage($event)"
-    (datosevent) = 'datosMessage($event)'
-    [toolbar]="toolbar">
+    <!-- <div role="group" class="btn-group-sm btn-group">
+        <button class="btn-shadow  btn btn-dark" [routerLink]="['/edit-cliente/35']">Editar</button>
+        <button type="button" class="btn-shadow  btn btn-dark">Eliminar</button>
+        <button type="button" class="btn-shadow  btn btn-dark" [routerLink]="['/add-cliente']">Agregar</button>
+    </div> -->
+    <app-grid-component [datos]="clientes" [gridOptions]="gridOptions" [columns]="columns" [colButtons]="colButtons" [exportExcel]="exportExcel"
+        [summaries]="summaries" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'
+        [toolbar]="toolbar">
     </app-grid-component>
 </div>

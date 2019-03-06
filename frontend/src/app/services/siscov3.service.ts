@@ -27,4 +27,9 @@ export class SiscoV3Service {
     if (headers) { this.headers = headers; }
     return this.http.put(this.url + ruta, body, { headers: this.headers});
   }
+
+  deleteService(ruta: string, data: any, headers?: HttpHeaders) {
+    if (headers) { this.headers = headers; }
+    return this.http.delete(this.url+ruta + '?idCliente='+ data,  { headers: this.headers});
+  }
 }

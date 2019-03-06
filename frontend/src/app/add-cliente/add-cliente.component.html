@@ -1,11 +1,13 @@
-<div class="app-main__inner">
+<div class="app-main__inner" [ngClass]="{'desactiva': numero == 0 }">
     <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
 
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon clientes"></div>
-                <div>Clientes</div>
+                <div *ngIf="!(idCliente || rfcClienteEntidad)"> <a [routerLink]="['/clientes']">Clientes</a> - Agregar Cliente </div>
+                <div *ngIf="(idCliente)"> <a [routerLink]="['/clientes']">Clientes</a> - <a [routerLink]="['/edit-cliente/'+datos?.idCliente]">Editar Cliente</a> - Agregar Datos Fiscales</div>
+                <div *ngIf="(rfcClienteEntidad)"> <a [routerLink]="['/clientes']">Clientes</a> - <a [routerLink]="['/edit-cliente/'+datos?.idCliente]">Editar Cliente</a> - Editar Datos Fiscales</div>
             </div>
         </div>
     </div>
@@ -82,9 +84,9 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-xl-4">
+                    <div class="col-sm-12 col-md-4 col-xl-4" [ngClass]="{'desactiva': (rfcClienteEntidad) }">
                         <mat-form-field class="all">
-                            <input matInput placeholder="RFC Cliente *" formControlName="rfcCliente" [errorStateMatcher]="matcher">
+                            <input  matInput placeholder="RFC Cliente *" formControlName="rfcCliente" [errorStateMatcher]="matcher">
                             <mat-error>
                                 El campo es
                                 <strong>requerido</strong> 13 Caracteres
@@ -215,7 +217,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="!(idCliente || rfcClienteEntidad)">
+                    <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="!(rfcClienteEntidad)">
                         <button class="btn-wide float-right mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                             btn-outline-primary" (click)='agregarClienteEntidad()' [disabled]="!clienteEntidadForm.valid">Agregar
                             <i class="pe-7s-diskette btn-icon-wrapper">
@@ -223,7 +225,7 @@
                         </button>
                     </div>
 
-                    <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="(idCliente || rfcClienteEntidad)">
+                    <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="(rfcClienteEntidad)">
                         <button class="btn-wide float-right mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn 
                             btn-outline-primary" (click)='modificarClienteEntidad()' [disabled]="!clienteEntidadForm.valid">Modificar
                             <i class="pe-7s-diskette btn-icon-wrapper">

@@ -98,8 +98,8 @@ onSelectionChanged(e) {
                 this.toole.toolbarOptions.items[i]['visible']=false;
                 
               }
-            } else{
-              // this.toole.toolbarOptions.items[i]['visible']=false;
+            } else if(cont[0].length <= 0  && this.toole.toolbarOptions.items[i].name == "simple"){
+              this.toole.toolbarOptions.items[i]['visible']=false;
             }
       }
     }

@@ -275,6 +275,22 @@ export class ClienteController {
         return this.repository.putActualizaClienteEntidad(body);
     }
 
+    @Put('/putActualizaDireccionClienteEntidad')
+    // #region documentación
+    /*
+    Nombre:         putActualizaDireccionClienteEntidad
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          06/03/2019
+    Descripción:    Actualiza un ClienteEntidad con Direccion
+    SP:             [cliente].[UPD_DIRECCIONCLIENTEENTIDAD_SP]
+    Url:            http://localhost:1000/cliente/putActualizaDireccionClienteEntidad
+    Wiki:           ...
+    */
+    // #endregion
+    putActualizaDireccionClienteEntidad(@Body() body: Request) {
+        return this.repository.putActualizaDireccionClienteEntidad(body);
+    }
+
     // ************ Servicios DELETE ************
     @Delete('/deleteCliente')
     // #region documentación
@@ -288,8 +304,8 @@ export class ClienteController {
     Wiki:           ...
     */
     // #endregion
-    deleteCliente(@Body() body: Request) {
-        return this.repository.deleteCliente(body);
+    deleteCliente(@Req() req: Request) {
+        return this.repository.deleteCliente(req.query);
     }
 
 
