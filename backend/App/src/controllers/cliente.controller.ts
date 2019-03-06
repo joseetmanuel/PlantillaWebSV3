@@ -149,6 +149,22 @@ export class ClienteController {
         return this.repository.getClienteEntidadPorIdCliente(req.query);
     }
 
+    @Get('/getClienteEntidadConDireccion')
+    // #region documentación
+    /*
+    Nombre:         getClienteEntidadConDireccion
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          05/03/2019
+    Descripción:    Obtener a un cliente entidad por idCliente
+    SP:             [cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]
+    Url:            http://localhost:1000/cliente/getClienteEntidadConDireccion?rfcClienteEntidad = rfc
+    Wiki:           ...
+    */
+    // #endregion
+    getClienteEntidadConDireccion(@Req() req: Request) {
+        return this.repository.getClienteEntidadConDireccion(req.query);
+    }
+
     
     // ************ Servicios POST ************
     

@@ -10,6 +10,7 @@ import {
   Toolbar
 } from '../interfaces'
 import { SiscoV3Service } from '../services/siscov3.service';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-clientes',
@@ -29,7 +30,7 @@ export class ClientesComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
-  data: [];
+  // data: [];
   clientes = [];
 
   receiveMessage($event) {
@@ -37,21 +38,21 @@ export class ClientesComponent implements OnInit {
     // this.data = $event.data;
     if ($event == "add") {
       let senddata = {
-        event:$event
+        event: $event
       }
       this.add(senddata);
     }
     else if ($event == "edit") {
       let senddata = {
-        event:$event,
-        data:this.datosevent
+        event: $event,
+        data: this.datosevent
       }
       this.edit(senddata);
     }
     else if ($event == "delete") {
       let senddata = {
-        event:$event,
-        data:this.datosevent
+        event: $event,
+        data: this.datosevent
       }
       this.delete(senddata);
     }
@@ -59,16 +60,17 @@ export class ClientesComponent implements OnInit {
 
   datosMessage($event) {
     this.datosevent = $event.data
+    // console.log(this.datosevent);
   }
 
   //******************FUNCION AGREGAR**************** */
   add(data) {
-    console.log(data)
+    this.router.navigateByUrl("/add-cliente");
   }
 
   //******************FUNCION EDITAR**************** */
   edit(data) {
-    console.log(data)
+    this.router.navigateByUrl("/edit-cliente/"+this.datosevent[0]["idCliente"]);
   }
 
   //******************FUNCION BORRAR**************** */
@@ -76,11 +78,11 @@ export class ClientesComponent implements OnInit {
     console.log(data)
   }
 
-  constructor(private _siscoV3Service: SiscoV3Service) {
+  constructor(private router: Router,private _siscoV3Service: SiscoV3Service) {
     _siscoV3Service.getService('cliente/getClientes').subscribe(
       (res: any) => {
         this.clientes = res.recordsets[0];
-        console.log(this.clientes.length)
+        // console.log(this.clientes.length)
       }, (error: any) => {
         console.log(error);
       }
@@ -147,9 +149,9 @@ export class ClientesComponent implements OnInit {
         options: {
           width: 90,
           text: 'Agregar',
-          onClick: this.receiveMessage.bind(this, 'add')
-
-        }
+          onClick: this.receiveMessage.bind(this, "add")
+        },
+        visible: true
       },
       {
         location: 'before',
@@ -157,8 +159,11 @@ export class ClientesComponent implements OnInit {
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Editar'
-        }
+          text: 'Editar',
+          onClick: this.receiveMessage.bind(this, "edit")
+        }, visible: false,
+        name: "simple",
+        name2: "multiple"
       },
       {
         location: 'before',
@@ -166,9 +171,11 @@ export class ClientesComponent implements OnInit {
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Eliminar'
-        }
-      }
+          text: 'Eliminar',
+          onClick: this.receiveMessage.bind(this, "delete")
+        }, visible: false,
+        name: "simple"
+      },
     ]
   }
 }

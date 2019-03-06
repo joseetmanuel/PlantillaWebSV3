@@ -520,6 +520,7 @@
     [searchPanel]="searchPanel" 
     [scroll] = "scroll"
     (messageEvent)="receiveMessage($event)"
+    (datosevent) = 'datosMessage($event)'
     [toolbar]="toolbar">
     </app-grid-component>
 </div>

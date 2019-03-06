@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
 import { SiscoV3Service } from '../services/siscov3.service';
 import {
   IGridOptions,
@@ -20,6 +20,8 @@ import { FormGroup, FormControl, Validators } from '../../../node_modules/@angul
   providers: [SiscoV3Service]
 })
 export class EditClienteComponent implements OnInit {
+
+  datosevent;
   gridOptions: IGridOptions;
   columns: IColumns[];
   columDoc: IColumns[];
@@ -30,7 +32,7 @@ export class EditClienteComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
-  data: [1];
+  // data: [1];
   cienteEntidad = [];
   documentos = [];
   clienteForm = new FormGroup({
@@ -39,37 +41,55 @@ export class EditClienteComponent implements OnInit {
 
   receiveMessage($event) {
     this.evento = $event.event;
-    this.data = $event.data;
-    console.log($event);
-
-    if (this.evento == "add") {
-      this.add(this.data);
+    // this.data = $event.data;
+    if ($event == "add") {
+      let senddata = {
+        event: $event
+      }
+      this.add(senddata);
     }
-    else if (this.evento == "edit") {
-      this.edit(this.data);
+    else if ($event == "edit") {
+      let senddata = {
+        event: $event,
+        data: this.datosevent
+      }
+      this.edit(senddata);
     }
-    else if (this.evento == "delete") {
-      this.delete(this.data);
+    else if ($event == "delete") {
+      let senddata = {
+        event: $event,
+        data: this.datosevent
+      }
+      this.delete(senddata);
     }
   }
+
+  datosMessage($event) {
+    this.datosevent = $event.data
+    // console.log(this.datosevent);
+  }
+  
   //******************FUNCION AGREGAR**************** */
   add(data) {
-
+    console.log(data)
+    this.router.navigateByUrl("/add-clienteEntidad/"+this.idCliente);
   }
 
   //******************FUNCION EDITAR**************** */
   edit(data) {
-
+    let rfcClienteEntidad = this.datosevent[0].rfcClienteEntidad;
+    this.router.navigateByUrl("/edit-clienteEntidad/"+rfcClienteEntidad);
   }
 
   //******************FUNCION BORRAR**************** */
   delete(data) {
-
+    console.log(data)
   }
 
   public idCliente;
   cliente;
   constructor(
+    private router: Router,
     private _siscoV3Service: SiscoV3Service,
     private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(parametros => {
@@ -80,10 +100,10 @@ export class EditClienteComponent implements OnInit {
         // console.log();
         this.cliente = res.recordsets[0][0];
         this.clienteForm.controls['nombre'].setValue(this.cliente.nombre);
-        _siscoV3Service.getService('cliente/getClienteEntidadPorIdCliente?idCliente='+this.idCliente).subscribe(
-          (res:any)=>{
+        _siscoV3Service.getService('cliente/getClienteEntidadPorIdCliente?idCliente=' + this.idCliente).subscribe(
+          (res: any) => {
             this.cienteEntidad = res.recordsets[0];
-          }, (error:any)=>{
+          }, (error: any) => {
             console.log(error);
           }
         )
@@ -94,16 +114,16 @@ export class EditClienteComponent implements OnInit {
 
   }
 
-  agregarCliente(){
+  agregarCliente() {
     this.cliente.nombre = this.clienteForm.controls['nombre'].value;
     let data = {
-      hola:'ghj'
+      hola: 'ghj'
     }
     console.log(this.cliente);
-    this._siscoV3Service.putService('cliente/putActualizaCliente',this.cliente).subscribe(
-      (res:any)=>{
+    this._siscoV3Service.putService('cliente/putActualizaCliente', this.cliente).subscribe(
+      (res: any) => {
         console.log(res)
-      }, (error:any)=>{
+      }, (error: any) => {
         console.log(error)
       }
     )
@@ -139,7 +159,7 @@ export class EditClienteComponent implements OnInit {
       },
     ]
 
-    this.columDoc= [
+    this.columDoc = [
       {
         caption: "Check",
         dataField: "check",
@@ -197,9 +217,9 @@ export class EditClienteComponent implements OnInit {
         options: {
           width: 90,
           text: 'Agregar',
-          onClick: this.receiveMessage.bind(this, 'add')
-
-        }
+          onClick: this.receiveMessage.bind(this, "add")
+        },
+        visible: true
       },
       {
         location: 'before',
@@ -207,8 +227,11 @@ export class EditClienteComponent implements OnInit {
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Editar'
-        }
+          text: 'Editar',
+          onClick: this.receiveMessage.bind(this, "edit")
+        }, visible: false,
+        name: "simple",
+        name2: "multiple"
       },
       {
         location: 'before',
@@ -216,9 +239,11 @@ export class EditClienteComponent implements OnInit {
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Eliminar'
-        }
-      }
+          text: 'Eliminar',
+          onClick: this.receiveMessage.bind(this, "delete")
+        }, visible: false,
+        name: "simple"
+      },
     ]
   }
 

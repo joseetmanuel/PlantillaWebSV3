@@ -15,7 +15,10 @@ const routes: Routes = [
   {path: 'ventas', component: VentasComponent },
   {path: 'clientes', component: ClientesComponent },
   {path: 'add-cliente', component: AddClienteComponent },
-  {path: 'edit-cliente/:idCliente', component: EditClienteComponent }
+  {path: 'edit-cliente/:idCliente', component: EditClienteComponent },
+  {path: 'edit-clienteEntidad/:rfcClienteEntidad', component: AddClienteComponent },
+  {path: 'add-clienteEntidad/:idCliente', component: AddClienteComponent },
+  // {path: '**', component: ClientesComponent }
 
 ];
 

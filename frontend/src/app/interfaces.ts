@@ -20,7 +20,7 @@ export interface IColumns {
   groupIndex?: string;
   cellTemplate?: string;
   hiddingPriority?: string;
-  check?: boolean;
+ 
 }
 
 export interface IColButtons {
@@ -55,4 +55,7 @@ export interface Toolbar{
   widget: string;
   locateInMenu: string;
   options: object;
+  visible: boolean;
+  name?: string;
+  name2?: string;
 }

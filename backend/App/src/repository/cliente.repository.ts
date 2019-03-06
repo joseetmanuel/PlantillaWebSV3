@@ -77,6 +77,10 @@ export class ClienteRepository {
         return this.query.spExecute(query, "[cliente].[SEL_CLIENTEENTIDADPORIDCLIENTE_SP]")
     }
 
+    getClienteEntidadConDireccion(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]")
+    }
+
     // ************ Servicios POST ************
 
     /**
