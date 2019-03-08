@@ -60,14 +60,14 @@ export class ExcepcionComponent implements OnInit {
   enviar() {
     try {
       const data = {
-        "idTipoExcepcion": this.data.idTipoExcepcion,
-        "idUsuario": this.data.idUsuario,
-        "idOperacion": this.data.idOperacion,
-        "idAplicacion": this.data.idAplicacion,
-        "moduloExcepcion": this.data.moduloExcepcion,
-        "mensajeExcepcion": this.data.mensajeExcepcion,
-        "stacktraceExcepcion": this.data.stack
-      }
+        'idTipoExcepcion': this.data.idTipoExcepcion,
+        'idUsuario': this.data.idUsuario,
+        'idOperacion': this.data.idOperacion,
+        'idAplicacion': this.data.idAplicacion,
+        'moduloExcepcion': this.data.moduloExcepcion,
+        'mensajeExcepcion': this.data.mensajeExcepcion,
+        'stacktraceExcepcion': this.data.stack
+      };
       this._excepcionService.postService('excepcion/postInsExcepcion', data).subscribe(
         (res: any) => {
           this.snackBar.open(res['recordsets'][0][0]['result'], 'Ok', {
