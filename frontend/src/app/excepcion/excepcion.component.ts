@@ -6,13 +6,13 @@ import { NGXLogger } from 'ngx-logger';
 import { ExcepcionTipoGlobal } from './excepcionTipoGlobal';
 
 export interface SendData {
-  idTipoExcepcion: number,
-  idUsuario: string,
-  idOperacion: number,
-  idAplicacion: string,
-  moduloExcepcion: string,
-  mensajeExcepcion: string,
-  stack: any
+  idTipoExcepcion: number;
+  idUsuario: string;
+  idOperacion: number;
+  idAplicacion: string;
+  moduloExcepcion: string;
+  mensajeExcepcion: string;
+  stack: any;
 }
 
 @Component({
@@ -32,26 +32,21 @@ export class ExcepcionComponent implements OnInit {
     public dialogRef: MatDialogRef<ExcepcionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SendData
   ) {
-    let h = Object.keys(this.data).map(key => this.data[key])
-    console.log('========================================', h[6]['stack'])
+    const h = Object.keys(this.data).map(key => this.data[key]);
     this.errorMsg = data.stack;
     this.tipoMensaje = ExcepcionTipoGlobal.arr[data.idTipoExcepcion];
     this.data.mensajeExcepcion = 'Error de' + this.tipoMensaje;
-    if (data.idTipoExcepcion != 1) {
+    if (data.idTipoExcepcion !== 1) {
       this.data.stack = JSON.stringify(this.data.stack, undefined, 2);
-    }
-    else {
-      let h = Object.keys(this.data).map(key => this.data[key])
-      let o = {
-        message:h[6]['message'],
-        stack:h[6]['stack']
-      }
+    } else {
+      // tslint:disable-next-line:no-shadowed-variable
+      const h = Object.keys(this.data).map(key => this.data[key]);
+      const o = {
+        message: h[6]['message'],
+        stack: h[6]['stack']
+      };
       this.data.stack = JSON.stringify(o, undefined, 2);
     }
-
-    // this.data.stack = JSON.stringify(this.data.stack.message);
-    // this.logger.debug(this.data.stack);
-    // console.log('error =========================================================0 ',JSON.stringify(this.data.stack));
   }
 
   ngOnInit() {
@@ -64,7 +59,7 @@ export class ExcepcionComponent implements OnInit {
 
   enviar() {
     try {
-      let data = {
+      const data = {
         "idTipoExcepcion": this.data.idTipoExcepcion,
         "idUsuario": this.data.idUsuario,
         "idOperacion": this.data.idOperacion,
@@ -74,17 +69,14 @@ export class ExcepcionComponent implements OnInit {
         "stacktraceExcepcion": this.data.stack
       }
       this._excepcionService.postService('excepcion/postInsExcepcion', data).subscribe(
-        response => {
-          this.snackBar.open(response['recordsets'][0][0]['result'], 'Ok', {
+        (res: any) => {
+          this.snackBar.open(res['recordsets'][0][0]['result'], 'Ok', {
             duration: 2000
           });
           this.dialogRef.close();
         },
-        error => {
-          // console.log(error.message)
-          // console.log(error)
-          this.logger.error(error)
-          // this.data.stack = error.message;
+        (error: any) => {
+          this.logger.error(error);
         }
       );
     } catch (err) {
@@ -94,10 +86,9 @@ export class ExcepcionComponent implements OnInit {
 
   cambio() {
     try {
-      if (this.ver == 1) {
+      if (this.ver === 1) {
         this.ver--;
-      }
-      else {
+      } else {
         this.ver++;
       }
     } catch (err) {

@@ -13,11 +13,11 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'forgot', component: ForgotPasswordComponent },
   {path: 'ventas', component: VentasComponent },
-  {path: 'clientes', component: ClientesComponent },
-  {path: 'add-cliente', component: AddClienteComponent },
-  {path: 'edit-cliente/:idCliente', component: EditClienteComponent },
-  {path: 'edit-clienteEntidad/:rfcClienteEntidad', component: AddClienteComponent },
-  {path: 'add-clienteEntidad/:idCliente', component: AddClienteComponent },
+  {path: 'sel-clientes', component: ClientesComponent },
+  {path: 'ins-cliente', component: AddClienteComponent },
+  {path: 'upd-cliente/:idCliente', component: EditClienteComponent },
+  {path: 'upd-clienteEntidad/:rfcClienteEntidad', component: AddClienteComponent },
+  {path: 'ins-clienteEntidad/:idCliente', component: AddClienteComponent },
   // {path: '**', component: ClientesComponent }
 
 ];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
   IGridOptions,
   IColumns,
@@ -8,16 +8,17 @@ import {
   ISearchPanel,
   IScroll,
   Toolbar
-} from "../interfaces";
-import { SiscoV3Service } from "../services/siscov3.service";
-import { Router } from "../../../node_modules/@angular/router";
-import { DeleteAlertComponent } from "../delete-alert/delete-alert.component";
-import { MatDialog } from "@angular/material";
+} from '../interfaces';
+import { SiscoV3Service } from '../services/siscov3.service';
+import { Router } from '../../../node_modules/@angular/router';
+import { DeleteAlertComponent } from '../delete-alert/delete-alert.component';
+import { MatDialog } from '@angular/material';
+import { ExcepcionComponent } from '../excepcion/excepcion.component';
 
 @Component({
-  selector: "app-clientes",
-  templateUrl: "./clientes.component.html",
-  styleUrls: ["./clientes.component.sass", "../app.component.sass"],
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.sass', '../app.component.sass'],
   providers: [SiscoV3Service]
 })
 export class ClientesComponent implements OnInit {
@@ -31,38 +32,42 @@ export class ClientesComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
-  // data: [];
   clientes = [];
   public numero = 1;
 
   receiveMessage($event) {
-    this.evento = $event.event;
-    // this.data = $event.data;
-    if ($event == "add") {
-      let senddata = {
-        event: $event
-      };
-      this.add(senddata);
-    } else if ($event == "edit") {
-      let senddata = {
-        event: $event,
-        data: this.datosevent
-      };
-      this.edit(senddata);
-    } else if ($event == "delete") {
-      let senddata = {
-        event: $event,
-        data: this.datosevent
-      };
-      this.delete(senddata);
+    try {
+      this.evento = $event.event;
+      if ($event === 'add') {
+        const senddata = {
+          event: $event
+        };
+        this.add(senddata);
+      } else if ($event === 'edit') {
+        const senddata = {
+          event: $event,
+          data: this.datosevent
+        };
+        this.edit(senddata);
+      } else if ($event === 'delete') {
+        const senddata = {
+          event: $event,
+          data: this.datosevent
+        };
+        this.delete(senddata);
+      }
+    } catch (error) {
+      this.excepciones(error, 1);
     }
   }
 
   datosMessage($event) {
-    this.datosevent = $event.data;
-    // console.log(this.datosevent);
+    try {
+      this.datosevent = $event.data;
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
-
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -72,148 +77,205 @@ export class ClientesComponent implements OnInit {
   }
 
   loadData() {
-    this.numero = 0;
-    this._siscoV3Service.getService("cliente/getClientes").subscribe(
-      (res: any) => {
-        this.numero = 1;
-        this.clientes = res.recordsets[0];
-        // console.log(this.clientes.length)
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    try {
+      this.numero = 0;
+      this._siscoV3Service.getService('cliente/getClientes').subscribe(
+        (res: any) => {
+          if (res.err) {
+            this.numero = 1;
+            this.excepciones(res.err, 4);
+          } else if (res.excepcion) {
+            this.numero = 1;
+            this.excepciones(res.excepcion, 3);
+          } else {
+            this.numero = 1;
+            this.clientes = res.recordsets[0];
+          }
+        },
+        (error: any) => {
+          this.numero = 1;
+          this.excepciones(error, 2);
+        }
+      );
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
 
-  //******************FUNCION AGREGAR**************** */
+  // #region documentación
+  /*
+  Fincion Agregar
+  */
+  // #endregion
   add(data) {
-    this.router.navigateByUrl("/add-cliente");
+    try {
+      this.router.navigateByUrl('/add-cliente');
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
 
-  //******************FUNCION EDITAR**************** */
+  // #region documentación
+  /*
+  Funcion Editar
+  */
+  // #endregion
   edit(data) {
-    this.router.navigateByUrl(
-      "/edit-cliente/" + this.datosevent[0]["idCliente"]
-    );
+    try {
+      this.router.navigateByUrl(
+        '/edit-cliente/' + this.datosevent[0]['idCliente']
+      );
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
 
-  //******************FUNCION BORRAR**************** */
+  // #region documentación
+  /*
+  Funcion Borrar
+  */
+  // #endregion
   delete(data) {
-    const _this = this;
-    // console.log(data.data)
-    let borrar = "<Ids>";
-    let cont = 0;
-    data.data.forEach(function(element, index, array) {
-      borrar += "<idCliente>" + element.idCliente + "</idCliente>";
-      cont++;
-      if (cont === array.length) {
-        borrar += "</Ids>";
-        _this.deleteData(borrar, '1');
-        // console.log(borrar)
-      }
-    });
+    try {
+      const _this = this;
+      let borrar = '<Ids>';
+      let cont = 0;
+      data.data.forEach(function(element, index, array) {
+        borrar += '<idCliente>' + element.idCliente + '</idCliente>';
+        cont++;
+        if (cont === array.length) {
+          borrar += '</Ids>';
+          _this.deleteData(borrar, '1');
+        }
+      });
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
-
-  borrar(data) {}
 
   ngOnInit() {
-    this.columns = [
-      {
-        caption: "Check",
-        dataField: "check",
-        cellTemplate: "checkbox",
-        hiddingPriority: "2",
-        width: 150
-      },
-      {
-        caption: "idCliente",
-        dataField: "idCliente",
-        hiddingPriority: "1",
-        width: 150
-      },
-      {
-        caption: "nombreCliente",
-        dataField: "nombre",
-        hiddingPriority: "0"
-      }
-    ];
-
-    //******************PARAMETROS DE TEMPLATE DE BOTONES**************** */
-
-    //******************PARAMETROS DE SUMMARIES**************** */
-    this.summaries = [
-      {
-        column: "idCliente",
-        summaryType: "custom",
-        displayFormat: "Check: {0}",
-        name: "SelectedRowsSummary"
-      }
-    ];
-
-    //******************PARAMETROS DE PAGINACION DE GRID**************** */
-    let pageSizes = [];
-    pageSizes.push("10", "25", "50", "100");
-
-    //this.gridOptions = { paginacion: 10, pageSize:pageSizes}
-
-    //******************PARAMETROS DE EXPORTACION**************** */
-    this.exportExcel = { enabled: true, fileName: "prueba2" };
-
-    //******************PARAMETROS DE SEARCH**************** */
-    this.searchPanel = {
-      visible: true,
-      width: 200,
-      placeholder: "Buscar...",
-      filterRow: true
-    };
-
-    //******************PARAMETROS DE SCROLL**************** */
-    this.scroll = { mode: "standard" };
-
-    //******************PARAMETROS DE TOOLBAR**************** */
-    this.toolbar = [
-      {
-        location: "before",
-        widget: "dxButton",
-        locateInMenu: "auto",
-        options: {
-          width: 90,
-          text: "Agregar",
-          onClick: this.receiveMessage.bind(this, "add")
+    try {
+      this.columns = [
+        {
+          caption: 'Check',
+          dataField: 'check',
+          cellTemplate: 'checkbox',
+          hiddingPriority: '2',
+          width: 150
         },
-        visible: true
-      },
-      {
-        location: "before",
-        widget: "dxButton",
-        locateInMenu: "auto",
-        options: {
-          width: 90,
-          text: "Editar",
-          onClick: this.receiveMessage.bind(this, "edit")
+        {
+          caption: 'idCliente',
+          dataField: 'idCliente',
+          hiddingPriority: '1',
+          width: 150
         },
-        visible: false,
-        name: "simple",
-        name2: "multiple"
-      },
-      {
-        location: "before",
-        widget: "dxButton",
-        locateInMenu: "auto",
-        options: {
-          width: 90,
-          text: "Eliminar",
-          onClick: this.receiveMessage.bind(this, "delete")
+        {
+          caption: 'nombreCliente',
+          dataField: 'nombre',
+          hiddingPriority: '0'
+        }
+      ];
+
+      // #region documentación
+      /*
+    Parametros de Sumaries
+    */
+      // #endregion
+      this.summaries = [
+        {
+          column: 'idCliente',
+          summaryType: 'custom',
+          displayFormat: 'Check: {0}',
+          name: 'SelectedRowsSummary'
+        }
+      ];
+
+      // #region documentación
+      /*
+    Parametros de Paginacion de Grit
+    */
+      // #endregion
+      const pageSizes = [];
+      pageSizes.push('10', '25', '50', '100');
+
+      // #region documentación
+      /*
+    Parametros de Exploracion
+    */
+      // #endregion
+      this.exportExcel = { enabled: true, fileName: 'prueba2' };
+
+      // #region documentación
+      /*
+    Parametros de Search
+    */
+      // #endregion
+      this.searchPanel = {
+        visible: true,
+        width: 200,
+        placeholder: 'Buscar...',
+        filterRow: true
+      };
+
+      // #region documentación
+      /*
+    Parametros de Scroll
+    */
+      // #endregion
+      this.scroll = { mode: 'standard' };
+
+      // #region documentación
+      /*
+    Parametros de Toolbar
+    */
+      // #endregion
+      this.toolbar = [
+        {
+          location: 'before',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 90,
+            text: 'Agregar',
+            onClick: this.receiveMessage.bind(this, 'add')
+          },
+          visible: true
         },
-        visible: false,
-        name: "simple"
-      }
-    ];
+        {
+          location: 'before',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 90,
+            text: 'Editar',
+            onClick: this.receiveMessage.bind(this, 'edit')
+          },
+          visible: false,
+          name: 'simple',
+          name2: 'multiple'
+        },
+        {
+          location: 'before',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 90,
+            text: 'Eliminar',
+            onClick: this.receiveMessage.bind(this, 'delete')
+          },
+          visible: false,
+          name: 'simple'
+        }
+      ];
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
+
   deleteData(data: any, tipo) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
-        width: "60%",
+        width: '60%',
         data: {
           data: data,
           tipo: tipo
@@ -221,13 +283,33 @@ export class ClientesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result: any) => {
-        console.log(result);
         if (result === 1) {
           this.loadData();
         }
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
+  }
+
+  excepciones(stack, tipoExcepcion: number) {
+    try {
+      const dialogRef = this.dialog.open(ExcepcionComponent, {
+        width: '60%',
+        data: {
+          idTipoExcepcion: tipoExcepcion,
+          idUsuario: 1,
+          idOperacion: 1,
+          idAplicacion: 1,
+          moduloExcepcion: 'clientes.component',
+          mensajeExcepcion: '',
+          stack: stack
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result: any) => {});
+    } catch (error) {
+      console.log(error);
     }
   }
 }
