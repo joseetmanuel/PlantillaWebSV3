@@ -22,7 +22,7 @@ export class SiscoV3Service {
     if (headers) { this.headers = headers; }
     return this.http.post(this.url + ruta, body, { headers: this.headers});
   }
-  
+
   putService(ruta: string, body?: any, headers?: HttpHeaders) {
     if (headers) { this.headers = headers; }
     return this.http.put(this.url + ruta, body, { headers: this.headers});
@@ -30,6 +30,6 @@ export class SiscoV3Service {
 
   deleteService(ruta: string, data: any, headers?: HttpHeaders) {
     if (headers) { this.headers = headers; }
-    return this.http.delete(this.url+ruta + '?idCliente='+ data,  { headers: this.headers});
+    return this.http.delete(this.url + ruta + '?data=' + data,  { headers: this.headers});
   }
 }

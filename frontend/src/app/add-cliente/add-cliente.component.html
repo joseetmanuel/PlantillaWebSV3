@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-sm-12 col-md-4 col-xl-4" [ngClass]="{'desactiva': (rfcClienteEntidad) }">
                         <mat-form-field class="all">
-                            <input  matInput placeholder="RFC Cliente *" formControlName="rfcCliente" [errorStateMatcher]="matcher">
+                            <input matInput placeholder="RFC Cliente *" formControlName="rfcCliente" [errorStateMatcher]="matcher">
                             <mat-error>
                                 El campo es
                                 <strong>requerido</strong> 13 Caracteres
@@ -120,8 +120,7 @@
                 <div class='row'>
                     <div class="col-sm-12 col-md-6 col-xl-6">
                         <mat-form-field class="all">
-                            <input #cp matInput placeholder="Código Postal *" (focusout)="getCp()" (keydown)="onKeydown($event)" formControlName="cp"
-                                [errorStateMatcher]="matcher">
+                            <input #cp matInput placeholder="Código Postal *" (focusout)="getCp()" (keydown)="onKeydown($event)" formControlName="cp" [errorStateMatcher]="matcher">
                             <mat-error>
                                 El campo es
                                 <strong>requerido</strong> 5 Caracteres

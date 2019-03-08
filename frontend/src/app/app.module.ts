@@ -27,6 +27,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { GridComponentComponent } from './grid-component/grid-component.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
+import { DeleteAlertComponent } from './delete-alert/delete-alert.component';
 
 
 @NgModule({
@@ -42,11 +43,14 @@ import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
     AddClienteComponent,
     ExcepcionComponent,
     GridComponentComponent,
-    EditClienteComponent
+    EditClienteComponent,
+    DeleteAlertComponent
   ],
-  entryComponents:[
+  entryComponents: [
     ExcepcionComponent,
-    AddClienteComponent
+    AddClienteComponent,
+    EditClienteComponent,
+    DeleteAlertComponent
   ],
   imports: [
     BrowserModule,

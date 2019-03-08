@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "../../../node_modules/@angular/router";
 import { SiscoV3Service } from '../services/siscov3.service';
+import {MDCDialog} from '@material/dialog';
 import {
   IGridOptions,
   IColumns,
@@ -10,17 +11,22 @@ import {
   ISearchPanel,
   IScroll,
   Toolbar
-} from '../interfaces'
-import { FormGroup, FormControl, Validators } from '../../../node_modules/@angular/forms';
+} from "../interfaces";
+import {
+  FormGroup,
+  FormControl,
+  Validators
+} from "../../../node_modules/@angular/forms";
+import { MatDialog } from "@angular/material";
+import { DeleteAlertComponent } from "../delete-alert/delete-alert.component";
 
 @Component({
-  selector: 'app-edit-cliente',
-  templateUrl: './edit-cliente.component.html',
-  styleUrls: ['./edit-cliente.component.sass'],
+  selector: "app-edit-cliente",
+  templateUrl: "./edit-cliente.component.html",
+  styleUrls: ["./edit-cliente.component.sass"],
   providers: [SiscoV3Service]
 })
 export class EditClienteComponent implements OnInit {
-
   datosevent;
   gridOptions: IGridOptions;
   columns: IColumns[];
@@ -37,101 +43,128 @@ export class EditClienteComponent implements OnInit {
   documentos = [];
   public numero = 1;
   clienteForm = new FormGroup({
-    nombre: new FormControl('', [Validators.required])
+    nombre: new FormControl("", [Validators.required])
   });
 
   receiveMessage($event) {
     this.evento = $event.event;
     // this.data = $event.data;
-    if ($event == "add") {
-      let senddata = {
+    if ($event === "add") {
+      const senddata = {
         event: $event
-      }
+      };
       this.add(senddata);
-    }
-    else if ($event == "edit") {
-      let senddata = {
+    } else if ($event === "edit") {
+      const senddata = {
         event: $event,
         data: this.datosevent
-      }
+      };
       this.edit(senddata);
-    }
-    else if ($event == "delete") {
+    } else if ($event == "delete") {
       let senddata = {
         event: $event,
         data: this.datosevent
-      }
+      };
       this.delete(senddata);
     }
   }
 
   datosMessage($event) {
-    this.datosevent = $event.data
+    this.datosevent = $event.data;
     // console.log(this.datosevent);
   }
-  
+
   //******************FUNCION AGREGAR**************** */
   add(data) {
-    console.log(data)
-    this.router.navigateByUrl("/add-clienteEntidad/"+this.idCliente);
+    console.log(data);
+    this.router.navigateByUrl("/add-clienteEntidad/" + this.idCliente);
   }
 
   //******************FUNCION EDITAR**************** */
   edit(data) {
     let rfcClienteEntidad = this.datosevent[0].rfcClienteEntidad;
-    this.router.navigateByUrl("/edit-clienteEntidad/"+rfcClienteEntidad);
+    this.router.navigateByUrl("/edit-clienteEntidad/" + rfcClienteEntidad);
   }
 
-  //******************FUNCION BORRAR**************** */
+  // ******************FUNCION BORRAR**************** */
   delete(data) {
-    console.log(data)
+    let borrar = '';
+    let cont = 0;
+    const _this = this;
+    data.data.forEach(function(element, index, array) {
+      // tslint:disable-next-line:max-line-length
+      borrar += '<Ids><idCliente>' + element.idCliente + '</idCliente><rfcClienteEntidad>' + element.rfcClienteEntidad + '</rfcClienteEntidad></Ids>';
+      cont++;
+      if (cont === array.length) {
+        _this.deleteData(borrar, '2');
+      }
+    });
+
   }
 
   public idCliente;
   cliente;
   constructor(
+    public dialog: MatDialog,
     private router: Router,
     private _siscoV3Service: SiscoV3Service,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute
+  ) {
     this.activatedRoute.params.subscribe(parametros => {
       this.idCliente = parametros.idCliente;
     });
-    this.numero = 0;
-    _siscoV3Service.getService('cliente/getClientePorId?idCliente=' + this.idCliente).subscribe(
-      (res: any) => {
-        // console.log();
-        this.cliente = res.recordsets[0][0];
-        this.clienteForm.controls['nombre'].setValue(this.cliente.nombre);
-        _siscoV3Service.getService('cliente/getClienteEntidadPorIdCliente?idCliente=' + this.idCliente).subscribe(
-          (res: any) => {
-            this.numero = 1;
-            this.cienteEntidad = res.recordsets[0];
-          }, (error: any) => {
-            this.numero = 1;
-            console.log(error);
-          }
-        )
-      }, (error: any) => {
-        this.numero = 1;
-        console.log(error);
-      }
-    )
+    this.loadData();
+  }
 
+  loadData() {
+    this.numero = 0;
+    this._siscoV3Service
+      .getService("cliente/getClientePorId?idCliente=" + this.idCliente)
+      .subscribe(
+        (res: any) => {
+          // console.log();
+          this.cliente = res.recordsets[0][0];
+          this.clienteForm.controls["nombre"].setValue(this.cliente.nombre);
+          this._siscoV3Service
+            .getService(
+              "cliente/getClienteEntidadPorIdCliente?idCliente=" +
+                this.idCliente
+            )
+            .subscribe(
+              // tslint:disable-next-line:no-shadowed-variable
+              (res: any) => {
+                this.numero = 1;
+                this.cienteEntidad = res.recordsets[0];
+              },
+              (error: any) => {
+                this.numero = 1;
+                console.log(error);
+              }
+            );
+        },
+        (error: any) => {
+          this.numero = 1;
+          console.log(error);
+        }
+      );
   }
 
   agregarCliente() {
-    this.cliente.nombre = this.clienteForm.controls['nombre'].value;
+    this.cliente.nombre = this.clienteForm.controls["nombre"].value;
     // console.log(this.cliente);
     this.numero = 0;
-    this._siscoV3Service.putService('cliente/putActualizaCliente', this.cliente).subscribe(
-      (res: any) => {
-        this.numero = 1;
-        console.log(res)
-      }, (error: any) => {
-        this.numero = 1;
-        console.log(error)
-      }
-    )
+    this._siscoV3Service
+      .putService("cliente/putActualizaCliente", this.cliente)
+      .subscribe(
+        (res: any) => {
+          this.numero = 1;
+          console.log(res);
+        },
+        (error: any) => {
+          this.numero = 1;
+          console.log(error);
+        }
+      );
   }
 
   ngOnInit() {
@@ -161,8 +194,8 @@ export class EditClienteComponent implements OnInit {
         caption: "Email",
         dataField: "email",
         hiddingPriority: "0"
-      },
-    ]
+      }
+    ];
 
     this.columDoc = [
       {
@@ -181,12 +214,9 @@ export class EditClienteComponent implements OnInit {
         dataField: "docuemento",
         hiddingPriority: "1"
       }
-    ]
-
+    ];
 
     //******************PARAMETROS DE TEMPLATE DE BOTONES**************** */
-
-
 
     //******************PARAMETROS DE SUMMARIES**************** */
     this.summaries = [
@@ -196,60 +226,88 @@ export class EditClienteComponent implements OnInit {
         displayFormat: "Check: {0}",
         name: "SelectedRowsSummary"
       }
-    ]
+    ];
 
     //******************PARAMETROS DE PAGINACION DE GRID**************** */
     let pageSizes = [];
-    pageSizes.push("10", "25", "50", "100")
+    pageSizes.push("10", "25", "50", "100");
 
     //this.gridOptions = { paginacion: 10, pageSize:pageSizes}
 
     //******************PARAMETROS DE EXPORTACION**************** */
-    this.exportExcel = { enabled: true, fileName: "prueba2" }
+    this.exportExcel = { enabled: true, fileName: "prueba2" };
 
     //******************PARAMETROS DE SEARCH**************** */
-    this.searchPanel = { visible: true, width: 200, placeholder: "Buscar...", filterRow: true }
+    this.searchPanel = {
+      visible: true,
+      width: 200,
+      placeholder: "Buscar...",
+      filterRow: true
+    };
 
     //******************PARAMETROS DE SCROLL**************** */
-    this.scroll = { mode: "standard" }
+    this.scroll = { mode: "standard" };
 
     //******************PARAMETROS DE TOOLBAR**************** */
     this.toolbar = [
       {
-        location: 'before',
-        widget: 'dxButton',
+        location: "before",
+        widget: "dxButton",
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Agregar',
+          text: "Agregar",
           onClick: this.receiveMessage.bind(this, "add")
         },
         visible: true
       },
       {
-        location: 'before',
-        widget: 'dxButton',
+        location: "before",
+        widget: "dxButton",
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Editar',
+          text: "Editar",
           onClick: this.receiveMessage.bind(this, "edit")
-        }, visible: false,
+        },
+        visible: false,
         name: "simple",
         name2: "multiple"
       },
       {
-        location: 'before',
-        widget: 'dxButton',
+        location: "before",
+        widget: "dxButton",
         locateInMenu: "auto",
         options: {
           width: 90,
-          text: 'Eliminar',
+          text: "Eliminar",
           onClick: this.receiveMessage.bind(this, "delete")
-        }, visible: false,
+        },
+        visible: false,
         name: "simple"
-      },
-    ]
+      }
+    ];
   }
 
+  deleteData(data: any, tipo) {
+    try {
+      const dialogRef = this.dialog.open(DeleteAlertComponent, {
+        width: '60%',
+        data: {
+          data: data,
+          tipo: tipo
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result: any) => {
+        console.log(result);
+        if (result === 1) {
+          this.loadData();
+        }
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

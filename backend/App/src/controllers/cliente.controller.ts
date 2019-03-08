@@ -338,7 +338,7 @@ export class ClienteController {
     Wiki:           ...
     */
     // #endregion
-    deleteClienteEntidad(@Body() body: Request) {
-        return this.repository.deleteClienteEntidad(body);
+    deleteClienteEntidad(@Req() req: Request) {
+        return this.repository.deleteClienteEntidad(req.query);
     }
 }
