@@ -407,7 +407,7 @@ export class AddClienteComponent implements OnInit {
             } else {
               this.numero = 1;
               this.router.navigateByUrl(
-                '/edit-cliente/' + res.recordsets[1][0].idCliente
+                '/upd-cliente/' + res.recordsets[1][0].idCliente
               );
             }
           },

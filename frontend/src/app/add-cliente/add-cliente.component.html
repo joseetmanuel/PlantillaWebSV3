@@ -5,9 +5,9 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon clientes"></div>
-                <div *ngIf="!(idCliente || rfcClienteEntidad)"> <a [routerLink]="['/clientes']">Clientes</a> - Agregar Cliente </div>
-                <div *ngIf="(idCliente)"> <a [routerLink]="['/clientes']">Clientes</a> - <a [routerLink]="['/edit-cliente/'+datos?.idCliente]">Editar Cliente</a> - Agregar Datos Fiscales</div>
-                <div *ngIf="(rfcClienteEntidad)"> <a [routerLink]="['/clientes']">Clientes</a> - <a [routerLink]="['/edit-cliente/'+datos?.idCliente]">Editar Cliente</a> - Editar Datos Fiscales</div>
+                <div *ngIf="!(idCliente || rfcClienteEntidad)"> <a [routerLink]="['/sel-clientes']">Clientes</a> - Agregar Cliente </div>
+                <div *ngIf="(idCliente)"> <a [routerLink]="['/sel-clientes']">Clientes</a> - <a [routerLink]="['/upd-cliente/'+datos?.idCliente]">Editar Cliente</a> - Agregar Datos Fiscales</div>
+                <div *ngIf="(rfcClienteEntidad)"> <a [routerLink]="['/sel-clientes']">Clientes</a> - <a [routerLink]="['/upd-cliente/'+datos?.idCliente]">Editar Cliente</a> - Editar Datos Fiscales</div>
             </div>
         </div>
     </div>

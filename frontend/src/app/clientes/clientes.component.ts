@@ -35,6 +35,11 @@ export class ClientesComponent implements OnInit {
   clientes = [];
   public numero = 1;
 
+  // #region
+    /*
+    Evaluamos a que tipo de evento nos vamos a dirigir.
+    */
+    // #endregion
   receiveMessage($event) {
     try {
       this.evento = $event.event;
@@ -61,6 +66,11 @@ export class ClientesComponent implements OnInit {
     }
   }
 
+  // #region
+    /*
+    Obtenemos la data del componente "grid-component".
+    */
+    // #endregion
   datosMessage($event) {
     try {
       this.datosevent = $event.data;
@@ -109,7 +119,7 @@ export class ClientesComponent implements OnInit {
   // #endregion
   add(data) {
     try {
-      this.router.navigateByUrl('/add-cliente');
+      this.router.navigateByUrl('/ins-cliente');
     } catch (error) {
       this.excepciones(error, 1);
     }
@@ -123,7 +133,7 @@ export class ClientesComponent implements OnInit {
   edit(data) {
     try {
       this.router.navigateByUrl(
-        '/edit-cliente/' + this.datosevent[0]['idCliente']
+        '/upd-cliente/' + this.datosevent[0]['idCliente']
       );
     } catch (error) {
       this.excepciones(error, 1);

@@ -85,7 +85,7 @@ export class EditClienteComponent implements OnInit {
   //******************FUNCION AGREGAR**************** */
   add(data) {
     try {
-      this.router.navigateByUrl('/add-clienteEntidad/' + this.idCliente);
+      this.router.navigateByUrl('/ins-clienteEntidad/' + this.idCliente);
     } catch (error) {
       this.excepciones(error, 1);
     }
@@ -95,7 +95,7 @@ export class EditClienteComponent implements OnInit {
   edit(data) {
     try {
       const rfcClienteEntidad = this.datosevent[0].rfcClienteEntidad;
-      this.router.navigateByUrl('/edit-clienteEntidad/' + rfcClienteEntidad);
+      this.router.navigateByUrl('/upd-clienteEntidad/' + rfcClienteEntidad);
     } catch (error) {
       this.excepciones(error, 1);
     }
