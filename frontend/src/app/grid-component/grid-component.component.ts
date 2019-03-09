@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { IGridOptions, IColumns, IColButtons, IExportExcel, ISummaries, ISearchPanel, IScroll, Toolbar } from '../interfaces'
+import { IGridOptions, IColumns, IExportExcel, ISearchPanel, IScroll, Toolbar } from '../interfaces'
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DxDataGridModule, DxDataGridComponent, getElement } from "devextreme-angular";
 
@@ -14,16 +14,14 @@ import { DxDataGridModule, DxDataGridComponent, getElement } from "devextreme-an
 
 export class GridComponentComponent implements OnInit {
 
-
+  @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
   @ViewChild('grid',{read: ElementRef})
   grid: ElementRef;
   //******************SE RECIBEN PARAMETROS Y SE ENVIA RESPUESTA**************** */
   @Input() datos: [];
   @Input() gridOptions: IGridOptions;
   @Input() columns: IColumns;
-  @Input() colButtons: IColButtons;
   @Input() exportExcel: IExportExcel;
-  @Input() summaries: ISummaries;
   @Input() searchPanel: ISearchPanel;
   @Input() scroll: IScroll;
   @Input() toolbar: Toolbar[];
@@ -42,7 +40,7 @@ export class GridComponentComponent implements OnInit {
     // console.log("grid:", this.grid.nativeElement);
        const div = this.grid.nativeElement.querySelector('.dx-datagrid-filter-panel');
        const parent = this.grid.nativeElement.querySelector('.dx-datagrid');
-       const refChild = this.element.nativeElement.querySelector('.dx-datagrid-header-panel');
+       const refChild = this.element.nativeElement.querySelector('.dx-datagrid-headers');
        this.renderer.insertBefore(parent, div, refChild);
    }
 
@@ -69,17 +67,6 @@ export class GridComponentComponent implements OnInit {
   }
 
   //******************CONTADOR DE ITEMS SELECCINADOS Y DEVUELVE DATOS AL EMITER**************** */
-//   calculateSelectedRow(options) {
-//     if (options.name === "SelectedRowsSummary") {
-//         if (options.summaryProcess === "start") {
-//             options.totalValue = 0;
-//         } else if (options.summaryProcess === "calculate") {
-//             if (options.component.isRowSelected(options.value.id)) {
-//                 options.totalValue++;
-//             }
-//         }
-//     }
-// }
 
 public contador = 0;
 onSelectionChanged(e) {
@@ -103,7 +90,7 @@ onSelectionChanged(e) {
             }
       }
     }
-    
+    this.dataGrid.instance.refresh()
 }
 
 
@@ -112,6 +99,9 @@ onSelectionChanged(e) {
 public toole;
 onToolbarPreparing(e) {
   this.toole = e;
+  var item = e.toolbarOptions.items.find(item => item.name === "columnChooserButton");
+  item.options.icon = "../../assets/seleccion.png";
+  
     e.toolbarOptions.items.unshift({
          location: 'before',
          template: 'Totalderegistros'

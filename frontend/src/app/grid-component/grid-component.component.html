@@ -1,7 +1,6 @@
 <div>
   <!--En caso de no mandar la prioridadd por parametros habilitar [columnHidingEnabled]="true" dentro de dx-data.grid-->
-  <dx-data-grid #grid   id="gridContainer" [dataSource]="datos"  [rowAlternationEnabled]="true"
-    [showBorders]="true" [columnAutoWidth]="true" [showRowLines]="true" [showColumnLines]="true"
+  <dx-data-grid #grid   id="gridContainer" [dataSource]="datos" [showBorders]="true" [columnAutoWidth]="true" [showRowLines]="true" [showColumnLines]="true"
     [remoteOperations]="remoteOperations"  (onToolbarPreparing)="onToolbarPreparing($event)"  
     (onSelectionChanged)="onSelectionChanged($event)" (onContentReady)="onContentReady($event)">
 
@@ -18,7 +17,7 @@
 
     <!-- -------------------- FILTROS ------------------------------------------>
 
-    <dxo-search-panel [visible]="searchPanel.visible" [width]="searchPanel.width" [placeholder]="searchPanel.placeholder"></dxo-search-panel>
+    <!-- <dxo-search-panel [visible]="searchPanel.visible" [width]="searchPanel.width" [placeholder]="searchPanel.placeholder"></dxo-search-panel> -->
     <dxo-header-filter [visible]="true" [allowSearch]="true" ></dxo-header-filter>
     <dxo-filter-row [visible]="searchPanel.filterRow"></dxo-filter-row>
     <dxo-filter-panel [visible]="true"></dxo-filter-panel>
@@ -32,13 +31,6 @@
 
     <dxo-export [fileName]="exportExcel.fileName" [enabled]="exportExcel.enabled" [customizeExcelCell]="customizeExcelCell"></dxo-export>
 
-
-    <!-- -------------------- SUMMARY ------------------------------------------>
-
-    <!-- <dxo-summary [calculateCustomSummary]="calculateSelectedRow">
-      <dxi-total-item *ngFor="let summary of summaries" [showInColumn]="summary.column" [summaryType]="summary.summaryType"
-        [valueFormat]="summary.valueFormat"  [displayFormat]="summary.displayFormat" [name]="summary.name" ></dxi-total-item>
-    </dxo-summary> -->
     <!-- -------------------- COLUMNAS ------------------------------------------>
     
     <dxi-column *ngFor="let column of columns" [dataField]="column.dataField" [caption]="column.caption" [width]="column.width"
@@ -61,31 +53,19 @@
       </ng-template>
     </div>
 
-    <!-- -------------------- TEMPLATE BOTON ------------------------------------------>
-    <div *dxTemplate="let btn of 'boton'" style="text-align: center;">
-      <ng-template #popContent>
-         <dx-button class="boton" *ngFor="let colbtn of colButtons" [icon]="colbtn.icon" [type]="colbtn.type" [text]="colbtn.name"
-        [disabled]="colbtn.disabled" (onClick)="onclick(colbtn.onClick, btn.data)">
-        </dx-button>
-     </ng-template>
-    <button type="button" class="btn btn-outline-secondary" placement="bottom" [ngbPopover]="popContent"  popoverClass="pop-class">
-        <i class="ion-md-more"></i>
-    </button>
-    </div>
-
     <!-- -------------------- TEMPLATE TOTAL DE REGISTROS ------------------------------------------>
-    <div *dxTemplate="let data of 'Totalderegistros'">
+    <div class="totalcolor" *dxTemplate="let data of 'Totalderegistros'">
         <div class="informer">
-            <h2 class="count">{{datos.length}}</h2>
-            <span class="name">Total</span>
+            <h2 class="totalcount">{{datos.length}}</h2>
+            <span class="name">Registros</span>
         </div>
     </div>
 
     <!-- -------------------- TEMPLATE REGISTROS SELECCIONADOS ------------------------------------------>
     <div class="countcolor" *dxTemplate="let data of 'Contarseleccionados'">
         <div class="informer">
-            <h2 class="count">{{contador}}</h2>
-            <span class="name">Selec</span>
+            <h2 class="countcount">{{contador}}</h2>
+            <span class="countname">Seleccionados</span>
         </div>
     </div>
 

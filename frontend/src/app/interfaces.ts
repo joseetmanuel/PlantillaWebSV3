@@ -23,26 +23,12 @@ export interface IColumns {
  
 }
 
-export interface IColButtons {
-  name?: string;
-  icon?: string;
-  onClick?: string;
-  disabled: boolean;
-  type: string;
-}
+
 
 export interface IExportExcel {
   enabled?: boolean;
   fileName?: string;
 
-}
-
-export interface ISummaries {
-  column: string;
-  summaryType: string;
-  valueFormat?: string;
-  displayFormat?: string;
-  name?: string;
 }
 
 export interface IScroll {

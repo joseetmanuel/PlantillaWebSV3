@@ -5,9 +5,7 @@ import { MDCDialog } from '@material/dialog';
 import {
   IGridOptions,
   IColumns,
-  IColButtons,
   IExportExcel,
-  ISummaries,
   ISearchPanel,
   IScroll,
   Toolbar
@@ -34,9 +32,7 @@ export class EditClienteComponent implements OnInit {
   gridOptions: IGridOptions;
   columns: IColumns[];
   columDoc: IColumns[];
-  colButtons: IColButtons[];
   exportExcel: IExportExcel;
-  summaries: ISummaries[];
   searchPanel: ISearchPanel;
   scroll: IScroll;
   evento: string;
@@ -267,20 +263,9 @@ export class EditClienteComponent implements OnInit {
         }
       ];
 
-      //******************PARAMETROS DE TEMPLATE DE BOTONES**************** */
-
-      //******************PARAMETROS DE SUMMARIES**************** */
-      this.summaries = [
-        {
-          column: 'idCliente',
-          summaryType: 'custom',
-          displayFormat: 'Check: {0}',
-          name: 'SelectedRowsSummary'
-        }
-      ];
 
       //******************PARAMETROS DE PAGINACION DE GRID**************** */
-      let pageSizes = [];
+      const pageSizes = [];
       pageSizes.push('10', '25', '50', '100');
 
       //this.gridOptions = { paginacion: 10, pageSize:pageSizes}

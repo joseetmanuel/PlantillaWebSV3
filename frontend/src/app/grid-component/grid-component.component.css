@@ -9,6 +9,7 @@
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
+    cursor: pointer;
 }
 
 .boton{
@@ -16,17 +17,33 @@
     margin-bottom: 5px;
 }
 
-.pop-class {
-    background: red;
+.countcolor{
+    color: #b4b4b4;
 }
 
-.countcolor{
-    background-color: rgba(103, 171, 255, 0.6);
+.totalcolor{
+    background-color: #b4b4b4;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.2);
+}
+
+::ng-deep #gridContainer .dx-datagrid-filter-panel{
+    background: #F8F9FA;
+    
+}
+
+::ng-deep #gridContainer .dx-datagrid-filter-panel .dx-icon-filter {
+    color: gray;
+    
+}
+
+::ng-deep #gridContainer .dx-datagrid-filter-panel .dx-datagrid-filter-panel-text{
+    color: gray;
+    
 }
 
 ::ng-deep #gridContainer .dx-datagrid-header-panel {
     padding: 0;
-    background-color: rgba(85, 149, 222, 0.6);
+    
 }
 
 ::ng-deep #gridContainer .dx-datagrid-header-panel .dx-toolbar {
@@ -54,15 +71,51 @@
 
 ::ng-deep #gridContainer .informer {
     height: 70px;
-    width: 40px;
+    width: 150px;
     text-align: center;
     color: #fff;
 }
 
-::ng-deep #gridContainer .count {
+::ng-deep #gridContainer .totalcount {
     padding-top: 15px;
     line-height: 27px;
-    font-size: 35px;
+    font-size: 30px;
     margin: 0;
 }
 
+::ng-deep #gridContainer .countcount {
+    padding-top: 15px;
+    line-height: 27px;
+    font-size: 30px;
+    color: #b4b4b4;
+    margin: 0;
+}
+
+::ng-deep #gridContainer .countname {
+    color: #b4b4b4;
+}
+
+::ng-deep #gridContainer .dx-datagrid-header-panel .dx-button{
+ border-width: 0 1px 0 0;
+ border-radius: 0;
+}
+
+::ng-deep #gridContainer .dx-datagrid-export-button .dx-icon-export-excel-button{
+    width: 35px;
+    height: 35px;
+}
+::ng-deep #gridContainer .dx-datagrid-export-button .dx-icon-export-excel-button:before{
+    background-image: url('../../assets/xcel.png'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 35px 35px;
+    display: block;
+    width: 100%; 
+    height: 100%;
+    content:"";
+  }
+
+::ng-deep #gridContainer .dx-toolbar-text-auto-hide .dx-button .dx-icon{
+    width: 35px;
+    height: 35px;
+}

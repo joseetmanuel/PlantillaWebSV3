@@ -48,8 +48,7 @@
                     </div>
                 </div>
             </div>
-            <app-grid-component [datos]="cienteEntidad" [gridOptions]="gridOptions" [columns]="columns" [colButtons]="colButtons" [exportExcel]="exportExcel" [summaries]="summaries" (datosevent)='datosMessage($event)' [searchPanel]="searchPanel" [scroll]="scroll"
-                (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
+            <app-grid-component [datos]="cienteEntidad" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel" (datosevent)='datosMessage($event)' [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
             </app-grid-component>
         </mat-card>
         <mat-card>
@@ -61,8 +60,7 @@
                     </div>
                 </div>
             </div>
-            <app-grid-component [datos]="documentos" [gridOptions]="gridOptions" [columns]="columDoc" [colButtons]="colButtons" [exportExcel]="exportExcel" [summaries]="summaries" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)"
-                [toolbar]="toolbar">
+            <app-grid-component [datos]="documentos" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
             </app-grid-component>
         </mat-card>
     </div>

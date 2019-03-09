@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   IGridOptions,
   IColumns,
-  IColButtons,
   IExportExcel,
-  ISummaries,
   ISearchPanel,
   IScroll,
   Toolbar
@@ -25,9 +23,7 @@ export class ClientesComponent implements OnInit {
   datosevent;
   gridOptions: IGridOptions;
   columns: IColumns[];
-  colButtons: IColButtons[];
   exportExcel: IExportExcel;
-  summaries: ISummaries[];
   searchPanel: ISearchPanel;
   scroll: IScroll;
   evento: string;
@@ -167,13 +163,6 @@ export class ClientesComponent implements OnInit {
     try {
       this.columns = [
         {
-          caption: 'Check',
-          dataField: 'check',
-          cellTemplate: 'checkbox',
-          hiddingPriority: '2',
-          width: 150
-        },
-        {
           caption: 'idCliente',
           dataField: 'idCliente',
           hiddingPriority: '1',
@@ -241,7 +230,7 @@ export class ClientesComponent implements OnInit {
       // #endregion
       this.toolbar = [
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {
@@ -252,7 +241,7 @@ export class ClientesComponent implements OnInit {
           visible: true
         },
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {
@@ -265,7 +254,7 @@ export class ClientesComponent implements OnInit {
           name2: 'multiple'
         },
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {

@@ -8,7 +8,6 @@
             </div>
         </div>
     </div>
-    <app-grid-component [datos]="clientes" [gridOptions]="gridOptions" [columns]="columns" [colButtons]="colButtons" [exportExcel]="exportExcel" [summaries]="summaries" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)"
-        (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    <app-grid-component [datos]="clientes" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
     </app-grid-component>
 </div>
