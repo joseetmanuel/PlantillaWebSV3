@@ -177,20 +177,6 @@ export class ClientesComponent implements OnInit {
 
       // #region documentación
       /*
-    Parametros de Sumaries
-    */
-      // #endregion
-      this.summaries = [
-        {
-          column: 'idCliente',
-          summaryType: 'custom',
-          displayFormat: 'Check: {0}',
-          name: 'SelectedRowsSummary'
-        }
-      ];
-
-      // #region documentación
-      /*
     Parametros de Paginacion de Grit
     */
       // #endregion

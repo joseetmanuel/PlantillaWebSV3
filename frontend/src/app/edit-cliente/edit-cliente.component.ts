@@ -216,13 +216,7 @@ export class EditClienteComponent implements OnInit {
   ngOnInit() {
     try {
       this.columns = [
-        {
-          caption: 'Check',
-          dataField: 'check',
-          cellTemplate: 'checkbox',
-          hiddingPriority: '2'
-        },
-        {
+       {
           caption: 'rfcClienteEntidad',
           dataField: 'rfcClienteEntidad',
           hiddingPriority: '1'
@@ -245,12 +239,6 @@ export class EditClienteComponent implements OnInit {
       ];
 
       this.columDoc = [
-        {
-          caption: 'Check',
-          dataField: 'check',
-          cellTemplate: 'checkbox',
-          hiddingPriority: '2'
-        },
         {
           caption: 'idDocumento',
           dataField: 'idDocumento',
@@ -287,7 +275,7 @@ export class EditClienteComponent implements OnInit {
       //******************PARAMETROS DE TOOLBAR**************** */
       this.toolbar = [
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {
@@ -298,7 +286,7 @@ export class EditClienteComponent implements OnInit {
           visible: true
         },
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {
@@ -311,7 +299,7 @@ export class EditClienteComponent implements OnInit {
           name2: 'multiple'
         },
         {
-          location: 'before',
+          location: 'after',
           widget: 'dxButton',
           locateInMenu: 'auto',
           options: {

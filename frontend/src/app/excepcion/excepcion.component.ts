@@ -70,7 +70,7 @@ export class ExcepcionComponent implements OnInit {
       };
       this._excepcionService.postService('excepcion/postInsExcepcion', data).subscribe(
         (res: any) => {
-          this.snackBar.open(res['recordsets'][0][0]['result'], 'Ok', {
+          this.snackBar.open('Ticket levantado', 'Ok', {
             duration: 2000
           });
           this.dialogRef.close();

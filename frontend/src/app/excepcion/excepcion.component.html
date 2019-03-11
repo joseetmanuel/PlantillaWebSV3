@@ -1,42 +1,39 @@
 <div class="cardHeader">
-  <div class="container">
-    <span class="float-right">
+    <div class="container">
+        <span class="float-right">
       <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
     </span>
-    <mat-card-title>Error</mat-card-title>
-  </div>
+        <mat-card-title>La operación no pudo ser procesada.</mat-card-title>
+    </div>
 </div>
 <mat-card-content>
-  <p class="contenido">
-    Error de {{tipoMensaje}}
-  </p>
+    <p class="contenido">
+        El sistema no ha funcionado correctamente, hemos recabado la información relacionada con este incidente. Para generar un ticket al equipo de soporte de clic en el botón “Enviar Informe”, daremos seguimiento a su solicitud.
+    </p>
 </mat-card-content>
 <div class="row">
-  <div class="col-6">
-    <div class="inLine bordes tipo">
-      <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
+    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <div class="inLine bordes tipo">
+            <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
+        </div>
     </div>
-  </div>
-  <div class="col-6">
-    <div class="poss">
-      <div class="punter">
-        <button class="btn inLine bordes1" (click)='enviar()'>
-          <i class="far fa-envelope"></i><span> Enviar Información</span>
-        </button>
-        <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 1' (click)="cambio()">Ver
-          más <i class="fas fa-chevron-down"></i></div>
-        <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 0' (click)="cambio()">Ver
-          menos <i class="fas fa-chevron-up"></i></div>
-      </div>
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+        <div class='float-right'>
+            <button class="btn inLine bordes1" (click)='enviar()'>
+                <i class="far fa-envelope"></i><span> Enviar Información</span>
+              </button>
+        </div>
     </div>
-  </div>
+    <div class='col-xs-12 col-sm-6 col-md-5 col-lg-5'>
+        <div class='float-right'>
+            <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 1' (click)="cambio()">Ver más <i class="fas fa-chevron-down"></i></div>
+            <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 0' (click)="cambio()">Ver menos <i class="fas fa-chevron-up"></i></div>
+        </div>
+    </div>
 </div>
 
 <div class="collapse" id="collapseExample">
-  <!-- <hr>
-  <p class='fecha'>05/02/2019 16:46</p>
-  <hr> -->
-  <div class="ex1">
-    <pre class='otra'>{{data.stack}}</pre>
-  </div>
+    <div class="ex1">
+        <pre class='otra'>{{data.stack}}</pre>
+    </div>
 </div>
