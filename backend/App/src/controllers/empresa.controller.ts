@@ -14,7 +14,7 @@ import { EmpresaRepository } from '../repository/empresa.respository';
 
 /**
  * @summary En este archivo van todos los metodos referentes a los clientes de SISCO
- * localhost:{{port}}/cliente/...
+ * {server}:{{port}}/cliente/...
  */
 @JsonController('/empresa')
 export class EmpresaController {
@@ -35,7 +35,7 @@ export class EmpresaController {
     Fecha:          18/02/2019
     Descripción:    Obtener todas las empresas
     SP:             [empresa].[SEL_EMPRESA_SP]
-    Url:            http://localhost:1000/empresa/getEmpresas
+    Url:            http://{server}:{port}/empresa/getEmpresas
     Wiki:           ...
     */
     // #endregion
@@ -52,7 +52,7 @@ export class EmpresaController {
     Fecha:          18/02/2019
     Descripción:    Obtener a una empresa por Rfc
     SP:             [empresa].[SEL_EMPRESAPORRFC_SP]
-    Url:            http://localhost:1000/empresa/getEmpresaPorRfc?rfcEmpresa=1
+    Url:            http://{server}:{port}/empresa/getEmpresaPorRfc?rfcEmpresa=1
     Wiki:           ...
     */
     // #endregion
@@ -70,7 +70,7 @@ export class EmpresaController {
     Fecha:          18/02/2019
     Descripción:    Insertar una Empresa
     SP:             [empresa].[INS_EMPRESA_SP]
-    Url:            http://localhost:1000/empresa/postInsertaEmpresa
+    Url:            http://{server}:{port}/empresa/postInsertaEmpresa
     Wiki:           ...
     */
     // #endregion
@@ -89,12 +89,11 @@ export class EmpresaController {
     Fecha:          18/02/2019
     Descripción:    Actualiza la Empresa
     SP:             [empresa].[UPD_EMPRESA_SP]
-    Url:            http://localhost:1000/empresa/putActualizaEmpresa
+    Url:            http://{server}:{port}/empresa/putActualizaEmpresa
     Wiki:           https://github.com/joseetmanuel/PlantillaWeb/wiki/Empresa
     */
     // #endregion
     putActualizaEmpresa(@Body() body: Request){
-        console.log(body)
         return this.repository.putActualizaEmpresa(body);
     }
 
@@ -107,7 +106,7 @@ export class EmpresaController {
     Fecha:          18/02/2019
     Descripción:    Elimina una Empresa
     SP:             [empresa].[DEL_EMPRESA_SP]
-    Url:            http://localhost:1000/empresa/deleteEmpresa
+    Url:            http://{server}:{port}/empresa/deleteEmpresa
     Wiki:           ...
     */
     // #endregion

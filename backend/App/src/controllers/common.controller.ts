@@ -14,7 +14,7 @@ import { CommonRepository } from '../repository/common.repository';
 
 /**
  * @summary En este archivo van todos los metodos referentes a los clientes de SISCO
- * localhost:{{port}}/cliente/...
+ * {server}:{{port}}/cliente/...
  */
 @JsonController('/common')
 export class CommonController {
@@ -33,7 +33,7 @@ export class CommonController {
     Fecha:          18/02/2019
     Descripción:    Ontiene todos los TipoVialidad
     SP:             [direccion].[SEL_TIPOVIALIDAD_SP]
-    Url:            http://localhost:1000/empresa/getTipoVialidad
+    Url:            http://{server}:{port}/empresa/getTipoVialidad
     Wiki:           ...
     */
     // #endregion
@@ -49,7 +49,7 @@ export class CommonController {
     Fecha:          18/02/2019
     Descripción:    Ontiene todos los TipoAsentamiento
     SP:             [direccion].[SEL_TIPOASENTAMIENTO_SP]
-    Url:            http://localhost:1000/empresa/getTipoAsentamiento
+    Url:            http://{server}:{port}/empresa/getTipoAsentamiento
     Wiki:           ...
     */
     // #endregion
@@ -67,7 +67,7 @@ export class CommonController {
     Fecha:          18/02/2019
     Descripción:    Obtiene el Estado y el Municipio por CP
     SP:             [direccion].[SEL_CPAUTOCIMPLETE_SP]
-    Url:            http://localhost:1000/comnon/postCpAutocomplete
+    Url:            http://{server}:{port}/comnon/postCpAutocomplete
     Wiki:           ...
     */
     // #endregion

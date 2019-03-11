@@ -10,8 +10,12 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { SiscoV3Service } from '../services/siscov3.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ExcepcionComponent } from '../excepcion/excepcion.component';
-import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+
+/*
+Cacha los posibles errores del fomControl
+*/
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -27,9 +31,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-add-cliente',
-  templateUrl: './add-cliente.component.html',
-  styleUrls: ['./add-cliente.component.sass'],
+  selector: 'app-ins-cliente',
+  templateUrl: './ins-cliente.component.html',
+  styleUrls: ['./ins-cliente.component.sass'],
   providers: [SiscoV3Service]
 })
 export class AddClienteComponent implements OnInit {
@@ -51,13 +55,18 @@ export class AddClienteComponent implements OnInit {
   @ViewChild('cp') cp;
   @ViewChild('municipio') municipio;
 
-  addCliente = 'addCliente';
 
+  /*
+  Hace las validaciones para que los datos que inserten del cliente sean correctos
+  */
   clienteForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     idUsuario: new FormControl('1')
   });
 
+  /*
+  Hace las validaciones para que los datos que inserten del Cliente Entidad sean correctos
+  */
   clienteEntidadForm = new FormGroup({
     tipoPersona: new FormControl('1', [Validators.required]),
     razonSocial: new FormControl('', [Validators.required]),
@@ -101,10 +110,19 @@ export class AddClienteComponent implements OnInit {
     private _siscoV3Service: SiscoV3Service
   ) {
     try {
+      /*
+      Obtiene el idClinte o rfcClienteEntidad por los parametros
+      */
       this.activatedRoute.params.subscribe(parametros => {
         this.numero = 0;
         this.idCliente = parametros.idCliente;
         this.rfcClienteEntidad = parametros.rfcClienteEntidad;
+
+
+        /*
+        Si solo llega el idCliente por los parametros entonces se va a insertar un nuevo dato Fiscal. De lo contrario si llega el
+        rfcClienteEntidad los datos de ese rfc serán actualizados.
+        */
         if (parametros.idCliente) {
           this.numero = 0;
           _siscoV3Service
@@ -208,6 +226,10 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+
+  /*
+  Cargamos los datos iniciales de la aplicacion que son el tipoVialidad y tipoAsentamiento
+  */
   ngOnInit() {
     try {
       this.numero = 0;
@@ -256,6 +278,10 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+
+  /*
+  Este metodo se encarga de buscar el código postal, junto con su estado, municipio y asentamiento
+  */
   getCp() {
     try {
       if (this.clienteEntidadForm.controls['cp'].value) {
@@ -317,6 +343,9 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+  /*
+  Cuando le den enter en el capo de código Postal ejecutará el metodo getCp().
+  */
   onKeydown(event) {
     try {
       if (event.key === 'Enter') {
@@ -327,6 +356,10 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+
+  /*
+  Agrega un nuevo dato fiscal
+  */
   agregarClienteEntidad() {
     try {
       this.numero = 0;
@@ -387,6 +420,10 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+
+  /**
+   Agrega un nuevo Cliente
+   */
   agregarCliente() {
     try {
       this.numero = 0;
@@ -421,6 +458,10 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+
+  /*
+  Modifica los datos de un dato fiscal
+  */
   modificarClienteEntidad() {
     try {
       this.numero = 0;
@@ -478,6 +519,9 @@ export class AddClienteComponent implements OnInit {
     }
   }
 
+  /*
+  En caso de que algun metodo, consulta a la base de datos o conexión con el servidor falle, se abrira el dialog de excepciones
+  */
   excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
@@ -495,7 +539,7 @@ export class AddClienteComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result: any) => {});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

@@ -10,6 +10,9 @@ import { NGXLogger } from 'ngx-logger';
 import { SiscoV3Service } from '../services/siscov3.service';
 import { ExcepcionComponent } from '../excepcion/excepcion.component';
 
+/*
+Obtenemos la tada que nos manda el componente padre al Dialog
+*/
 export interface SendData {
   data: any;
   tipo: string;
@@ -34,6 +37,9 @@ export class DeleteAlertComponent implements OnInit {
 
   ngOnInit() {}
 
+  /*
+  Validamos si la data es igual a 1 se borrara un cliente, y si es 2 borrara un dato fiscal
+  */
   eliminar() {
     try {
       if (this.data.tipo === '1') {
@@ -84,6 +90,9 @@ export class DeleteAlertComponent implements OnInit {
     }
   }
 
+  /*
+  Si cancelan se cierra el Dialog
+  */
   cancelar(): void {
     try {
       this.dialogRef.close();
@@ -92,6 +101,9 @@ export class DeleteAlertComponent implements OnInit {
     }
   }
 
+  /*
+  En caso de que algun metodo, consulta a la base de datos o conexión con el servidor falle, se abrira el dialog de excepciones
+  */
   excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
@@ -109,7 +121,7 @@ export class DeleteAlertComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result: any) => {});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
