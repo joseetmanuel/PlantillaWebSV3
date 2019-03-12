@@ -44,7 +44,7 @@ export class DeleteAlertComponent implements OnInit {
     try {
       if (this.data.tipo === '1') {
         this._siscoV3Service
-          .deleteService('cliente/deleteCliente', this.data.data)
+          .deleteService('cliente/deleteCliente', 'data=' + this.data.data)
           .subscribe(
             (res: any) => {
               if (res.err) {
@@ -65,7 +65,7 @@ export class DeleteAlertComponent implements OnInit {
       } else if (this.data.tipo === '2') {
         this.numero = 0;
         this._siscoV3Service
-          .deleteService('cliente/deleteClienteEntidad', this.data.data)
+          .deleteService('cliente/deleteClienteEntidad', 'data=' + this.data.data)
           .subscribe(
             (res: any) => {
               if (res.err) {

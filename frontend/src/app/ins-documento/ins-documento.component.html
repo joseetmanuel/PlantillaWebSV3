@@ -49,6 +49,44 @@
           </div>
         </div>
       </mat-card>
+      <mat-card class="cardMargin" [ngClass]="{ desactiva: numero == 0 }">
+        <div [formGroup]="documentoForm">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <mat-form-field class="all">
+                <mat-select formControlName="idTipoDocumento" placeholder="Selecciona un documento">
+                  <mat-option
+                    *ngFor="let documento of documentos"
+                    [value]="documento.idTipoDocumento"
+                  >
+                    {{ documento.descripcion }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El campo es
+                  <strong>requerido</strong>
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <dx-file-uploader (onValueChanged)="test()" #fileUploader uploadButtonText="Cargar" uploadedMessage="Cargado"
+            uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="o arrastra aqui los archivo(s)"
+            [multiple]="IUploadFile.multiple" accept="*" uploadMode="useForm" [allowedFileExtensions]="IUploadFile.extension"
+            [maxFileSize]="15000000"></dx-file-uploader>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+            <button
+              class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+            (click)='insDocto(fileUploader)' [disabled]="(disabled || !documentoForm.valid)">
+              <i class="pe-7s-diskette btn-icon-wrapper"> </i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </mat-card>
     </div>
   </div>
 </div>
