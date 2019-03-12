@@ -45,7 +45,7 @@ export class DeleteAlertComponent implements OnInit {
     try {
       this.numero = 0;
       this._siscoV3Service
-        .deleteService(this.data.ruta, 'data=' + this.data.data)
+        .deleteService(this.data.ruta, this.data.data)
         .subscribe(
           (res: any) => {
             if (res.err) {
