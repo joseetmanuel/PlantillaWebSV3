@@ -81,6 +81,10 @@ export class ClienteRepository {
         return this.query.spExecute(query, "[cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]")
     }
 
+    getTipoDocumento(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[cliente].[SEL_TIPODOCUMENTO_SP]")
+    }
+
     // ************ Servicios POST ************
 
     /**
