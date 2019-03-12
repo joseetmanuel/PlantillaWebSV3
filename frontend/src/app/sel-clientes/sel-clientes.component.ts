@@ -147,7 +147,7 @@ export class ClientesComponent implements OnInit {
         cont++;
         if (cont === array.length) {
           borrar += '</Ids>';
-          _this.deleteData(borrar, '1');
+          _this.deleteData('cliente/deleteCliente', 'data=' + borrar);
         }
       });
     } catch (error) {
@@ -250,13 +250,13 @@ export class ClientesComponent implements OnInit {
   /*
   Abre el dialog delete-alert
   */
-  deleteData(data: any, tipo) {
+  deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
         width: '60%',
         data: {
-          data: data,
-          tipo: tipo
+          ruta: ruta,
+          data: data
         }
       });
 
