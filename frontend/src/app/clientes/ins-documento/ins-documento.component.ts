@@ -10,7 +10,7 @@ import {
   FormBuilder
 } from '@angular/forms';
 import { IFileUpload } from '../../interfaces';
-import { GLOBAL } from '../../services/config';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DxFileUploaderComponent } from 'devextreme-angular';
 
@@ -47,7 +47,7 @@ export class AddDoctoComponent implements OnInit {
     private _siscoV3Service: SiscoV3Service
   ) {
     try {
-      this.url = GLOBAL.urlFileServer;
+      this.url = environment.urlFileServer;
       this.loadData();
     } catch (error) {
       this.excepciones(error, 1);

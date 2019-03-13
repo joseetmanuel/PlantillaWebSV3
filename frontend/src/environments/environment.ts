@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   serviceUrul: 'http://localhost:1000/',
-  excepcionUrl: 'http://189.204.141.199:5113/'
+  excepcionUrl: 'http://189.204.141.199:5113/',
+  urlFileServer: 'http://localhost:4050/documento/UploadFiles'
 };
 
 /*
