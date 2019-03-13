@@ -30,6 +30,6 @@ export class SiscoV3Service {
 
   deleteService(ruta: string, data: any, headers?: HttpHeaders) {
     if (headers) { this.headers = headers; }
-    return this.http.delete(this.url + ruta + '?data=' + data,  { headers: this.headers});
+    return this.http.delete(this.url + ruta + '?' + data,  { headers: this.headers});
   }
 }

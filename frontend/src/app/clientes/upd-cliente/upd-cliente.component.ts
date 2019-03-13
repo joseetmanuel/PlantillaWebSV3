@@ -131,7 +131,7 @@ export class EditClienteComponent implements OnInit {
           '</rfcClienteEntidad></Ids>';
         cont++;
         if (cont === array.length) {
-          _this.deleteData(borrar, '2');
+          _this.deleteData('cliente/deleteClienteEntidad', 'data=' + borrar);
         }
       });
     } catch (error) {
@@ -430,13 +430,13 @@ export class EditClienteComponent implements OnInit {
   /*
   Abre el dialog delete-alert
   */
-  deleteData(data: any, tipo) {
+  deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
         width: '60%',
         data: {
-          data: data,
-          tipo: tipo
+          ruta: ruta,
+          data: data
         }
       });
       dialogRef.afterClosed().subscribe((result: any) => {

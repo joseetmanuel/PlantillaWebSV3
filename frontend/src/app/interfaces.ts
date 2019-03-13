@@ -20,10 +20,7 @@ export interface IColumns {
   groupIndex?: string;
   cellTemplate?: string;
   hiddingPriority?: string;
- 
 }
-
-
 
 export interface IExportExcel {
   enabled?: boolean;
@@ -36,7 +33,7 @@ export interface IScroll {
 
 }
 
-export interface Toolbar{
+export interface Toolbar {
   location: string;
   widget: string;
   locateInMenu: string;

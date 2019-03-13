@@ -14,8 +14,8 @@ import { ExcepcionComponent } from '../excepcion/excepcion.component';
 Obtenemos la tada que nos manda el componente padre al Dialog
 */
 export interface SendData {
+  ruta: any;
   data: any;
-  tipo: string;
 }
 
 @Component({
@@ -33,7 +33,8 @@ export class DeleteAlertComponent implements OnInit {
     private _siscoV3Service: SiscoV3Service,
     public dialogRef: MatDialogRef<DeleteAlertComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SendData
-  ) {}
+  ) {
+  }
 
   ngOnInit() {}
 
@@ -42,49 +43,27 @@ export class DeleteAlertComponent implements OnInit {
   */
   eliminar() {
     try {
-      if (this.data.tipo === '1') {
-        this._siscoV3Service
-          .deleteService('cliente/deleteCliente', this.data.data)
-          .subscribe(
-            (res: any) => {
-              if (res.err) {
-                this.numero = 1;
-                this.excepciones(res.err, 4);
-              } else if (res.excepcion) {
-                this.numero = 1;
-                this.excepciones(res.excepcion, 3);
-              } else {
-                this.numero = 1;
-                this.dialogRef.close(1);
-              }
-            },
-            (error: any) => {
-              this.excepciones(error, 2);
-            }
-          );
-      } else if (this.data.tipo === '2') {
-        this.numero = 0;
-        this._siscoV3Service
-          .deleteService('cliente/deleteClienteEntidad', this.data.data)
-          .subscribe(
-            (res: any) => {
-              if (res.err) {
-                this.numero = 1;
-                this.excepciones(res.err, 4);
-              } else if (res.excepcion) {
-                this.numero = 1;
-                this.excepciones(res.excepcion, 3);
-              } else {
-                this.numero = 1;
-                this.dialogRef.close(1);
-              }
-            },
-            (error: any) => {
+      this.numero = 0;
+      this._siscoV3Service
+        .deleteService(this.data.ruta, this.data.data)
+        .subscribe(
+          (res: any) => {
+            if (res.err) {
               this.numero = 1;
-              this.excepciones(error, 2);
+              this.excepciones(res.err, 4);
+            } else if (res.excepcion) {
+              this.numero = 1;
+              this.excepciones(res.excepcion, 3);
+            } else {
+              this.numero = 1;
+              this.dialogRef.close(1);
             }
-          );
-      }
+          },
+          (error: any) => {
+            this.numero = 1;
+            this.excepciones(error, 2);
+          }
+        );
     } catch (error) {
       this.excepciones(error, 1);
     }

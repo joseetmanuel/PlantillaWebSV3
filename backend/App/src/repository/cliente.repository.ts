@@ -110,6 +110,10 @@ export class ClienteRepository {
         return this.query.spExecute(body, '[cliente].[INS_CLIENTEENTIDAD_SP]')
     }
 
+    postInsClienteDocumento(body:any):PromiseLike<{}>{
+        return this.query.spExecute(body, '[cliente].[INS_CLIENTEDOCUMENTO_SP]')
+    }
+
     // ************ Servicios PUT ************
 
     putActualizaCliente(body:any):PromiseLike<{}>{

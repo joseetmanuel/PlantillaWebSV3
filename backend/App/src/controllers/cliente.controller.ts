@@ -166,6 +166,23 @@ export class ClienteController {
     }
 
     
+    @Get('/getTipoDocumento')
+    // #region documentación
+    /*
+    Nombre:         getTipoDocumento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          12/03/2019
+    Descripción:    Obtener lo Tipo de documentoa un cliente entidad con su direccion
+    SP:             [cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]
+    Url:            http://{server}:{port}/cliente/getTipoDocumento
+    Wiki:           ...
+    */
+    // #endregion
+    getTipoDocumento(@Req() req: Request) {
+        return this.repository.getTipoDocumento(req.query);
+    }
+
+    
     // ************ Servicios POST ************
     
     @Post('/postInserta')
@@ -223,6 +240,24 @@ export class ClienteController {
     postInsertaClienteEntidad(@Body() body: Request) {
         return this.repository.postInsertaClienteEntidad(body);
     }
+
+    @Post('/postInsClienteDocumento')
+    // #region documentación
+    /*
+    Nombre:         postInsClienteDocumento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          12/03/2019
+    Descripción:    Insertar un Cliente Documento
+    SP:             [cliente].[INS_CLIENTEDOCUMENTO_SP]
+    Url:            http://{server}:{port}/cliente/postInsClienteDocumento
+    Wiki:           ...
+    */
+    // #endregion
+    postInsClienteDocumento(@Body() body: Request) {
+        return this.repository.postInsClienteDocumento(body);
+    }
+
+
 
     // ************ Servicios PUT ************ 
     @Put('/putActualizaCliente')
