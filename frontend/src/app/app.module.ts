@@ -14,8 +14,8 @@ import { PanelComponent } from './panel/panel.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VentasComponent } from './ventas/ventas.component';
-import { ClientesComponent } from './clientes/clientes.component';
-import { AddClienteComponent } from './add-cliente/add-cliente.component';
+import { ClientesComponent } from './sel-clientes/sel-clientes.component';
+import { AddClienteComponent } from './ins-cliente/ins-cliente.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { MaterialModule } from './angular-material';
@@ -26,8 +26,9 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 import { GridComponentComponent } from './grid-component/grid-component.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
+import { EditClienteComponent } from './upd-cliente/upd-cliente.component';
 import { DeleteAlertComponent } from './delete-alert/delete-alert.component';
+import { AddDoctoComponent } from './ins-documento/ins-documento.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DeleteAlertComponent } from './delete-alert/delete-alert.component';
     ExcepcionComponent,
     GridComponentComponent,
     EditClienteComponent,
-    DeleteAlertComponent
+    DeleteAlertComponent,
+    AddDoctoComponent
   ],
   entryComponents: [
     ExcepcionComponent,

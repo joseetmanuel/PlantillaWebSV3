@@ -8,19 +8,19 @@ import {
   Toolbar
 } from '../interfaces';
 import { SiscoV3Service } from '../services/siscov3.service';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { DeleteAlertComponent } from '../delete-alert/delete-alert.component';
 import { MatDialog } from '@angular/material';
 import { ExcepcionComponent } from '../excepcion/excepcion.component';
 
 @Component({
-  selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.sass', '../app.component.sass'],
+  selector: 'app-sel-clientes',
+  templateUrl: './sel-clientes.component.html',
+  styleUrls: ['./sel-clientes.component.sass', '../app.component.sass'],
   providers: [SiscoV3Service]
 })
 export class ClientesComponent implements OnInit {
-  datosevent;
+  datosevent: any;
   gridOptions: IGridOptions;
   columns: IColumns[];
   exportExcel: IExportExcel;
@@ -31,11 +31,9 @@ export class ClientesComponent implements OnInit {
   clientes = [];
   public numero = 1;
 
-  // #region
-    /*
-    Evaluamos a que tipo de evento nos vamos a dirigir.
-    */
-    // #endregion
+  /*
+  Evaluamos a que tipo de evento nos vamos a dirigir cuando se prieten los botones del Toolbar.
+  */
   receiveMessage($event) {
     try {
       this.evento = $event.event;
@@ -62,11 +60,9 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  // #region
-    /*
-    Obtenemos la data del componente "grid-component".
-    */
-    // #endregion
+  /*
+  Obtenemos la data del componente "grid-component".
+  */
   datosMessage($event) {
     try {
       this.datosevent = $event.data;
@@ -74,6 +70,8 @@ export class ClientesComponent implements OnInit {
       this.excepciones(error, 1);
     }
   }
+
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -82,6 +80,10 @@ export class ClientesComponent implements OnInit {
     this.loadData();
   }
 
+
+  /*
+  Este metodo es el que trae todos los datos inciales de los clientes
+  */
   loadData() {
     try {
       this.numero = 0;
@@ -108,11 +110,9 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  // #region documentación
   /*
-  Fincion Agregar
+  Función Agregar que rdirige a la pagina ins-cliente
   */
-  // #endregion
   add(data) {
     try {
       this.router.navigateByUrl('/ins-cliente');
@@ -121,11 +121,9 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  // #region documentación
   /*
-  Funcion Editar
+  Funcion Editar redirige a la pagina upd-cliente para actualizar el nombre del Cliente
   */
-  // #endregion
   edit(data) {
     try {
       this.router.navigateByUrl(
@@ -136,11 +134,9 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  // #region documentación
   /*
-  Funcion Borrar
+  Recorre la data con un forEach para armar un xml, el cual se manda al dialog delete-alert
   */
-  // #endregion
   delete(data) {
     try {
       const _this = this;
@@ -151,7 +147,7 @@ export class ClientesComponent implements OnInit {
         cont++;
         if (cont === array.length) {
           borrar += '</Ids>';
-          _this.deleteData(borrar, '1');
+          _this.deleteData('cliente/deleteCliente', 'data=' + borrar);
         }
       });
     } catch (error) {
@@ -160,6 +156,9 @@ export class ClientesComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*
+    Columnas de la tabla
+    */
     try {
       this.columns = [
         {
@@ -175,26 +174,20 @@ export class ClientesComponent implements OnInit {
         }
       ];
 
-      // #region documentación
       /*
-    Parametros de Paginacion de Grit
-    */
-      // #endregion
+      Parametros de Paginacion de Grit
+      */
       const pageSizes = [];
       pageSizes.push('10', '25', '50', '100');
 
-      // #region documentación
       /*
-    Parametros de Exploracion
-    */
-      // #endregion
+      Parametros de Exploracion
+      */
       this.exportExcel = { enabled: true, fileName: 'prueba2' };
 
-      // #region documentación
       /*
-    Parametros de Search
-    */
-      // #endregion
+      Parametros de Search
+      */
       this.searchPanel = {
         visible: true,
         width: 200,
@@ -202,18 +195,14 @@ export class ClientesComponent implements OnInit {
         filterRow: true
       };
 
-      // #region documentación
       /*
-    Parametros de Scroll
-    */
-      // #endregion
+      Parametros de Scroll
+      */
       this.scroll = { mode: 'standard' };
 
-      // #region documentación
       /*
-    Parametros de Toolbar
-    */
-      // #endregion
+      Parametros de Toolbar
+      */
       this.toolbar = [
         {
           location: 'after',
@@ -257,13 +246,17 @@ export class ClientesComponent implements OnInit {
     }
   }
 
-  deleteData(data: any, tipo) {
+
+  /*
+  Abre el dialog delete-alert
+  */
+  deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
         width: '60%',
         data: {
-          data: data,
-          tipo: tipo
+          ruta: ruta,
+          data: data
         }
       });
 
@@ -277,6 +270,10 @@ export class ClientesComponent implements OnInit {
     }
   }
 
+
+  /*
+  En caso de que algun metodo, consulta a la base de datos o conexión con el servidor falle, se abrira el dialog de excepciones
+  */
   excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
@@ -294,7 +291,7 @@ export class ClientesComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result: any) => {});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

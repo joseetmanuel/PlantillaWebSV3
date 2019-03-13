@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SiscoV3Service } from '../services/siscov3.service';
 import { MDCDialog } from '@material/dialog';
 import {
@@ -14,15 +14,15 @@ import {
   FormGroup,
   FormControl,
   Validators
-} from '../../../node_modules/@angular/forms';
+} from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DeleteAlertComponent } from '../delete-alert/delete-alert.component';
 import { ExcepcionComponent } from '../excepcion/excepcion.component';
 
 @Component({
-  selector: 'app-edit-cliente',
-  templateUrl: './edit-cliente.component.html',
-  styleUrls: ['./edit-cliente.component.sass'],
+  selector: 'app-upd-cliente',
+  templateUrl: './upd-cliente.component.html',
+  styleUrls: ['./upd-cliente.component.sass'],
   providers: [SiscoV3Service]
 })
 export class EditClienteComponent implements OnInit {
@@ -37,13 +37,22 @@ export class EditClienteComponent implements OnInit {
   scroll: IScroll;
   evento: string;
   toolbar: Toolbar[];
+  toolbarDoc: Toolbar[];
   cienteEntidad = [];
   documentos = [];
+
   public numero = 1;
+
+  /*
+  Hace las validaciones para que los datos que inserten del cliente sean correctos
+  */
   clienteForm = new FormGroup({
     nombre: new FormControl('', [Validators.required])
   });
 
+  /*
+  Evaluamos a que tipo de evento nos vamos a dirigir cuando se prieten los botones del Toolbar (clienteEntidad).
+  */
   receiveMessage($event) {
     try {
       this.evento = $event.event;
@@ -70,6 +79,9 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
+  /*
+  Obtenemos la data del componente "grid-component".
+  */
   datosMessage($event) {
     try {
       this.datosevent = $event.data;
@@ -78,7 +90,9 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
-  //******************FUNCION AGREGAR**************** */
+  /*
+  Función Agregar que rdirige a la pagina ins-clienteEntidad
+  */
   add(data) {
     try {
       this.router.navigateByUrl('/ins-clienteEntidad/' + this.idCliente);
@@ -87,7 +101,9 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
-  //******************FUNCION EDITAR**************** */
+  /*
+  Funcion Editar redirige a la pagina upd-clienteEntidad para actualizar los datos fiscales del cliente
+  */
   edit(data) {
     try {
       const rfcClienteEntidad = this.datosevent[0].rfcClienteEntidad;
@@ -97,7 +113,9 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
-  // ******************FUNCION BORRAR**************** */
+  /*
+  Recorre la data con un forEach para armar un xml, el cual se manda al dialog delete-alert
+  */
   delete(data) {
     try {
       let borrar = '';
@@ -113,12 +131,52 @@ export class EditClienteComponent implements OnInit {
           '</rfcClienteEntidad></Ids>';
         cont++;
         if (cont === array.length) {
-          _this.deleteData(borrar, '2');
+          _this.deleteData('cliente/deleteClienteEntidad', 'data=' + borrar);
         }
       });
     } catch (error) {
       this.excepciones(error, 1);
     }
+  }
+
+
+  /*
+  Evaluamos a que tipo de evento nos vamos a dirigir cuando se prieten los botones del Toolbar (documento).
+  */
+  receiveMessageDoc($event) {
+    try {
+      this.evento = $event.event;
+      if ($event === 'add') {
+        const senddata = {
+          event: $event
+        };
+        this.addDoc(senddata);
+      } else if ($event === 'delete') {
+        const senddata = {
+          event: $event,
+          data: this.datosevent
+        };
+        this.deleteDoc(senddata);
+      }
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
+  }
+
+  /*
+  Función Agregar que rdirige a la pagina ins-documento
+  */
+  addDoc(data) {
+    try {
+      this.router.navigateByUrl('/ins-documento/' + this.idCliente);
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
+  }
+
+
+  deleteDoc(data) {
+
   }
 
   constructor(
@@ -127,12 +185,18 @@ export class EditClienteComponent implements OnInit {
     private _siscoV3Service: SiscoV3Service,
     private activatedRoute: ActivatedRoute
   ) {
+    /*
+    Obtiene el idClinte por los parametros
+    */
     this.activatedRoute.params.subscribe(parametros => {
       this.idCliente = parametros.idCliente;
     });
     this.loadData();
   }
 
+  /*
+  Este metodo es el que trae todos los datos inciales del cliente junto con sus dtaos ficales
+  */
   loadData() {
     try {
       this.numero = 0;
@@ -185,7 +249,10 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
-  agregarCliente() {
+  /*
+  Este evento actualiza los datos del cliente (Nombre)
+  */
+ actualizaCliente() {
     try {
       this.cliente.nombre = this.clienteForm.controls['nombre'].value;
       this.numero = 0;
@@ -215,6 +282,9 @@ export class EditClienteComponent implements OnInit {
 
   ngOnInit() {
     try {
+      /*
+      Columnas de la tabla Datos fiscales
+      */
       this.columns = [
        {
           caption: 'rfcClienteEntidad',
@@ -238,6 +308,9 @@ export class EditClienteComponent implements OnInit {
         }
       ];
 
+      /*
+      Columnas de la tabla Documentos
+      */
       this.columDoc = [
         {
           caption: 'idDocumento',
@@ -252,16 +325,20 @@ export class EditClienteComponent implements OnInit {
       ];
 
 
-      //******************PARAMETROS DE PAGINACION DE GRID**************** */
+      /*
+      Parametros de Paginacion de Grit
+      */
       const pageSizes = [];
       pageSizes.push('10', '25', '50', '100');
 
-      //this.gridOptions = { paginacion: 10, pageSize:pageSizes}
-
-      //******************PARAMETROS DE EXPORTACION**************** */
+      /*
+      Parametros de Exploracion
+      */
       this.exportExcel = { enabled: true, fileName: 'prueba2' };
 
-      //******************PARAMETROS DE SEARCH**************** */
+      /*
+      Parametros de Search
+      */
       this.searchPanel = {
         visible: true,
         width: 200,
@@ -269,10 +346,14 @@ export class EditClienteComponent implements OnInit {
         filterRow: true
       };
 
-      //******************PARAMETROS DE SCROLL**************** */
+      /*
+      Parametros de Scroll
+      */
       this.scroll = { mode: 'standard' };
 
-      //******************PARAMETROS DE TOOLBAR**************** */
+      /*
+      Parametros de Toolbar Datos fiscales
+      */
       this.toolbar = [
         {
           location: 'after',
@@ -311,18 +392,51 @@ export class EditClienteComponent implements OnInit {
           name: 'simple'
         }
       ];
+
+
+      /*
+      Parametros de Toolbar Documentos
+      */
+      this.toolbarDoc = [
+        {
+          location: 'after',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 90,
+            text: 'Agregar',
+            onClick: this.receiveMessageDoc.bind(this, 'add')
+          },
+          visible: true
+        },
+        {
+          location: 'after',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 90,
+            text: 'Eliminar',
+            onClick: this.receiveMessageDoc.bind(this, 'delete')
+          },
+          visible: false,
+          name: 'simple'
+        }
+      ];
     } catch (error) {
       this.excepciones(error, 1);
     }
   }
 
-  deleteData(data: any, tipo) {
+  /*
+  Abre el dialog delete-alert
+  */
+  deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
         width: '60%',
         data: {
-          data: data,
-          tipo: tipo
+          ruta: ruta,
+          data: data
         }
       });
       dialogRef.afterClosed().subscribe((result: any) => {
@@ -335,6 +449,9 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
+  /*
+  En caso de que algun metodo, consulta a la base de datos o conexión con el servidor falle, se abrira el dialog de excepciones
+  */
   excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
@@ -352,7 +469,7 @@ export class EditClienteComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result: any) => {});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

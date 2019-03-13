@@ -14,7 +14,7 @@ import { ClienteRepository } from '../repository/cliente.repository';
 
 /**
  * @summary En este archivo van todos los metodos referentes a los clientes de SISCO
- * localhost:{{port}}/cliente/...
+ * {server}:{{port}}/cliente/...
  */
 @JsonController('/cliente')
 export class ClienteController {
@@ -57,7 +57,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Obtener a un cliente por idCliente
     SP:             [cliente].[SEL_CLIENTEPORID_SP]
-    Url:            http://localhost:1000/cliente/getClientePorId?idCliente=1
+    Url:            http://{server}:{port}/cliente/getClientePorId?idCliente=1
     Wiki:           https://github.com/joseetmanuel/PlantillaWeb/wiki/Cliente
     */
     // #endregion
@@ -74,7 +74,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Obtener todos los Contratos
     SP:             [cliente].[SEL_CONTRATO_SP]
-    Url:            http://localhost:1000/cliente/getContratos
+    Url:            http://{server}:{port}/cliente/getContratos
     Wiki:           ...
     */
     // #endregion
@@ -91,7 +91,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Obtener a un contrato por numeroContrato
     SP:             [cliente].[SEL_CONTRATOPORNUMERO_SP]
-    Url:            http://localhost:1000/cliente/getContratoPorNumero?numeroContrato=1
+    Url:            http://{server}:{port}/cliente/getContratoPorNumero?numeroContrato=1
     Wiki:           ...
     */
     // #endregion
@@ -108,7 +108,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Obtener todos los ClienteEntidad
     SP:             [cliente].[SEL_CLIENTEENTIDAD_SP]
-    Url:            http://localhost:1000/cliente/getClienteEntidad
+    Url:            http://{server}:{port}/cliente/getClienteEntidad
     Wiki:           ...
     */
     // #endregion
@@ -125,7 +125,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Obtener a un cliente entidad por rfcClienteEntidad
     SP:             [cliente].[SEL_CLIENTEENTIDADPORRFC_SP]
-    Url:            http://localhost:1000/cliente/getClienteEntidadPorRfc?rfcClienteEntidad=1
+    Url:            http://{server}:{port}/cliente/getClienteEntidadPorRfc?rfcClienteEntidad=1
     Wiki:           ...
     */
     // #endregion
@@ -141,7 +141,7 @@ export class ClienteController {
     Fecha:          04/03/2019
     Descripción:    Obtener a un cliente entidad por idCliente
     SP:             [cliente].[SEL_CLIENTEENTIDADPORIDCLIENTE_SP]
-    Url:            http://localhost:1000/cliente/getClienteEntidadPorIdCliente?idCliente=35
+    Url:            http://{server}:{port}/cliente/getClienteEntidadPorIdCliente?idCliente=35
     Wiki:           ...
     */
     // #endregion
@@ -155,14 +155,31 @@ export class ClienteController {
     Nombre:         getClienteEntidadConDireccion
     Autor:          Gerardo Zamudio Gonzalez
     Fecha:          05/03/2019
-    Descripción:    Obtener a un cliente entidad por idCliente
+    Descripción:    Obtener a un cliente entidad con su direccion
     SP:             [cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]
-    Url:            http://localhost:1000/cliente/getClienteEntidadConDireccion?rfcClienteEntidad = rfc
+    Url:            http://{server}:{port}/cliente/getClienteEntidadConDireccion?rfcClienteEntidad = rfc
     Wiki:           ...
     */
     // #endregion
     getClienteEntidadConDireccion(@Req() req: Request) {
         return this.repository.getClienteEntidadConDireccion(req.query);
+    }
+
+    
+    @Get('/getTipoDocumento')
+    // #region documentación
+    /*
+    Nombre:         getTipoDocumento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          12/03/2019
+    Descripción:    Obtener lo Tipo de documentoa un cliente entidad con su direccion
+    SP:             [cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]
+    Url:            http://{server}:{port}/cliente/getTipoDocumento
+    Wiki:           ...
+    */
+    // #endregion
+    getTipoDocumento(@Req() req: Request) {
+        return this.repository.getTipoDocumento(req.query);
     }
 
     
@@ -182,7 +199,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Insertar un Cliente
     SP:             [cliente].[INS_CLIENTE_SP]
-    Url:            http://localhost:1000/cliente/postInsertaCliente
+    Url:            http://{server}:{port}/cliente/postInsertaCliente
     Wiki:           ...
     */
     // #endregion
@@ -199,7 +216,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Insertar un Contrato
     SP:             [cliente].[INS_CONTRATO_SP]
-    Url:            http://localhost:1000/cliente/postInsertaContrato
+    Url:            http://{server}:{port}/cliente/postInsertaContrato
     Wiki:           ...
     */
     // #endregion
@@ -216,13 +233,31 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Insertar un Cliente Entidad
     SP:             [cliente].[INS_CLIENTEENTIDAD_SP]
-    Url:            http://localhost:1000/cliente/postInsertaClienteEntidad
+    Url:            http://{server}:{port}/cliente/postInsertaClienteEntidad
     Wiki:           ...
     */
     // #endregion
     postInsertaClienteEntidad(@Body() body: Request) {
         return this.repository.postInsertaClienteEntidad(body);
     }
+
+    @Post('/postInsClienteDocumento')
+    // #region documentación
+    /*
+    Nombre:         postInsClienteDocumento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          12/03/2019
+    Descripción:    Insertar un Cliente Documento
+    SP:             [cliente].[INS_CLIENTEDOCUMENTO_SP]
+    Url:            http://{server}:{port}/cliente/postInsClienteDocumento
+    Wiki:           ...
+    */
+    // #endregion
+    postInsClienteDocumento(@Body() body: Request) {
+        return this.repository.postInsClienteDocumento(body);
+    }
+
+
 
     // ************ Servicios PUT ************ 
     @Put('/putActualizaCliente')
@@ -233,7 +268,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Actualiza un Cliente
     SP:             [cliente].[UPD_CLIENTE_SP]
-    Url:            http://localhost:1000/cliente/putActualizaCliente
+    Url:            http://{server}:{port}/cliente/putActualizaCliente
     Wiki:           ...
     */
     // #endregion
@@ -250,7 +285,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Actualiza un Contrato
     SP:             [cliente].[UPD_CONTRATO_SP]
-    Url:            http://localhost:1000/cliente/putActualizaContrato
+    Url:            http://{server}:{port}/cliente/putActualizaContrato
     Wiki:           ...
     */
     // #endregion
@@ -267,7 +302,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Actualiza un ClienteEntidad
     SP:             [cliente].[UPD_CLIENTEENTIDAD_SP]
-    Url:            http://localhost:1000/cliente/putActualizaClienteEntidad
+    Url:            http://{server}:{port}/cliente/putActualizaClienteEntidad
     Wiki:           ...
     */
     // #endregion
@@ -283,7 +318,7 @@ export class ClienteController {
     Fecha:          06/03/2019
     Descripción:    Actualiza un ClienteEntidad con Direccion
     SP:             [cliente].[UPD_DIRECCIONCLIENTEENTIDAD_SP]
-    Url:            http://localhost:1000/cliente/putActualizaDireccionClienteEntidad
+    Url:            http://{server}:{port}/cliente/putActualizaDireccionClienteEntidad
     Wiki:           ...
     */
     // #endregion
@@ -300,7 +335,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Elimina un Cliente
     SP:             [cliente].[DEL_CLIENTE_SP]
-    Url:            http://localhost:1000/cliente/deleteCliente
+    Url:            http://{server}:{port}/cliente/deleteCliente
     Wiki:           ...
     */
     // #endregion
@@ -317,7 +352,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Elimina un Contrato
     SP:             [cliente].[DEL_CONTRATO_SP]
-    Url:            http://localhost:1000/cliente/deleteContrato
+    Url:            http://{server}:{port}/cliente/deleteContrato
     Wiki:           ...
     */
     // #endregion
@@ -334,7 +369,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Elimina un ClienteEntidad
     SP:             [cliente].[DEL_CLIENTEENTIDAD_SP]
-    Url:            http://localhost:1000/cliente/deleteClienteEntidad
+    Url:            http://{server}:{port}/cliente/deleteClienteEntidad
     Wiki:           ...
     */
     // #endregion

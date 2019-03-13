@@ -5,6 +5,11 @@ import { MatSnackBar } from '@angular/material';
 import { NGXLogger } from 'ngx-logger';
 import { ExcepcionTipoGlobal } from './excepcionTipoGlobal';
 
+// #region
+  /*
+  Recivimos la data que se va a insertar en la base de datos
+  */
+  // #endregion
 export interface SendData {
   idTipoExcepcion: number;
   idUsuario: string;
@@ -25,6 +30,11 @@ export class ExcepcionComponent implements OnInit {
   public ver = 1;
   tipoMensaje;
   errorMsg;
+
+
+    /*
+    Obtenemos la Data y validamos los tipos de Errores para enviarlos a la base de datos
+    */
   constructor(
     private logger: NGXLogger,
     private snackBar: MatSnackBar,
@@ -32,7 +42,6 @@ export class ExcepcionComponent implements OnInit {
     public dialogRef: MatDialogRef<ExcepcionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SendData
   ) {
-    const h = Object.keys(this.data).map(key => this.data[key]);
     this.errorMsg = data.stack;
     this.tipoMensaje = ExcepcionTipoGlobal.arr[data.idTipoExcepcion];
     this.data.mensajeExcepcion = 'Error de' + this.tipoMensaje;
@@ -53,10 +62,17 @@ export class ExcepcionComponent implements OnInit {
 
   }
 
+
+  /*
+  Cerramos el Dialog
+  */
   cerrar(): void {
     this.dialogRef.close();
   }
 
+  /*
+  Formamos la Data y enviamos a la base de datos
+  */
   enviar() {
     try {
       const data = {
@@ -80,10 +96,13 @@ export class ExcepcionComponent implements OnInit {
         }
       );
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
+  /*
+  Abre y oculta el collapse donde esta el error
+  */
   cambio() {
     try {
       if (this.ver === 1) {
@@ -92,7 +111,7 @@ export class ExcepcionComponent implements OnInit {
         this.ver++;
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 

@@ -4,7 +4,8 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon clientes"></div>
-                <div> <a [routerLink]="['/sel-clientes']">Clientes</a> - Editar Cliente </div>
+                <div>
+                    <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <i class="colorRuta2">Editar Cliente</i> </div>
             </div>
         </div>
     </div>
@@ -30,7 +31,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='agregarCliente()' [disabled]="!clienteForm.valid">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='actualizaCliente()' [disabled]="!clienteForm.valid">
               <i class="pe-7s-diskette btn-icon-wrapper">
               </i>
               Modificar
@@ -40,7 +41,7 @@
             </div>
         </mat-card>
         <mat-card class="cardMargin">
-            <div class="row">
+            <div class="row cardMargin">
                 <div class="col-sm-12 col-md-12 col-xl-12">
                     <div class="col-sm-12 col-md-12 col-xl-12">
                         <img class='imagen' src="../../assets/images/iconos-sisco/lapizIcon.png"> &nbsp;&nbsp;&nbsp;
@@ -51,8 +52,9 @@
             <app-grid-component [datos]="cienteEntidad" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel" (datosevent)='datosMessage($event)' [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
             </app-grid-component>
         </mat-card>
+
         <mat-card>
-            <div class="row">
+            <div class="row cardMargin">
                 <div class="col-sm-12 col-md-12 col-xl-12">
                     <div class="col-sm-12 col-md-12 col-xl-12">
                         <img class='imagen' src="../../assets/images/iconos-sisco/lapizIcon.png"> &nbsp;&nbsp;&nbsp;
@@ -60,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <app-grid-component [datos]="documentos" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
+            <app-grid-component [datos]="documentos" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessageDoc($event)" [toolbar]="toolbarDoc">
             </app-grid-component>
         </mat-card>
     </div>

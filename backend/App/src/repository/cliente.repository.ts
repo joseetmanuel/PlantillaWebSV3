@@ -81,6 +81,10 @@ export class ClienteRepository {
         return this.query.spExecute(query, "[cliente].[SEL_CLIENTEENTIDADCONDIRECCION_SP]")
     }
 
+    getTipoDocumento(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[cliente].[SEL_TIPODOCUMENTO_SP]")
+    }
+
     // ************ Servicios POST ************
 
     /**
@@ -104,6 +108,10 @@ export class ClienteRepository {
 
     postInsertaClienteEntidad(body:any):PromiseLike<{}>{
         return this.query.spExecute(body, '[cliente].[INS_CLIENTEENTIDAD_SP]')
+    }
+
+    postInsClienteDocumento(body:any):PromiseLike<{}>{
+        return this.query.spExecute(body, '[cliente].[INS_CLIENTEDOCUMENTO_SP]')
     }
 
     // ************ Servicios PUT ************
