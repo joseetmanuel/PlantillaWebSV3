@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { SiscoV3Service } from "../services/siscov3.service";
-import { MatDialog } from "@angular/material";
-import { ExcepcionComponent } from "../excepcion/excepcion.component";
-import { FormGroup, Validators, FormControl } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SiscoV3Service } from '../../services/siscov3.service';
+import { MatDialog } from '@angular/material';
+import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.component';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
-  selector: "app-ins-docto",
-  templateUrl: "./ins-documento.component.html",
-  styleUrls: ["./ins-documento.component.sass"],
+  selector: 'app-ins-docto',
+  templateUrl: './ins-documento.component.html',
+  styleUrls: ['./ins-documento.component.sass'],
   providers: [SiscoV3Service]
 })
 export class AddDoctoComponent implements OnInit {
@@ -31,7 +31,7 @@ export class AddDoctoComponent implements OnInit {
         this.numero = 0;
         this.idCliente = parametros.idCliente;
         _siscoV3Service
-          .getService("cliente/getClientePorId?idCliente=" + this.idCliente)
+          .getService('cliente/getClientePorId?idCliente=' + this.idCliente)
           .subscribe(
             (res: any) => {
               if (res.err) {
@@ -61,14 +61,14 @@ export class AddDoctoComponent implements OnInit {
   excepciones(stack, tipoExcepcion: number) {
     try {
       const dialogRef = this.dialog.open(ExcepcionComponent, {
-        width: "60%",
+        width: '60%',
         data: {
           idTipoExcepcion: tipoExcepcion,
           idUsuario: 1,
           idOperacion: 1,
           idAplicacion: 1,
-          moduloExcepcion: "add-cliente.component",
-          mensajeExcepcion: "",
+          moduloExcepcion: 'add-cliente.component',
+          mensajeExcepcion: '',
           stack: stack
         }
       });

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { IGridOptions, IColumns, IExportExcel, ISearchPanel, IScroll, Toolbar } from '../interfaces'
+import { IGridOptions, IColumns, IExportExcel, ISearchPanel, IScroll, Toolbar } from '../../interfaces';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DxDataGridModule, DxDataGridComponent, getElement } from "devextreme-angular";
+import { DxDataGridModule, DxDataGridComponent, getElement } from 'devextreme-angular';
 
 
 
@@ -37,7 +37,7 @@ export class GridComponentComponent implements OnInit {
    }
 
    ngAfterViewInit(){
-    // console.log("grid:", this.grid.nativeElement);
+    // console.log('grid:', this.grid.nativeElement);
        const div = this.grid.nativeElement.querySelector('.dx-datagrid-filter-panel');
        const parent = this.grid.nativeElement.querySelector('.dx-datagrid');
        const refChild = this.element.nativeElement.querySelector('.dx-datagrid-headers');
@@ -51,9 +51,9 @@ export class GridComponentComponent implements OnInit {
   ngOnInit() {
 
     if (this.gridOptions == undefined) {
-      this.gridOptions = { paginacion: 50, pageSize: ["50", "100", "150"] }
+      this.gridOptions = { paginacion: 50, pageSize: ['50', '100', '150'] }
     }
-    if (this.scroll.mode == "virtual") {
+    if (this.scroll.mode == 'virtual') {
       this.remoteOperations = true;
     } else {
       this.remoteOperations = false;
@@ -78,14 +78,14 @@ onSelectionChanged(e) {
   // console.log(this.toole.toolbarOptions.items)
     for( let i=0;i< this.toole.toolbarOptions.items.length-1; i++){
       if (this.toole.toolbarOptions.items[i].name){
-        if(cont[0].length >= 1 && this.toole.toolbarOptions.items[i].name == "simple"){
+        if(cont[0].length >= 1 && this.toole.toolbarOptions.items[i].name == 'simple'){
           this.toole.toolbarOptions.items[i]['visible']=true; 
           
-              if(cont[0].length >= 2  && this.toole.toolbarOptions.items[i].name2 == "multiple"){
+              if(cont[0].length >= 2  && this.toole.toolbarOptions.items[i].name2 == 'multiple'){
                 this.toole.toolbarOptions.items[i]['visible']=false;
                 
               }
-            } else if(cont[0].length <= 0  && this.toole.toolbarOptions.items[i].name == "simple"){
+            } else if(cont[0].length <= 0  && this.toole.toolbarOptions.items[i].name == 'simple'){
               this.toole.toolbarOptions.items[i]['visible']=false;
             }
       }
@@ -99,8 +99,8 @@ onSelectionChanged(e) {
 public toole;
 onToolbarPreparing(e) {
   this.toole = e;
-  var item = e.toolbarOptions.items.find(item => item.name === "columnChooserButton");
-  item.options.icon = "../../assets/seleccion.png";
+  var item = e.toolbarOptions.items.find(item => item.name === 'columnChooserButton');
+  item.options.icon = '../../assets/seleccion.png';
   
     e.toolbarOptions.items.unshift({
          location: 'before',
@@ -109,7 +109,7 @@ onToolbarPreparing(e) {
       location: 'before',
       template: 'Contarseleccionados',
       visible: false,
-      name: "simple"
+      name: 'simple'
  }, 
     ...this.toolbar
   );

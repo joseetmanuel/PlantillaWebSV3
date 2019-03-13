@@ -6,17 +6,17 @@ import {
   ISearchPanel,
   IScroll,
   Toolbar
-} from '../interfaces';
-import { SiscoV3Service } from '../services/siscov3.service';
+} from '../../interfaces';
+import { SiscoV3Service } from '../../services/siscov3.service';
 import { Router } from '@angular/router';
-import { DeleteAlertComponent } from '../delete-alert/delete-alert.component';
+import { DeleteAlertComponent } from '../../utilerias/delete-alert/delete-alert.component';
 import { MatDialog } from '@angular/material';
-import { ExcepcionComponent } from '../excepcion/excepcion.component';
+import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.component';
 
 @Component({
   selector: 'app-sel-clientes',
   templateUrl: './sel-clientes.component.html',
-  styleUrls: ['./sel-clientes.component.sass', '../app.component.sass'],
+  styleUrls: ['./sel-clientes.component.sass', '../../app.component.sass'],
   providers: [SiscoV3Service]
 })
 export class ClientesComponent implements OnInit {

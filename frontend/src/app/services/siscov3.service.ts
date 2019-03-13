@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GLOBAL } from './config';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SiscoV3Service {
@@ -10,7 +10,7 @@ export class SiscoV3Service {
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({'Content-Type': 'application/json'});
-    this.url = GLOBAL.serviceUrul;
+    this.url = environment.serviceUrul;
   }
 
   getService(ruta: string, headers?: HttpHeaders) {

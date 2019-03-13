@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { NGXLogger } from 'ngx-logger';
-import { SiscoV3Service } from '../services/siscov3.service';
+import { SiscoV3Service } from '../../services/siscov3.service';
 import { ExcepcionComponent } from '../excepcion/excepcion.component';
 
 /*

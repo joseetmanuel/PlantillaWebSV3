@@ -7,9 +7,9 @@ import {
   Validators
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { SiscoV3Service } from '../services/siscov3.service';
+import { SiscoV3Service } from '../../services/siscov3.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ExcepcionComponent } from '../excepcion/excepcion.component';
+import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 

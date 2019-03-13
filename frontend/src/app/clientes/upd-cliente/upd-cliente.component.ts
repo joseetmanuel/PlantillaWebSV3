@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SiscoV3Service } from '../services/siscov3.service';
+import { SiscoV3Service } from '../../services/siscov3.service';
 import { MDCDialog } from '@material/dialog';
 import {
   IGridOptions,
@@ -9,15 +9,15 @@ import {
   ISearchPanel,
   IScroll,
   Toolbar
-} from '../interfaces';
+} from '../../interfaces';
 import {
   FormGroup,
   FormControl,
   Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { DeleteAlertComponent } from '../delete-alert/delete-alert.component';
-import { ExcepcionComponent } from '../excepcion/excepcion.component';
+import { DeleteAlertComponent } from '../../utilerias/delete-alert/delete-alert.component';
+import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.component';
 
 @Component({
   selector: 'app-upd-cliente',

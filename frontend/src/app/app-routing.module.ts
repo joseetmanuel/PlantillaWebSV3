@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PanelComponent} from './panel/panel.component';
-import { LoginComponent} from './login/login.component';
-import { ForgotPasswordComponent} from './forgot-password/forgot-password.component';
+import { LoginComponent} from './acceso/login/login.component';
+import { ForgotPasswordComponent} from './acceso/forgot-password/forgot-password.component';
 import { VentasComponent} from './ventas/ventas.component';
-import { ClientesComponent} from './sel-clientes/sel-clientes.component';
-import { AddClienteComponent } from './ins-cliente/ins-cliente.component';
-import { EditClienteComponent } from './upd-cliente/upd-cliente.component';
-import { AddDoctoComponent } from './ins-documento/ins-documento.component';
+import { ClientesComponent} from './clientes/sel-clientes/sel-clientes.component';
+import { AddClienteComponent } from './clientes/ins-cliente/ins-cliente.component';
+import { EditClienteComponent } from './clientes/upd-cliente/upd-cliente.component';
+import { AddDoctoComponent } from './clientes/ins-documento/ins-documento.component';
 
 const routes: Routes = [
   {path: '', component: PanelComponent},
