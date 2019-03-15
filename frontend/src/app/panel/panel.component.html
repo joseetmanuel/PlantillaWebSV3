@@ -1,58 +1,53 @@
 <div class="d-none d-lg-block">
     <div class="d-none d-lg-block titulo">Panel de Control</div>
     <div class="d-none d-lg-block col-md-12 col-lg-12 col-xl-12">
-        <div class="container-fluid">
-            <div class="row  h-100 align-items-center">
+        <div class="container-fluid d-inline-flex justify-content-center">
+            <div class="row h-100  align-items-center">
                 <div class=" main-card mb-3 card card-body">
                     <div class="row ">
-                        <div class="bordes col">
-                            <div class="badge badge-dot badge-dot-md badge-danger notificaciones">Danger</div>
-                            <div class="badge badge-dot badge-dot-md badge-warning notificaciones">Warning</div>
-                            <img style="height:100px; display:inline-block;"
-                                src="../../assets/images/iconos-sisco/parque.png">
-                            <p class="parque">Parque Vehicular</p>
-                        </div>
-                        <div class="bordes col">
-                            <div id="gps">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/gps.png">
+                        <div class=" d-flex bordes">
+                            <div>
+                                <div class="badge badge-dot badge-dot-md badge-danger notificaciones">Danger</div>
+                                <div class="badge badge-dot badge-dot-md badge-warning notificaciones">Warning</div>
+                                <img class="parque-img" src="../../assets/images/iconos-sisco/parque.png">
+                                <p class="parque">Parque Vehicular</p>
                             </div>
-                            <p class="gps">GPS</p>
                         </div>
-                        <div class="bordes col">
-                            <div id="mantenimiento">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/mantenimiento.png">
+                        <div class=" d-flex bordes">
+                            <div>
+                                <img class="gps-img" src="../../assets/images/iconos-sisco/gps.png">
+                                <p class="gps">GPS</p>
                             </div>
-                            <p class="mantenimiento">Mantenimiento</p>
                         </div>
-                        <div class="bordes col">
-                            <div id="configurador">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/configurador.png">
+                        <div class="d-flex bordes">
+                            <div>
+                                <img class="mantenimiento-img" src="../../assets/images/iconos-sisco/mantenimiento.png">
+                                <p class="mantenimiento">Mantenimiento</p>
                             </div>
-                            <p class="configurador">Configurador</p>
                         </div>
-                        <div class="bordes col">
-                            <div id="partidas">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/partidas.png">
+                        <div class=" d-flex bordes">
+                            <div>
+                                <img class="configurador-img" src="../../assets/images/iconos-sisco/configurador.png">
+                                <p class="configurador">Configurador</p>
                             </div>
-                            <p class="partidas">Partidas</p>
                         </div>
-                        <div class="bordes col">
-                            <div id="talleres">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/talleres.png">
+                        <div class=" d-flex bordes">
+                            <div>
+                                <img class="partidas-img" src="../../assets/images/iconos-sisco/partidas.png">
+                                <p class="partidas">Partidas</p>
                             </div>
-                            <p class="talleres">Talleres</p>
                         </div>
-                        <div routerLink="/ventas" class="bordes col">
-                            <div id="clientes">
-                                <img style="height:80px; display:inline-block;"
-                                    src="../../assets/images/iconos-sisco/clientes.png">
+                        <div class=" d-flex bordes">
+                            <div>
+                                <img class="talleres-img" src="../../assets/images/iconos-sisco/talleres.png">
+                                <p class="talleres">Talleres</p>
                             </div>
-                            <p class="clientes">Clientes</p>
+                        </div>
+                        <div routerLink="/ventas" class=" d-flex bordes">
+                            <div>
+                                <img class="clientes-img" src="../../assets/images/iconos-sisco/clientes.png">
+                                <p class="clientes">Clientes</p>
+                            </div>
                         </div>
                     </div>
                 </div>
