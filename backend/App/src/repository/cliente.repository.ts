@@ -85,6 +85,10 @@ export class ClienteRepository {
         return this.query.spExecute(query, "[cliente].[SEL_TIPODOCUMENTO_SP]")
     }
 
+    getClienteDocumentoPorIdCliente(query: any): PromiseLike<{}> {
+        return this.query.spExecute(query, "[cliente].[SEL_CLIENTEDOCUMENTOPORIDCLIENTE_SP]")
+    }
+
     // ************ Servicios POST ************
 
     /**
@@ -142,6 +146,9 @@ export class ClienteRepository {
     }
     deleteClienteEntidad(body:any):PromiseLike<{}>{
         return this.query.spExecute(body, '[cliente].[DEL_CLIENTEENTIDAD_SP]')
+    }
+    deleteClienteDocumento(body:any):PromiseLike<{}>{
+        return this.query.spExecute(body, '[cliente].[DEL_CLIENTEDOCUMENTO_SP]')
     }
 
     // ************ Metodos Privados ************

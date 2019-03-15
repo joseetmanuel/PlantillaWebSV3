@@ -182,6 +182,23 @@ export class ClienteController {
         return this.repository.getTipoDocumento(req.query);
     }
 
+
+    @Get('/getClienteDocumentoPorIdCliente')
+    // #region documentación
+    /*
+    Nombre:         getClienteDocumentoPorIdCliente
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          12/03/2019
+    Descripción:    Obtener los documentos por idCliente
+    SP:             [cliente].[SEL_CLIENTEDOCUMENTOPORIDCLIENTE_SP]
+    Url:            http://{server}:{port}/cliente/getClienteDocumentoPorIdCliente?idCliente=35
+    Wiki:           ...
+    */
+    // #endregion
+    getClienteDocumentoPorIdCliente(@Req() req: Request) {
+        return this.repository.getClienteDocumentoPorIdCliente(req.query);
+    }
+
     
     // ************ Servicios POST ************
     
@@ -335,7 +352,7 @@ export class ClienteController {
     Fecha:          18/02/2019
     Descripción:    Elimina un Cliente
     SP:             [cliente].[DEL_CLIENTE_SP]
-    Url:            http://{server}:{port}/cliente/deleteCliente
+    Url:            http://{server}:{port}/cliente/deleteCliente?data='<Ids><idCliente>20</idCliente></Ids>'
     Wiki:           ...
     */
     // #endregion
@@ -375,5 +392,21 @@ export class ClienteController {
     // #endregion
     deleteClienteEntidad(@Req() req: Request) {
         return this.repository.deleteClienteEntidad(req.query);
+    }
+
+    @Delete('/deleteClienteDocumento')
+    // #region documentación
+    /*
+    Nombre:         deleteClienteDocumento
+    Autor:          Gerardo Zamudio Gonzalez
+    Fecha:          18/02/2019
+    Descripción:    Elimina un Cliente Documento
+    SP:             [cliente].[DEL_CLIENTEDOCUMENTO_SP]
+    Url:            http://{server}:{port}/cliente/deleteClienteDocumento
+    Wiki:           ...
+    */
+    // #endregion
+    deleteClienteDocumento(@Req() req: Request) {
+        return this.repository.deleteClienteDocumento(req.query);
     }
 }

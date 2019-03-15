@@ -2,11 +2,13 @@
     <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
     <div class="app-page-title">
         <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon clientes"></div>
-                <div>
-                    <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <i class="colorRuta2">Editar Cliente</i> </div>
+            <div class="page-title-heading row">
+                <img class="imagenLogo" src="../../../assets/images/iconos-sisco/clientes.png" alt="">
+                <p class='colorRuta2'>&nbsp;Editar Cliente</p>
             </div>
+        </div>
+        <div>
+            <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [ngClass]="{'desactiva': numero == 0 }">
@@ -62,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <app-grid-component [datos]="documentos" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessageDoc($event)" [toolbar]="toolbarDoc">
+            <app-grid-component [datos]="doctosName" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" (datosevent)='datosMessage($event)' [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessageDoc($event)" [toolbar]="toolbarDoc">
             </app-grid-component>
         </mat-card>
     </div>

@@ -253,7 +253,7 @@ export class ClientesComponent implements OnInit {
   deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
-        width: '60%',
+        width: '500px',
         data: {
           ruta: ruta,
           data: data
@@ -289,8 +289,11 @@ export class ClientesComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe((result: any) => {});
+      dialogRef.afterClosed().subscribe((result: any) => {
+        this.numero = 1;
+      });
     } catch (error) {
+      this.numero = 1;
       console.error(error);
     }
   }

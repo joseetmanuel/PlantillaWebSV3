@@ -1,0 +1,18 @@
+<div class="app-main__inner" [ngClass]="{'desactiva': numero == 0 }">
+  <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+  <div class="app-page-title">
+      <div class="page-title-wrapper">
+          <div class="page-title-heading">
+              <div class="page-title-icon clientes"></div>
+              <div>Proveedores</div>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="proveedores.length > 0">
+
+      <app-grid-component  [datos]="proveedores" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel"
+          [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="eventButtonDataGrid($event)" (datosevent)='datosMessage($event)'
+          [toolbar]="toolbar">
+      </app-grid-component>
+  </div>
+</div>

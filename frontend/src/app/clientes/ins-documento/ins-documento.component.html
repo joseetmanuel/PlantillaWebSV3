@@ -3,90 +3,81 @@
 
     <div class="app-page-title">
         <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon clientes"></div>
-                <div>
-                    <a [routerLink]="['/sel-clientes']">Clientes</a> -
-                    <a [routerLink]="['/upd-cliente/' + datos?.idCliente]">Editar Cliente</a
-          >
-          - Agregar Documento
+            <div class="page-title-heading row">
+                <img class="imagenLogo" src="../../../assets/images/iconos-sisco/clientes.png" alt="">
+                <p class='colorRuta2'>&nbsp;Agregar Documento</p>
+            </div>
         </div>
-      </div>
+        <div>
+            <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <a [routerLink]="['/upd-cliente/'+datos?.idCliente]" class="colorRuta">Editar Cliente</a>
+        </div>
     </div>
-  </div>
 
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div [formGroup]="clienteForm">
-      <mat-card class="cardMargin" [ngClass]="{ desactiva: numero == 0 }">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-xl-12">
-            <img
-              class="imagen"
-              src="../../assets/images/iconos-sisco/clietne_icon.png"
-            />
-            &nbsp;&nbsp;&nbsp;
-            <span>Datos del Cliente</span>
-          </div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-xl-12">
-            <mat-form-field
-              class="all"
-              [ngClass]="{ desactiva: rfcClienteEntidad || idCliente }"
-            >
-              <input
-                matInput
-                value="{{ datos?.nombre }}"
-                placeholder="Nombre Cliente *"
-                formControlName="nombre"
-              />
-              <mat-error>
-                El campo es
-                <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
-      <mat-card class="cardMargin" [ngClass]="{ desactiva: numero == 0 }">
-        <div [formGroup]="documentoForm">
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-              <mat-form-field class="all">
-                <mat-select formControlName="idTipoDocumento" placeholder="Selecciona un documento">
-                  <mat-option
-                    *ngFor="let documento of documentos"
-                    [value]="documento.idTipoDocumento"
-                  >
-                    {{ documento.descripcion }}
-                  </mat-option>
-                </mat-select>
-                <mat-error>
-                  El campo es
-                  <strong>requerido</strong>
-              </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-              <dx-file-uploader (onValueChanged)="test()" #fileUploader uploadButtonText="Cargar" uploadedMessage="Cargado"
-            uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="o arrastra aqui los archivo(s)"
-            [multiple]="IUploadFile.multiple" accept="*" uploadMode="useForm" [allowedFileExtensions]="IUploadFile.extension"
-            [maxFileSize]="15000000"></dx-file-uploader>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-xl-12 text-center">
-            <button
-              class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
-            (click)='insDocto(fileUploader)' [disabled]="(disabled || !documentoForm.valid)">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div [formGroup]="clienteForm">
+            <mat-card class="cardMargin" [ngClass]="{ desactiva: numero == 0 }">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <img class="imagen" src="../../assets/images/iconos-sisco/clietne_icon.png" /> &nbsp;&nbsp;&nbsp;
+                        <span>Datos del Cliente</span>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <mat-form-field class="all" [ngClass]="{ desactiva: rfcClienteEntidad || idCliente }">
+                            <input matInput value="{{ datos?.nombre }}" placeholder="Nombre Cliente *" formControlName="nombre" />
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card class="cardMargin" [ngClass]="{ desactiva: numero == 0 }">
+                <div [formGroup]="documentoForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <mat-form-field class="all">
+                                <mat-select formControlName="idTipoDocumento" placeholder="Selecciona un documento">
+                                    <mat-option *ngFor="let documento of documentosLoad" [value]="documento.idTipoDocumento">
+                                        {{ documento.descripcion }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    El campo es
+                                    <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <dx-file-uploader (onValueChanged)="test()" #fileUploader uploadButtonText="Cargar" uploadedMessage="Cargado" uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="o arrastra aqui los archivo(s)" [multiple]="IUploadFile.multiple"
+                                accept="*" uploadMode="useForm" [allowedFileExtensions]="IUploadFile.extension" [maxFileSize]="15000000"></dx-file-uploader>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='insDocto(fileUploader)' [disabled]="(disabled || !documentoForm.valid)">
               <i class="pe-7s-diskette btn-icon-wrapper"> </i>
               Agregar
             </button>
-          </div>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="row cardMargin">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="col-sm-12 col-md-12 col-xl-12">
+                            <img class='imagen' src="../../assets/images/iconos-sisco/lapizIcon.png"> &nbsp;&nbsp;&nbsp;
+                            <span>Documentos</span>
+                        </div>
+                    </div>
+                </div>
+                <app-grid-component [datos]="doctosName" [gridOptions]="gridOptions" [columns]="columDoc" [exportExcel]="exportExcel" (datosevent)='datosMessage($event)' [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessageDoc($event)" [toolbar]="toolbarDoc">
+                </app-grid-component>
+            </mat-card>
         </div>
-      </mat-card>
     </div>
-  </div>
 </div>

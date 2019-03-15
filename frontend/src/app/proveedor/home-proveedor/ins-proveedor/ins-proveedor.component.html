@@ -1,0 +1,18 @@
+<div class="app-main__inner" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+
+  <div class="app-page-title">
+      <div class="page-title-wrapper">
+          <div class="page-title-heading">
+              <div class="page-title-icon clientes"></div>
+              <div *ngIf="!(rfcProveedor || rfcProveedorEntidad)"> <a [routerLink]="['/proveedor']">Proveedor</a> - Agregar Proveedor </div>
+              <div *ngIf="(rfcProveedor)"> <a [routerLink]="['/proveedor']">Proveedor</a> - <a [routerLink]="['/upd-proveedor/'+datosProveedor?.rfcProveedor]">Editar Proveedor</a> - Agregar Datos Fiscales</div>
+              <div *ngIf="(rfcProveedorEntidad)"> <a [routerLink]="['/proveedor']">Proveedor</a> - <a [routerLink]="['/upd-proveedor/'+datosProveedor?.rfcProveedor]">Editar Proveedor</a> - Editar Datos Fiscales</div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <app-form-proveedor [newProveedor]="true" (formProveedorEvent)= "agregarProveedor($event)"></app-form-proveedor>
+  </div>
+</div>

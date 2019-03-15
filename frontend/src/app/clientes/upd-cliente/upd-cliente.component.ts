@@ -10,14 +10,13 @@ import {
   IScroll,
   Toolbar
 } from '../../interfaces';
-import {
-  FormGroup,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DeleteAlertComponent } from '../../utilerias/delete-alert/delete-alert.component';
 import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.component';
+import { UpdateAlertComponent } from 'src/app/utilerias/update-alert/update-alert.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-upd-cliente',
@@ -28,6 +27,7 @@ import { ExcepcionComponent } from '../../utilerias/excepcion/excepcion.componen
 export class EditClienteComponent implements OnInit {
   public idCliente;
   public cliente;
+  clienteDocumento;
   datosevent;
   gridOptions: IGridOptions;
   columns: IColumns[];
@@ -40,6 +40,8 @@ export class EditClienteComponent implements OnInit {
   toolbarDoc: Toolbar[];
   cienteEntidad = [];
   documentos = [];
+  url;
+  public doctosName = [];
 
   public numero = 1;
 
@@ -80,7 +82,7 @@ export class EditClienteComponent implements OnInit {
   }
 
   /*
-  Obtenemos la data del componente "grid-component".
+  Obtenemos la data del componente 'grid-component'.
   */
   datosMessage($event) {
     try {
@@ -135,10 +137,10 @@ export class EditClienteComponent implements OnInit {
         }
       });
     } catch (error) {
+      this.numero = 1;
       this.excepciones(error, 1);
     }
   }
-
 
   /*
   Evaluamos a que tipo de evento nos vamos a dirigir cuando se prieten los botones del Toolbar (documento).
@@ -164,7 +166,7 @@ export class EditClienteComponent implements OnInit {
   }
 
   /*
-  Función Agregar que rdirige a la pagina ins-documento
+  Función Agregar que redirige a la pagina ins-documento
   */
   addDoc(data) {
     try {
@@ -174,12 +176,33 @@ export class EditClienteComponent implements OnInit {
     }
   }
 
-
+  /*
+  Abre el dialog del delete-alert, para eliminar un documento
+  */
   deleteDoc(data) {
-
+    try {
+      let borrar = '<Ids>';
+      let cont = 0;
+      const _this = this;
+      data.data.forEach(function(element, index, array) {
+        // tslint:disable-next-line:max-line-length
+        borrar +=
+          '<idClienteDocumento>' +
+          element.idClienteDocumento +
+          '</idClienteDocumento>';
+        cont++;
+        if (cont === array.length) {
+          borrar += '</Ids>';
+          _this.deleteData('cliente/deleteClienteDocumento', 'data=' + borrar);
+        }
+      });
+    } catch (error) {
+      this.excepciones(error, 1);
+    }
   }
 
   constructor(
+    private httpClient: HttpClient,
     public dialog: MatDialog,
     private router: Router,
     private _siscoV3Service: SiscoV3Service,
@@ -195,11 +218,15 @@ export class EditClienteComponent implements OnInit {
   }
 
   /*
-  Este metodo es el que trae todos los datos inciales del cliente junto con sus dtaos ficales
+  Este metodo es el que trae todos los datos inciales del cliente junto con sus datos ficales y sus Documentos
   */
   loadData() {
     try {
+      this.url = environment.urlFileServer;
       this.numero = 0;
+      /*
+      Obtenemos los datos del Cliente
+      */
       this._siscoV3Service
         .getService('cliente/getClientePorId?idCliente=' + this.idCliente)
         .subscribe(
@@ -213,6 +240,9 @@ export class EditClienteComponent implements OnInit {
             } else {
               this.cliente = res.recordsets[0][0];
               this.clienteForm.controls['nombre'].setValue(this.cliente.nombre);
+              /*
+              Obtenemos los Datos Fiscales del Cliente
+              */
               this._siscoV3Service
                 .getService(
                   'cliente/getClienteEntidadPorIdCliente?idCliente=' +
@@ -228,8 +258,78 @@ export class EditClienteComponent implements OnInit {
                       this.numero = 1;
                       this.excepciones(res.excepcion, 3);
                     } else {
-                      this.numero = 1;
                       this.cienteEntidad = res.recordsets[0];
+                      /*
+                      Obtenemos los Documentos del Cliente
+                      */
+                      this._siscoV3Service
+                        .getService(
+                          'cliente/getClienteDocumentoPorIdCliente?idCliente=' +
+                            this.idCliente
+                        )
+                        .subscribe(
+                          // tslint:disable-next-line:no-shadowed-variable
+                          (res: any) => {
+                            if (res.err) {
+                              this.numero = 1;
+                              this.excepciones(res.err, 4);
+                            } else if (res.excepcion) {
+                              this.numero = 1;
+                              this.excepciones(res.excepcion, 3);
+                            } else {
+                              this.doctosName = [];
+                              let con = 0;
+                              this.clienteDocumento = res.recordsets[0];
+                              /*
+                              Recorremos el arreglo de clienteDocumento para agregar el tipoDocumento a la tabla
+                              Y despues concatenarle el titulo (nombre de la imagen) y path (Ruta donde esta la imagen)
+                              */
+                              this.clienteDocumento.forEach(d => {
+                                this.doctosName[con] = {
+                                  idClienteDocumento: d.idClienteDocumento,
+                                  tipo: d.tipo,
+                                  titulo : '',
+                                  path : ''
+                                };
+                                con ++;
+                              });
+                              const getDocumentos = [];
+                              /*
+                              Mapeaamos para enviar la data en el formato correcto
+                              */
+                              res.recordsets[0].map(doc => getDocumentos.push({'idDocumento': doc.idDocumento}));
+                              /*
+                              Obtenemos los documentos del cliente para llenar la tabla
+                              */
+                              this.httpClient.get(this.url + 'GetDocumentosById?documentos=' + JSON.stringify(getDocumentos)).subscribe(
+                                // tslint:disable-next-line:no-shadowed-variable
+                                (res: any) => {
+                                  // tslint:disable-next-line:no-unused-expression
+                                  // tslint:disable-next-line:no-shadowed-variable
+                                  // tslint:disable-next-line:no-shadowed-variable
+                                  let con = 0;
+                                  this.documentos = res.recordsets;
+                                  /*
+                                  Concatenamos el path y el titulo conforme al Arreglo anterior
+                                  */
+                                  this.documentos.forEach(d => {
+                                    this.doctosName[con].titulo = d.titulo;
+                                    this.doctosName[con].path = d.path;
+                                    con++;
+                                  });
+                                  this.numero = 1;
+                                }, (error: any) => {
+                                  this.numero = 1;
+                                  this.excepciones(error, 2);
+                                }
+                              );
+                            }
+                          },
+                          (error: any) => {
+                            this.numero = 1;
+                            this.excepciones(error, 2);
+                          }
+                        );
                     }
                   },
                   (error: any) => {
@@ -245,6 +345,7 @@ export class EditClienteComponent implements OnInit {
           }
         );
     } catch (error) {
+      this.numero = 1;
       this.excepciones(error, 1);
     }
   }
@@ -252,30 +353,12 @@ export class EditClienteComponent implements OnInit {
   /*
   Este evento actualiza los datos del cliente (Nombre)
   */
- actualizaCliente() {
+  actualizaCliente() {
     try {
       this.cliente.nombre = this.clienteForm.controls['nombre'].value;
-      this.numero = 0;
-      this._siscoV3Service
-        .putService('cliente/putActualizaCliente', this.cliente)
-        .subscribe(
-          (res: any) => {
-            if (res.err) {
-              this.numero = 1;
-              this.excepciones(res.err, 4);
-            } else if (res.excepcion) {
-              this.numero = 1;
-              this.excepciones(res.excepcion, 3);
-            } else {
-              this.numero = 1;
-            }
-          },
-          (error: any) => {
-            this.numero = 1;
-            this.excepciones(error, 2);
-          }
-        );
+      this.updateData('cliente/putActualizaCliente', this.cliente);
     } catch (error) {
+      this.numero = 1;
       this.excepciones(error, 1);
     }
   }
@@ -286,7 +369,7 @@ export class EditClienteComponent implements OnInit {
       Columnas de la tabla Datos fiscales
       */
       this.columns = [
-       {
+        {
           caption: 'rfcClienteEntidad',
           dataField: 'rfcClienteEntidad',
           hiddingPriority: '1'
@@ -313,17 +396,22 @@ export class EditClienteComponent implements OnInit {
       */
       this.columDoc = [
         {
-          caption: 'idDocumento',
-          dataField: 'idDocumento',
+          caption: 'Tipo documento',
+          dataField: 'tipo',
+          hiddingPriority: '1'
+        },
+        {
+          caption: 'Nombre Documento',
+          dataField: 'titulo',
           hiddingPriority: '1'
         },
         {
           caption: 'Documento',
-          dataField: 'docuemento',
+          dataField: 'path',
+          cellTemplate: 'foto',
           hiddingPriority: '1'
         }
       ];
-
 
       /*
       Parametros de Paginacion de Grit
@@ -393,7 +481,6 @@ export class EditClienteComponent implements OnInit {
         }
       ];
 
-
       /*
       Parametros de Toolbar Documentos
       */
@@ -433,7 +520,7 @@ export class EditClienteComponent implements OnInit {
   deleteData(ruta: any, data) {
     try {
       const dialogRef = this.dialog.open(DeleteAlertComponent, {
-        width: '60%',
+        width: '500px',
         data: {
           ruta: ruta,
           data: data
@@ -445,6 +532,30 @@ export class EditClienteComponent implements OnInit {
         }
       });
     } catch (error) {
+      this.numero = 1;
+      this.excepciones(error, 1);
+    }
+  }
+
+  /*
+  Abre el dialog update-alert
+  */
+  updateData(ruta: any, data) {
+    try {
+      const dialogRef = this.dialog.open(UpdateAlertComponent, {
+        width: '500px',
+        data: {
+          ruta: ruta,
+          data: data
+        }
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+        if (result === 1) {
+          this.loadData();
+        }
+      });
+    } catch (error) {
+      this.numero = 1;
       this.excepciones(error, 1);
     }
   }
@@ -467,8 +578,11 @@ export class EditClienteComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe((result: any) => {});
+      dialogRef.afterClosed().subscribe((result: any) => {
+        this.numero = 1;
+      });
     } catch (error) {
+      this.numero = 1;
       console.error(error);
     }
   }

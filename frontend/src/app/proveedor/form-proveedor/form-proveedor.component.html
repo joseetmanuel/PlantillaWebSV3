@@ -1,0 +1,190 @@
+<mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+
+<div [formGroup]="newProveedorForm">
+  <mat-card [ngClass]="{'desactiva': numero == 0 }">
+      <div class="row">
+          <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="col-sm-12 col-md-12 col-xl-12">
+                  <img class='imagen' src="../../assets/images/iconos-sisco/lapizIcon.png"> &nbsp;&nbsp;&nbsp;
+                  <span>Datos del proveedor</span>
+              </div>
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+          <div class='col-sm-12 col-md-5 col-xl-5 text-center'>
+              <mat-button-toggle-group #group="matButtonToggleGroup" formControlName="idTipoPersona">
+                  <mat-button-toggle value="1" class='all'> Física </mat-button-toggle>
+                  <mat-button-toggle value="4" class='all'> Moral </mat-button-toggle>
+              </mat-button-toggle-group>
+          </div>
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput formControlName="nombreComercial" placeholder="Nombre Comercial *">
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Razón Social *" formControlName="razonSocial" >
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-5 col-xl-5" [ngClass]="{'desactiva': (rfcProveedorEntidad) }">
+              <mat-form-field class="all">
+                  <input  matInput placeholder="RFC Proveedor *" formControlName="rfcProveedor" >
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong> 13 Caracteres
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Persona Contacto" formControlName='personaContacto'>
+              </mat-form-field>
+          </div>
+          
+          <div class="col-sm-12 col-md-5 col-xl-5">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Teléfono" formControlName='telefono'>
+              </mat-form-field>
+          </div>
+      </div>
+      <div class='row'>
+          <div class="col-sm-12 col-md-5 col-xl-5">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Correo Electronico *" formControlName='email'>
+                  <mat-error>
+                      Por favor, da un correo Valido
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-6 col-xl-6">
+                <mat-form-field class="all">
+                    <input #cp matInput placeholder="Código Postal *" (focusout)="getCp()" (keydown)="onKeydown($event)" formControlName="codigoPostal">
+                    <mat-error>
+                        El campo es
+                        <strong>requerido</strong> 5 Caracteres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Estado *" formControlName="estado" >
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-5 col-xl-5">
+              <mat-form-field class="all">
+                  <input #municipio matInput placeholder="Município *" formControlName="municipio" >
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+
+      <div class='row'>
+          <div class="col-sm-12 col-md-5 col-xl-5">
+              <mat-form-field class="all">
+                  <mat-select placeholder="Tipo Asentamiento *" formControlName="idTipoAsentamiento" >
+                      <mat-option *ngFor='let tipoAsentamiento of tipoAsentamientos' [value]="tipoAsentamiento.idTipoAsentamiento">
+                          {{tipoAsentamiento.nombre}}
+                      </mat-option>
+                  </mat-select>
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput placeholder="Asentamiento *" formControlName="asentamiento" [matAutocomplete]="auto" >
+                  <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let asentamiento of asentamientos" [value]="asentamiento.nombreAsentamiento">
+                          {{asentamiento.nombreAsentamiento}}
+                      </mat-option>
+                  </mat-autocomplete>
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+
+      <div class='row'>
+          <div class='col-sm-12 col-md-6 col-xl-6'>
+              <mat-form-field class="all">
+                  <mat-select placeholder="Tipo Vialidad *" formControlName="idTipoVialidad" >
+                      <mat-option *ngFor='let tipoVialidad of tipoVialidades' [value]="tipoVialidad.idTipoVialidad">
+                          {{tipoVialidad.nombre}}
+                      </mat-option>
+                  </mat-select>
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div class='col-sm-12 col-md-5 col-xl-5'>
+              <mat-form-field class="all">
+                  <input matInput placeholder="Vialidad *" formControlName="vialidad" >
+                  <mat-error>
+                      El campo es
+                      <strong>requerido</strong>
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+      <div class='row'>
+          <div class="col-sm-12 col-md-5 col-xl-5">
+              <mat-form-field class="all">
+                  <input matInput placeholder="No. Ext / Mz. Lt." formControlName='numeroExterior'>
+              </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-6 col-xl-6">
+              <mat-form-field class="all">
+                  <input matInput placeholder="No. Int" formControlName='numeroInterior'>
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-11 col-md-11 col-xl-11 text-center" *ngIf="newProveedor">
+              <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='agregarProveedor()' [disabled]="!newProveedorForm.valid">Agregar
+                  <i class="pe-7s-diskette btn-icon-wrapper">
+                  </i>
+              </button>
+          </div>
+
+          <div class="col-sm-11 col-md-11 col-xl-11 text-center" *ngIf="!newProveedor">
+              <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='agregarProveedor()' [disabled]="!newProveedorForm.valid">Modificar
+                  <i class="pe-7s-diskette btn-icon-wrapper">
+                  </i>
+              </button>
+          </div>
+      </div>
+      <div *ngIf='!newProveedorForm.valid'>
+          <p class='message'>Los campos con * son obligatórios</p>
+      </div>
+  </mat-card>
+</div>

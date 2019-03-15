@@ -46,6 +46,15 @@ import { SeguridadRepository } from './repository/seguridad.repository';
 import { SeguridadController, SeguridadMiddleware } from './controllers/seguridad.controller';
 Container.get(SeguridadRepository);
 
+/**
+ * @summary En este archivo van todos los metodos referentes a los proveedores
+ * localhost:{{port}}/proveedor/...
+ */
+import { ProveedorRepository } from './repository/proveedor.repository';
+import { ProveedorController } from './controllers/proveedor.controller';
+Container.get(ProveedorController)
+
+
 
 useContainer(Container);
 // generamos el Express
@@ -56,7 +65,8 @@ const app = createExpressServer({
         ClienteController,
         SeguridadController,
         EmpresaController,
-        CommonController
+        CommonController,
+        ProveedorController
     ],
     middlewares: [SeguridadMiddleware]
 });

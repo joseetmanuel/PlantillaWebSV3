@@ -1,0 +1,47 @@
+<div class="app-main__inner" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+  <div class="app-page-title">
+    <div class="page-title-wrapper">
+      <div class="page-title-heading">
+        <div class="page-title-icon clientes"></div>
+        <div> <a [routerLink]="['/proveedor']">Proveedor</a> - Editar Proveedor </div>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-accordion class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Datos del Proveedor
+        </mat-panel-title>
+        <mat-panel-description>
+          Actualizar Datos del proveedor
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-form-proveedor [newProveedor]="false" [rfcProveedor]="rfcProveedor"
+        (formProveedorEvent)="modificarProveedor($event)"></app-form-proveedor>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Talleres
+        </mat-panel-title>
+        <mat-panel-description>
+          Talleres del Proveedor
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- Form -->
+      <app-grid-component *ngIf="columns" [datos]="proveedorEntidad" [gridOptions]="gridOptions" [columns]="columns"
+        [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+        (messageEvent)="receiveMessage($event)" [toolbar]="toolbar">
+      </app-grid-component>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [ngClass]="{'desactiva': loading }">
+
+  </div>
+</div>

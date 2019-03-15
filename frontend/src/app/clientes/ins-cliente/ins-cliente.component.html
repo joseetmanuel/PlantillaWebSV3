@@ -3,15 +3,29 @@
 
     <div class="app-page-title">
         <div class="page-title-wrapper">
-            <div class="page-title-heading">
-                <div class="page-title-icon clientes"></div>
-                <div *ngIf="!(idCliente || rfcClienteEntidad)">
-                    <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <i class="colorRuta2">Agregar Cliente</i> </div>
-                <div *ngIf="(idCliente)">
-                    <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <a [routerLink]="['/upd-cliente/'+datos?.idCliente]" class="colorRuta">Editar Cliente</a> / <i class="colorRuta2">Agregar Datos Fiscales</i></div>
-                <div *ngIf="(rfcClienteEntidad)">
-                    <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <a [routerLink]="['/upd-cliente/'+datos?.idCliente]" class="colorRuta">Editar Cliente</a> / <i class="colorRuta2">Editar Datos Fiscales</i></div>
+            <div *ngIf="!(idCliente || rfcClienteEntidad)" class="page-title-heading row">
+                <img class="imagenLogo" src="../../../assets/images/iconos-sisco/clientes.png" alt="">
+                <p class='colorRuta2'>&nbsp;Agregar Cliente</p>
             </div>
+
+            <div *ngIf="(idCliente)" class="page-title-heading row">
+                <img class="imagenLogo" src="../../../assets/images/iconos-sisco/clientes.png" alt="">
+                <p class='colorRuta2'>&nbsp;Agregar Datos Fiscales</p>
+            </div>
+
+            <div *ngIf="(rfcClienteEntidad)" class="page-title-heading row">
+                <img class="imagenLogo" src="../../../assets/images/iconos-sisco/clientes.png" alt="">
+                <p class='colorRuta2'>&nbsp;Editar Datos Fiscales</p>
+            </div>
+        </div>
+        <div *ngIf="!(idCliente || rfcClienteEntidad)">
+            <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a>
+        </div>
+        <div *ngIf="(idCliente)">
+            <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <a [routerLink]="['/upd-cliente/'+datos?.idCliente]" class="colorRuta">Editar Cliente</a>
+        </div>
+        <div *ngIf="(rfcClienteEntidad)">
+            <a [routerLink]='["/ventas"]'><img class='imagen' src="../../assets/home.png" alt=""></a> / <a [routerLink]="['/sel-clientes']" class="colorRuta">Clientes</a> / <a [routerLink]="['/upd-cliente/'+datos?.idCliente]" class="colorRuta">Editar Cliente</a>
         </div>
     </div>
 

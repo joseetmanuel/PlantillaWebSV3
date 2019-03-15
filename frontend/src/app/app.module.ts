@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,  } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { DevExtremeModule,
   DxDataGridModule,
@@ -14,21 +15,27 @@ import { PanelComponent } from './panel/panel.component';
 import { ForgotPasswordComponent } from './acceso/forgot-password/forgot-password.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VentasComponent } from './ventas/ventas.component';
-import { ClientesComponent } from './clientes/sel-clientes/sel-clientes.component';
-import { AddClienteComponent } from './clientes/ins-cliente/ins-cliente.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
-import { MaterialModule } from './angular-material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ExcepcionComponent } from './utilerias/excepcion/excepcion.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 import { GridComponentComponent } from './utilerias/grid-component/grid-component.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelProveedorComponent } from './proveedor/home-proveedor/sel-proveedor/sel-proveedor.component';
+import { HomeProveedorComponent } from './proveedor/home-proveedor/home-proveedor.component';
+import { InsProveedorComponent } from './proveedor/home-proveedor/ins-proveedor/ins-proveedor.component';
+import { DelProveedorComponent } from './proveedor/home-proveedor/del-proveedor/del-proveedor.component';
+import { UpdProveedorComponent } from './proveedor/home-proveedor/upd-proveedor/upd-proveedor.component';
+import { FormProveedorComponent } from './proveedor/form-proveedor/form-proveedor.component';
 import { EditClienteComponent } from './clientes/upd-cliente/upd-cliente.component';
 import { DeleteAlertComponent } from './utilerias/delete-alert/delete-alert.component';
 import { AddDoctoComponent } from './clientes/ins-documento/ins-documento.component';
+import { ExcepcionComponent } from './utilerias/excepcion/excepcion.component';
+import { ClientesComponent } from './clientes/sel-clientes/sel-clientes.component';
+import { AddClienteComponent } from './clientes/ins-cliente/ins-cliente.component';
+import { MaterialModule } from './angular-material';
+import { MatCheckboxModule, MatButtonModule } from '@angular/material';
+import { UpdateAlertComponent } from './utilerias/update-alert/update-alert.component';
 
 
 @NgModule({
@@ -44,15 +51,22 @@ import { AddDoctoComponent } from './clientes/ins-documento/ins-documento.compon
     AddClienteComponent,
     ExcepcionComponent,
     GridComponentComponent,
-    EditClienteComponent,
     DeleteAlertComponent,
-    AddDoctoComponent
+    AddDoctoComponent,
+    SelProveedorComponent,
+    HomeProveedorComponent,
+    InsProveedorComponent,
+    DelProveedorComponent,
+    UpdProveedorComponent,
+    FormProveedorComponent,
+    EditClienteComponent,
+    UpdateAlertComponent
   ],
   entryComponents: [
     ExcepcionComponent,
     AddClienteComponent,
-    EditClienteComponent,
-    DeleteAlertComponent
+    DeleteAlertComponent,
+    UpdateAlertComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,27 @@
+export interface IProveedor {
+    rfcProveedor:string,
+    razonSocial: string,
+    nombreComercial: string,
+    idTipoPersona: number,
+    tipoPersona?: string,
+    idClase: number,
+    clase?: string,
+    personaContacto: string,
+    telefono: string,
+    email: string,
+    idPais: string,
+    pais?:string
+    idEstado: string,
+    estado?: string,
+    idMunicipio: string,
+    municipio: string,
+    codigoPostal: number,
+    idTipoAsentamiento: string,
+    asentamiento: string,
+    idTipoVialidad: number,
+    vialidad: string,
+    numeroExterior?: string,
+    numeroInterior?: string,
+    idUsuario: number,
+    activo?: number
+}

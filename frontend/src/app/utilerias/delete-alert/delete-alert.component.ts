@@ -39,7 +39,7 @@ export class DeleteAlertComponent implements OnInit {
   ngOnInit() {}
 
   /*
-  Validamos si la data es igual a 1 se borrara un cliente, y si es 2 borrara un dato fiscal
+  Validamos que la data sea correcta con su ruta para eliminarla
   */
   eliminar() {
     try {
@@ -57,6 +57,9 @@ export class DeleteAlertComponent implements OnInit {
             } else {
               this.numero = 1;
               this.dialogRef.close(1);
+              this.snackBar.open("Eliminado exitosamente.", "Ok", {
+                duration: 2000
+              });
             }
           },
           (error: any) => {
@@ -98,8 +101,11 @@ export class DeleteAlertComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe((result: any) => {});
+      dialogRef.afterClosed().subscribe((result: any) => {
+        this.numero = 1;
+      });
     } catch (error) {
+      this.numero = 1;
       console.error(error);
     }
   }

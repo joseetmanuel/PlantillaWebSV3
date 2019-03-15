@@ -1,8 +1,8 @@
 <div class="cardHeader">
     <div class="container">
         <span class="float-right">
-      <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
-    </span>
+          <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
+        </span>
         <mat-card-title>La operación no pudo ser procesada.</mat-card-title>
     </div>
 </div>
@@ -13,18 +13,20 @@
 </mat-card-content>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-        <div class="inLine bordes tipo">
-            <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
+        <div class="float-right">
+            <div class="inLine bordes tipo">
+                <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
+            </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
         <div class='float-right'>
             <button class="btn inLine bordes1" (click)='enviar()'>
-                <i class="far fa-envelope"></i><span> Enviar Información</span>
-              </button>
+                    <i class="far fa-envelope"></i><span> Enviar Información</span>
+                  </button>
         </div>
     </div>
-    <div class='col-xs-12 col-sm-6 col-md-5 col-lg-5'>
+    <div class='col-xs-4 col-sm-4 col-md-2 col-lg-2'>
         <div class='float-right'>
             <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 1' (click)="cambio()">Ver más <i class="fas fa-chevron-down"></i></div>
             <div class="inLine punter" data-toggle="collapse" href="#collapseExample" *ngIf='ver == 0' (click)="cambio()">Ver menos <i class="fas fa-chevron-up"></i></div>

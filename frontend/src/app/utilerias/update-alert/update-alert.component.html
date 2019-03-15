@@ -1,0 +1,11 @@
+<div [ngClass]="{'desactiva': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' style="position:fixed;top:50%;left:50%;z-index: 1;"></mat-spinner>
+    <div class='row'>
+        <h2>&nbsp;&nbsp;¿Seguro qué quiere modificar los datos?</h2>
+    </div>
+    <br>
+    <div class="float-right">
+        <button class='mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-danger' (click)='modificar()'>Modificar</button>
+        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary" (click)='cancelar()'>Cancelar</button>
+    </div>
+</div>
