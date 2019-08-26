@@ -1,0 +1,1249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Documentation - If you have any questions or suggestions, feel free to drop us an email at contact@architectui.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+    <meta name="description" content="If you have any questions or suggestions, feel free to drop us an email at contact@architectui.com">
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+<link href="./main.9f1c32ea80afc73a3729.css" rel="stylesheet"></head>
+<body>
+<div class="app-container app-theme-white">
+        <div class="app-main">
+            <div class="app-main__outer">
+                <div class="app-page-title">
+                    <div class="container fiori-container">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div>
+                                    Documentation
+                                    <div class="page-title-subheading">If you have any questions or suggestions, feel free to drop us an email at contact@architectui.com
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                                <a href="mailto:contact@architectui.com" class="btn-shadow btn btn-wide btn-primary">
+                                        <span class="btn-icon-wrapper pr-1 opacity-7">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                    Contact Support
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>            <div class="app-main__inner p-0">
+                    <div class="container fiori-container">
+                        <div class="app-inner-layout chat-layout">
+                            <div class="app-inner-layout__wrapper row-fluid no-gutters">
+                                <div class="app-inner-layout__sidebar bg-transparent card">
+                                    <div class="p-3 stick-to-parent">
+                                        <div class="dropdown-menu nav p-0 dropdown-menu-inline dropdown-menu-rounded dropdown-menu-hover-primary">
+                                            <h6 tabindex="-1" class="pt-0 dropdown-header">Docs Menu</h6>
+                                            <a href="#docs-tab-1" data-toggle="tab" tabindex="0" class="mb-1 active dropdown-item">Introduction</a>
+                                            <a href="#docs-tab-2" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">File Structure</a>
+                                            <a href="#docs-tab-3" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">Stylesheets</a>
+                                            <a href="#docs-tab-4" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">Theming & Colors</a>
+                                            <a href="#docs-tab-6" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">Angular Components</a>
+                                            <a href="#docs-tab-7" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">Layout Modifiers</a>
+                                            <a href="#docs-tab-8" data-toggle="tab" tabindex="0" class="mb-1 dropdown-item">Routing & Navigation</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 app-inner-layout__content card">
+                                    <div class="pb-5 pl-5 pr-5 pt-3">
+                                        <div class="mobile-app-menu-btn mb-3">
+                                            <button type="button" class="hamburger hamburger--elastic"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
+                                        </div>
+                                        <div class="tab-content">
+    <div class="tab-pane active show" id="docs-tab-1">
+    
+        <h4>Introduction</h4>
+        <div class="divider"></div>
+    
+        <h5>ArchitectUI Angular 7 Version</h5>
+        <p>ArchitectUI Angular is built using <code>Angular CLI</code> and utilizes the latest versions of the Angular
+            plugins included in the package.</p>
+        <p>Thanks to <code>Angular CLI</code>, ArchitectUI comes bundled and
+            pre-configured with all the necessary configurations, NPM plugins and options, so you don't have to loose time
+            setting
+            those up in each of your projects.</p>
+        <p>For stylesheets it uses SASS which allowed us to build a better, more modular
+            and scalable styles architecture. The modular SCSS files are compiled,
+            minified and bundled automatically using Webpack.</p>
+        <p>
+            All styles are standardised using <code>ng-bootstrap</code> which is a Bootstrap 4 port for Angular.
+        </p>
+        <div class="divider"></div>
+    
+        <h4>Installation</h4>
+        <ol>
+            <li>
+                <p>Download and uncompress the theme package archive in your desired
+                    folder location.</p>
+            </li>
+            <li>
+                <p>Download and install <b>Node.js</b> from <a
+                        href="https://nodejs.org/en/download/" target="_blank">nodejs.org/en/download/</a>
+                </p>
+            </li>
+            <li>
+                <p>Install the latest version of <code>npm</code>. This will be useful
+                    when running all the build commands. Run the following in a command
+                    line, either your IDE's Terminal window or in a Windows Command
+                    Prompt.</p>
+                <pre>
+                                                            <code class="language-js">
+    npm install --global npm@latest</code>
+                                                        </pre>
+                <br>
+                <br>
+            </li>
+            <li>
+                <p>Install <b>Angular CLI</b> using NPM, if you don't have it already installed. More informations about
+                    Angular CLI installation are available
+                    <a href="https://angular.io/cli" target="_blank">here</a>.</p>
+                <p>Run the following command to install Angular CLI from the command line:</p>
+                <code class="language-js">
+                    npm install -g @angular/cli
+                    # OR
+                    yarn global add @angular/cli
+                </code>
+                <br>
+                <br>
+            </li>
+            <li>
+                <p>Install the app dependencies by running the following command in the
+                    command line inside the
+                    folder root where you have unzipped the theme package archive.</p>
+                <pre><code class="language-js">
+    npm install
+                                                        </code></pre>
+            </li>
+            <li>
+                <p>After npm finishes installing the modules from
+                    <code>package.json</code> you can go ahead and start the
+                    application. To do so, run the command below.</p>
+                <p></p>
+                <pre><code class="language-js">
+    ng serve
+                                                        </code></pre>
+                <p>Running the command above will initialize Angular UI in your current working directory.</p>
+                <br><br>
+            </li>
+            <li>
+                <p>You can create a production build with the command below. More info regarding the build npm command are
+                    available
+                    <a href="https://angular.io/cli/build" target="_blank">here</a>.</p>
+                <p></p>
+                <pre><code class="language-js">
+    ng build --prod
+                                                        </code></pre>
+            </li>
+        </ol>
+    
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-2">
+        <h4>File Structure</h4>
+        <div class="divider"></div>
+    
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 250px;">Folder Path</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <code>src</code>
+                    </td>
+                    <td>
+                        Holds all the project source files
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├<code>assets</code>
+                    </td>
+                    <td>
+                        <code>base.scss</code> is the main stylesheet that imports all other
+                        stylesheets for components, elements, layouts and widgets. Contains ArchitectUI source SCSS stylesheets files.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├<code>app</code>
+                    </td>
+                    <td>
+                        Holds the project source code files.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├─<code>DemoPages</code>
+                    </td>
+                    <td>
+                        In this folder you can find all the examples from the demo. This is
+                        useful if you want to copy paste snippets of code from the theme
+                        demo.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Applications</code>
+                    </td>
+                    <td>
+                        Applications examples, found in the Demo navigation under
+                        "Applications" submenu.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Components</code>
+                    </td>
+                    <td>
+                        Components examples, found in the Demo navigation under "Components"
+                        submenu.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Forms</code>
+                    </td>
+                    <td>
+                        Forms elements and components examples, found in the Demo navigation
+                        under "Forms"
+                        section. They are splitted between the following sub-directories
+                        <code>Components</code> and <code>Elements</code>.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Charts</code>
+                    </td>
+                    <td>
+                        Charts elements and components examples, found in the Demo navigation
+                        under "Charts"
+                        section.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├── <code>[...]</code>
+                    </td>
+                    <td>
+                        Other components examples that don't have a parent folder. For example, Accordion, Calendar, Pagination, Progress Bar, etc
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Dashboards</code>
+                    </td>
+                    <td>
+                        Dashboards examples, found in the Demo navigation under "Dashboards"
+                        submenu.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Elements</code>
+                    </td>
+                    <td>
+                        Elements examples, found in the Demo navigation under "Elements"
+                        submenu.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>UserPages</code>
+                    </td>
+                    <td>
+                        Pages examples, found in the Demo navigation under "Pages"
+                        submenu.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Material</code>
+                    </td>
+                    <td>
+                        Angular Material Design components examples
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├──<code>Widgets</code>
+                    </td>
+                    <td>
+                        Widgets examples, found in the Demo navigation under "Dashboard
+                        Widgets"
+                        section.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├─<code>Layout</code>
+                    </td>
+                    <td>
+                        This folder holds all the components that build the page layout wrapper.
+                        <p>
+                            This contains the main app component wrappers. All others pass
+                            through this component. It also holds the <code>div</code> that
+                            accepts layout modifiers like <code>fixed-footer</code>,
+                            etc
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├─<code>ThemeOptions</code>
+                    </td>
+                    <td>
+                        This folder holds the demo theme configuration panel.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├─<code>/app.module.ts</code>
+                    </td>
+                    <td>
+                        This files contains the imports for all the theme components and modules.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ├─<code>/app.routing.module.ts</code>
+                    </td>
+                    <td>
+                        This files contains the navigation routes and routing options.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-3">
+        <h4>Stylesheets </h4>
+        <div class="divider"></div>
+    
+        <p>All ArchitectUI stylesheets can be found in <code>/src/assets/</code>.</p>
+        <p>From <code>base.scss</code> you can choose for what elements, components, widgets stylesheets to include in your application.</p>
+        <p>For Example, if you won't be using the <code>Sortable Tree</code> component, you can remove it's associated SCSS file by commenting out the import line like in the example below:</p>
+        <div class="scroll-area-sm mb-3">
+        <pre><code class="language-css">
+    // Calendar
+    @import "architect/components/calendar/calendar";
+    
+    // Splitters
+    @import "architect/components/splitters/splitters";
+    
+    // Tree View
+    // @import "architect/components/tree-view/tree-view";
+    
+    // Tables
+    @import "architect/components/tables/tables";
+    
+    // Icons
+    @import "architect/components/icons/linearicons";
+    @import "architect/components/icons/p7icons";
+    
+    // FORMS
+    
+    @import "architect/components/forms/datepicker/datepicker";
+    @import "architect/components/forms/rangeslider/rangeslider";
+    @import "architect/components/forms/multiselect/multiselect";
+    @import "architect/components/forms/wysiwyg/wysiwyg";
+    @import "architect/components/forms/toggle-switch/switch";
+    @import "architect/components/forms/dropzone/dropzone";
+    @import "architect/components/forms/typeahead/typeahead";</code></pre>
+        </div>
+        <p>
+            All components use the same variables for spacing or styling. We'll talk about style customization in the next section: <b>Theming & Colors</b>.
+        </p>
+        <p>
+            The <b>Angular Components</b> section contains the paths of SCSS files associated with each Angular component that's included in ArchitectUI.
+        </p>
+        <p>
+            Inside <code>/src/assets/</code>, folders are structured in a logical manner based on the element or component type, so you can easily find or remove the respective element or component. For
+            example, all Bootstrap 4 related stylesheets can be found under <code>/components/bootstrap4/</code>.
+        </p>
+        <p>
+            Also, inside <code>/src/assets/</code> you'll find a folder called <code>demo-ui</code>. This contains theme demo specific SCSS and should be removed in a live application because some of the
+            styles written there are applicable for demo purposes only.
+        </p>
+    
+        <h5>Layout Stylesheets</h5>
+        <p>
+            Layout stylesheets are located under <code>/src/assets/layout</code> folder. Inside you'll find folders logically split between the layout components: Layout Header, Sidebar, Main Content Area and
+            so on.
+        </p>
+        <p>
+            Let's take the Header section as an example. Inside <code>/layout/header/</code> folder you'll find two subfolders <code>/modifiers</code> and <code>/themes</code>.
+        </p>
+        <p>
+            The <code>_header-base.scss</code> contains some generic styling for the layout header component and all the imports from those two sub-folders.
+        </p>
+        <ol>
+            <li>
+                <p><code>/modifiers/</code> - this folder contains all the modifiers for the header like <code>fixed-header</code> and also, the header components.</p>
+            </li>
+            <li>
+                <p><code>/themes/</code> - based on the color choosen for the header component background, you can choose one of the two themes available:</p>
+                <ul>
+                    <li><code>_header-light.scss</code> - should be used with a darker background color, this way the texts and icons will have a light color contrast</li>
+                    <li><code>_header-dark.scss</code> - should be used with a lighter background color, this way the texts and icons will have a dark color contrast</li>
+                </ul>
+    
+            </li>
+        </ol>
+        <p>The <code>/themes/</code> folder can be found for the following layout components: <b>header</b>, <b>sidebar</b> and <b>main</b></p>
+    
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-4">
+        <h4>Theming & Colors</h4>
+        <div class="divider"></div>
+    
+        <p>
+            ArchitectUI is built in a modalar and scalable manner. This means that you can easily modify theme variables and they will get propagated through out the whole stylesheets architecture.
+        </p>
+        <p>
+            ArchitectUI is build around the latest version of <code>Bootstrap 4</code> and respectively <code>vue-bootstrap</code> (which is a Angular port of Bootstrap 4).
+        </p>
+        <p>
+            All generic theme variables can be found in <code>/src/assets/themes/_variables.scss</code>.
+        </p>
+        <p>
+            To modify, for example, the generic colors scheme for common states like success, warning, primary, danger, info and so on, you'll have to modify the <code>_variables.scss</code> file as follows:
+        </p>
+        <div class="scroll-area-sm mb-3">
+                                                        <pre><code class="language-css">
+    
+    // Colors
+    
+    $white: #fff;
+    $gray-100: #f8f9fa;
+    $gray-200: #e9ecef;
+    $gray-300: #dee2e6;
+    $gray-400: #ced4da;
+    $gray-500: #adb5bd;
+    $gray-600: #6c757d;
+    $gray-700: #495057;
+    $gray-800: #343a40;
+    $gray-900: #212529;
+    $black: #000;
+    
+    $grays: ();
+    
+    $grays: map-merge(
+        (
+                "100": $gray-100,
+                "200": $gray-200,
+                "300": $gray-300,
+                "400": $gray-400,
+                "500": $gray-500,
+                "600": $gray-600,
+                "700": $gray-700,
+                "800": $gray-800,
+                "900": $gray-900
+        ),
+        $grays
+    );
+    
+    //--#{$color}
+    $brand: #3f6ad8;
+    $blue: #78C3FB;
+    $indigo: #444054;
+    $purple: #794c8a;
+    $pink: #f65ca2;
+    $red: #d92550;
+    $orange: #fd7e14;
+    $yellow: #f7b924;
+    $green: #3ac47d;
+    $teal: #16E0BD;
+    $cyan: #28b0cd;
+    $blue-light: #eeeeee;
+    
+    $primary: $brand;
+    $secondary: $gray-600;
+    $success: $green;
+    $info: $cyan;
+    $warning: $yellow;
+    $danger: $red;
+    $light: $blue-light;
+    $dark: $gray-800;
+    $focus: $indigo;
+    $alt: $purple;
+    
+    $theme-colors: ();
+    
+    $theme-colors: map-merge(
+          (
+                  "primary": $primary,
+                  "secondary": $secondary,
+                  "success": $success,
+                  "info": $info,
+                  "warning": $warning,
+                  "danger": $danger,
+                  "light": $light,
+                  "dark": $dark,
+                  "focus": $focus,
+                  "alternate": $alt
+          ),
+          $theme-colors
+    );</code>
+                                                        </pre>
+        </div>
+        <h4>
+            Layout Components Styles
+        </h4>
+        <div class="divider"></div>
+        <h6 class="text-primary">Sidebar</h6>
+        <p>You can modify the <b>Sidebar</b> component background style by adding one of the below CSS helpers to the <code>.app-sidebar</code> component. For example, if you want ot have a green style sidebar, you'll
+            have to add <code>bg-success</code> as a CSS class to the div that has the <code>app-sidebar</code> CSS class.</p>
+    
+        <ol>
+            <li>
+                <p><code>src/assets/layout/sidebar/themes/</code> - based on the color chosen for the sidebar component background, you can choose one of the two themes available:</p>
+                <ul>
+                    <li>
+                        <code>_sidebar-light.scss</code> - should be used with a darker background color, this way the texts and icons will have a light color contrast
+                        <p>The CSS class that needs to be applied to <code>.app-sidebar</code> is <code>text-lighter</code>.</p>
+                    </li>
+                    <li>
+                        <code>_sidebar-dark.scss</code> - should be used with a lighter background color, this way the texts and icons will have a dark color contrast
+                        <p>The CSS class that needs to be applied to <code>.app-sidebar</code> is <code>text-darker</code>.</p>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <div class="divider"></div>
+        <h6 class="text-primary">Header</h6>
+        <p>You can modify the <b>Header</b> component background style by adding one of the below CSS helpers to the <code>.app-header</code> component. For example, if you want ot have a warning state style header,
+            you'll
+            have to add <code>bg-warning</code> as a CSS class to the div that has the <code>app-header</code> CSS class.</p>
+    
+        <ol>
+            <li>
+                <p><code>src/assets/layout/header/themes/</code> - based on the color chosen for the header component background, you can choose one of the two themes available:</p>
+                <ul>
+                    <li>
+                        <code>_header-light.scss</code> - should be used with a darker background color, this way the texts and icons will have a light color contrast.
+                        <p>The CSS class that needs to be applied to <code>.app-header</code> is <code>text-lighter</code>.</p>
+                    </li>
+                    <li>
+                        <code>_header-dark.scss</code> - should be used with a lighter background color, this way the texts and icons will have a dark color contrast.
+                        <p>The CSS class that needs to be applied to <code>.app-header</code> is <code>text-darker</code>.</p>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <div class="divider"></div>
+        <h6 class="text-primary">Bootstrap 4 Variables</h6>
+        <p>ArchitectUI comes with 9 different color schemes, located under <code>/assets/themes/</code>.</p>
+        <p>Stock, the default variables are loaded. To load a different color schemes for Bootstrap 4 variables, in <code>/assets/themes/_layout-variables.scss</code>,
+            comment out the default variables <code>@import "default/variables";</code> and uncomment a different variables scheme.</p>
+        <div class="divider"></div>
+        <h6 class="text-primary">Colors Available</h6>
+        <p>Hover over the color dots below to see what CSS class you need to apply for Header and Sidebar components for each style.</p>
+        <p class="text-danger"><b>Remember to use them in combination with _*-light.scss or _*-dark.scss</b></p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Solid Colors</h5>
+                        <div class="swatch-holder swatch-holder-lg bg-primary" id="TooltipC-0"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-secondary" id="TooltipC-1"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-success" id="TooltipC-2"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-info" id="TooltipC-3"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-warning" id="TooltipC-4"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-danger" id="TooltipC-5"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-focus" id="TooltipC-6"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-alternate" id="TooltipC-7"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-light" id="TooltipC-8"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-dark" id="TooltipC-9"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Gradient Colors</h5>
+                        <div class="swatch-holder swatch-holder-lg bg-happy-green" id="Tooltip-0"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-premium-dark" id="Tooltip-1"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-love-kiss" id="Tooltip-2"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-grow-early" id="Tooltip-3"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-strong-bliss" id="Tooltip-4"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-warm-flame" id="Tooltip-5"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-tempting-azure" id="Tooltip-6"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-sunny-morning" id="Tooltip-7"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-mean-fruit" id="Tooltip-8"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-night-fade" id="Tooltip-9"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-heavy-rain" id="Tooltip-10"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-amy-crisp" id="Tooltip-11"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-malibu-beach" id="Tooltip-12"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-deep-blue" id="Tooltip-13"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-mixed-hopes" id="Tooltip-14"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-happy-itmeo" id="Tooltip-15"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-happy-fisher" id="Tooltip-16"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-arielle-smile" id="Tooltip-17"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-ripe-malin" id="Tooltip-18"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-vicious-stance" id="Tooltip-19"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-midnight-bloom" id="Tooltip-20"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-night-sky" id="Tooltip-21"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-slick-carbon" id="Tooltip-22"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-royal" id="Tooltip-23"></div>
+                        <div class="swatch-holder swatch-holder-lg bg-asteroid" id="Tooltip-24"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-6">
+        <h4>Angular Components</h4>
+        <div class="divider"></div>
+    
+        <p>All Angular Components from ArchitectUI are imported and maintained in <code>node_modules</code> from <code>package.json</code> located in the project root. </p>
+        <p>For a better control, consistency, modularity and scalability, most style related resources are maintained and integrated from <code>/src/assets/</code> folder.</p>
+    
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular Google Maps
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/maps</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://angular-maps.com/" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular Material Design Components
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Material</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://material.angular.io/" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular WYSIWYG Editor
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/wysiwyg-editor</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/kolkov/angular-editor#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular NG-Bootstrap
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://ng-bootstrap.github.io/#/components/alert/examples" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular NG-Select
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/input-selects</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://ng-select.github.io/ng-select#/data-sources" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        NGX-Loading Bar
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/Layout/base-layout</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/aitboudad/ngx-loading-bar" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        SweetAlerts 2
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/notifications</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/sweetalert2/ngx-sweetalert2" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Sticky Things
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Elements/sticky-headers</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/w11k/angular-sticky-things" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular Calendar
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/calendar</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://mattlewis92.github.io/angular-calendar/#/kitchen-sink" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular FontAwesome
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Elements/icons</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://fontawesome.com/how-to-use/on-the-web/using-with/angular" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular Gauge
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Charts/gauges</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/mattlewis92/angular-gauge#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Circle ProgressBar
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Charts/gauges</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/crisbeto/angular-svg-round-progressbar" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Ladda Loading
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Elements/Buttons</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/moff/angular2-ladda#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Input Mask
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/input-mask</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/text-mask/text-mask/tree/master/angular2/#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        ApexCharts
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Charts/apexcharts</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/apexcharts/ng-apexcharts" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        CountUp
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/count-up</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/inorganik/countUp.js-angular2" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        FlagIcons
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Elements/icons</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/lipis/flag-icon-css" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Bootstrap Switch
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Elements/icons</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://www.npmjs.com/package/jw-bootstrap-switch-ng2" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Bootstrap Form Validation
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Elements/validation</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/third774/ng-bootstrap-form-validation#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Multiselect Dropdown
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/input-selects</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/nileshpatel17/ng-multiselect-dropdown#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        NG2-Charts
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Charts/chartjs</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://valor-software.com/ng2-charts/" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        NG2-NoUISlider
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/range-slider</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/tb/ng2-nouislider" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Clipboard
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/clipboard</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/maxisam/ngx-clipboard" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Colorpicker
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/colorpicker</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/zefoy/ngx-color-picker#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Dropzone Upload
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/dropzone</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/zefoy/ngx-dropzone-wrapper#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Image Cropper
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/image-crop</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/Mawi137/ngx-image-cropper" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Page Loading
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/Layout/base-layout</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/Zak-C/ngx-loading#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Perfect Scrollbar
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/scrollable</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/zefoy/ngx-perfect-scrollbar#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Select Dropdown
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/input-selects</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/manishjanky/ngx-select-dropdown#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Slick Carousel
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/carousel</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/leo6104/ngx-slick-carousel#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Textarea Autosize
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Forms/Widgets/textarea-autosize</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/evseevdev/ngx-textarea-autosize#readme" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        Angular Toastr
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Components/notifications</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/scttcper/ngx-toastr" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="card-border mb-3 text-center card">
+            <div class="card-body">
+                <div class="card-title mb-1">
+                    <h6 class="mb-3">
+                        NGX-Trend Charts
+                    </h6>
+                </div>
+                <div class="alert alert-warning fade show" role="alert">The source code for examples shown in demo for this component can be found at the following location:
+                    <div><code>src/app/DemoPages/Charts/sparklines</code></div>
+                </div>
+                <div class="divider"></div>
+                <div class="text-center"><a class="btn btn-warning btn-shadow btn-pill btn-wide" href="https://github.com/scttcper/ngx-trend" target="_blank">View Documentation</a></div>
+            </div>
+        </div>
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-7">
+        <h4>Layout Modifiers</h4>
+        <div class="divider"></div>
+    
+        <p>ArchitectUI has built-in CSS helper classes that modify the layout components positions.</p>
+        <p>These CSS helper classes need to be added to the element that has the <code>app-container</code> CSS class.
+            The path to the ArchitectUI App Container Component can be found in one of the layout wrappers from: <code>src/Layout/Wrappers</code>.</p>
+        <p>Check out the available modifiers list below:</p>
+        <h6 class="text-primary">App Container Modifiers
+            <small>( <code>.app-container</code> )</small>
+        </h6>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 250px;">CSS Helper Class</th>
+                    <th style="width: 250px;">Modified Component</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <code>closed-sidebar</code>
+                    </td>
+                    <td>
+                        Sidebar ( <code>.app-sidebar</code> )
+                    </td>
+                    <td>
+                        Makes the Sidebar Component initially closed, with only the icons available. If the <code>fixed-sidebar</code> is active the Sidebar will open as an overlay over the main content.
+                        <p>If the Sidebar is static and not fixed, it will push the main content area to the right, on hover.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>fixed-footer</code>
+                    </td>
+                    <td>
+                        Footer ( <code>.app-footer</code> )
+                    </td>
+                    <td>
+                        Makes the Footer Component positioned bottom fixed/sticky.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h6 class="text-primary">Sidebar
+            <small>( <code>.app-sidebar</code> )</small>
+        </h6>
+        <p>These CSS helper classes need to be added to the element that has the <code>app-sidebar</code> CSS class.
+        The path to the ArchitectUI Sidebar Container Component is: <code>src/Layout/Components/Sidebar</code>.</p>
+        <p>Check out the available modifiers list below:</p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 250px;">CSS Helper Class</th>
+                    <th style="width: 250px;">Modified Component</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <code>sidebar-shadow</code>
+                    </td>
+                    <td>
+                        Sidebar ( <code>.app-sidebar</code> )
+                    </td>
+                    <td>
+                        Adds a drop shadow for the Sidebar Component.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    
+    
+        <h6 class="text-primary">Header
+            <small>( <code>.app-header</code> )</small>
+        </h6>
+        <p>These CSS helper classes need to be added to the element that has the <code>app-header</code> CSS class.
+            The path to the ArchitectUI Header Container Component is: <code>src/Layout/Components/Header</code>.</p>
+        <p>Check out the available modifiers list below:</p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 250px;">CSS Helper Class</th>
+                    <th style="width: 250px;">Modified Component</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <code>header-shadow</code>
+                    </td>
+                    <td>
+                        Header ( <code>.app-header</code> )
+                    </td>
+                    <td>
+                        Adds a drop shadow for the Header Component.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="mt-5"></div>
+    </div>
+    <div class="tab-pane fade" id="docs-tab-8">
+        <h4>Angular Routing & Navigation</h4>
+        <div class="divider"></div>
+        <p>ArchitectUI uses the Angular router for navigation: <code>@angular/router</code>. The Sidebar component navigation menu uses the <code>ng-bootstrap</code> accordion component. Accordion options are available here:
+            <a href="https://ng-bootstrap.github.io/#/components/accordion/examples" target="_blank">https://ng-bootstrap.github.io/#/components/accordion/examples</a></p>
+        <p>The Demo navigation menu is defined in <code>src/app/Layout/Components/sidebar/sidebar.component.html</code></p>
+        <p>The routing paths is located is <code>src/app/app-routing.module.ts</code></p>
+        <p>The <code>extraParameter</code> defines which sidebar menu panel is opened based on active route link.</p>
+    
+        <pre><code class="language-js">
+    const routes: Routes = [
+      {
+        path: '',
+        component: BaseLayoutComponent,
+        children: [
+    
+          // Dashboads
+    
+          {path: '', component: AnalyticsComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/advertisement', component: AdvertisementComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/management', component: ManagementComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/helpdesk', component: HelpdeskComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/monitoring', component: MonitoringComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/crypto', component: CryptoComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/project-management', component: ProjectManagementComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/product', component: ProductComponent, data: {extraParameter: 'dashboardsMenu'}},
+          {path: 'dashboards/statistics', component: StatisticsComponent, data: {extraParameter: 'dashboardsMenu'}},
+            #...
+        </code></pre>
+    
+    
+        <div class="mt-5"></div>
+    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer h-auto">
+                            <div class="container fiori-container text-center">
+                                <div class="p-3">
+                                    Copyright 2019 &copy; architectui.com
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+<script type="text/javascript" src="./assets/scripts/main.9f1c32ea80afc73a3729.js"></script></body>
+</html>
