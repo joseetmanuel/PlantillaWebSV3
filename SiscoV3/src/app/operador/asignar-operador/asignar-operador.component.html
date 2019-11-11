@@ -1,0 +1,182 @@
+<div [ngClass]="{'desactiva': spinner }">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <app-breadcrumbs [ruta]="breadcrumb"></app-breadcrumbs>
+    <app-banner [IObjeto]="IObjeto"></app-banner>
+    <mat-card class="cardMarginBottom">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <img class='imagenIconoGris'
+                src="../../../assets/images/iconos-sisco/Objetos/operador/operador-automovil.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Asignar operador</span>
+        </div>
+        <hr>
+        <div [formGroup]="operadorForm" class="col-sm-12 col-md-12 col-xl-12">
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <div style="padding-left: 15px">
+                        <small class="titulo-input-dinamico">Operador</small>
+                    </div>
+                    <app-buscador [IBuscador]="buscador" (responseBuscador)="ResponseBuscador($event)">
+                    </app-buscador>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="operadorAsignado">
+                    <app-viewer [IViewer]="IViewerUsu">
+                    </app-viewer>
+                    <div class="col-sm-12 col-md-12 col-xl-12" style="text-align: center;">
+                        <p>{{operadorAsignado.PrimerNombre}} {{operadorAsignado.PrimerApellido}} </p>
+                    </div>
+                </div>
+            </div>
+            <div class='row' *ngIf="operadorAsignado">
+                <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                    <mat-form-field style="width: 100%">
+                        <input formControlName="fechaAsignacion" matInput [matDatepicker]="picker"
+                            [ngModel]="fechaAsignacion" placeholder="Fecha asignación">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row' *ngIf="operadorAsignado">
+                <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                    <mat-form-field style="width: 100%">
+                        <input formControlName="odometroAsignacion" matInput placeholder="Odómetro"
+                            [ngModel]="odometroAsignacion" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row' *ngIf="operadorAsignado">
+                <div class="col-sm-12 col-md-12 col-xl-12" style="padding-right: 0px">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='GuardarOperador()' [disabled]="!operadorForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Asignar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- div de el operador asignado si hay alguno -->
+        <div class='row align-items-end' *ngIf="operadorVigente && !operadorAsignado">
+            <div [formGroup]="updOperadorForm" class="col-sm-12 col-md-12 col-xl-12">
+                <div class='row justify-content-end'>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <app-viewer [IViewer]="operadorVigente.iviewerVigente">
+                        </app-viewer>
+                    </div>
+                </div>
+                <div class='row justify-content-end'>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center;">
+                        <label>
+                            {{operadorVigente.nombreOperadorVigente}}
+                        </label>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field style="width: 100%">
+                            <input matInput readonly [matDatepicker]="pickerA" placeholder="Fecha asignación"
+                                [value]="operadorVigente.fechaAsignacion | slice:0:10">
+                            <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerA disabled></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field style="width: 100%">
+                            <input formControlName="fechaEntrega" matInput [matDatepicker]="picker"
+                                [readonly]="operadorVigente.fechaEntregaVigente == null ? false : true"
+                                [min]="operadorVigente.fechaAsignacion  | slice:0:10"
+                                [ngModel]="operadorVigente.fechaEntregaVigente | slice:0:10"
+                                placeholder="Fecha entrega">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker
+                                [disabled]="operadorVigente.fechaEntregaVigente == null ? false : true">
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field style="width: 100%">
+                            <input matInput placeholder="Odómetro asignación"
+                                [value]="operadorVigente.odometroAsignacion" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field style="width: 100%">
+                            <input type="number" [min]="operadorVigente.odometroAsignacion" matInput
+                                placeholder="Odómetro entrega" formControlName="odometroEntrega"
+                                [readonly]="operadorVigente.odometroEntregaVigente > 0 ? true : false"
+                                [ngModel]="operadorVigente.odometroEntregaVigente" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class='row justify-content-end'>
+                    <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="operadorVigente.fechaEntregaVigente == null">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            (click)='ActualizarOperador()' [disabled]="!updOperadorForm.valid">
+                            <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                            Asignar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <!-- card par ael historico de los operadores-->
+    <mat-card>
+        <div class="row cardMargin">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris'
+                        src="./assets/images/iconos-sisco/Objetos/sh_objeto-sel-card-automovil.png">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Operadores asignados</span>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class='row'>
+            <div class="col-sm-12 col-md-12 col-xl-12 div-timeline">
+                <div class="row" style="padding-left: 65px">
+                    <div class="col-sm-12 col-md-3 col-xl-3"><b>Nombre</b></div>
+                    <div class="col-sm-12 col-md-2 col-xl-2"><b>Fecha asignación</b></div>
+                    <div class="col-sm-12 col-md-2 col-xl-2"><b>Odómetro asignación </b></div>
+                    <div class="col-sm-12 col-md-2 col-xl-2"><b>Fecha entrega</b></div>
+                    <div class="col-sm-12 col-md-2 col-xl-2"><b>Odómetro entrega</b></div>
+                </div>
+                <div
+                    class="vertical-time-icons vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element" *ngFor="let operador of operadores">
+                        <div class="vertical-timeline-element-icon bounce-in">
+                            <app-viewer [IViewer]="operador.IViewer">
+                            </app-viewer>
+                        </div>
+                        <div class="row vertical-timeline-element-content bounce-in"
+                            (click)="GenerarEntrega(operador.idAsignacion)"
+                            [ngClass]="{'div-vigente': operadorVigente &&  operadorVigente.idAsignado == operador.idAsignacion}">
+                            <div class="col-sm-12 col-md-3 col-xl-3">
+                                <label style="font-size: 14px"> {{operador.PrimerNombre }}
+                                    {{operador.SegundoNombre }} {{operador.PrimerApellido }}
+                                    {{operador.SegundoApellido }}</label>
+                            </div>
+                            <div class="col-sm-12 col-md-2 col-xl-2">
+                                <label style="font-size: 14px"> {{operador.fechaAsignacion | slice:0:10 }}
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-2 col-xl-2">
+                                <label style="font-size: 14px"> {{operador.odometroAsignacion}} </label>
+                            </div>
+                            <div class="col-sm-12 col-md-2 col-xl-2">
+                                <label style="font-size: 14px"> {{operador.fechaEntrega  | slice:0:10 }} </label>
+                            </div>
+                            <div class="col-sm-12 col-md-2 col-xl-2">
+                                <label style="font-size: 14px"> {{operador.odometroEntrega}} </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+</div>

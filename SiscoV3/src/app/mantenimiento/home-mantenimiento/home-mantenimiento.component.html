@@ -1,0 +1,159 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+
+<mat-card class="cardMarginBottom" *ngIf="!spinner">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnWorkshopType(group.value)" [value]="1">
+                <mat-button-toggle *ngIf="switchCosto" value="1" checked="true"> Costo
+                </mat-button-toggle>
+                <mat-button-toggle *ngIf="switchVenta" value="2"> Venta
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div *ngIf="activaZona && zonas" class="col-sm-12 col-md-6 col-lg-6">
+            <dx-drop-down-box #dropBox [dataSource]="zonas" placeholder="Selecciona Zona" displayExpr="descripcion"
+                valueExpr="idContratoZona" [showClearButton]="true" [(value)]="treeBoxValue"
+                (onValueChanged)="closeWindow(dropBox)">
+                <div *dxTemplate="let data of 'content'">
+                    <dx-tree-view [dataSource]="zonas" dataStructure="plain" keyExpr="idContratoZona"
+                        parentIdExpr="idPadre" displayExpr="descripcion" [selectByClick]="true" selectionMode="single"
+                        noDataText="No contiene datos"
+                        (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, zonas)">
+                    </dx-tree-view>
+                </div>
+            </dx-drop-down-box>
+        </div>
+    </div>
+</mat-card>
+
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="!spinner && fases && pasos"
+    style="padding-left: 0;padding-right:0">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let fase of fases">
+            <div class="mb-3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                        <i class="header-icon"><img class='imagenIconoGris' [src]="fase.img_url"></i>
+                        {{fase.fase}}
+                    </div>
+                    <div *ngIf="fase.fase === 'Solicitud'"
+                        class="btn-actions-pane-right text-capitalize actions-icon-btn">
+                        <button routerLink="/ins-solicitud"
+                            class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form">Nueva
+                            cita</button>
+                    </div>
+                </div>
+
+                <div *ngIf="pintaGrafica">
+                    <div class="relative">
+                        <canvas baseChart id="myDoughnutChart" [options]="barChartOptions" [legend]="false"
+                            (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)"
+                            [datasets]="fase.datosGrph" [labels]="fase.labels" chartType="doughnut">
+                        </canvas>
+                        <div *ngIf="pasoactive">
+                            <div [ngClass]="{'mask': fase.idFase === paso.idFase}" class="absolute-center text-center"
+                                *ngFor='let paso of paso'>
+                                <div style="position: relative; top: 50%;transform: translateY(-50%);">
+                                    <p class="estatus" *ngIf="fase.idFase === paso.idFase">{{label}}</p>
+                                    <p class="numero" *ngIf="fase.idFase === paso.idFase">{{number}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 128px;height: 84px;" class="absolute-center text-center"
+                            *ngFor='let paso of pasos'>
+                            <div style="position: relative; top: 50%;transform: translateY(-50%);">
+                                <p class="estatus" *ngIf="fase.idFase === paso.idFase && paso.orden === '1'">
+                                    {{fase.fase}}
+                                </p>
+                                <p class="numero" *ngIf="fase.idFase === paso.idFase && paso.orden === '1'">
+                                    {{fase.totalFase}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2 pb-0 card-body">
+                        <h6 class="text-muted text-uppercase font-size-md opacity-9 mb-2 font-weight-normal">Estatus:
+                        </h6>
+                        <div class="scroll-area-md ">
+                            <perfect-scrollbar [autoPropagation]="true">
+                                <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush"
+                                    *ngFor="let paso of pasos">
+                                    <li class="list-group-item" *ngIf="fase.idFase === paso.idFase">
+                                        <div class="widget-content p-0">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                                style="padding-right: 0;padding-left:0;">
+                                                <div class="row no-gutters">
+                                                    <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                                        <div class="row no-gutters">
+                                                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                                <div class="icon-wrapper m-0">
+                                                                    <div class="progress-circle-wrapper">
+                                                                        <div class="round-progress-text">
+                                                                            <span
+                                                                                [style.color]="paso.color">{{paso.totalPaso}}
+                                                                            </span>
+                                                                            <round-progress
+                                                                                [current]="(paso.totalPaso * 100)/ fase.totalFase"
+                                                                                [max]="100" [color]="paso.color"
+                                                                                [background]="'#f0f0f0'" [radius]="88"
+                                                                                [stroke]="11" [semicircle]="false"
+                                                                                [rounded]="true" [clockwise]="false"
+                                                                                [responsive]="true" [duration]="1400"
+                                                                                [animation]="'easeInOutQuart'"
+                                                                                [animationDelay]="0">
+                                                                            </round-progress>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                                                <div (click)='redirige(paso.idPaso, paso.paso, paso.color)' class="widget-heading" style="font-weight: bold; cursor: pointer;"
+                                                                    [style.color]="paso.color">
+                                                                    {{paso.paso}}
+                                                                </div>
+                                                                <div class="fsize-1 text-focus">
+                                                                    <div class="widget-heading"
+                                                                        style="font-weight: bold"> Prom. hrs.</div>
+                                                                    <span>{{paso.promH}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                                                        <div class="widget-content-right">
+                                                            <div class="fsize-1 text-focus">
+                                                                <div class="widget-heading"> <b>Monto </b></div>
+                                                                <span *ngIf="switch == 1">{{paso.costo | currency}}
+                                                                </span>
+                                                                <span
+                                                                    *ngIf="switch == 2">{{paso.venta | currency}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </perfect-scrollbar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

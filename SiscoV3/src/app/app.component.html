@@ -1,0 +1,21 @@
+<div [ngClass]="{
+    'closed-sidebar' : globals.toggleSidebar,
+    'closed-sidebar-md' : globals.toggleSidebarMobile,
+    'settings-open' : globals.toggleThemeOptions,
+    'closed-sidebar-open': globals.sidebarHover || globals.toggleSidebarMobile,
+    'header-menu-open' : globals.toggleHeaderMobile,
+    'drawer-open' : globals.toggleDrawer,
+    'fixed-footer' : globals.toggleFixedFooter
+}" [class]="'app-container app-theme-white'">
+    <app-header *ngIf="sessionInitializer.state"></app-header>
+    <app-sidebar *ngIf="sessionInitializer.state"></app-sidebar>
+    <div [ngClass]="sessionInitializer.state ? 'app-main__outer': 'app-main__outer_f'">
+        <div [ngClass]="sessionInitializer.state ? 'app-main__inner': 'app-main__inner_f'">
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer *ngIf="sessionInitializer.state && !globals.banderaFooterSol"></app-footer>
+    </div>
+    <app-drawer></app-drawer>
+    <div class="sidebar-menu-overlay" (click)="toggleSidebarMobile()"></div>
+    <app-toast-sisco #toastSisco></app-toast-sisco>
+</div>

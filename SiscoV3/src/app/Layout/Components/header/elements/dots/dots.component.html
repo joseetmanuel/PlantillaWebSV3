@@ -1,0 +1,46 @@
+<div class="header-dots">
+    <div class="btn-group" ngbDropdown autoClose="outside" placement="bottom" #dotNotificacionDropDown="ngbDropdown">
+        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle>
+      <span>
+        <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+          <div class="icon-wrapper-bg bg-danger"></div>
+          <i class="lnr-bullhorn text-danger"></i>
+          <div class="badge badge-dot badge-dot-sm" [ngClass]="tieneNotificaciones ? 'badge-danger':''">Notificaciones</div>
+        </div>
+      </span>
+    </button>
+        <div class="dropdown-menu-xl" ngbDropdownMenu>
+            <div class="dropdown-menu-header mb-0">
+                <div class="dropdown-menu-header-inner bg-deep-dot-notification">
+                    <div class="menu-header-image opacity-1 dd-header-bg-7"></div>
+                    <div class="menu-header-content text-light">
+                        <h5 class="menu-header-title">Notificaciones</h5>
+                        <h6 class="menu-header-subtitle">Tiene notificaciones sin leer</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-tabbed-header">
+                <div class="scroll-gradient">
+                    <div class="scroll-area-sm shadow-overflow">
+                        <perfect-scrollbar [autoPropagation]="true">
+                            <div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                                <div class="vertical-timeline-item vertical-timeline-element" *ngFor="let notificacion of notificaciones | async">
+                                    <app-notificacion [notificacion]="notificacion" (notificacionLeida)="notificacionLeida($event)">
+                                    </app-notificacion>
+                                </div>
+                            </div>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-justified">
+                <ul class="nav flex-column">
+                    <li class="nav-item-divider nav-item mt-0"></li>
+                    <li class="nav-item-btn text-center nav-item">
+                        <button class="btn-shadow btn-wide btn-pill btn btn-focus btn-sm"><a (click)="abrirNotificaciones()">Ver todas</a></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

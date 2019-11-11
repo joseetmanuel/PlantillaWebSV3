@@ -1,0 +1,123 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6" *ngFor="let tipoObjeto of tipoObjetoPropiedades, let index = index">
+            <div *ngIf="tipoObjeto.idTipoValor != 'Unico'">
+                <div class="inputFullWide">
+                    <small class="titulo-input-dinamico" *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                    <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                        *</small>
+                    <dx-drop-down-box #dropBox [dataSource]="tipoObjeto.arreglo"
+                        placeholder="Selecciona {{tipoObjeto.valor}}" displayExpr="valor" valueExpr="id"
+                        [showClearButton]="true" [(value)]="tipoObjeto.label"
+                        (onValueChanged)="closeWindow(dropBox, tipoObjeto.idTipoValor == 'Etiqueta')">
+                        <div *dxTemplate="let data of 'content'">
+                            <div *ngIf="tipoObjeto.idTipoValor == 'Agrupador' || tipoObjeto.idTipoValor == 'Catalogo'">
+                                <dx-tree-view [dataSource]="tipoObjeto.arreglo" dataStructure="plain" keyExpr="id"
+                                    parentIdExpr="idPadre" displayExpr="valor" [selectByClick]="true"
+                                    selectionMode="single" noDataText="No contiene datos"
+                                    (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                </dx-tree-view>
+                            </div>
+                            <div *ngIf="tipoObjeto.idTipoValor == 'Etiqueta'">
+                                <dx-tree-view [dataSource]="tipoObjeto.arreglo" dataStructure="plain" keyExpr="id"
+                                    parentIdExpr="idPadre" displayExpr="valor" [selectByClick]="true"
+                                    selectionMode="multiple" noDataText="No contiene datos" showCheckBoxesMode="normal"
+                                    [selectNodesRecursive]="true"
+                                    (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                </dx-tree-view>
+                            </div>
+                        </div>
+                    </dx-drop-down-box>
+                </div>
+            </div>
+            <div *ngIf="tipoObjeto.idTipoValor == 'Unico'" class="col-md-12 col-lg-12" style="margin: auto;">
+                <mat-form-field *ngIf="tipoObjeto.idTipoDato == 'String'" class="inputFullWide"
+                    style="width: 100%; padding-top: 10px;">
+                    <input matInput [placeholder]="tipoObjeto.valor" (keyup)="ChangePropiedad($event,index)"
+                        (blur)="ChangePropiedad($event,index)" ([value])="tipoObjeto.valorSelected"
+                        (change)="ChangeInput($event, index)" [required]="tipoObjeto.obligatorio">
+                </mat-form-field>
+                <small class="text-error" *ngIf="!tipoObjeto.valid">Campo obligatorio</small>
+
+                <div *ngIf="tipoObjeto.idTipoDato == 'Date'" class="col-md-12 col-lg-12" style="margin: auto;">
+                    <mat-form-field>
+                        <div class="inputFullWide">
+                            <small class="titulo-input-dinamico">{{tipoObjeto.valor}}</small>
+                            <dx-date-box placeholder="Indica {{tipoObjeto.valor}}"
+                                (change)="ChangePropiedad($event,index)" [displayFormat]="'dd/MM/yyyy'"
+                                [(value)]="tipoObjeto.valorSelected" type="date" [showClearButton]="true">
+                            </dx-date-box>
+                            <small class="titulo-input-dinamico"
+                                *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                            <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                *</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div *ngIf="tipoObjeto.idTipoDato == 'Decimal' || tipoObjeto.idTipoDato == 'Numeric'"
+                    class="col-md-12 col-lg-12" style="margin: auto;">
+                    <div class="inputFullWide">
+                        <small class="titulo-input-dinamico"
+                            *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                            *</small>
+                        <dx-number-box [(value)]="tipoObjeto.valorSelected" placeholder="Indica {{tipoObjeto.valor}}"
+                            [showSpinButtons]="true" (onValueChanged)="ChangePropiedad($event,index)"
+                            (change)="ChangePropiedad($event,index)" [showClearButton]="true">
+                        </dx-number-box>
+                        <small class="titulo-input-dinamico"
+                            *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                            *</small>
+                    </div>
+                </div>
+                <div *ngIf="tipoObjeto.idTipoDato == 'File' || tipoObjeto.idTipoDato == 'Image'"
+                    class="col-md-12 col-lg-12" style="margin: auto;">
+                    <small class="titulo-input-dinamico" *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                    <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                        *</small>
+                    <app-file-upload-component [IUploadFile]="IUploadFile"
+                        (messageEvent)="ResultUploadFile($event, index)">
+                    </app-file-upload-component>
+                </div>
+                <div *ngIf="tipoObjeto.idTipoDato == 'DateTime'">
+                    <div class="inputFullWide">
+                        <small class="titulo-input-dinamico"
+                            *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                            *</small>
+                        <dx-date-box [(value)]="tipoObjeto.valorSelected" type="datetime" [showClearButton]="true"
+                            placeholder="Indica {{tipoObjeto.valor}}" [showClearButton]="true" applyButtonText="Aceptar"
+                            cancelButtonText="Cancelar">
+                        </dx-date-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form"
+                (click)='AgregarTipoObjeto()' [disabled]="valid">
+                <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+    <div>
+        <p class="tagAviso">Los campos con * son obligatorios</p>
+    </div>
+</mat-card>

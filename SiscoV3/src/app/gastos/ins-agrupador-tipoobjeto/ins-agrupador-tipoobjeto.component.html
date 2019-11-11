@@ -1,0 +1,46 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div [formGroup]="agrupadorForm">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput placeholder="Agrupador *" maxlength='50' formControlName="agrupador"
+                                [errorStateMatcher]="matcher">
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            [disabled]='!agrupadorForm.valid' (click)='insAgrupador()'><i
+                                class="pe-7s-diskette btn-icon-wrapper">
+                            </i>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

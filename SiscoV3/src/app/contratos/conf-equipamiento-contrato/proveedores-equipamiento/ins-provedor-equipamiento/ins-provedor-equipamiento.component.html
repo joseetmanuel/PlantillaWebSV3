@@ -1,0 +1,70 @@
+<div [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+    <mat-card>
+        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datos_prov.png"> &nbsp;&nbsp;&nbsp;
+        <span>Datos del proveedor</span>
+        <hr>
+        <div [formGroup]="provedoresForm">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre" maxlength="20" formControlName="nombre">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select formControlName="rfcProveedor" placeholder="Selecciona un proveedor">
+                            <mat-option  id="bluemat"  id="bluemat" *ngFor="let proveedor of proveedores" [value]="proveedor.rfcProveedor">
+                                {{ proveedor.nombreComercial }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Cotización" formControlName="cotizacion">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(Solo números)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select formControlName="idMoneda" placeholder="Moneda">
+                            <mat-option  id="bluemat"  id="bluemat" *ngFor="let moneda of monedas" [value]="moneda.id">
+                                {{ moneda.currency }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='insProveedor()' [disabled]="(!provedoresForm.valid)">
+                        <i class="pe-7s-diskette btn-icon-wrapper"> </i>
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

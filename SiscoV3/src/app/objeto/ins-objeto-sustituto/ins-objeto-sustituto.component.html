@@ -1,0 +1,200 @@
+<div>
+  <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+  <app-breadcrumbs [ruta]="breadcrumb"></app-breadcrumbs>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" [ngClass]="{'desactiva': spinner }">
+    <app-banner [IObjeto]="IObjeto"></app-banner>
+
+    <mat-card class="cardMargin" *ngIf='!spinner'>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+              <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+              <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+              <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+          <div class="row content-component">
+            <div class="col-lg-12 col-md-12">
+              <div class="main-card mb-3 card">
+                <div class="card-body">
+                  <div id="smartwizard" class="forms-wizard nav nav-tabs step-anchor">
+                    <ul class="forms-wizard nav nav-tabs step-anchor">
+                      <li class="nav-item liStep"
+                        [ngClass]="{'done': process[0].finish && !process[0].active, 'active': process[0].active}">
+                        <a>
+                          <em (click)="active(0)">1</em>
+                          <span>Lista de automoviles</span>
+                        </a>
+                      </li>
+                      <li class="nav-item liStep"
+                        [ngClass]="{'done': process[1].finish && !process[1].active, 'active': process[1].active}">
+                        <a>
+                          <em (click)="active(1)">2</em>
+                          <span>Propiedades</span>
+                        </a>
+                      </li>
+                      <li class="nav-item liStep" [ngClass]="{'done': process[2].finish, 'active': process[2].active}">
+                        <a>
+                          <em (click)="active(2)">3</em>
+                          <span>Finalizar</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <div class="form-wizard-content">
+                      <div id="step-1" [hidden]="!process[0].active ">
+                        <div id="accordion" class="accordion-wrapper mb-3">
+                          <div class="card">
+                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                              class="collapse show">
+                              <div class="card-body" *ngIf="tipoObjetos && columns.length > 0">
+                                <app-grid-component [datos]="tipoObjetos" [gridOptions]="gridOptions"
+                                  [columns]="columns" [columnHiding]="columnHiding" [Checkbox]="Checkbox"
+                                  [Editing]="Editing" [Columnchooser]="Columnchooser" [exportExcel]="exportExcel"
+                                  [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar"
+                                  (datosevent)='datosMessage($event)'>
+                                </app-grid-component>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="step-2" [hidden]="!process[1].active ">
+                        <div id="accordion" class="accordion-wrapper mb-3">
+                          <div class="card">
+                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                              class="collapse show">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div [formGroup]="sustitutoForm">
+                                      <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-xl-6">
+                                          <mat-form-field class="inputFullWide" id="blueversion">
+                                            <mat-select placeholder="Motivo *" formControlName="motivoSustituto"
+                                              [errorStateMatcher]="matcher">
+                                              <mat-option id="bluemat" *ngFor='let motivo of motivos'
+                                                [value]="motivo.idMotivoSustituto">
+                                                {{motivo.nombre}}
+                                              </mat-option>
+                                            </mat-select>
+                                            <mat-error>
+                                              El campo es
+                                              <strong>requerido</strong>
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div>
+                                        <!-- <div class="col-sm-12 col-md-6 col-xl-6">
+                                          <mat-form-field class="inputFullWide">
+                                            <input matInput placeholder="Número de orden *" maxlength='50'
+                                              formControlName="noOrden" [errorStateMatcher]="matcher">
+                                            <mat-error>
+                                              El campo es
+                                              <strong>requerido</strong>
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div> -->
+                                        <div class="col-sm-12 col-md-6 col-xl-6">
+                                          <mat-form-field class="inputFullWide">
+                                            <input matInput placeholder="Comentarios *" maxlength='100'
+                                              formControlName="comentarios" [errorStateMatcher]="matcher">
+                                            <mat-error>
+                                              El campo es
+                                              <strong>requerido</strong>
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-xl-6">
+                                          <div class="inputFullWide">
+                                            <small class="titulo-input-dinamico">Seleccione la fecha y hora: </small>
+                                            <br>
+                                            <div style="width: 100%;">
+                                              <dx-date-box formControlName="fecha" placeholder="Seleccione la fecha"
+                                                type="date" [showClearButton]="true" pickerType="calendar"
+                                                displayFormat="dd/MM/yyyy" style="display: inline-block; width:50%;"
+                                                [useMaskBehavior]="true">
+                                              </dx-date-box>
+                                              <dx-date-box formControlName="hora" placeholder="Seleccione la hora"
+                                                type="time" [showClearButton]="true" pickerType="list" [interval]="30"
+                                                style="display: inline-block; width:50%;">
+                                              </dx-date-box>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="step-3" [hidden]="!process[2].active ">
+                        <div id="accordion">
+                          <div class="swal2-icon swal2-success swal2-animate-success-icon">
+                            <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);">
+                            </div>
+                            <span class="swal2-success-line-tip"></span>
+                            <span class="swal2-success-line-long"></span>
+                            <div class="swal2-success-ring"></div>
+                            <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);">
+                            </div>
+                            <div class="swal2-success-circular-line-right"
+                              style="background-color: rgb(255, 255, 255);"></div>
+                          </div>
+                          <div class="col-md-12" style="text-align:center">
+                            <div class="btn-shadow btn-wide btn btn-success btn-lg">Proceso finalizado
+                              con éxito
+                            </div>
+                          </div>
+                          <div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix">
+                    <button type="button" (click)="next()" id="next-btn"
+                      class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                      [disabled]="!btnNextEnable" *ngIf="indexActive == 0">
+                      <i class="pe-7s-back btn-icon-wrapper" style="transform: rotateY(-200deg);"></i>
+                      Siguiente
+                    </button>
+
+                    <button type="button" (click)="next()" id="next-btn"
+                      class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                      [disabled]="!sustitutoForm.valid" *ngIf="indexActive == 1">
+                      <i class="pe-7s-back btn-icon-wrapper" style="transform: rotateY(-200deg);"></i>
+                      Siguiente
+                    </button>
+
+                    <button type="button" (click)="insSustituto()" id="next-btn"
+                      class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                      *ngIf="indexActive == 2">
+                      <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                      Finalizar
+                    </button>
+
+                    <button type="button" (click)="previous()" id="prev-btn" *ngIf="indexActive != 0"
+                      class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-secondary float-right">
+                      <i class="pe-7s-back btn-icon-wrapper"></i>
+                      Anterior
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

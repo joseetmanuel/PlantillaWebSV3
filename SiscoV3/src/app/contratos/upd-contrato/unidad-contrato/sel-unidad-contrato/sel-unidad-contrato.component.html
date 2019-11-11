@@ -1,0 +1,8 @@
+<hr>
+<mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+<app-grid-component [datos]="unidadesContratos" [gridOptions]="gridOptions" [columns]="columns"
+    [exportExcel]="exportExcel" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+    [Columnchooser]="Columnchooser" [searchPanel]="searchPanel" [scroll]="scroll"
+    (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+</app-grid-component>

@@ -1,0 +1,58 @@
+<mat-card>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaCategoriaDrawer': 'columnaCategoria'">
+        <div class="barraCategoria" [style.background-color]="tarea.colorModulo"></div>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaCheckDrawer': 'columnaCheck'">
+        <mat-checkbox (click)="marcarFinalizado(tarea)" [checked]="tarea.idEstatusTarea === tareaConcluida" [disabled]="tarea.idEstatusTarea === tareaConcluida || tarea.idEstatusTarea === tareaRechazada"></mat-checkbox>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaUsuarioDrawer': 'columnaUsuario'">
+        <div class="widget-content-wrapper">
+            <div class="widget-content-left mr-3">
+                <img [src]="tarea.avatarSolicitante" alt="" class="rounded-circle">
+            </div>
+        </div>
+    </div>
+    <div class="TareaColumna columnaEspacioDrawer" [hidden]="tipoTarea === 0"></div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaCuerpoDrawer': 'columnaCuerpo'">
+        <div class="tarea-titulo">
+            {{tarea.titulo}}
+        </div>
+        <div class="tarea-descripcion">
+            {{tarea.descripcion}}
+        </div>
+        <div class="tarea-fecha">
+            <fa name="calendar-alt" class="opacity-4 mr-2"></fa>{{tarea.fechaCreacion}} Vencimiento:
+            <i>
+                <img style="height: 20px; width: 20px;" src="../../../assets/images/iconos-tarea/vencimiento.png">
+            </i><span [ngClass]="tarea.vencida ? 'tarea-fecha-vencida' : 'tarea-fecha'">{{tarea.fechaVencimiento}}</span>
+        </div>
+    </div>
+    <div class="TareaColumnaBarra" [hidden]="tipoTarea === 1">
+        <div class="barraSeparadorI"></div>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaLinkDrawer': 'columnaLink'">
+        <button (click)="navegaTarea(tarea.rutaProcesada)" [hidden]="!tarea.rutaProcesada" [disabled]="tarea.idEstatusTarea === tareaConcluida" class="border-0 btn-transition btn">
+            <img class="imagenIcono" src="../../../assets/images/iconos-tarea/accion.png">
+        </button>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaAdjuntoDrawer': 'columnaAdjunto'">
+        <button (click)="visualizaAdjunto(tarea)" class="border-0 btn-transition btn">
+            <img class="imagenIcono" src="../../../assets/images/iconos-tarea/adjunto.png">
+        </button>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaRechazaDrawer': 'columnaRechaza'">
+        <button (click)="rechazarTarea(tarea)" [disabled]="tarea.idEstatusTarea === tareaConcluida || tarea.rutaProcesada" class="border-0 btn-transition btn">
+            <img class="imagenIcono" src="../../../assets/images/iconos-tarea/eliminar.png">
+        </button>
+    </div>
+    <div class="TareaColumnaBarra" [hidden]="tipoTarea === 1">
+        <div class="barraSeparadorD"></div>
+    </div>
+    <div class="TareaColumna" [ngClass]="tipoTarea === 1 ? 'columnaTagDrawer': 'columnaTag'">
+        <div class="d-flex flex-wrap" [ngClass]="tipoTarea == 0 ? '' : 'justify-content-center'">
+            <div class="tag-badge" *ngFor="let tag of tarea.tags;" [style.background-color]="tag.color">
+                {{tag.tag}}
+            </div>
+        </div>
+    </div>
+</mat-card>

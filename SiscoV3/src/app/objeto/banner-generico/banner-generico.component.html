@@ -1,0 +1,58 @@
+<mat-card class="cardMarginBottom" *ngIf="tipoObjetos">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <img class='imagenIconoGris' src="../../assets/images/objeto-banner/objeto-icono.png"> &nbsp;&nbsp;&nbsp;
+            <span>Datos</span>
+            <a routerLink="/sel-ficha-tecnica/{{IObjeto[0].idObjeto}}/{{IObjeto[0].idTipoObjeto}}/{{IObjeto[0].rfcEmpresa}}/{{IObjeto[0].idCliente}}/{{IObjeto[0].numeroContrato}}"
+                routerLinkActive="router-link-active">
+                <img style="width: 40px;float: right;" src="./assets/images/objeto-banner/accion.svg">
+            </a>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+            <div class="row no-gutters" style="width:100%; margin: 0; align-items: center; height: 100%;">
+                <div class="col-sm-6 col-md-6 col-lg-7 col-xl-6 sinPadd ImagenCarro">
+                    <div class="car-color" *ngIf="color">
+                        <span class="color-dot-desktop" [style.background]="color"></span>
+                    </div>
+                    <app-viewer ngDefaultControl [IViewer]="IViewer"></app-viewer>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-5 col-xl-6 sinPadd">
+                    <div class="row" style="height: 100%; align-items:center" *ngFor="let tipoObjeto of tipoObjetos">
+                        <div class="col-lg-12 col-xl-3 col-3 col-sm-2 col-md-2" style="text-align: center">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/tipoObjeto.png">
+                        </div>
+                        <div class="col-lg-12 col-xl-9 col-sm-10 col-md-10">
+                            <p class="datoBannerImportant"> {{tipoObjeto.campo}}: {{tipoObjeto.valor}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+            <div class="row no-gutters" style="height: 100%; align-items: center">
+                <div *ngFor="let objeto of objetos" class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <div class="row horizontal">
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 sinPadd" style="height: 45px">
+                            <img class='imagenBanner' src="../../assets/images/objeto-banner/objeto.png">
+                        </div>
+                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 sinPadd textoAzul"
+                            style="height: 45px">
+                            <p class="SubtituloBanner">
+                                {{objeto.campo}}
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.valor}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</mat-card>

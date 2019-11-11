@@ -1,0 +1,581 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<div class="panel-estado-solicitud" *ngIf="dataPaso && barrasolicitud">
+    <mat-card class=" cardMarginBottom" style="border-bottom-color: #E9EFFF !important;padding: 0;height: 60px;">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12" style="margin-top: 7px">
+              <div class="row no-gutters" style="height: 100%; align-items:center">
+                <div class="col-md-6 col-lg-6 col-xl-2">
+                  <div class="row no-gutters" style="height: 100%; align-items:center">
+                    <div class="col-md-2 col-lg-2 col-xl-3">
+                      <app-viewer [IViewer]="IViewer2"></app-viewer>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-9">
+                      <p class="orden">{{pasoActualsolicitud.numeroOrden}}</p>
+                      <p class="status" style="margin-top: 5px">{{pasoActualsolicitud.idTipoSolicitud}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-7" style="margin-top: -10px">
+                    <div class="row no-gutters">
+                      <div class="col" *ngFor='let fase of fasessolicitud;let i = index'>
+                        <p class="fase" [ngClass]="{'colores' : i <= indexfaseactual}" style="margin-bottom: 5px">{{fase.nombre}}
+                        </p>
+                        <div class="progress" style="height: 0.3rem;width: 95%;margin-left: 17px;">
+                          <span class="numero-fase" [ngClass]="{'numero-fase-actual' : i <= indexfaseactual}">{{i+1}}</span>
+                          <div *ngIf="fase.porcentaje" aria-valuemin="0" role="progressbar" class="progress-bar"
+                            aria-valuenow="fase.porcentaje" aria-valuemax="100" [style.width]="fase.porcentaje + '%' "></div>
+                          <div *ngIf="!fase.porcentaje" aria-valuemin="0" role="progressbar" class="progress-bar"
+                            aria-valuenow="0" aria-valuemax="100" width="0%"></div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-md-4 col-lg-4 col-xl-3">
+                  <div class="row">
+                        <div class="col-md-1 col-lg-1 col-xl-1"></div>
+                    <div *ngIf='pasoActualsolicitud.solicitudFinalizadaHoras' class="col-md-8 col-lg-8 col-xl-8">
+                      <p class="tiempo-paso">{{pasoActualsolicitud.solicitudFinalizadaHoras}}
+                        hrs</p>
+                      <p class="paso-tiempo-actual">{{pasoActualsolicitud.estatus}}</p>
+                    </div>
+                    <div *ngIf='!pasoActualsolicitud.solicitudFinalizadaHoras' class="col-md-8 col-lg-8 col-xl-8">
+                      <p [ngClass]="negativos ? 'tiempo-paso-sobrepasado' : 'tiempo-paso'">{{hours}}:{{minutes}}:{{seconds}}
+                        hrs</p>
+                      <p [ngClass]="negativos ? 'paso-tiempo-sobrepasado' : 'paso-tiempo-actual'">{{pasoActualsolicitud.estatus}}</p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <div *ngIf='pasoActualsolicitud.solicitudFinalizadaDias' class="dias2 float-right">
+                        <p style="font-size: 18px">{{pasoActualsolicitud.solicitudFinalizadaDias}}</p>
+                        <p style="font-size: 12px">Dias</p>
+                      </div>
+                      <div *ngIf='!pasoActualsolicitud.solicitudFinalizadaDias' class="dias2 float-right">
+                        <p style="font-size: 18px">{{pasoActualsolicitud.diasPasos}}</p>
+                        <p style="font-size: 12px">Dias</p>
+                      </div>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+</div>
+
+<mat-card *ngIf='solicitudes && solicitudes.length > 1' (window:resize)="onResize($event)" class="cardMarginBottom" style='border-radius: 25px;'>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row no-gutters" style="height: 100%;align-items:center;">
+            <div class="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                <div class="row no-gutters" style="height: 100%;align-items:center;">
+                    <div class="col-10 col-sm-10 col-md-8 col-lg-9 col-xl-10">
+                        <p style="font-size: 14px; margin-bottom:0; color: #6D757D">Orden de Servicio</p>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-4 col-lg-3 col-xl-2">
+                        <img (click)="scrollLeft()" src="../../../assets/images/iconos-sisco/lineadeltiempo/izq.png" style="width:40;height:40px;position: absolute;top: -20px;cursor: pointer;right: 10px;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
+                <div class="row">
+                    <div class="col-10 col-sm-10 col-md-11 col-lg-11 col-xl-11">
+                        <div #horizontal class="d-flex overflow">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-2 solicitud" *ngFor='let solicitud of solicitudes; let i = index' style="padding: 5px;margin-bottom: 5px;margin-top: 5px;" [ngClass]="{'solicitud-actual': solicitud.idSolicitud === solicitudActual.idSolicitud  }">
+                                <div class="row no-gutters" style="height: 100%;align-items:center;">
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-5">
+                                        <div *ngFor='let image of IViewer2'>
+                                            <app-viewer *ngIf='solicitud.idSolicitud === image.idSolicitud' [IViewer]="image.image"></app-viewer>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-7" style="cursor: pointer;" (click)='cambioSolicitud(solicitud, i)'>
+                                        {{solicitud.numeroOrden}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                        <img (click)="scrollRight()" src="../../../assets/images/iconos-sisco/lineadeltiempo/der.png" style="width:40;height:40px;position: absolute;top: 7px;cursor: pointer;left: -7px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>
+<div [ngClass]="{'desactivaPantalla': spinner }">
+    <div *ngIf='ban'>
+        <div>
+            <app-fase-paso-solicitud [idLogo]='idLogo' [idClase]='idClase' [idTipoSolicitud]='idTipoSolicitud' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato' [idSolicitud]='idSolicitud' (pasoActualSend)='pasoAct($event)' (dataPaso)='datafasepasosolicitud($event)'></app-fase-paso-solicitud>
+            <app-banner [IObjeto]="IObjeto" *ngIf="idClase == 'Automovil'"></app-banner>
+            <app-banner-generico [IObjeto]="IObjeto" *ngIf="idClase != 'Automovil'"></app-banner-generico>
+
+            <mat-card class="cardMarginBottom">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/costos.png"> &nbsp;&nbsp;&nbsp;
+                        <span>Documentación de la orden</span>
+                        <hr>
+                        <app-viewer [IViewer]="IViewer" [desactivador]='true' [doc]="docOrden" [total]="numeroDocOrden" (messageEvent)="receiveMessageDoc($event)"></app-viewer>
+                    </div>
+                    <br>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/costos.png"> &nbsp;&nbsp;&nbsp;
+                        <span>Catálogo de evidencias</span>
+                        <hr>
+                        <div *ngIf='banEvidencia' class="row">
+                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                <app-viewer [IViewer]="IViewer" [desactivador]='true' (messageEvent)="receiveMessageDoc($event)" [doc]="docEvidencia" [total]="numeroDocEvidencia"></app-viewer>
+                                <hr *ngIf='numeroDocEvidencia > 0'>
+                                <dx-file-uploader (onValueChanged)="uploadFile(fileUploader)" #fileUploader uploadButtonText="Cargar" uploadedMessage="Cargado" uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="o arrastra aqui los archivo(s)" [multiple]="IUploadFile.multiple"
+                                    accept="*" uploadMode="useForm" [allowedFileExtensions]="IUploadFile.extension" [maxFileSize]="15000000">
+                                </dx-file-uploader>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <div class="row text-right">
+                <div class='col-sm-12 col-md-12 col-xl-12'>
+                    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="validaCostoVenta(group.value)">
+                        <mat-button-toggle *ngIf='moduloCosto' value="1" checked="true" class="inputFullWide"> Costo
+                        </mat-button-toggle>
+                        <mat-button-toggle *ngIf='moduloVenta' value="2" class="inputFullWide"> Venta
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <br><br>
+                </div>
+            </div>
+
+            <div>
+                <div *ngFor='let prov of prove; let ip = index'>
+                    <app-banner-proveedor-entidad [rfcProveedor]="prov.rfcProveedor" [idProveedorEntidad]="prov.idProveedorEntidad">
+                    </app-banner-proveedor-entidad>
+                    <mat-card class="cardMarginBottom">
+                        <div class="cardMarginBottom">
+                            <div *ngFor='let proveedor of proveedores'>
+                                <div *ngIf='prov.rfcProveedor === proveedor.rfcProveedor && prov.idProveedorEntidad === proveedor.idProveedorEntidad'>
+                                    <div class="row" style="height: 100%; align-items: center;">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                            <span class="cotizacion">Cotización {{proveedor.numeroCotizacion}}</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                                            <div *ngFor='let fechaCoti of fechaCotizacion'>
+                                                <div *ngIf='proveedor.numeroCotizacion === fechaCoti.numeroCotizacion && proveedor.rfcProveedor === fechaCoti.rfcProveedor && proveedor.idProveedorEntidad === fechaCoti.idProveedorEntidad'>
+
+                                                    <div *ngIf='fechaCoti.estatusCotizacionNombre === "Aprobada" || fechaCoti.estatusCotizacionNombre === "Rechazada" || fechaCoti.estatusCotizacionNombre === "Cancelada"'>
+                                                        <div class="row no-gutters">
+                                                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 d-none d-md-block">
+                                                            </div>
+                                                            <div class="col-6 col-sm-6 col-md-5 col-lg-5 col-xl-5 espera">
+                                                                <span>En espera</span><br>
+                                                                <span>{{fechaCoti.nombreCompleto}}
+                                                                    {{fechaCoti.fechaAlta | date: 'dd/MM/yyyy'}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-6 col-sm-6 col-md-5 col-lg-5 col-xl-5 {{fechaCoti.clase}}">
+                                                                <span *ngIf='fechaCoti.estatusCotizacionNombre === "Cancelada"'>No solicitada</span>
+                                                                <span *ngIf='fechaCoti.estatusCotizacionNombre !== "Cancelada"'>{{fechaCoti.estatusCotizacionNombre}}</span><br>
+                                                                <span>{{fechaCoti.idUsuarioAprobador}}
+                                                                    {{fechaCoti.fechaFin | date: 'dd/MM/yyyy'}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 d-none d-md-block">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="soloespera" *ngIf="fechaCoti.estatusCotizacionNombre === 'En Espera'">
+                                                        <span>{{fechaCoti.estatusCotizacionNombre}}</span><br>
+                                                        <span>{{fechaCoti.nombreCompleto}}
+                                                            {{fechaCoti.fechaAlta | date: 'dd/MM/yyyy'}}</span>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="desktop-table d-none d-md-block">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" sortable="idPartida" class="columnas">Id</th>
+                                                    <th scope="col" sortable="Foto" class="columnas">Foto</th>
+                                                    <th scope="col" sortable="Instructivo" class="columnas">Instructivo
+                                                    </th>
+                                                    <th scope="col" sortable="partida" class="columnas">Partida
+                                                    </th>
+                                                    <th scope="col" sortable="noParte" class="columnas">No parte
+                                                    </th>
+                                                    <th scope="col" sortable="Descripcion" class="columnas">Descripción
+                                                    </th>
+                                                    <th *ngIf='proveedor.muestraFolio' scope="col" sortable="cantidad" class="columnas">Factura</th>
+                                                    <th scope="col" sortable="cantidad" class="columnas">Cantidad</th>
+                                                    <th *ngIf='bandCostoVenta' scope="col" sortable="costoInicial" class="columnas">Costo unitario
+                                                    </th>
+                                                    <th *ngIf='bandCostoVenta === false' scope="col" sortable="costoInicial" class="columnas">Venta unitaria
+                                                    </th>
+                                                    <th *ngIf='bandCostoVenta' scope="col" sortable="costo" class="columnas">Costo</th>
+                                                    <th *ngIf='bandCostoVenta === false' scope="col" sortable="costo" class="columnas">Venta</th>
+                                                    <th *ngIf='proveedor.muestraCampos' scope="col" sortable="costo" class="columnas">Usuario aprobador</th>
+                                                    <th *ngIf='proveedor.muestraCampos' scope="col" sortable="fechaEstatus" class="columnas">Fecha</th>
+                                                    <th scope="col" sortable="nombreEstatus" class="columnas">Estatus
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let partidaCotizacion of partidasCotizaciones; let i = index" [ngClass]="proveedor.idCotizacion !== partidaCotizacion.idCotizacion ? 'des' : ''">
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.idPartida" class="desc">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <app-viewer ngDefaultControl [IViewer]="partidaCotizacion.Foto">
+                                                        </app-viewer>
+                                                    </td>
+                                                    <td>
+                                                        <app-viewer ngDefaultControl [IViewer]="partidaCotizacion.Instructivo">
+                                                        </app-viewer>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight ngbTooltip="Veces que se ha utilizado esta partida: {{partidaCotizacion.partidaUso}}" [result]="partidaCotizacion.partida" class="desc">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.noParte" class="desc">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.Descripcion" class="desc">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='proveedor.muestraFolio'>
+                                                        <ngb-highlight style="cursor: pointer" (click)="open(Gridlightbox)" [result]="partidaCotizacion.folio" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ng-template #Gridlightbox let-c="close" let-d="dismiss">
+                                                            <div>
+                                                                <button type="button" class="close linea" aria-label="Close" (click)="d('Cross click')">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <pdf-viewer class="pdf" [src]="partidaCotizacion.factura" [original-size]="false" [autoresize]="true">
+                                                                </pdf-viewer>
+                                                            </div>
+                                                        </ng-template>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.cantidad" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta'>
+                                                        <ngb-highlight [result]="partidaCotizacion.costoInicial | currency" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta'>
+                                                        <ngb-highlight [result]="partidaCotizacion.subTotalCosto | currency" class="columnas"></ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta === false'>
+                                                        <ngb-highlight [result]="partidaCotizacion.ventaInicial | currency" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta === false'>
+                                                        <ngb-highlight [result]="partidaCotizacion.subTotalVenta | currency" class="columnas"></ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='proveedor.muestraCampos'>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus !== "En espera"' [result]="partidaCotizacion.nombreCompleto" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='proveedor.muestraCampos'>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus !== "En espera"' [result]="partidaCotizacion.fechaEstatus | date: 'dd/MM/yyyy'" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "En espera"' style="color:#FCB142" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "Rechazada"' style="color:#D92550" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "Aprobada"' style="color:#159843" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "Cancelada"' style="color:#96A4B1" result="No solicitada" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                </tr>
+                                                <!-- </div> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-table d-md-none" *ngFor="let partidaCotizacion of partidasCotizaciones; let i = index" [ngClass]="proveedor.idCotizacion !== partidaCotizacion.idCotizacion ? 'des' : ''">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" sortable="Descripcion" class="columnas">Item</th>
+                                                    <th scope="col" sortable="Foto"></th>
+                                                    <th scope="col" sortable="Instructivo"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.Descripcion" class="desc">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <app-viewer ngDefaultControl [IViewer]="partidaCotizacion.Foto">
+                                                        </app-viewer>
+                                                    </td>
+                                                    <td>
+                                                        <app-viewer ngDefaultControl [IViewer]="partidaCotizacion.Instructivo">
+                                                        </app-viewer>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngIf='proveedor.muestraFolio' scope="col" sortable="cantidad" class="columnas">Factura</th>
+                                                    <th scope="col" sortable="cantidad" class="columnas">Cantidad</th>
+                                                    <th *ngIf='bandCostoVenta' scope="col" sortable="costoInicial" class="columnas">Costo unitario
+                                                    </th>
+                                                    <th *ngIf='bandCostoVenta === false' scope="col" sortable="costoInicial" class="columnas">Venta unitaria
+                                                    </th>
+                                                    <th *ngIf='bandCostoVenta' scope="col" sortable="costo" class="columnas">Costo</th>
+                                                    <th *ngIf='bandCostoVenta === false' scope="col" sortable="costo" class="columnas">Venta</th>
+                                                    <th *ngIf='proveedor.muestraCampos' scope="col" sortable="costo" class="columnas">Usuario aprobador</th>
+                                                    <th *ngIf='proveedor.muestraCampos' scope="col" sortable="fechaEstatus" class="columnas">Fecha</th>
+                                                    <th scope="col" sortable="nombreEstatus" class="columnas">Estatus
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td *ngIf='proveedor.muestraFolio'>
+                                                        <ngb-highlight [result]="partidaCotizacion.folio" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight [result]="partidaCotizacion.cantidad" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta'>
+                                                        <ngb-highlight [result]="partidaCotizacion.costoInicial | currency" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta'>
+                                                        <ngb-highlight [result]="partidaCotizacion.subTotalCosto | currency" class="columnas"></ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta === false'>
+                                                        <ngb-highlight [result]="partidaCotizacion.ventaInicial | currency" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='bandCostoVenta === false'>
+                                                        <ngb-highlight [result]="partidaCotizacion.subTotalVenta | currency" class="columnas"></ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='proveedor.muestraCampos'>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus !== "En espera"' [result]="partidaCotizacion.nombreCompleto" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td *ngIf='proveedor.muestraCampos'>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus !== "En espera"' [result]="partidaCotizacion.fechaEstatus | date: 'dd/MM/yyyy'" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                    <td>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "En espera"' style="color:#FCB142" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "Rechazada"' style="color:#D92550" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                        <ngb-highlight *ngIf='partidaCotizacion.nombreEstatus === "Aprobada"' style="color:#159843" [result]="partidaCotizacion.nombreEstatus" class="columnas">
+                                                        </ngb-highlight>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div *ngFor='let costo of costos'>
+                                        <div *ngIf='proveedor.rfcProveedor === costo.rfcProveedor && proveedor.idProveedorEntidad === costo.idProveedorEntidad && proveedor.numeroCotizacion === costo.numeroCotizacion && proveedor.idCotizacion === costo.idCotizacion'>
+                                            <div class='row no-gutters'>
+                                                <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                                <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 subtotal-gray">
+                                                    Subtotal:
+                                                    <hr>
+                                                </div>
+                                                <div *ngIf='bandCostoVenta' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 subtotal-gray" style="text-align: right">
+                                                    {{costo.subTotalCosto | currency }}
+                                                    <hr>
+                                                </div>
+                                                <div *ngIf='bandCostoVenta === false' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 subtotal-gray" style="text-align: right">
+                                                    {{costo.subTotalVenta | currency }}
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <!-- <div class='row no-gutters'>
+                                                                    <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                                                    <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 iva">
+                                                                        IVA:
+                                                                        <hr>
+                                                                    </div>
+                                                                    <div class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 iva"
+                                                                        style="text-align: right">
+                                                                        {{costo.IVA | currency}}
+                                                                        <hr>
+                                                                    </div>
+                                                                </div>
+                                                                <div class='row no-gutters'>
+                                                                    <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                                                    <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 total">
+                                                                        Total:
+                                                                        <hr>
+                                                                    </div>
+                                                                    <div class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 total"
+                                                                        style="text-align: right">
+                                                                        {{costo.total | currency}}
+                                                                        <hr>
+                                                                    </div>
+                                                                </div> -->
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf='ip + 1 === prove.length'>
+                                <div class='row no-gutters'>
+                                    <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                    <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 subtotal">
+                                        Subtotal:
+                                        <hr>
+                                    </div>
+                                    <div *ngIf='bandCostoVenta' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 subtotal" style="text-align: right">
+                                        {{sumaTotalSolicitud.subTotalCosto | currency }}
+                                        <hr>
+                                    </div>
+
+                                    <div *ngIf='bandCostoVenta === false' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 subtotal" style="text-align: right">
+                                        {{sumaTotalSolicitud.subTotalVenta | currency }}
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class='row no-gutters'>
+                                    <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                    <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 iva">
+                                        IVA:
+                                        <hr>
+                                    </div>
+                                    <div *ngIf='bandCostoVenta' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 iva" style="text-align: right">
+                                        {{sumaTotalSolicitud.IVACosto | currency}}
+                                        <hr>
+                                    </div>
+
+                                    <div *ngIf='bandCostoVenta === false' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 iva" style="text-align: right">
+                                        {{sumaTotalSolicitud.IVAVenta | currency}}
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class='row no-gutters'>
+                                    <div class="col-5 col-sm-5 col-md-8 col-lg-8 col-xl-8"></div>
+                                    <div class="col-3 col-sd-3 col-md-2 col-lg-2 col-xl-2 total">
+                                        Total:
+                                        <hr>
+                                    </div>
+                                    <div *ngIf='bandCostoVenta' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 total" style="text-align: right">
+                                        {{sumaTotalSolicitud.totalCosto | currency}}
+                                        <hr>
+                                    </div>
+
+                                    <div *ngIf='bandCostoVenta === false' class="col-4 col-sd-4 col-md-2 col-lg-2 col-xl-2 total" style="text-align: right">
+                                        {{sumaTotalSolicitud.totalVenta | currency}}
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <app-encuesta-proveedor></app-encuesta-proveedor> -->
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <mat-card *ngIf='tokenBand' class="cardMarginBottom" [formGroup]="tokenForm">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Solicitudes/token.png"> &nbsp;&nbsp;&nbsp;
+            <span>Aprobar token</span>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input #tok matInput placeholder="Token de aprobación" maxlength='6' formControlName="token">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong> (6 digitos)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf='tokenBoton' class="col-sm-12 col-md-6 col-xl-6 float-left">
+                    <br>
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary" (click)='generarToken()'><i class="pe-7s-key btn-icon-wrapper">
+                        </i>
+                        Generar token
+                    </button>
+                    <button *ngIf='pasoActual === "Entrega"' class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary" (click)='encuesta()'><i class="pe-7s-key btn-icon-wrapper">
+                        </i>
+                        Encuesta
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='sendToken()' [disabled]="!tokenForm.valid"><i class="pe-7s-key btn-icon-wrapper">
+                        </i>
+                        Aprobar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+
+        <mat-card *ngIf='PlanAccionBand' class="cardMarginBottom" [formGroup]="planAccionForm">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Solicitudes/token.png"> &nbsp;&nbsp;&nbsp;
+            <span>Plan de acción</span>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <mat-form-field class="inputFullWide">
+                        <textarea #planAcc matInput placeholder="Descripción" maxlength='500' rows="4" formControlName="descripcion" style="resize: none;"></textarea>
+                        <mat-error> El campo es <strong>requerido</strong> </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput [matDatepicker]="vFecha" placeholder="Fecha de vencimiento" formControlName="vFecha">
+                        <mat-datepicker-toggle matSuffix [for]="vFecha"></mat-datepicker-toggle>
+                        <mat-datepicker #vFecha></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <mat-select placeholder="Prioridad" formControlName="prioridad">
+                            <mat-option *ngFor='let prioridad of prioridades' [value]="prioridad.id">
+                                {{prioridad.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='enviaPlanAccion()' [disabled]="!planAccionForm.valid"><i
+                            class="pe-7s-key btn-icon-wrapper">
+                        </i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<app-sel-solicitud-footer *ngIf="globals.banderaFooterSol && ban3" [rfcEmpresa]="solicitudActual.rfcEmpresa" [idCliente]="solicitudActual.idCliente" [numeroContrato]="solicitudActual.numeroContrato" [idSolicitud]="solicitudActual.idSolicitud" [idTipoSolicitud]="solicitudActual.idTipoSolicitud"
+    [idClase]="idClase" (responseFooter)="reponse($event)">
+</app-sel-solicitud-footer>

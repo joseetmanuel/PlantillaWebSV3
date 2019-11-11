@@ -1,0 +1,56 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+  <div>
+    <mat-card>
+      <div class="row" *ngIf="fileEnabled">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <div>
+            <small class="titulo-input-dinamico">Factura</small>
+            <app-file-upload-component [IUploadFile]="IUploadFile" (messageEvent)="ResultUploadFile($event)">
+            </app-file-upload-component>
+          </div>
+        </div>
+
+        <div *ngFor="let objeto of modulo.camposClase" class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <div *ngIf="objeto.nombre == 'Disponer'" class="pull-right">
+            <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+              (click)="receiveMessage('cobrar')" [disabled]="valid"><i class="pe-7s-diskette btn-icon-wrapper"></i>
+              Disponer
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <br><br>
+
+      <app-grid-component [datos]="comisionesDisponibles" [gridOptions]="gridOptions" [columns]="columns"
+        [exportExcel]="exportExcel" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+        [Columnchooser]="Columnchooser" [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar"
+        (datosevent)='datosMessage($event)'>
+      </app-grid-component>
+
+      <br>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+          <table class="text-primary main float-right">
+            <tr>
+              <td rowspan="3">
+                <span class="d-block"><b>Comision :</b></span>
+                <span class="d-block"><b>Total Factura :</b></span>
+              </td>
+              <td style="padding-left: 50px !important;" rowspan="3">
+                <span class="d-block text-right"><b>{{ totalComision | currency:'MXN' :'symbol':'4.2-2' }}</b></span>
+                <span class="d-block text-right"><b>{{ totalFactura | currency:'MXN' :'symbol':'4.2-2' }}</b></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </mat-card>
+  </div>
+</div>

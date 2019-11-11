@@ -1,0 +1,37 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+  
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" urlImagen = "../../../assets/images/iconos-sisco/talleres.png"></app-breadcrumbs>
+  
+  <div>
+      <carga-masiva [columnas]="columnas"  [sp]="sp" [urlApi]="urlApi" [parametrosSP]="parametrosSP" [idClase]="idClase" [acciones]="acciones"
+        (reponse)="response($event)" (responseFileUpload)="responseFileUpload($event)"></carga-masiva>
+  </div>
+
+
+  <!-- <div *ngIf="valid" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <mat-card class="cardMarginBottom">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/lapizIcon.png">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Resultado de Carga Masiva</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <app-grid-component [datos]="jsonUnidades" [gridOptions]="gridOptions" [columns]="columns"
+            [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+            [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar">
+        </app-grid-component>
+        <br>
+        <div class="clearfix">
+            <button type="button" (click)="Guardar()" id="next-btn"
+                class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">
+                Guardar
+            </button>
+        </div>
+    </mat-card>
+  </div> -->
+</div>

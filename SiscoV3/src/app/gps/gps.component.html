@@ -1,0 +1,172 @@
+<div [ngClass]="{'desactivaPantalla': spinner }">
+   <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+   <div class="gpscontent drag-content">
+      <button id="ResetBtn" class="btn btn-info rounded-circle" (click)="regresaParque()">
+         <i style="font-size: 18px; margin-top: 2px; margin-left: -1px;" class="fa fa-sync"></i>
+      </button>
+      <button id="ClearPath" [hidden]="!origin && !destination" class="btn btn-danger rounded-circle"
+         (click)="limpiaRuta()">
+         <i style="font-size: 18px; margin-top: 2px; margin-left: -1px;" class="fa fa-trash"></i>
+      </button>
+
+      <!-- Bucador de unidades -->
+      <div class="search-wrapper" [class.active]="activo" #contentInput>
+         <div class="input-holder">
+            <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="auto" #busqueda
+               placeholder="Buscar unidad" class="search-input inputFullWide" [formControl]="formBuscar">
+            <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+         </div>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete">
+         <mat-option (onSelectionChange)="changeOption(filtro)" *ngFor="let filtro of datosFiltrados">
+            <div style="display: block">
+               <img class="example-option-img img-buscador" aria-hidden [src]="urlFileServer + filtro.path">
+               <small>{{ filtro.marca}} {{ filtro.submarca }} {{filtro.modelo}} |</small>
+               <span style="font-size: 9px;font-weight: 600;" *ngIf="filtro.placa"> Placa:</span>
+               <small *ngIf="filtro.placas"> {{ filtro.placa}}</small>
+               <span style="font-size: 9px;font-weight: 600;" *ngIf="filtro.VIN"> VIN:</span>
+               <small *ngIf="filtro.VIN">{{ filtro.VIN }}</small>
+            </div>
+         </mat-option>
+      </mat-autocomplete>
+
+
+      <agm-map [styles]="styles" [style.height]="scrHeight" [(latitude)]="latitud" [(longitude)]="longitud" [(zoom)]="zoom" (mapReady)="mapReady($event)">
+         <!-- Marker para el recorrido del vehiculo -->
+         <agm-marker *ngIf="unidad" [visible]="carro && paradas.length > 0" [zIndex]="999" [latitude]="carro.latitud" [longitude]="carro.longitud"
+            iconUrl="./assets/markers/{{ unidad.tipo }}_luces.png">
+         </agm-marker>
+
+         <!-- Puntos de inicio y final del recorrido -->
+         <agm-marker *ngIf="paradas.length > 0" [latitude]="paradas[0].latitud" [longitude]="paradas[0].longitud"
+            [iconUrl]='{"url": "./assets/markers/inicio.png","scaledSize": {"height": 35, "width": 25}}'>
+         </agm-marker>
+
+         <agm-marker *ngIf="mostrarRuta && paradas.length > 1" [latitude]="paradas[paradas.length -1].latitud"
+            [longitude]="paradas[paradas.length -1].longitud"
+            [iconUrl]='{"url": "./assets/markers/final.png","scaledSize": {"height": 35, "width": 25}}'>
+         </agm-marker>
+
+         <!-- Se pinta la ruta del vehiculo -->
+         <agm-polyline *ngIf="paradas.length > 0" [strokeColor]="rutatheme">
+            <agm-polyline-point *ngFor="let point of paradas" [latitude]="point.latitud" [longitude]="point.longitud">
+            </agm-polyline-point>
+         </agm-polyline>
+
+         <!-- Marker de la unidad seleccionada para mostrar el recorrido -->
+         <agm-marker *ngIf="mostrarFiltro && mostrarRecorrido && paradas.length == 0" (markerClick)="openWindow(unidad)"
+            [latitude]="unidad.latitude" [longitude]="unidad.longitude" iconUrl="./assets/markers/{{unidad.tipo}}.png">
+            <agm-info-window [isOpen]="isInfoWindowOpen(unidad)" [latitude]="unidad.latitude"
+               [longitude]="unidad.longitude">
+               <app-tooltip-vehiculo (detalle)="detalle($event)" (mostrarRecorrido)="mostrarControlRecorrido($event)" [vehiculo]="unidad"></app-tooltip-vehiculo>
+            </agm-info-window>
+         </agm-marker>
+
+         <!-- Markers para el parque vehicular -->
+         <agm-marker-cluster *ngIf="!mostrarFiltro && !mostrarRecorrido"
+            imagePath="./assets/markers/cluster">
+            <agm-marker (markerClick)="openWindow(unidad)" *ngFor="let unidad of unidades"
+               [latitude]="unidad.latitude" [longitude]="unidad.longitude" iconUrl="./assets/markers/{{ unidad.tipo }}.png">
+               <agm-info-window [isOpen]="isInfoWindowOpen(unidad)" [latitude]="unidad.latitude"
+                  [longitude]="unidad.longitude">
+                  <app-tooltip-vehiculo (detalle)="detalle($event)" (mostrarRecorrido)="mostrarControlRecorrido($event)" [vehiculo]="unidad"></app-tooltip-vehiculo>
+               </agm-info-window>
+            </agm-marker>
+         </agm-marker-cluster>
+
+         <!-- Mostrar las alarmas del recorrido -->
+         <agm-marker (markerClick)="openWindow(r)" [visible]="mostrarAlarmas && alarmaSeleccionado && mostrarRecorrido"
+            *ngFor="let r of ruta | filterAlarma: alarmaSeleccionado" [latitude]="r.alarma.ubicacion.latitud"
+            [longitude]="r.alarma.ubicacion.longitud"
+            [iconUrl]='{"url": "./assets/markers/alarm.png","scaledSize": {"height": 13, "width": 13}}'>
+            <agm-info-window [isOpen]="isInfoWindowOpen(r)" [latitude]="r.alarma.ubicacion.latitud"
+               [longitude]="r.alarma.ubicacion.longitud">
+               <div>
+                  <h2>{{ r.alarma.ubicacion.direccion }}</h2>
+                  <div>
+                     <p><span class="font-weight-bold">Hora:</span> {{ r.alarma.fecha | date: ' HH:mm:ss' }}
+                     </p>
+                     <p><span class="font-weight-bold">Tipo: </span> {{ alarmaSeleccionado.descripcion }}</p>
+                  </div>
+               </div>
+            </agm-info-window>
+         </agm-marker>
+      </agm-map>
+
+      <div *ngIf="mostrarFiltro && mostrarRecorrido" class="d-none d-lg-block controles-ruta sin-ruta"
+         [ngClass]="{'con-ruta': mostrarRuta, 'fichabi' : !fichatecnica, 'fichcer' : fichatecnica}"
+         cdkDragBoundary=".drag-content" cdkDrag>
+         <div class="col-6 control" *ngIf="mostrarRuta">
+            <i (click)="playRuta()" class="fa fa-play" ngdis
+               [ngClass]="{'control-activo': playing}"><span>Reproducir</span></i>
+            <i class="fa fa-pause" (click)="onPause()" [ngClass]="{'control-activo': pause}"><span>Pausa</span></i>
+            <i class="fa fa-stop" (click)="onStop()" [ngClass]="{'control-activo': stop}"><span>Detener</span></i>
+
+            <div class="iconos-cotroles">
+               <i class="fa fa-fw" aria-hidden="true" (click)="regresaInicio()" title="Copy to use step-backward"></i>
+               <i class="fa fa-fw" aria-hidden="true" (click)="regresarParadas()" title="Copy to use forward"
+                  style="transform: rotateY(-200deg);"></i>
+
+               <nouislider [disabled]="playing" [min]="range.start" [max]="range.end" [step]="1" [(ngModel)]="unidadPosicion"
+                  (update)="cambiaPosicion($event)" (slide)="cambiaPosicion($event)" class="nouislider">
+               </nouislider>
+
+               <i class="fa fa-fw" aria-hidden="true" (click)="avanzarParadas()" title="Copy to use forward"></i>
+               <i class="fa fa-fw" aria-hidden="true" (click)="avanzaFinal()" title="Copy to use step-forward"></i>
+            </div>
+         </div>
+         <div class="col-6 fechas" *ngIf="mostrarRuta">
+            <div class="dato" [formGroup]="fechasForm">
+               <mat-form-field style="width: 100%; margin-left: 8px;">
+                  <mat-select (selectionChange)="cambioRecorridoPorDia($event.value)" formControlName="dia">
+                     <mat-option *ngFor="let dia of dias" [value]="dia.fecha">
+                        {{dia.fecha | date: 'dd MMM yyyy'}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div class="dato">
+               <span>{{ carro.fecha | date: 'HH:mm:ss' }}</span>
+            </div>
+            <div class="dato">
+               <span *ngIf="paradas">Intradia {{ unidadPosicion }}/{{ paradas.length }}</span>
+               <span *ngIf="!paradas">Intradia 0/0</span>
+            </div>
+         </div>
+         <div class="row">
+            <div [formGroup]="fechasForm" class="col-md-8 col-sm-12 col-lg-8">
+               <span class="margin-left: 15px">Recorridos</span>
+               <div class="dx-field-value">
+                  <mat-select placeholder="Periodo" formControlName="frmPeriodo">
+                     <mat-option *ngFor='let periodo of periodos' [value]="periodo">
+                        {{ periodo }}
+                     </mat-option>
+                  </mat-select>
+               </div>
+               <div style="margin-left: 200px;">
+                  <mat-form-field *ngIf="mostrarRuta">
+                     <mat-label>Alarma</mat-label>
+                     <mat-select (selectionChange)="alarmaSeleccionado = $event.value">
+                        <mat-option *ngFor="let tipo of tiposDeAlarmasRuta" [value]="tipo">
+                           {{ tipo.descripcion }}
+                        </mat-option>
+                     </mat-select>
+                  </mat-form-field>
+               </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-lg-4">
+               <div class="dx-field-value" (click)="buscarRecorrido()" style="width: 110px !important">
+                  <div class="font-icon-wrapper">
+                     <i class="lnr-magnifier">
+                        <span style="font-family: Arial, Helvetica, sans-serif;">Buscar</span>
+                     </i>
+                  </div>
+               </div>
+               <button *ngIf="mostrarRuta" mat-button style="margin-left: 28px;"
+                  (click)="finalizarRecorrido()">Finalizar
+                  recorrido</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,144 @@
+<div [ngClass]="{'desactiva': spinner }">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <ng-container *ngIf="breadcrumbIns  && idObjeto == 0; else breadUpd">
+        <app-breadcrumbs [ruta]="breadcrumbIns">
+        </app-breadcrumbs>
+    </ng-container>
+    <ng-template #breadUpd>
+        <app-breadcrumbs [ruta]="breadcrumb">
+        </app-breadcrumbs>
+    </ng-template>
+    <!-- campos generales de el objeto -->
+    <app-ins-objeto></app-ins-objeto>
+    <!-- div propiedades de objeto -->
+    <mat-card class='cardMargin'>
+        <div class="row cardMargin">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris' src="{{logo}}"> &nbsp;&nbsp;&nbsp;
+                <span>{{titleClase}}</span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6"
+                *ngFor="let tipoObjeto of tipoObjetoPropiedades, let index = index">
+                <div *ngIf="tipoObjeto.idTipoValor != 'Unico'; else unicoG">
+                    <div class="all ">
+                        <small *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}} *</small>
+                        <dx-drop-down-box class="updObjeto" #dropBox [dataSource]="tipoObjeto.arreglo"
+                            (onValueChanged)="closeWindow(dropBox, tipoObjeto.idTipoValor == 'Etiqueta')"
+                            placeholder="Selecciona {{tipoObjeto.valor}}" displayExpr="valor" valueExpr="id"
+                            [showClearButton]="true" [(value)]="tipoObjeto.label">
+
+                            <div *dxTemplate="let data of 'content'">
+                                <div
+                                    *ngIf="tipoObjeto.idTipoValor == 'Agrupador' || tipoObjeto.idTipoValor == 'Catalogo'">
+                                    <dx-tree-view class="dx-tree-view_scroll" [dataSource]="tipoObjeto.arreglo"
+                                        dataStructure="plain" keyExpr="id" parentIdExpr="idPadre"
+                                        selectedExpr="tipoObjeto.valorPropiedad" displayExpr="valor"
+                                        [selectByClick]="true" selectionMode="single" noDataText="No contiene datos"
+                                        (onInitialized)="initializedDxTreeView($event)"
+                                        (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                    </dx-tree-view>
+                                    <small *ngIf="!tipoObjeto.valid">Campo obligatorio</small>
+                                </div>
+                                <div *ngIf="tipoObjeto.idTipoValor == 'Etiqueta'">
+                                    <dx-tree-view class="dx-tree-view_scroll" [dataSource]="tipoObjeto.arreglo"
+                                        dataStructure="plain" keyExpr="id" parentIdExpr="idPadre" displayExpr="valor"
+                                        [selectByClick]="true" selectionMode="multiple" noDataText="No contiene datos"
+                                        showCheckBoxesMode="normal" [selectNodesRecursive]="true"
+                                        (onInitialized)="initializedDxTreeView($event)"
+                                        (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                    </dx-tree-view>
+                                    <small *ngIf="!tipoObjeto.valid">Campo obligatorio</small>
+                                </div>
+                            </div>
+                        </dx-drop-down-box>
+                    </div>
+                </div>
+
+                <ng-template #unicoG class="col-md-12 col-lg-12" style="margin: auto;">
+                    <mat-form-field *ngIf="tipoObjeto.idTipoDato == 'String' " class="all" id="blueversion">
+                        <input
+                            [disabled]="equipUrl.ruta && tipoObjeto.valor == 'VIN' &&  tipoObjeto.label != '' ? true : false "
+                            matInput [(ngModel)]="tipoObjeto.label" [placeholder]="tipoObjeto.valor"
+                            (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)" ([value])="tipoObjeto.label"
+                            [required]="tipoObjeto.obligatorio">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="tipoObjeto.idTipoDato == 'Documento'" class="all" id="blueversion">
+                        <input [disabled]="tipoObjeto.valorPropiedad != '' == true  ? false : true" matInput
+                            [(ngModel)]="tipoObjeto.label" [placeholder]="tipoObjeto.valor"
+                            (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)" ([value])="tipoObjeto.label"
+                            [required]="tipoObjeto.obligatorio">
+                    </mat-form-field>
+                    <div *ngIf="tipoObjeto.idTipoDato == 'Date'" class="all">
+                        <small *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}} *</small>
+                        <dx-date-box style="width: 100%" [(ngModel)]="tipoObjeto.label" [displayFormat]="'dd/MM/yyyy'"
+                            placeholder="Indica {{tipoObjeto.valor}}"
+                            (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)" [(value)]="tipoObjeto.label"
+                            type="date" [showClearButton]="true"></dx-date-box>
+                    </div>
+                    <div style="width: 100%;" *ngIf="tipoObjeto.idTipoDato == 'Datetime'">
+                        <small *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}} *</small>
+
+                        <dx-date-box style="width: 100%" [(value)]="tipoObjeto.label" [(ngModel)]="tipoObjeto.label"
+                            (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)" type="datetime"
+                            [showClearButton]="true" placeholder="Indica {{tipoObjeto.valor}}" applyButtonText="Aceptar"
+                            cancelButtonText="Cancelar">
+                        </dx-date-box>
+                    </div>
+                    <div *ngIf="tipoObjeto.idTipoDato == 'Decimal' || tipoObjeto.idTipoDato == 'Numeric'" class="all"
+                        style="margin: auto;">
+                        <small *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}} *</small>
+                        <dx-number-box [(ngModel)]="tipoObjeto.label" [(value)]="tipoObjeto.label"  id="blueversion"
+                            placeholder="Indica {{tipoObjeto.valor}}" [showSpinButtons]="true"
+                            (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)" [showClearButton]="true">
+                        </dx-number-box>
+
+                    </div>
+                    <div *ngIf="tipoObjeto.idTipoDato == 'File' || tipoObjeto.idTipoDato == 'Image'"
+                        class="col-md-12 col-lg-12">
+                        <small *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                        <small *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}} *</small>
+                        <app-file-upload-component [IUploadFile]="IUploadFile"
+                            (messageEvent)="ResultUploadFile($event, index)">
+                        </app-file-upload-component>
+                    </div>
+                    <div style="padding: 35px 0px;" *ngIf="tipoObjeto.idTipoDato == 'Bit'" class="col-md-12 col-lg-12">
+                        <mat-slide-toggle color="primary" class="tp-margin" [(ngModel)]="tipoObjeto.label"
+                            [checked]="tipoObjeto.valor" (ngModelChange)="ChangePropiedadTipo($event,tipoObjeto.valor)">
+                            {{tipoObjeto.valor}}
+                        </mat-slide-toggle>
+                    </div>
+                    <div *ngIf="tipoObjeto.idTipoDato == 'Color'" class="all">
+                        <mat-form-field class="color"  id="blueversion">
+                            <button [disabled]="true" style="width: 30px;height: 30px"
+                                class="border-0 mr-4 btn-transition btn float-left"
+                                [style.background]="tipoObjeto.label" [(colorPicker)]="tipoObjeto.label">
+                            </button>
+                            <input style="width: 85%;vertical-align: sub;" matInput [(colorPicker)]="tipoObjeto.label"
+                                placeholder="Indica {{tipoObjeto.valor}}" [cpOutputFormat]="'rgba'"
+                                [(ngModel)]="tipoObjeto.label" [cpPosition]="'bottom'"
+                                (colorPickerChange)="ChangePropiedadTipo($event,tipoObjeto.valor)"
+                                [value]="tipoObjeto.label" [style.color]="tipoObjeto.label" />
+                        </mat-form-field>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                    (click)='editPropiedades()' [disabled]="valido || !insertaObjeto.newObjetoForm.valid">
+                    <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

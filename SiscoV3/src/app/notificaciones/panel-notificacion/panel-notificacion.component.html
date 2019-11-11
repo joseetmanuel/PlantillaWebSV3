@@ -1,0 +1,17 @@
+<div class="card-body">
+    <h5 class="card-title">Notificaciones</h5>
+    <div class="scroll-area-notificacion" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScrollNotificacion()" [scrollWindow]="false">
+        <div class="scrollbar-container" >
+                <div style="position: static;" class="ps ps--active-y" ng-reflect-disabled="false">
+                    <div class="ps-content">
+                        <div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                            <div class="vertical-timeline-item vertical-timeline-element" *ngFor="let notificacion of notificaciones | async">
+                                <app-notificacion [notificacion]="notificacion" [token]="token">
+                                </app-notificacion>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

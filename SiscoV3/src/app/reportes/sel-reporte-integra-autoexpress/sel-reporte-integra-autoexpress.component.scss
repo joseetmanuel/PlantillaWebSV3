@@ -1,0 +1,31 @@
+.body-tabs-line .body-tabs-layout {
+    margin: 0 -30px;
+    padding: 0 30px;
+    margin-bottom: 30px;
+    border-bottom: #dee2e6 solid 1px;
+}
+
+
+.tabs-animated .nav-link {
+    position: relative;
+    padding: 1rem;
+    margin: 0 .75rem 0 0;
+    color: #495057;
+}
+
+.homebuttons {
+    border: none;
+    background: transparent;
+    color: gray;
+    margin-right: 5px;
+    width: 135px;
+    font-size: 14px;
+}
+
+.homebuttons:hover, .homebuttons.active {
+    color: #3F6AD8;
+    -webkit-box-shadow: 0px 10px 20px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 20px -11px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 20px -11px rgba(0,0,0,0.75);
+    font-weight: bold;
+}

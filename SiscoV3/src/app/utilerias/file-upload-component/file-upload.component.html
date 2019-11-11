@@ -1,0 +1,106 @@
+<form [formGroup]="frmCarga" (ngSubmit)="SubmitInputFile(fileUploader)">
+
+    <div *ngIf="!IUploadFile.soloProcesar">
+        <!-- <div  class="option" *ngIf="(!IUploadFile.multiple) || (IUploadFile.titulo == undefined)"> -->
+        <div class="option" [hidden]="(IUploadFile.multiple == true) || (IUploadFile.titulo != undefined)">
+            <span>Título</span>
+            <dx-text-box (onValueChanged)="ValidaInputs()" [formControl]="frmCarga.controls['titulo']" placeholder="Título..."></dx-text-box>
+        </div>
+        <div class="option" [hidden]="(IUploadFile.multiple == true) || (IUploadFile.descripcion != undefined)">
+            <span>Descripción</span>
+            <dx-text-box (onValueChanged)="ValidaInputs()" [formControl]="frmCarga.controls['descripcion']" placeholder="Descripción..."></dx-text-box>
+        </div>
+    </div>
+    <div style="display:inline-flex">
+        <div *ngIf='viewer'>
+            <div *ngFor="let prearchivo of doc">
+                <!-- Visualizador imagenes -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "jpg" || prearchivo.extencion == "jpeg" || prearchivo.extencion == "png" || prearchivo.extencion == "JPG" || prearchivo.extencion == "JPEG" || prearchivo.extencion == "PNG"'>
+                    <a [href]="prearchivo.path" data-lightbox="avatar">
+                        <img [src]="prearchivo.path" class="avatar" name="actual" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)" data-lightbox="newavatar">
+                        <img [src]="domSanitizer.bypassSecurityTrustUrl(imgURL)" class="avatar" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+                <!-- Visualizador pdf -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "pdf" || prearchivo.extencion == "PDF" '>
+                    <pdf-viewer name="actual" *ngIf="IUploadFile.previsualizacion == true " placement="right" [src]="prearchivo.path" [original-size]="false" [render-text]="false" [show-all]="false" style="display:block; width: 150px; cursor: pointer;" (click)="dialog.open(Gridlightbox)">
+                    </pdf-viewer>
+                    <ng-template #Gridlightbox>
+                        <div>
+                            <button type="button" class="close linea" aria-label="Close" [mat-dialog-close]>
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                            <pdf-viewer class="pdf" [src]="prearchivo.path" [original-size]="false" [autoresize]="true">
+                            </pdf-viewer>
+                        </div>
+                    </ng-template>
+                    <pdf-viewer *ngIf='imgURL && IUploadFile.previsualizacion == true && (prearchivo.extencion == "pdf" || prearchivo.extencion == "PDF")' placement="right" [src]="imgURL" [original-size]="false" [render-text]="false" [show-all]="false" style="display:block; width: 150px; cursor: pointer;"
+                        (click)="dialog.open(Gridlightboxnew)">
+                    </pdf-viewer>
+                    <ng-template #Gridlightboxnew>
+                        <div>
+                            <button type="button" class="close linea" aria-label="Close" [mat-dialog-close]>
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                            <pdf-viewer class="pdf" [src]="imgURL" [original-size]="false" [autoresize]="true">
+                            </pdf-viewer>
+                        </div>
+                    </ng-template>
+                </div>
+                <!-- Visualizador Excel -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "xlsx" || prearchivo.extencion == "xls" || prearchivo.extencion == "XLSX" || prearchivo.extencion == "XLS" '>
+                    <a [href]="prearchivo.path">
+                        <img name="actual" class="grid" src="../../assets/images/iconos-sisco/docEXCEL.png" class="grid" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)">
+                        <img src="../../assets/images/iconos-sisco/docEXCEL.png" class="grid" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+                <!-- Visualizador Word -->
+                <div style="display:block" *ngIf=' prearchivo.extencion == "docx" || prearchivo.extencion == "doc" || prearchivo.extencion == "DOCX" || prearchivo.extencion == "DOC" '>
+                    <a [href]="prearchivo.path">
+                        <img name="actual" class="grid" src="../../assets/images/iconos-sisco/docword.png" class="grid" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)">
+                        <img src="../../assets/images/iconos-sisco/docword.png" class="grid" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+                <!-- Visualizador Power Point -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "pptx" || prearchivo.extencion == "ppt" || prearchivo.extencion == "PPTX"  || prearchivo.extencion == "PPT" '>
+                    <a [href]="prearchivo.path">
+                        <img name="actual" class="grid" src="../../assets/images/iconos-sisco/docPP.png" class="grid" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)">
+                        <img src="../../assets/images/iconos-sisco/docPP.png" class="grid" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+                <!-- Visualicador TXT -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "txt" || prearchivo.extencion == "TXT" '>
+                    <a [href]="prearchivo.path">
+                        <img name="actual" class="grid" src="../../assets/images/iconos-sisco/doctxt.png" class="grid" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)">
+                        <img src="../../assets/images/iconos-sisco/doctxt.png" class="grid" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+                <!-- Visualizador XML -->
+                <div style="display:block" *ngIf='prearchivo.extencion == "xml" || prearchivo.extencion == "XML" '>
+                    <a [href]="prearchivo.path">
+                        <img name="actual" class="grid" src="../../assets/images/iconos-sisco/docXML.png" class="grid" *ngIf="IUploadFile.previsualizacion == true ">
+                    </a>
+                    <a [href]="domSanitizer.bypassSecurityTrustUrl(imgURL)">
+                        <img src="../../assets/images/iconos-sisco/docXML.png" class="grid" *ngIf="imgURL && IUploadFile.previsualizacion == true ">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="widget-container">
+            <dx-file-uploader (onValueChanged)="onValueChanged($event,fileUploader)" #fileUploader [disabled]="disabled" uploadButtonText="Cargar" uploadedMessage="Cargado" uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="o arrastra aqui los archivo(s)"
+                [multiple]="IUploadFile.multiple" [accept]="IUploadFile.extension" [uploadMode]="IUploadFile.tipodecarga" [allowedFileExtensions]="IUploadFile.extension" [maxFileSize]="15000000"></dx-file-uploader>
+            <dx-button *ngIf="IUploadFile.tipodecarga == 'useForm' " [disabled]="btnUpload" [useSubmitBehavior]="true" text="Subir Archivo(s)"></dx-button>
+        </div>
+    </div>
+
+</form>

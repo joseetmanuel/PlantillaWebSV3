@@ -1,0 +1,176 @@
+<div>
+  <form class="col-sm-12 col-md-12 col-xl-12">
+    <!-- Para tipo de busqueda Usuario -->
+    <div *ngIf="TipoBusqueda.usuario == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="user" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+      </div>
+      <mat-autocomplete #user="matAutocomplete">
+        <mat-option (onSelectionChange)="changeOption(filtro)"
+          *ngFor="let filtro of datosFiltrados; let index = index;">
+          <div style="display: block">
+            <img class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Foto">
+            <small>{{ filtro.PrimerNombre}} {{filtro.SegundoNombre}} {{filtro.PrimerApellido}} </small>
+            <span *ngIf="filtro.Email"> Email:</span>
+            <small>{{ filtro.Email}}</small>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <!-- Para tipo de busqueda parque vehicular -->
+    <div *ngIf="TipoBusqueda.parqueVehicular == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="auto" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option (onSelectionChange)="changeOption(filtro)" *ngFor="let filtro of datosFiltrados">
+          <div *ngIf='buscador.parametros.idClase === "Automovil"' style="display: block">
+            <img class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Foto">
+            <small>{{ filtro.Submarca}} {{filtro.Modelo}} |</small>
+            <span *ngIf="filtro.Placas"> Placa:</span>
+            <small *ngIf="filtro.Placas"> {{ filtro.Placas}}</small>
+            <span *ngIf="filtro.VIN"> VIN:</span>
+            <small *ngIf="filtro.VIN">{{ filtro.VIN }}</small>
+            <span *ngIf="filtro.numeroEconomico"> Eco:</span>
+            <small *ngIf="filtro.numeroEconomico">{{ filtro.numeroEconomico }}</small>
+          </div>
+
+          <div *ngIf='buscador.parametros.idClase !== "Automovil"' style="display: block">
+            <img class="example-option-img" aria-hidden [src]="urlFileServer + filtro.foto">
+            <small *ngFor='let camp of campos'>{{filtro[camp.campo]}} |</small>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <!-- Para tipo de busqueda parque Proveedor -->
+    <div *ngIf="TipoBusqueda.proveedor == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="auto" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option (onSelectionChange)="changeOption(filtro)" *ngFor="let filtro of datosFiltrados">
+          <div style="display: block">
+            <img *ngIf="filtro.Logo" class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Logo">
+            <small *ngIf="filtro.nombreComercial"> {{ filtro.nombreComercial}}</small>
+            <span *ngIf="filtro.rfcProveedor"> RFC:</span>
+            <small *ngIf="filtro.rfcProveedor"> {{ filtro.rfcProveedor}}</small>
+            <span *ngIf="filtro.email"> Email:</span>
+            <small *ngIf="filtro.email"> {{ filtro.email}}</small>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <!-- Para tipo de busqueda general -->
+    <div *ngIf="TipoBusqueda.general == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="general" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+        <button class="close" (click)="closeInput()"></button>
+      </div>
+      <mat-autocomplete #general="matAutocomplete">
+        <mat-optgroup *ngFor="let filtros of datosFiltrados" [label]="filtros.grupo">
+          <mat-option (onSelectionChange)="changeOption(filtro)"
+            *ngFor="let filtro of filtros.items; let index = index;">
+
+            <!-- objetos -->
+            <div style="display: block" *ngIf="filtro.tipoBusqueda === 'parqueVehicular'">
+              <img class="example-option-img" *ngIf="filtro.Foto" aria-hidden [src]="urlFileServer + filtro.Foto">
+              <small>{{ filtro.Submarca}} {{filtro.Modelo}} |</small>
+              <span *ngIf="filtro.Placas"> Placa:</span>
+              <small *ngIf="filtro.Placas"> {{ filtro.Placas}}</small>
+              <span *ngIf="filtro.VIN"> VIN:</span>
+              <small *ngIf="filtro.VIN">{{ filtro.VIN }}</small>
+              <span *ngIf="filtro.numeroEconomico"> Eco:</span>
+              <small *ngIf="filtro.numeroEconomico">{{ filtro.numeroEconomico }}</small>
+            </div>
+
+            <div style="display: block" *ngIf="filtro.tipoBusqueda === 'generico'">
+              <img class="example-option-img" *ngIf="filtro.Foto" aria-hidden [src]="urlFileServer + filtro.Foto">
+              <small *ngFor='let camp of campos'>{{filtro[camp.campo]}} |</small>
+            </div>
+
+            <!-- proveedor -->
+            <div style="display: block" *ngIf="filtro.tipoBusqueda === 'proveedor'">
+              <img *ngIf="filtro.Logo" class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Logo">
+              <small *ngIf="filtro.nombreComercial"> {{ filtro.nombreComercial}}</small>
+              <span *ngIf="filtro.rfcProveedor"> RFC:</span>
+              <small *ngIf="filtro.rfcProveedor"> {{ filtro.rfcProveedor}}</small>
+              <span *ngIf="filtro.email"> Email:</span>
+              <small *ngIf="filtro.email"> {{ filtro.email}}</small>
+            </div>
+
+            <!-- Orden -->
+            <div style="display: block" *ngIf="filtro.tipoBusqueda === 'orden'">
+              <img *ngIf="filtro.Foto" class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Foto">
+              <small *ngIf="filtro.noOrden"> {{ filtro.noOrden}}</small>
+            </div>
+          </mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </div>
+
+    <!-- Para tipo de busqueda Operador -->
+    <div *ngIf="TipoBusqueda.operador == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="operador" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+      </div>
+      <mat-autocomplete #operador="matAutocomplete">
+        <mat-option (onSelectionChange)="changeOption(filtro)"
+          *ngFor="let filtro of datosFiltrados; let index = index;">
+          <div style="display: block">
+            <img class="example-option-img" aria-hidden [src]="urlFileServer + filtro.Foto">
+            <small>{{ filtro.PrimerNombre}} {{filtro.SegundoNombre}} {{filtro.PrimerApellido}} </small>
+            <span *ngIf="filtro.Email"> Email:</span>
+            <small>{{ filtro.Email}}</small>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <!-- Para tipo de busqueda Objeto -->
+    <div *ngIf="TipoBusqueda.objeto == buscador.tipoBusqueda">
+      <div class="search-wrapper" [class.active]="buscador.isActive" #contentInput>
+        <div class="input-holder">
+          <input type="text" matInput aria-label="Busqueda" [matAutocomplete]="objeto" #busqueda
+            [placeholder]="placeholder" class="search-input inputFullWide" [formControl]="formBuscar">
+          <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+        </div>
+      </div>
+      <mat-autocomplete #objeto="matAutocomplete">
+        <mat-option (onSelectionChange)="changeOption(filtro)"
+          *ngFor="let filtro of datosFiltrados; let index = index;">
+          <div style="display: block">
+            <img *ngIf="filtro.idFileServer > 0 " class="example-option-img" aria-hidden
+              [src]="urlFileServer + filtro.idFileServer">
+            <span *ngIf="filtro.idObjeto"> idObjeto:</span>
+            <small>{{ filtro.idObjeto}} </small>
+            <span *ngIf="filtro.propiedades"> Propiedad:</span>
+            <small>{{ filtro.propiedades}} </small>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,27 @@
+::ng-deep .dx-dropdowneditor-button-visible.dx-show-clear-button .dx-texteditor-input{
+  background: #EAF0FF!important;
+}
+
+::ng-deep .dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused > .dx-treeview-item {
+  background-color: transparent!important;
+}
+
+::ng-deep .dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused > .dx-treeview-item:hover {
+  background-color: #d6e0fb!important;
+}
+
+::ng-deep .dx-treeview .dx-treeview-node .dx-treeview-item:hover {
+  background-color: #d6e0fb!important;
+}
+
+::ng-deep .dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused > .dx-treeview-item * {
+  color: black!important;
+}
+
+::ng-deep .dx-treeview-item-without-checkbox.dx-state-selected > .dx-treeview-item {
+  background-color: #d6e0fb!important;
+}
+
+ ::ng-deep .dx-treeview-node.dx-state-selected, .dx-treeview .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-selected > .dx-treeview-item {
+  background-color: #d6e0fb !important;
+}

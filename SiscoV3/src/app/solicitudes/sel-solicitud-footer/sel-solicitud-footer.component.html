@@ -1,0 +1,68 @@
+<div class="app-footer">
+    <div class="app-footer__inner">
+        <div class="app-footer-left">
+            <ul class="header-megamenu nav">
+                <li class="nav-item">
+                    <div class="btn-group" ngbDropdown autoClose="outside" placement="top-left"
+                        #chatDropDown="ngbDropdown">
+                        <button class="btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            ngbDropdownToggle>
+                            <img src="../../../assets/images/iconos-tarea/chat.png" style="width: 35px; height: 35px;">
+                        </button>
+                        <div class="dropdown-menu-lg" ngbDropdownMenu>
+                            <app-chat [idSolicitud]="idSolicitud" [tokenSolicitud]="token">
+                            </app-chat>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="app-footer-right">
+            <div class="d-none d-lg-block">
+                <div class="footer-dots">
+                    <ul class="header-megamenu nav">
+                        <li class="nav-item">
+                            <div *ngFor="let boton of Botones" style="display: inline-block">
+                                <button class=" btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                                    style="display: inline-block;" (click)='EjecutaAccionDinamica(boton)'>
+                                    <i class="pe-7s-angle-right btn-icon-wrapper"></i>
+                                    <span> {{boton.AccionCaption}}</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-lg-none col-md-12">
+                <a class="float" id="menu-share" [ngClass]="{'active' : togglemobilefooter}"
+                    (click)="toggleMobileFooter()">
+                    <img src="../../../assets/images/iconos-footer/solicitud/flotante_azul.png">
+                </a>
+                <div class="menu-mobile">
+                    <div *ngFor="let boton of Botones">
+                        <strong
+                            style="color:#547fdd; display: inline-block;width: CALC(100% - 75px); text-align: right;background: white">
+                                {{boton.AccionCaption}}
+                        </strong>
+                        <div class="col dropdown-toggle-no-caret"
+                            style="display: inline-block;width: 60px; margin-right: 15px" (click)='EjecutaAccionDinamica(boton)' >
+                            <img *ngIf="boton.AccionCaption === 'Aprobación'" src="../../../assets/images/iconos-footer/solicitud/aprobacion.png">
+                            <img *ngIf="boton.AccionCaption === 'Crear cotización'" src="../../../assets/images/iconos-footer/solicitud/crear_cotz.png">
+                            <img *ngIf="boton.AccionCaption === 'Nueva cotización'" src="../../../assets/images/iconos-footer/solicitud/nuev_cotz.png">
+                            <img *ngIf="boton.AccionCaption === 'Editar cotización'" src="../../../assets/images/iconos-footer/solicitud/edit_cotz.png">
+                            <img *ngIf="boton.AccionCaption === 'Procesar compra'" src="../../../assets/images/iconos-footer/solicitud/proc_compra.png">
+                            <img *ngIf="boton.AccionCaption === 'Token de entrega'" src="../../../assets/images/iconos-footer/solicitud/entrega_token.png">
+                            <img *ngIf="boton.AccionCaption === 'Enviar a aprobación'" src="../../../assets/images/iconos-footer/solicitud/enviar_aprob.png">
+                            <img *ngIf="boton.AccionCaption === 'Comprobante de recepción'" src="../../../assets/images/iconos-footer/solicitud/recepcion.png">
+                            <img *ngIf="boton.AccionCaption === 'Cargar factura'" src="../../../assets/images/iconos-footer/solicitud/sub_factura.png">
+                            <img *ngIf="boton.AccionCaption === 'Asignar sustituto'" src="../../../assets/images/iconos-footer/solicitud/sustituto.png">
+                            <img *ngIf="boton.AccionCaption === 'Término de trabajo'" src="../../../assets/images/iconos-footer/solicitud/termino.png">
+                            <img *ngIf="boton.AccionCaption === 'Token de auditoría'" src="../../../assets/images/iconos-footer/solicitud/token_aud.png">
+                            <img *ngIf="boton.AccionCaption === 'Plan de acción'" src="../../../assets/images/iconos-footer/solicitud/recepcion.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<mat-card class="cardMargin">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <img class='imagenIconoGris' src="{{logo}}"> &nbsp;&nbsp;&nbsp;
+      <span>{{titleClase}}</span>
+    </div>
+  </div>
+  <hr>
+  <div [formGroup]="newObjetoForm">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <small>Tipo de unidad *</small>
+        <dx-drop-down-box #dropBox valueExpr="idTipoObjeto" [(value)]="gridBoxValue" displayExpr="marcaSub"
+          placeholder="Selecciona el tipo de unidad" [showClearButton]="true" [dataSource]="gridDataSource"
+          (onValueChanged)="closeWindow(dropBox)">
+          <div *dxTemplate="let data of 'content'">
+            <dx-data-grid [dataSource]="gridDataSource" [columns]="tipoObjetosColumns" [selection]="{ mode: 'single'}"
+              [hoverStateEnabled]="true" [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+              [scrolling]="{ mode: 'infinite' }" [height]="345" [columnAutoWidth]="true"
+              [(selectedRowKeys)]="gridSelectedRowKeys" (onSelectionChanged)="onSelectionChanged($event);">
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <small>Zona *</small>
+        <dx-drop-down-box #dropBox2 formControlName="idZona" [dataSource]="zonas" placeholder="Selecciona zona"
+          displayExpr="descripcion" valueExpr="idContratoZona" [showClearButton]="true" [(value)]="idContratoZona"
+          (onValueChanged)="closeWindow(dropBox2)">
+          <div *dxTemplate="let data of 'content'">
+            <dx-tree-view [dataSource]="zonas" dataStructure="plain" keyExpr="idContratoZona" parentIdExpr="idPadre"
+              displayExpr="descripcion" [selectByClick]="true" selectionMode="single" noDataText="No contiene datos"
+              (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, zonas)">
+            </dx-tree-view>
+          </div>
+        </dx-drop-down-box>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <small>Centro de Costos *</small>
+        <div class="dx-field-value">
+          <dx-select-box formControlName="idCosto" id="centroCostos" placeholder="Selecciona Centro de Costo"
+            [dataSource]="costos" displayExpr="nombre" valueExpr="idCentroCosto" value="idCentroCosto">
+            <div *dxTemplate="let data of costos">
+              <div class="custom-item">
+                <div>
+                  {{data.nombre}}
+                </div>
+              </div>
+            </div>
+          </dx-select-box>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

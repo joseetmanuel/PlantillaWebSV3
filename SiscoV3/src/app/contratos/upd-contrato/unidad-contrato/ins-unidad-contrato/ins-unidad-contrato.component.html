@@ -1,0 +1,86 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+    <mat-card class="cardMarginBottom">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div [formGroup]="unidadContratoForm">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Cantidad *" maxlength='250' formControlName='cantidad'>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(Solo números)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div *ngFor="let objeto of modulo.camposClase">
+                        <dx-drop-down-box *ngIf="objeto.nombre=='TituloPlaceHolder'" #dropBox formControlName="idTipoObjeto" valueExpr="idTipoObjeto"
+                            displayExpr="marcaSub" [placeholder]="objeto.label" [showClearButton]="true"
+                            [dataSource]="gridDataSource" (onValueChanged)="closeWindow(dropBox)">
+
+                            <div *dxTemplate="let data of 'content'">
+                                <dx-data-grid [dataSource]="gridDataSource" [columns]="tipoObjColumns"
+                                    [selection]="{ mode: 'single'}" [hoverStateEnabled]="true"
+                                    [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+                                    [scrolling]="{ mode: 'infinite' }" [height]="345" [(selectedRowKeys)]="gridBoxValue"
+                                    (onSelectionChanged)="onSelectionChanged($event);">
+                                </dx-data-grid>
+                            </div>
+                        </dx-drop-down-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Año *" formControlName='modelo' minlength="4" maxlength='4'>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(Solo números)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Conversión *" formControlName='idConversion'>
+                            <mat-option id="bluemat" *ngFor='let conversion of conversiones'
+                                [value]="conversion.idConversion">
+                                {{conversion.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button *ngIf='edita == false'
+                        class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='insTipoUnidad()' [disabled]="!unidadContratoForm.valid"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

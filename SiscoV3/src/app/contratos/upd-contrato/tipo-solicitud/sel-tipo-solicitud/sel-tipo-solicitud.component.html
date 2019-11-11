@@ -1,0 +1,37 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<div *ngIf='idClase && ban' [ngClass]="{'desactivaPantalla': numero == 0 }">
+  <div *ngIf='band'>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <dx-drop-down-box [(value)]="gridBoxValue" valueExpr="idTipoSolicitud" displayExpr="nombre"
+          placeholder="Selecciona el tipo de solicitud" [showClearButton]="true" [dataSource]="gridDataSource">
+
+          <div *dxTemplate="let data of 'content'">
+            <dx-data-grid [dataSource]="gridDataSource" [columns]="['nombre']" [selection]="{ mode: 'multiple' }"
+              [hoverStateEnabled]="true" [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+              [scrolling]="{ mode: 'infinite' }" [height]="345" [(selectedRowKeys)]="gridBoxValue"
+              (onSelectionChanged)="onSelectionChanged($event)">
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+    </div>
+    <div *ngIf='bandAgregar' class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <br>
+        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+          [disabled]='!tipoSolicitudForm.valid' (click)='insCreateXmlTipoSolicitud()'><i
+            class="pe-7s-diskette btn-icon-wrapper">
+          </i>
+          Agregar
+        </button>
+      </div>
+    </div>
+
+    <app-grid-component *ngIf='ban' [datos]="tiposSolicitudTable" [columns]="columns" [exportExcel]="exportExcel"
+      [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+      [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)"
+      (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+  </div>
+</div>

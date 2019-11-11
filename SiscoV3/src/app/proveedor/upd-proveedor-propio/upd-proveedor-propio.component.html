@@ -1,0 +1,34 @@
+<div [ngClass]="{'desactivaPantalla': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+  </app-breadcrumbs>
+
+  <div *ngIf="datosProveedor">
+    <app-form-proveedor-propio [modulo]="modulo" [tituloDireccion]="tituloDireccion" [formValid]="true"
+      [datosProveedor]="datosProveedor" [newProveedor]="false" [rfcProveedor]="rfcProveedor"
+      (formProveedorEvent)="ModificarProveedor($event)">
+    </app-form-proveedor-propio>
+  </div>
+
+  <mat-card style="margin-top:30px">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+          <img *ngIf="objeto.nombre=='LogoCardProveedorEntidad'" class='imagenIconoGris' [src]="objeto.path">
+          <span *ngIf="objeto.nombre=='LogoCardProveedorEntidad'">&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+          <span *ngIf="objeto.nombre=='TituloCardProveedorEntidad'">{{objeto.label}}</span>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <app-grid-component *ngIf="proveedorEntidad && showGridPEntidad" [datos]="proveedorEntidad" [gridOptions]="gridOptions" [columns]="columns"
+      [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+      [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+      (messageEvent)="ToolbarButtonEvent($event)" (datosevent)="DatosMessage($event)" [toolbar]="toolbar">
+    </app-grid-component>
+  </mat-card>
+
+</div>

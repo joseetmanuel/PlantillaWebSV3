@@ -1,0 +1,214 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+    <!-- <app-breadcrumbs urlImagen='./assets/images/iconos-sisco/clientes.png' [ruta]='ruta'></app-breadcrumbs> -->
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div [formGroup]="contratoForm">
+            <mat-card>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datoscontrato.png">
+                        &nbsp;&nbsp;&nbsp;
+                        <span>Datos del contrato</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <small class="titulo-input-dinamico">Foto</small>
+                        <app-file-upload-component #avatar [IUploadFile]="IUploadFile"
+                            (messageEvent)="ResultUploadFile($event)">
+                        </app-file-upload-component>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput placeholder="Numero contrato *" maxlength='50'
+                                formControlName="numeroContrato" [errorStateMatcher]="matcher">
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="inputFullWide">
+                            <input matInput placeholder="Nombre contrato *" maxlength='100' formControlName="nombre"
+                                [errorStateMatcher]="matcher">
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select placeholder="Empresa *" formControlName="rfcEmpresa"
+                                [errorStateMatcher]="matcher">
+                                <mat-option  id="bluemat" *ngFor='let empresa of empresas' [value]="empresa.rfcEmpresa">
+                                    {{empresa.nombreComercial}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <br>
+                        <mat-card-content>
+                            <section class="example-section">
+                                <mat-slide-toggle color = 'primary' class="example-margin" [checked]="checked"
+                                    (change)="validaClienteFinal($event)">
+                                    ¿El cliente es una empresa del grupo?
+                                </mat-slide-toggle>
+                            </section>
+                        </mat-card-content>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select placeholder="Cliente *" formControlName="idCliente"
+                                [errorStateMatcher]="matcher">
+                                <mat-option  id="bluemat" *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                    {{cliente.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field id="blueversion" *ngIf='valClienteFinal' class="inputFullWide">
+                            <mat-select placeholder="Cliente final" formControlName="idClienteFinal"
+                                [errorStateMatcher]="matcher">
+                                <mat-option  id="bluemat" *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                    {{cliente.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select placeholder="Estatus *" (selectionChange)='cambioEstatus($event.value)'
+                                formControlName="idEstatus" [errorStateMatcher]="matcher">
+                                <mat-option  id="bluemat" *ngFor='let estatus of estatus' [value]="estatus.idEstatus">
+                                    {{estatus.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput readonly [matDatepicker]="picker" placeholder="Fecha firma *"
+                                formControlName="fechaFirma" [errorStateMatcher]="matcher">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #picker></mat-datepicker>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf='estatusAct == "ACT"'>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput [matDatepicker]="picker" placeholder="Fecha inicio"
+                                formControlName="fechaInicio" [errorStateMatcher]="matcher">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #picker></mat-datepicker>
+                            <div *ngIf='validaFecha'>
+                                <p class="errorFecha">
+                                    La fecha de inicio es
+                                    <strong>mayor</strong> a la fecha de Termino
+                                </p>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput [matDatepicker]="picker2" placeholder="Fecha termino"
+                                formControlName="fechaFin" [errorStateMatcher]="matcher">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #picker2></mat-datepicker>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-card-content>
+                            <section class="example-section">
+                                <mat-slide-toggle color = 'primary' class="example-margin" [checked]="checked2"
+                                    (change)="validaEquipamiento($event)">
+                                    ¿Requiere equipamiento?
+                                </mat-slide-toggle>
+                            </section>
+                        </mat-card-content>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-card-content>
+                            <section class="example-section">
+                                <mat-slide-toggle color = 'primary' class="example-margin" [checked]="checked3"
+                                    (change)="validaMantenimiento($event)">
+                                    ¿Requiere mantenimiento?
+                                </mat-slide-toggle>
+                            </section>
+                        </mat-card-content>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput placeholder="Total unidades *" maxlength='50' formControlName="cantidad"
+                                [errorStateMatcher]="matcher">
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>(Solo números)
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            (click)='insContrato()' [disabled]="!contratoForm.valid"><i
+                                class="pe-7s-diskette btn-icon-wrapper">
+                            </i>
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf='!contratoForm.valid'>
+                    <p class="tagAviso">Los campos con * son obligatorios</p>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

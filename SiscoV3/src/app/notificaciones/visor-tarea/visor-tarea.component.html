@@ -1,0 +1,18 @@
+<app-breadcrumbs [ruta]="breadcrumb">
+</app-breadcrumbs>
+<div class="col-12">
+    <mat-card>
+        <div [innerHTML]="plantillaProcesada"></div>
+    </mat-card>
+</div>
+<div class="col-12" *ngIf="documentos && documentos.length > 0">
+    <mat-card>
+        <div class="row cardMargin">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <h5>Adjuntos</h5>
+            </div>
+        </div>
+        <app-viewer [IViewer]="IViewer" [desactivador]="true" [doc]="documentos" [total]="total" [documentosgrid]="documento">
+        </app-viewer>
+    </mat-card>
+</div>

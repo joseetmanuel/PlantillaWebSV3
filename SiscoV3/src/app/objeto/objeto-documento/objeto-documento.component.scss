@@ -1,0 +1,106 @@
+.textCentrado{
+    word-wrap: break-word;
+    vertical-align: middle;
+}
+
+.centradoVertical{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+ 
+.doclnr{
+    font-size: 1.15rem
+}
+
+
+.fila{
+    background-color: rgba(0, 0, 0, 0.06);
+    }
+
+.docDisabled >ng-select-container :disabled{
+    background-color: #f7f7f7;
+    color: #b5b3b3 !important;
+}
+
+.a_documentos {
+    padding: 0px;
+    font-weight: bold;
+
+}
+
+.a-docs-disabled{
+    pointer-events: none;
+    font-weight: normal;
+    color: gray;
+}
+
+::ng-deep .ng-placeholder {
+    color: #a9a9a9 !important;
+ }
+
+::ng-deep .ng-select.ng-select-disabled > .ng-select-container{
+    background-color: #f7f7f7 !important;
+    color: #b5b3b3 !important;
+}
+
+::ng-deep #blueversion .mat-form-field-underline{
+    background: #3f51b5;
+}
+
+::ng-deep #blueversion .mat-select-arrow{
+    color: #3f51b5;
+}
+
+::ng-deep .ng-option.ng-option-selected.ng-star-inserted.ng-option-marked{
+    background: #EAF0FF!important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+    background: #EAF0FF!important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
+    background: #EAF0FF!important;
+}
+
+   
+
+#bluemat{
+    background: white;
+}
+#bluemat:hover{
+    background: #d6e0fb;
+}
+#bluemat.mat-active{
+    background: #d6e0fb !important;
+}
+#bluemat.mat-selected{
+    background: #d6e0fb !important;
+    color: black !important;
+}
+
+@media only screen and (min-width: 600px) {}
+
+@media only screen and (min-width: 768px) {}
+
+@media only screen and (min-width: 992px) {
+    .pdf {
+        width: 400px;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .pdf {
+        width: 400px;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .pdf {
+        width: 800px;
+        overflow: hidden;
+    }
+}

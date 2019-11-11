@@ -1,0 +1,497 @@
+<div [ngClass]="{'desactiva': spinner }">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <app-breadcrumbs [ruta]="breadcrumb"></app-breadcrumbs>
+        <!--
+         campos generales de el objeto
+       -->
+        <app-banner [IObjeto]="IObjeto" *ngIf="idClase === 'Automovil'"></app-banner>
+        <app-banner-generico  [IObjeto]="IObjeto" *ngIf="idClase !== 'Automovil'"></app-banner-generico>
+        <!-- div propiedades de objeto -->
+        <mat-card class='cardMargin'>
+            <ngb-tabset class="tabs-animated tabs-animated-line" ng-reflect-justify="start">
+                <ngb-tab *ngFor="let grupo of agrupador, let index = index">
+                    <ng-template ngbTabTitle>
+                        <img style="height: 100%" class='imagen' src=" {{grupo.icono}} ">&nbsp;&nbsp;
+                        <span class="d-none d-lg-block" style="font-size:14px" >{{grupo.titulo}}</span>
+                    </ng-template>
+                    <ng-template ngbTabContent *ngIf="grupo.titulo != 'Pagos' ; else multas">
+                        <ng-template class="col-sm-12 col-lg-2" #default>
+                            <div class="widget-subheading opacity-7">
+                                <label></label>
+                            </div>
+                        </ng-template>
+                        <div *ngFor="let documento of documentos, let index = index">
+                            <div class="row centradoVertical" style="padding: 10px 0px;"
+                                [ngClass]="{'fila': index % 2 == 0}"
+                                *ngIf="grupo.idAgrupador === documento.parametros.agrupador">
+                                <div class="col-sm-12 col-lg-2 text-center textCentrado">
+                                    <div
+                                        *ngIf="documento.valores.idFileServer == null || (mostrarArchivo == 1 && idSelected == documento.parametros.id && tipoSelected == documento.parametros.tipo )  ; else upload">
+                                        <app-file-upload-component [IUploadFile]="documento.IUploadFile"
+                                            (messageEvent)="ResultUploadFile($event, documento.parametros.tipo, documento.parametros.id, documento.parametros.nombre )">
+                                        </app-file-upload-component>
+                                    </div>
+                                    <ng-template #upload>
+                                        <app-viewer ngDefaultControl [IViewer]="documento.IViewer">
+                                        </app-viewer>
+                                    </ng-template>
+
+                                </div>
+                                <div class="col-sm-12 col-lg-1 text-center textCentrado">
+                                    <div class="widget-heading">
+                                        <label name="nombre" style="font-size: 13px">{{documento.parametros.nombre}}</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-2 text-center textCentrado">
+                                    <div *ngIf="documento.valores.idFileServer !== null">
+                                        <div *ngIf="grupo.idAgrupador === documento.parametros.agrupador">
+                                            <ng-select class="docDisabled"  [searchable]="false" [clearable]="false" 
+                                                [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? disabled : !disabled"
+                                                [items]="documento.versiones"            
+                                                (change)="MostrarVersiones($event, documento.parametros.nombre, documento)"
+                                                [ngModel]="documento.valores.fechaModificacion"
+                                                bindLabel="fechaModificacion" bindValue="fechaModificacion">
+                                                <ng-template ng-label-tmp let-item="item">
+                                                    <img height="18"
+                                                        [src] ="item.urlAvatar" />
+                                                    <b>&nbsp;<label
+                                                            style="font-size:12px">{{item.uNombre}}</label></b>&nbsp;
+                                                    <img height="18" src = '../../../assets/images/iconos-sisco/Objetos/calendario.png'/>&nbsp;
+                                                    <label style="font-size:11px">{{item.fechaModificacion}}</label>
+                                                </ng-template>
+                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                    <div style="margin: 5px 0;" class="card" style="font-size:12px" >
+                                                        <div><p class="mb-2 text-muted">
+                                                            <img height="25" [src] ="item.urlAvatar"/>&nbsp;
+                                                               <b>{{item.uNombre}}</b></p>
+                                                            <label class="card-subtitle mb-2 text-muted" style="font-size:11px">{{item.usuario}}</label>
+                                                            <h5 class="card-title" style="font-size:12px">{{item.fechaModificacion}}</h5>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <!--ng-template #versiones>
+                                <input style="height: 36px; width: 96%; font-size:11px; padding-left: 10px;"
+                                    value="{{documento.valores.fechaModificacion | date :  'dd-MM-y hh:mm:ss a' }} {{documento.valores.usuario}} "
+                                    readonly>
+                            </ng-template-->
+                                        <!--small> {{documento.valores.fechaModificacion | date :  "dd-MM-y hh:mm:ss a" }}</small-->
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-2 text-center">
+                                    <div *ngIf="documento.parametros.aplicaVigencia == true; else default">
+                                        <mat-form-field style="width: 100%"
+                                            *ngIf="nameChange == documento.parametros.nombre; else vigenciaInactiva">
+                                            <input matInput [matDatepicker]="picker"
+                                                [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                (ngModelChange)="ValidacionParam($event,'vigencia', index, documento.parametros.aplicaVigencia);"
+                                                [ngModel]="vigenciaActiva"
+                                                placeholder="{{documento.titulos.textoVigencia}}">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        <ng-template #vigenciaInactiva>
+                                            <mat-form-field style="width: 100%">
+                                                <input matInput [matDatepicker]="picker"
+                                                    [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                    (ngModelChange)="ValidacionParam($event,'vigencia', index, documento.parametros.aplicaVigencia);"
+                                                    [ngModel]="documento.valores.vigencia"
+                                                    placeholder="{{documento.titulos.textoVigencia}}">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-1 text-center">
+                                    <div *ngIf="documento.parametros.aplicaValor == true; else default">
+                                        <small
+                                            *ngIf="!documento.parametros.aplicaValor">{{documento.titulos.textoValor}}</small>
+                                        <mat-form-field style="width: 100%"
+                                            *ngIf="nameChange == documento.parametros.nombre; else valorInactivo">
+                                            <input matInput
+                                                [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                placeholder="{{documento.titulos.textoValor}}"
+                                                name="valor.{{documento.parametros.nombre}}" [ngModel]="valorActivo"
+                                                (change)="ValidacionParam($event,'valor', index, documento.parametros.aplicaValor)"
+                                                required>
+                                        </mat-form-field>
+
+                                        <ng-template #valorInactivo>
+                                            <mat-form-field style="width: 100%">
+                                                <input matInput
+                                                    [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                    placeholder="{{documento.titulos.textoValor}}"
+                                                    name="valor.{{documento.parametros.nombre}}"
+                                                    [ngModel]="documento.valores.valor"
+                                                    (change)="ValidacionParam($event,'valor', index, documento.parametros.aplicaValor)"
+                                                    required>
+                                            </mat-form-field>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div *ngIf="documento.parametros.aplicaCosto == true; else default"
+                                    class="col-sm-12 col-lg-1 text-center">
+                                    <div>
+                                        <small
+                                            *ngIf="!documento.parametros.aplicaCosto">{{documento.titulos.textoCosto}}</small>
+                                        <mat-form-field style="width: 100%"
+                                            *ngIf="nameChange == documento.parametros.nombre; else costoInactivo">
+                                            <input matInput type="number" min="0"
+                                                [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                placeholder="{{documento.titulos.textoCosto}}" [ngModel]="costoActivo"
+                                                (change)="ValidacionParam($event,'costo', index,  documento.parametros.aplicaCosto)"
+                                                required>
+                                        </mat-form-field>
+
+                                        <ng-template #costoInactivo>
+                                            <mat-form-field style="width: 100%">
+                                                <input matInput type="number" min="0"
+                                                    [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled"
+                                                    placeholder="{{documento.titulos.textoCosto}}"
+                                                    name="costo.{{documento.parametros.nombre}}"
+                                                    [ngModel]="documento.valores.costo"
+                                                    (change)="ValidacionParam($event,'costo', index,  documento.parametros.aplicaCosto)"
+                                                    required>
+                                            </mat-form-field>
+                                        </ng-template>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-lg-2 text-center">
+                                    <div *ngIf="documento.parametros.aplicaEstado == true; else default">
+                                        <small
+                                            *ngIf="!documento.parametros.aplicaEstado">{{documento.titulos.textoEstado}}</small>
+                                        <mat-form-field
+                                            *ngIf="nameChange == documento.parametros.nombre; else estadoInactivo">
+                                            <mat-select placeholder="{{documento.titulos.textoEstado}}"
+                                                (selectionChange)="ValidacionParam($event, 'estado' , index,  documento.parametros.aplicaEstado)"
+                                                [(ngModel)]="estadoActivo"
+                                                [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled">
+                                                <mat-option id="bluemat" *ngFor="let estado of estados" [value]="estado.idEstado">
+                                                    {{estado.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <ng-template #estadoInactivo>
+                                            <mat-form-field>
+                                                <mat-select placeholder="{{documento.titulos.textoEstado}}"
+                                                    (selectionChange)="ValidacionParam($event, 'estado' , index,  documento.parametros.aplicaEstado)"
+                                                    [(ngModel)]="documento.valores.estado"
+                                                    [disabled]="mostrarArchivo == 1 && documento.parametros.id == idSelected && documento.parametros.tipo == tipoSelected == true ? !disabled : disabled">
+                                                    <mat-option id="bluemat" *ngFor="let estado of estados"
+                                                        [value]="estado.idEstado">
+                                                        {{estado.nombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </ng-template>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-lg-1 text-center">
+                                    <!-- botones para editar, eliminar y guardar -->
+                                    <div *ngIf="mostrarArchivo == 0 || ( archivos.length > 0 && archivos[0].id !== documento.parametros.id ) || 
+                  (mostrarArchivo == 1 && idSelected != documento.parametros.id && tipoSelected != documento.parametros.tipo ) "
+                                        class="float-center">
+                                        <button *ngIf="documento.valores.idFileServer > 0" mat-stroked-button
+                                            color="primary" matTooltip="Agregar archivo"
+                                            (click)="HabilitarEdicion(documento.parametros.id,documento.parametros.tipo); ">
+                                            <i class="doclnr lnr-plus-circle"></i>
+                                        </button>
+                                        <button *ngIf="documento.valores.idFileServer > 0" mat-stroked-button
+                                            color="warn" matTooltip="Borrar archivo"
+                                            (click)="BorrarArchivo(documento.parametros.id, documento.parametros.tipo, documento.parametros.nombre, documento.valores.version )">
+                                            <i class="doclnr lnr-trash">
+                                            </i>
+                                        </button>
+                                    </div>
+                                    <div
+                                        *ngIf="mostrarArchivo == 1 && idSelected == documento.parametros.id && tipoSelected == documento.parametros.tipo">
+                                        <button [disabled]="disabledGuardar" mat-stroked-button class="float-left"
+                                            color="primary" matTooltip="Guardar archivo"
+                                            (click)="GuardarArchivo(documento.parametros.id, documento.parametros.tipo, documento.parametros.idConcepto );">
+                                            <i class="pe-7s-diskette btn-icon-wrapper"></i> Guardar
+                                        </button>
+                                        <button mat-stroked-button color="warn" matTooltip="Cancelar Edicion"
+                                            (click)="DeshabilitarEdicion()">
+                                            <i class="doclnr lnr-cross"></i>
+                                        </button>
+                                    </div>
+                                    <!--button mat-raised-button ">Version</button-->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <!--area de consulta de multas -->
+                    <ng-template ngbTabContent #multas>
+                        <div *ngFor="let docs of documentos, let index = index">
+                            <div *ngIf="grupo.idAgrupador === docs.parametros.agrupador">
+                                <mat-accordion class="col-sm-12 col-lg-12">
+                                    <mat-expansion-panel (opened)="panelOpenState = true"
+                                        (closed)="panelOpenState = false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                            </mat-panel-title>
+                                            <div style="text-align: right; padding: 0px 20px;">
+                                                <img style="width:30px" src="../../assets/images/iconos-sisco/Objetos/subir_multa.png">
+                                                <span><b> Agregar pago </b></span>
+                                            </div>
+                                        </mat-expansion-panel-header>
+                                        <!-- mat para el insert de multas -->
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-2 centradoVertical">
+                                                <app-file-upload-component [IUploadFile]="docs.IUploadFile"
+                                                    (messageEvent)="ResultUploadFile($event, docs.parametros.tipo, docs.parametros.id, docs.parametros.nombre )">
+                                                </app-file-upload-component>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-lg-3">
+                                                        <div *ngIf="docs.parametros.aplicaValor == true; else default">
+                                                            <small
+                                                                *ngIf="!docs.parametros.aplicaValor">{{docs.titulos.textoValor}}</small>
+                                                            <mat-form-field style="width: 100%">
+                                                                <input matInput
+                                                                    placeholder="{{docs.titulos.textoValor}}" required
+                                                                    (change)="ValidacionParam($event,'valor', index,  docs.parametros.aplicaValor)">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-2">
+                                                        <div
+                                                            *ngIf="docs.parametros.aplicaVigencia == true; else default">
+                                                            <mat-form-field style="width: 100%">
+                                                                <input matInput [matDatepicker]="picker"
+                                                                    placeholder="{{docs.titulos.textoVigencia}}"
+                                                                    [ngModel]="vigenciaActiva"
+                                                                    (ngModelChange)="ValidacionParam($event,'vigencia', index, docs.parametros.aplicaVigencia);">
+                                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-lg-3">
+                                                        <div *ngIf="docs.parametros.aplicaCosto == true; else default">
+                                                            <small
+                                                                *ngIf="!docs.parametros.aplicaCosto">{{docs.titulos.textoCosto}}</small>
+                                                            <mat-form-field style="width: 100%">
+                                                                <input matInput
+                                                                    placeholder="{{docs.titulos.textoCosto}}" required
+                                                                    (change)="ValidacionParam($event,'costo', index,  docs.parametros.aplicaCosto)">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-lg-2">
+                                                        <div *ngIf="docs.parametros.aplicaEstado == true; else default">
+                                                            <small
+                                                                *ngIf="!docs.parametros.aplicaEstado">{{docs.titulos.textoEstado}}</small>
+                                                            <mat-form-field style="width: 100%">
+                                                                <mat-select placeholder="{{docs.titulos.textoEstado}}"
+                                                                    (selectionChange)="ValidacionParam($event, 'estado' , index,  docs.parametros.aplicaEstado)">
+                                                                    <mat-option id="bluemat" *ngFor="let estado of estados"
+                                                                        [value]="estado.idEstado">
+                                                                        {{estado.nombre}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- segundo renglon para agregar comentarios-->
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-9 col-lg-9">
+                                                        <small
+                                                            *ngIf="!docs.parametros.aplicaComentario">{{docs.titulos.textoComentario}}</small>
+                                                        <mat-form-field style="width: 100%">
+                                                            <textarea matInput rows="2"
+                                                                placeholder="{{docs.titulos.textoComentario}}"
+                                                                (change)="ValidacionParam($event,'comentario', index,  docs.parametros.aplicaComentario)"></textarea>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div style="padding: 35px 15px;"
+                                                        class="col-sm-12 col-md-2 col-lg-2">
+                                                        <mat-slide-toggle color="primary" class="tp-margin"
+                                                            (change)="ValidacionParam($event,'costoPagado', index, docs.parametros.aplicaCosto)">
+                                                            Pagado
+                                                        </mat-slide-toggle>
+                                                    </div>
+                                                </div>
+                                                <!-- tercer renglon para agregar fotos -->
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-lg-4" style="padding: 0px">
+                                                        <span>Linea de Captura</span>
+                                                        <app-file-upload-component
+                                                            [IUploadFile]="docs.valores.IUploadLineaCaptura"
+                                                            (messageEvent)="ResultUploadFile($event, docs.parametros.tipo, docs.parametros.id, 'lineaCaptura' )">
+                                                        </app-file-upload-component>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4" style="padding: 0px">
+                                                        <span>Factura PDF</span>
+                                                        <app-file-upload-component
+                                                            [IUploadFile]="docs.valores.IUploadFacturaPDF"
+                                                            (messageEvent)="ResultUploadFile($event, docs.parametros.tipo, docs.parametros.id, 'facturaPDF' )">
+                                                        </app-file-upload-component>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-4" style="padding: 0px">
+                                                        <span>Factura XML</span>
+                                                        <app-file-upload-component
+                                                            [IUploadFile]="docs.valores.IUploadFacturaXML"
+                                                            (messageEvent)="ResultUploadFile($event, docs.parametros.tipo, docs.parametros.id, 'facturaXML'  )">
+                                                        </app-file-upload-component>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-1 centradoVertical">
+                                                <button [disabled]="disabledGuardar" mat-stroked-button
+                                                    class="float-left" color="primary" matTooltip="Guardar archivo"
+                                                    (click)="GuardarArchivo(docs.parametros.id, docs.parametros.tipo, docs.parametros.idConcepto );">
+                                                    <i class="pe-7s-diskette btn-icon-wrapper"></i> Guardar
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <!-- termina el mat de agregar  multas -->
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <div *ngFor="let versiones of docs.versiones, let index = index">
+                                    <div class="row centradoVertical" style="padding: 10px 0px;"
+                                        [ngClass]="{'fila': index % 2 == 0}">
+                                        <div class="col-sm-12 col-lg-2 text-center textCentrado">
+                                            <app-viewer ngDefaultControl [IViewer]="versiones.IViewerVersion">
+                                            </app-viewer>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-8">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-lg-3 text-center">
+                                                    <div *ngIf="docs.parametros.aplicaValor == true; else default">
+                                                        <small
+                                                            *ngIf="!docs.parametros.aplicaValor">{{docs.titulos.textoValor}}</small>
+                                                        <mat-form-field style="width: 100%">
+                                                            <input matInput disabled='true'
+                                                                placeholder="{{docs.titulos.textoValor}}"
+                                                                [ngModel]="versiones.valor" required>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-lg-3 text-center">
+                                                    <div *ngIf="docs.parametros.aplicaVigencia == true; else default">
+                                                        <mat-form-field>
+                                                            <input matInput [matDatepicker]="picker" disabled='true'
+                                                                [ngModel]="versiones.vigencia"
+                                                                placeholder="{{docs.titulos.textoVigencia}}">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12 col-lg-3 text-center">
+                                                    <div *ngIf="docs.parametros.aplicaCosto == true; else default">
+                                                        <small
+                                                            *ngIf="!docs.parametros.aplicaCosto">{{docs.titulos.textoCosto}}</small>
+                                                        <mat-form-field style="width: 100%">
+                                                            <input matInput disabled='true'
+                                                                placeholder="{{docs.titulos.textoCosto}}"
+                                                                [ngModel]="versiones.costo" required>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12 col-lg-3 text-center">
+                                                    <div *ngIf="docs.parametros.aplicaEstado == true; else default">
+                                                        <small
+                                                            *ngIf="!docs.parametros.aplicaEstado">{{docs.titulos.textoEstado}}</small>
+                                                        <mat-form-field>
+                                                            <mat-select placeholder="{{docs.titulos.textoEstado}}"
+                                                                [(ngModel)]="versiones.estado" disabled='true'>
+                                                                <mat-option id="bluemat" *ngFor="let estado of estados"
+                                                                    [value]="estado.idEstado">
+                                                                    {{estado.nombre}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- segundo renglon para agregar comentarios-->
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-10 col-lg-10 text-center">
+                                                    <div *ngIf="docs.parametros.aplicaComentario == true; else default">
+                                                        <small
+                                                            *ngIf="!docs.parametros.aplicaComentario">{{docs.titulos.textoComentario}}</small>
+                                                        <mat-form-field style="width: 100%">
+                                                            <textarea matInput rows="2" disabled='true'
+                                                                placeholder="{{docs.titulos.textoComentario}}"
+                                                                [ngModel]="versiones.comentario"></textarea>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div style="padding: 35px 15px;" class="col-sm-12 col-md-2 col-lg-2">
+                                                    <mat-slide-toggle disabled='true' color="primary" class="tp-margin"
+                                                        [(ngModel)]="versiones.costoPagado"
+                                                        [checked]="versiones.costoPagado">
+                                                        Pagado
+                                                    </mat-slide-toggle>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-2">
+                                            <div class="col-sm-12 col-lg-12" >
+                                                <a class="a_documentos" mat-button color="primary"
+                                                    data-lightbox="avatar"
+                                                    [ngClass]="{'a-docs-disabled': versiones.lineaCapturaUrl == null}"
+                                                    [href]="versiones.lineaCapturaUrl">
+                                                    <img style="height: 100%" class='imagen'
+                                                        src="../../../assets/images/iconos-sisco/Objetos/linea_cap.png">
+                                                    &nbsp;&nbsp; Linea de captura
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-12">
+                                                <a class="a_documentos" mat-button color="primary"
+                                                    [ngClass]="{'a-docs-disabled': versiones.facturaPDFUrl == null}"
+                                                    (click)="dialog.open(Gridlightbox)">
+                                                    <img style="height: 100%" class='imagen'
+                                                        src="../../../assets/images/iconos-sisco/Objetos/fac_pdf.png">
+                                                    &nbsp;&nbsp; Factura PDF
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-12" >
+                                                <a class="a_documentos"
+                                                    [ngClass]="{'a-docs-disabled': versiones.facturaXMLUrl == null}"
+                                                    mat-button color="primary"
+                                                    (click)="downloadimage(versiones.facturaXMLUrl,'factura')">
+                                                    <img style="height: 100%" class='imagen'
+                                                        src="../../../assets/images/iconos-sisco/Objetos/fac_xml.png">
+                                                    &nbsp;&nbsp; Factura XML
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--visualizazdor PDF modal-->
+                                    <ng-template #Gridlightbox>
+                                        <div>
+                                            <button type="button" class="close linea" aria-label="Close"
+                                                [mat-dialog-close]>
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <pdf-viewer class="pdf" [src]="versiones.facturaPDFUrl"
+                                                [original-size]="false" [autoresize]="true">
+                                            </pdf-viewer>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </mat-card>
+</div>

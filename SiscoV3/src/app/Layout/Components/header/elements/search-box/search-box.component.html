@@ -1,0 +1,8 @@
+<div class="search-wrapper" [class.active]="isActive">
+    <div class="input-holder">
+        <input type="text" #busqueda [placeholder]="placeholder" [(ngModel)]="busquedaValor" (keydown)="OnKeyPress($event)"
+        (ngModelChange)="busquedaValorChange.emit(busquedaValor)" class="search-input">
+        <button class="search-icon" (click)="AbreBusqueda()"><span></span></button>
+    </div>
+    <button class="close" (click)="isActive = false"></button>
+</div>

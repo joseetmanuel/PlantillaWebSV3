@@ -1,0 +1,27 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <header-tipoobjeto-automovil [idTipoObjeto]="idTipoObjeto" [idClase]="idClase" *ngIf="idTipoObjeto"></header-tipoobjeto-automovil>
+    <div>
+        <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div *ngIf="columnas.length > 0">
+                <carga-masiva *ngIf="idClase && idUsuario" [columnas]="columnas" [sp]="sp" [urlApi]="urlApi" [parametrosSP]="parametrosSP" [idClase]="idClase" (response)="reponse($event)"
+                    (reponse)="responseFileUpload($event)" [acciones]="idTipoAccion"></carga-masiva>
+            </div>
+        </mat-card>
+    </div>
+</div>

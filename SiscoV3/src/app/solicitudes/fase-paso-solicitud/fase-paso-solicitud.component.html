@@ -1,0 +1,249 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<div *ngIf='idClase && ban' [ngClass]="{'desactivaPantalla': numero == 0 }">
+  <mat-card *ngIf="ban" class=" d-none d-md-block cardMarginBottom" style="border-bottom-color: #E9EFFF !important">
+    <div class="container-fluid" style="padding-right: 0; padding-left:0">
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+          <div class="row no-gutters" style="height: 100%; align-items:center">
+            <div class="col-md-6 col-lg-6 col-xl-3">
+              <div class="row no-gutters" style="height: 100%; align-items:center">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                  <app-viewer [IViewer]="IViewer2"></app-viewer>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                  <p class="orden">{{pasoActual.numeroOrden}}</p>
+                  <p class="status" style="margin-top: 5px">{{pasoActual.idTipoSolicitud}}</p>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                  <p class="titulo-status colores" style="font-weight: bold">Zona</p>
+                  <p class="status">{{pasoActual.zona}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-2">
+              <p class="titulo-status colores" style="font-weight: bold">Centro de costos</p>
+              <p class="status">{{pasoActual.nombreCentroCosto}} - Presupuesto: ${{pasoActual.centroCosto}}</p>
+            </div>
+            <div class="col-md-8 col-lg-8 col-xl-4">
+              <div class="row no-gutters">
+                <div class="col-md-6 col-lg-6 col-xl-6"
+                  style="background: #F2F2F2;border-radius: 25px 0 0 25px;border-right: solid 5px white;">
+                  <span class="titulo-status" style="margin-right: 10px;margin-left: 10px;">Estado de la unidad</span>
+                  <span class="status">{{pasoActual.estadoUnidad}}</span>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6" style="background: #F2F2F2;border-radius: 0 25px 25px 0;">
+                  <span class="titulo-status" style="margin-right: 10px;margin-left: 10px;">Fecha de cita</span>
+                  <span class="status">{{pasoActual.fechaCita | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-3">
+              <div class="row">
+                <div class="col-md-2 col-lg-2 col-xl-2"></div>
+                <div *ngIf='pasoActual.solicitudFinalizadaHoras' class="col-md-8 col-lg-8 col-xl-8">
+                  <p class="tiempo-paso">{{pasoActual.solicitudFinalizadaHoras}}
+                    hrs</p>
+                  <p class="paso-tiempo-actual">{{pasoActual.estatus}}</p>
+                </div>
+                <div *ngIf='!pasoActual.solicitudFinalizadaHoras' class="col-md-8 col-lg-8 col-xl-8">
+                  <p [ngClass]="negativos ? 'tiempo-paso-sobrepasado' : 'tiempo-paso'">{{hours}}:{{minutes}}:{{seconds}}
+                    hrs</p>
+                  <p [ngClass]="negativos ? 'paso-tiempo-sobrepasado' : 'paso-tiempo-actual'">{{pasoActual.estatus}}</p>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                  <div *ngIf='pasoActual.solicitudFinalizadaDias' class="dias2 float-right">
+                    <p style="font-size: 24px">{{pasoActual.solicitudFinalizadaDias}}</p>
+                    <p style="font-size: 12px">Dias</p>
+                  </div>
+                  <div *ngIf='!pasoActual.solicitudFinalizadaDias' class="dias2 float-right">
+                    <p style="font-size: 24px">{{pasoActual.diasPasos}}</p>
+                    <p style="font-size: 12px">Dias</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-lg-4 col-xl-1">
+              
+            </div> -->
+          </div>
+        </div>
+        <br>
+        <div class="col-md-12 col-lg-12 col-xl-12">
+          <div class="row no-gutters">
+            <div class="col" *ngFor='let fase of fases;let i = index'>
+              <p class="fase" [ngClass]="{'colores' : i <= indexfaseactual}" style="margin-bottom: 9px">{{fase.nombre}}
+              </p>
+              <div class="progress" style="height: 0.3rem;width: 95%;margin-left: 17px;">
+                <span class="numero-fase" [ngClass]="{'numero-fase-actual' : i <= indexfaseactual}">{{i+1}}</span>
+                <div *ngIf="fase.porcentaje" aria-valuemin="0" role="progressbar" class="progress-bar"
+                  aria-valuenow="fase.porcentaje" aria-valuemax="100" [style.width]="fase.porcentaje + '%' "></div>
+                <div *ngIf="!fase.porcentaje" aria-valuemin="0" role="progressbar" class="progress-bar"
+                  aria-valuenow="0" aria-valuemax="100" width="0%"></div>
+              </div>
+              <br>
+              <div class="row no-gutters" *ngFor='let paso of pasos'>
+                <div *ngIf='fase.orden === paso.ordenFase && paso.nombre !== ""' class="col-md-12 col-lg-12 col-xl-5">
+
+                  <p class="pasos ellipsis"
+                    [ngClass]="{'paso-finalizado-desktop': paso.estatusPaso === 1, 'paso-actual-desktop': paso.estatusPaso === 2, 'paso-futuro-desktop': paso.estatusPaso === 3 }"
+                    placement="top" ngbTooltip="{{paso.nombre}}">
+                    <span class="dias text-center"
+                      [ngClass]="{'dias-finalizado': paso.estatusPaso === 1, 'dias-actual': paso.estatusPaso === 2, 'dias-futuro': paso.estatusPaso === 3 }">&nbsp;{{paso.tiempo}}
+                      &nbsp;</span>&nbsp;
+                    {{paso.nombre}}
+                  </p>
+                </div>
+                <div *ngIf='fase.orden === paso.ordenFase && paso.nombre !== ""' class="col-md-12 col-lg-12 col-xl-7">
+                  <div class="row no-gutters" style="height: 100%;align-items:center">
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <p class="pasos-nombre ellipsis"
+                        [ngClass]="{'black': paso.idPaso === pasoActual.idPaso || paso.finalizado }" placement="top"
+                        ngbTooltip="{{paso.nombreCompleto}}" style="margin-right:3px">{{paso.nombreCompleto}}</p>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <p class="fechaPaso" ngbTooltip="{{paso.fechaSalida | date: 'dd/MM/yy H:mm'}}">
+                        {{paso.fechaSalida | date: 'dd/MM/yy H:mm'}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="footer">
+      <p class="textFooter">{{pasoActual.comentarios}}</p>
+    </div>
+  </mat-card>
+  <mat-card *ngIf="ban" class="cardMarginBottom d-md-none">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <div class="row no-gutters" style="height: 100%; align-items:center">
+            <div class="col-6 col-sm-6">
+              <app-viewer [IViewer]="IViewer2"></app-viewer>
+              <hr style="margin-bottom: 7px;">
+            </div>
+            <div class="col-6 col-sm-6" style="text-align: center">
+              <p class="orden">{{pasoActual.numeroOrden}}</p>
+              <p class="status">{{pasoActual.idTipoSolicitud}}</p>
+              <hr>
+            </div>
+            <div class="col-6 col-sm-6" style="margin-bottom: 5px">
+              <p class="titulo-status colores" style="font-weight: bold">ZONA</p>
+              <p class="status">{{pasoActual.zona}}</p>
+            </div>
+            <div class="col-6 col-sm-6" style="margin-bottom: 5px">
+              <p class="titulo-status colores" style="font-weight: bold">CENTRO DE COSTOS</p>
+              <p class="status">{{pasoActual.centroCosto}}</p>
+            </div>
+            <div class="col-6 col-sm-6" style="background: #F2F2F2;border-radius: 25px 0 0 25px;margin-bottom: 5px">
+              <p class="titulo-status-mobil" style="text-align: center;font-weight:bold">ESTADO DE LA UNIDAD</p>
+              <p class="status" style="text-align: center">{{pasoActual.estadoUnidad}}</p>
+            </div>
+            <div class="col-6 col-sm-6" style="background: #F2F2F2;border-radius: 0 25px 25px 0;margin-bottom: 5px">
+              <p class="titulo-status-mobil" style="text-align: center;font-weight:bold;">FECHA DE CITA</p>
+              <p class="status" style="text-align: center">{{pasoActual.fechaCita | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
+            </div>
+            <div class="col-12 col-sm-12" style="margin-bottom: 5px">
+              <div class="row no-gutters">
+                <div class="col-1 col-sm-1"></div>
+                <div class="col-5 col-sm-5">
+                  <p [ngClass]="negativos ? 'tiempo-paso-sobrepasado-mobil' : 'tiempo-paso-mobil'">
+                    {{hours}}:{{minutes}}:{{seconds}} hrs</p>
+                </div>
+                <div class="col-5 col-sm-5">
+                  <p [ngClass]="negativos ? 'paso-tiempo-sobrepasado-mobil' : 'paso-tiempo-actual-mobil'">
+                    {{pasoActual.estatus}}</p>
+                </div>
+                <div class="col-1 col-sm-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12">
+          <div class="d-flex overflow">
+            <div *ngFor='let paso of pasos;let i = index' (click)="getpaso(paso)" class="col-2 col-sm-2 pasos-mobil"
+              [style.z-index]="50 - i"
+              [ngClass]="{'paso-finalizado': paso.estatusPaso === 1, 'paso-actual': paso.estatusPaso === 2, 'paso-futuro': paso.estatusPaso === 3 }">
+              {{i+1}}</div>
+          </div>
+        </div>
+        <br>
+        <div [ngClass]="{'d-none': pasoclick }" class="col-12 col-sm-12" style="margin-top: 10px">
+          <div class="row" *ngFor='let paso of pasos'>
+            <div class="col-9 col-sm-9">
+              <div class="row no-gutters">
+                <div *ngIf='paso.estatusPaso === 2' class="col-2 col-sm-2" style="margin-bottom: 5px">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/estatus.svg" alt="" style="width: 25px">
+                </div>
+                <div *ngIf='paso.estatusPaso === 2' class="col-10 col-sm-10" style="margin-bottom: 5px">
+                  {{paso.nombre}}
+                </div>
+                <div *ngIf='paso.estatusPaso === 2' class="col-2 col-sm-2" style="margin-bottom: 5px">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/inicio.svg" alt="" style="width: 25px">
+                </div>
+                <div *ngIf='paso.estatusPaso === 2' class="col-10 col-sm-10" style="margin-bottom: 5px">
+                  {{paso.fechaSalida | date: 'dd/MM/yy'}}
+                </div>
+                <div *ngIf='paso.estatusPaso === 2' class="col-2 col-sm-2">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/usuario_azul.svg" alt=""
+                    style="width: 25px">
+                </div>
+                <div *ngIf='paso.estatusPaso === 2' class="col-10 col-sm-10">
+                  {{paso.nombreCompleto}}
+                </div>
+              </div>
+            </div>
+            <div *ngIf='paso.estatusPaso === 2' class="col-3 col-sm-3">
+              <div class="circle">
+                <p style="margin-bottom: -10px">{{paso.tiempo}}</p>
+                <p>dias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="pasoclick" class="col-12 col-sm-12" style="margin-top: 10px">
+          <div class="row">
+            <div class="col-9 col-sm-9">
+              <div class="row no-gutters">
+                <div class="col-2 col-sm-2" style="margin-bottom: 5px">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/estatus.svg" alt="" style="width: 25px">
+                </div>
+                <div class="col-10 col-sm-10" style="margin-bottom: 5px">
+                  {{pasomobil.nombre}}
+                </div>
+                <div class="col-2 col-sm-2" style="margin-bottom: 5px">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/inicio.svg" alt="" style="width: 25px">
+                </div>
+                <div class="col-10 col-sm-10" style="margin-bottom: 5px">
+                  {{pasomobil.fechaSalida | date: 'dd/MM/yy'}}
+                </div>
+                <div class="col-2 col-sm-2">
+                  <img src="../../../assets/images/iconos-sisco/lineadeltiempo/usuario_azul.svg" alt=""
+                    style="width: 25px">
+                </div>
+                <div class="col-10 col-sm-10">
+                  {{pasomobil.nombreCompleto}}
+                </div>
+              </div>
+            </div>
+            <div class="col-3 col-sm-3">
+              <div class="circle">
+                <p style="margin-bottom: -10px">{{pasomobil.tiempo}}</p>
+                <p>dias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <footer>
+      {{pasoActual.comentarios}}
+    </footer>
+  </mat-card>
+</div>

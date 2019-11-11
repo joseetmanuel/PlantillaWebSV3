@@ -1,0 +1,109 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<mat-card *ngIf="!spinner && columns" style="margin-bottom: 22px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/lapizIcon.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Datos del Contrato</span>
+        </div>
+    </div>
+    <hr>
+    <div class=row>
+        <div class='col-sm-12 col-md-6 col-xl-6 text-center'>
+            <mat-form-field class="all">
+                <input matInput [value]="contratoActual.nombre" placeholder="Contrato *" disabled>
+                <mat-error>
+                    El campo es
+                    <strong>requerido</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class='col-sm-12 col-md-6 col-xl-6 text-center'>
+            <mat-form-field class="all">
+                <input matInput [value]="contratoActual.numeroContrato" placeholder="Numero de Contrato *" disabled>
+                <mat-error>
+                    El campo es
+                    <strong>requerido</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-card>
+
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+    </div>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+    </div>
+    <hr>
+    <app-grid-component *ngIf="columns" [datos]="niveles" [gridOptions]="gridOptions" [columns]="columns"
+        [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+        [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+        (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+</mat-card>
+
+<mat-card [formGroup]="zonaForm" class="cardMarginBottom" *ngIf='!spinner'>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <img *ngIf="objeto.nombre=='LogoCardZona'" class='imagenIconoGris' [src]="objeto.path">
+        <span *ngIf="objeto.nombre=='LogoCardZona'">&nbsp;&nbsp;&nbsp;</span>
+    </div>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <span *ngIf="objeto.nombre=='TituloCardZona'">{{objeto.label}}</span>
+    </div>
+    <hr>
+    <div class="form">
+        <dx-tree-view id="simple-treeview" [items]="zonas" dataStructure="plain" parentIdExpr="idPadre"
+            keyExpr="idContratoZona" displayExpr="descripcion" [width]="300" (onItemClick)="selectItem($event)"
+            expandedExpr="isExpanded">
+        </dx-tree-view>
+    </div>
+    <hr>
+    <div style="margin-top: 15px;" class="row col-sm-12 col-md-12 col-xl-12">
+        <mat-form-field *ngIf="nuevaZonaEnabled" class="inputFullWide col-sm-6 col-md-6 col-xl-6">
+            <input matInput readonly placeholder="Zona Padre" maxlength='50' formControlName="zonaPadre">
+        </mat-form-field>
+        <mat-form-field *ngIf="nuevaZonaEnabled" class="inputFullWide col-sm-6 col-md-6 col-xl-6">
+            <input matInput placeholder="Nueva Zona *" maxlength='50' formControlName="nuevaZona"
+                [errorStateMatcher]="matcher">
+            <mat-error>
+                El campo es
+                <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field id="blueversion" class="inputFullWide col-sm-6 col-md-6 col-xl-6"
+            *ngIf="estadoEnabled && nuevaZonaEnabled">
+            <mat-select placeholder="Estado *" formControlName="estado" [errorStateMatcher]="matcher">
+                <mat-option id="bluemat" *ngFor='let estado of estados' [value]="estado.idEstado">
+                    {{estado.nombre}}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                El campo es
+                <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+            <button *ngIf="nuevaZonaEnabled"
+                class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                (click)='insZonaNueva()' [disabled]="!zonaForm.valid">
+                <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                Agregar Zona
+            </button>
+            <button class='mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-danger float-right'
+                *ngIf="eliminarZonaEnabled" (click)='Eliminar()'>
+                Eliminar Zona
+            </button>
+        </div>
+        <div *ngIf='!zonaForm.valid'>
+            <p class="tagAviso">Los campos con * son obligatorios</p>
+        </div>
+    </div>
+</mat-card>

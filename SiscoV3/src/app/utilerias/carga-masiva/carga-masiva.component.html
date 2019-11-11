@@ -1,0 +1,251 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+        <div class="row content-component">
+            <div class="col-lg-12 col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+
+                        <div id="smartwizard" class="forms-wizard nav nav-tabs step-anchor">
+                            <ul class="forms-wizard nav nav-tabs step-anchor">
+                                <li class="nav-item"
+                                    [ngClass]="{'done': process[0].finish && !process[0].active, 'active': process[0].active}">
+                                    <a>
+                                        <em (click)="active(0)">1</em><span>Cargar</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item"
+                                    [ngClass]="{'done': process[1].finish && !process[1].active, 'active': process[1].active}">
+                                    <a>
+                                        <em (click)="active(1)">2</em><span>Conectar</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item"
+                                    [ngClass]="{'done': process[2].finish, 'active': process[2].active}">
+                                    <a>
+                                        <em (click)="active(2)">3</em><span>Validar</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item"
+                                    [ngClass]="{'done': process[3].finish, 'active': process[3].active}">
+                                    <a>
+                                        <em (click)="active(3)">4</em><span>Procesar</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="form-wizard-content">
+                                <div id="step-1" [hidden]="!process[0].active ">
+                                    <div class="accordion-wrapper mb-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="form-row">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-6" style="text-align:center">
+                                                                <a>Instrucciones de uso del wizard</a>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="col-md-12">
+                                                                    <p class="downloadTemplate">
+                                                                        <img src="./assets/images/iconos-utilerias/download-archive.svg"
+                                                                            alt="Descargar Template"
+                                                                            (click)="downloadTemplate()">
+                                                                        <span>Descargar Template</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-12"
+                                                                    style="text-align: center; display: block;">
+                                                                    <app-file-upload-component [IUploadFile]="IUploadFile"
+                                                                        [IFileUploadLabels]="IFileUploadLabels"
+                                                                        (messageEvent)="receiveMessage($event)">
+                                                                    </app-file-upload-component>
+                                                                </div>
+                                                                <div class="col-md-12" style="text-align: center;">
+                                                                    <span class="message">{{ message }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step-2" [hidden]="!process[1].active" *ngIf="reload">
+                                    <div id="accordion" class="accordion-wrapper mb-3">
+                                        <div class="card">
+                                            <div id="headingOne" class="card-header">
+                                                <button type="button" data-toggle="collapse" data-target="#collapseOne"
+                                                    aria-expanded="false" aria-controls="collapseOne"
+                                                    class="text-left m-0 p-0 btn btn-link col-md-6">
+                                                    <span class="form-heading">Enlace de campos.
+                                                        <p>
+                                                            Selecciona los datos que deseas relacionar del Layout
+                                                            cargado.
+                                                        </p>
+                                                    </span>
+                                                </button>
+                                                <div class="btn col-md-6" style="text-align: right;">
+                                                    <span (click)="limpiarSeleccionados()"
+                                                        class="pe-7s-trash limpiar-seleccionados"></span>
+                                                </div>
+                                            </div>
+                                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                                                class="collapse show">
+                                                <mat-card class="example-card">
+                                                    <div class="row">
+                                                        <div class="col-12  col-md-12 col-lg-12">
+                                                            <mat-select id="blueversion" class="col-12 col-md-6 col-lg-4" placeholder="Tipo de acción" required
+                                                                [(value)]="idTipoAccion"
+                                                                (selectionChange)="validateInputsRequired()">
+                                                                <mat-option id="bluemat" *ngFor="let item of acciones" [value]="item">{{ item }}</mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-12" style="display: inline-block;">
+                                                            <span class="col-12 col-md-12 col-lg-12 label text-error">{{ msgErrorId }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <mat-form-field id="blueversion" class="col-12 col-md-6 col-lg-4" [ngClass]="{'ocultar': columna.disabled}"
+                                                        *ngFor="let columna of columnasTemplate; let indexColumnaTemplate = index">
+                                                        <mat-select
+                                                            (selectionChange)="changeSelectColumnaExcel($event.value, indexColumnaTemplate)"
+                                                            [required]="columna.obligatorio"
+                                                            [placeholder]="columna.descripcion">
+                                                            <mat-option id="bluemat">Limpiar</mat-option>
+                                                            <mat-option id="bluemat"
+                                                                *ngFor="let columnaExcel of columnasExcel;let indexColumnaExcel = index"
+                                                                [value]="indexColumnaExcel"
+                                                                [disabled]="columnaExcel.seleccionado">
+                                                                {{columnaExcel.descripcion}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step-3" [hidden]="!process[2].active">
+                                    <div id="accordion" *ngIf="arrayRowsFinalErrors.length > 0"
+                                        class="accordion-wrapper mb-3">
+                                        <div class="card">
+                                            <div id="headingOne" class="card-header header-panel-error">
+                                                <button type="button" data-toggle="collapse" data-target="#collapseOne"
+                                                    aria-expanded="false" aria-controls="collapseOne"
+                                                    class="text-left m-0 p-0 btn btn-link col-md-6">
+                                                    <span class="form-heading">Lista de errores
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                                                class="collapse show">
+                                                <div class="card-body">
+                                                    <app-grid-component [datos]="arrayRowsFinalErrors"
+                                                        [Checkbox]="Checkbox"
+                                                        [Editing]="Editing"
+                                                        [gridOptions]="gridOptions" [columns]="columns"
+                                                        [exportExcel]="exportExcel" [searchPanel]="searchPanel"
+                                                        [scroll]="scroll" [toolbar]="toolbar" [Editing]="Editing"
+                                                        [Checkbox]="Checkbox">
+                                                    </app-grid-component>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="accordion" *ngIf="arrayRowsFinalErrors.length == 0"
+                                        class="accordion-wrapper mb-3">
+                                        <div class="card">
+                                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                                                class="collapse show">
+                                                <div class="card-body">
+                                                    <app-grid-component [datos]="arrayProcesado"
+                                                        [gridOptions]="gridOptions" [exportExcel]="exportExcel"
+                                                        [searchPanel]="searchPanel" [scroll]="scroll"
+                                                        [toolbar]="toolbar" [Editing]="Editing" [Checkbox]="Checkbox"
+                                                        [columns]="arrayProcesadoColumns">
+                                                    </app-grid-component>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="step-4" [hidden]="!process[3].active">
+                                    <div id="accordion" *ngIf="arrayProcesadoErrors.length > 0"
+                                        class="accordion-wrapper mb-3">
+                                        <div class="card">
+                                            <div id="headingOne" class="card-header header-panel-error">
+                                                <button type="button" data-toggle="collapse" data-target="#collapseOne"
+                                                    aria-expanded="false" aria-controls="collapseOne"
+                                                    class="text-left m-0 p-0 btn btn-link col-md-6">
+                                                    <span class="form-heading">Lista de errores
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                                                class="collapse show">
+                                                <div class="card-body">
+                                                    <app-grid-component [datos]="arrayProcesadoErrors"
+                                                        [gridOptions]="gridOptions" [columns]="columns"
+                                                        [exportExcel]="exportExcel" [searchPanel]="searchPanel"
+                                                        [scroll]="scroll" [toolbar]="toolbar" [Editing]="Editing"
+                                                        [Checkbox]="Checkbox">
+                                                    </app-grid-component>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 text-error">
+                                                    {{ msgErrorServidor }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="accordion" *ngIf="arrayProcesadoErrors.length == 0">
+                                        <div class="swal2-icon swal2-success swal2-animate-success-icon">
+                                            <div class="swal2-success-circular-line-left"
+                                                style="background-color: rgb(255, 255, 255);"></div>
+                                            <span class="swal2-success-line-tip"></span>
+                                            <span class="swal2-success-line-long"></span>
+                                            <div class="swal2-success-ring"></div>
+                                            <div class="swal2-success-fix"
+                                                style="background-color: rgb(255, 255, 255);">
+                                            </div>
+                                            <div class="swal2-success-circular-line-right"
+                                                style="background-color: rgb(255, 255, 255);"></div>
+                                        </div>
+                                        <div class="col-md-12" style="text-align:center">
+                                            <div class="btn-shadow btn-wide btn btn-success btn-lg">Proceso finalizado
+                                                con éxito
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="clearfix">
+                                    <button type="button" (click)="next()" id="next-btn"
+                                        class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                                        [disabled]="!btnNextEnable" *ngIf="indexActive != 3">
+                                        <i class="pe-7s-back btn-icon-wrapper" style="transform: rotateY(-200deg);"></i>
+                                        Siguiente
+                                    </button>
+
+                                    <button type="button" (click)="finalizar()" id="next-btn"
+                                        class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                                        *ngIf="indexActive == 3">
+                                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                                        Finalizar
+                                    </button>
+
+                                    <button type="button" (click)="previous()" id="prev-btn"
+                                        class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-secondary float-right">
+                                        <i class="pe-7s-back btn-icon-wrapper"></i>
+                                        Anterior
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

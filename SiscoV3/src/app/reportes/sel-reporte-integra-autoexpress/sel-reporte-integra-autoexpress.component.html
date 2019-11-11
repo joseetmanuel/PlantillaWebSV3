@@ -1,0 +1,42 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+  
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" ></app-breadcrumbs>
+
+
+  <div class="col-md-12" style="margin-top: -30px">
+    <button class="homebuttons"  [ngClass]="'active'" >Reporte</button>
+    <button  [routerLink]="['/sel-reporte-contrato']" class="homebuttons">Contrato</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 4]" class="homebuttons">Facturación</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 2]" class="homebuttons">Seguro</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 3]" class="homebuttons">Facturación GPS</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 1]" class="homebuttons">Pagos Banco</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 5]" class="homebuttons">Gasto 1</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 6]" class="homebuttons">Gasto 2</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 7]" class="homebuttons">Gasto 3</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 8]" class="homebuttons">Gasto 4</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 9]" class="homebuttons">Gasto 5</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 10]" class="homebuttons">Cobrado</button>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+      <button *ngIf="objeto.nombre == 'Kilometraje'" routerLink="/sel-reporte-integra-autoexpress-kilometraje-gps" class="homebuttons">Kilometraje</button>
+    </div>
+
+  </div>
+  <div>
+    <br>
+    <button class="homebuttons pull-right" (click)="imprimirExcel()"> 
+      <i class="icono">
+        <img class="imagenLogo" src="./assets/images/iconos-sisco/print_x.png" style="width: 35px;">
+      </i>
+    </button>
+    <button class="homebuttons pull-right" (click)="imprimirPDF()">
+      <i class="icono">
+        <img class="imagenLogo" src="./assets/images/iconos-sisco/print_pdf.png" style="width: 35px;">
+      </i>
+    </button>    
+    <br>
+    <br>
+    <div #grafica id="grafica" [innerHTML]="htmlData"></div>
+    
+  </div>
+</div>

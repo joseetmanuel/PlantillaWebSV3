@@ -1,0 +1,4 @@
+<hr>
+<app-grid-component *ngIf='ban' [datos]="proveedores" [columns]="columns" [exportExcel]="exportExcel" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser" [searchPanel]="searchPanel"
+    [scroll]="scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+</app-grid-component>

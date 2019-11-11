@@ -1,0 +1,96 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div [formGroup]="agrupadorForm">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <mat-form-field class="inputFullWide">
+                            <input matInput placeholder="Agrupador *" maxlength='50' formControlName="agrupador"
+                                [errorStateMatcher]="matcher">
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            [disabled]='!agrupadorForm.valid' (click)='updAgrupador()'><i
+                                class="pe-7s-diskette btn-icon-wrapper">
+                            </i>
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCard2'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCard2'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCard2'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <dx-drop-down-box [(value)]="gridBoxValue" valueExpr="idTipoObjeto" [displayExpr]="Combustible"
+                    placeholder="Selecciona..." [showClearButton]="true" [dataSource]="gridDataSource">
+
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid [dataSource]="gridDataSource" [columns]="columns"
+                            [selection]="{ mode: 'multiple' }" [hoverStateEnabled]="true"
+                            [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+                            [scrolling]="{ mode: 'infinite' }" [(selectedRowKeys)]="gridSelectedRowKeys" [height]="345"
+                            (onSelectionChanged)="onSelectionChanged($event)">
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            [disabled]='!agrupadorContratoForm.valid' (click)='insAgrupador()'><i
+                                class="pe-7s-diskette btn-icon-wrapper">
+                            </i>
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+                <app-grid-component *ngIf="columns" [datos]="tipoObjetosAgrupador2" [gridOptions]="gridOptions"
+                    [columns]="columns" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+                    [Columnchooser]="Columnchooser" [exportExcel]="exportExcel" [searchPanel]="searchPanel"
+                    [scroll]="scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'
+                    [toolbar]="toolbar">
+                </app-grid-component>
+            </div>
+        </div>
+    </mat-card>
+</div>

@@ -1,0 +1,144 @@
+<div [ngClass]="{'desactiva': spinner }">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <app-breadcrumbs [ruta]="breadcrumb"></app-breadcrumbs>
+    <mat-card class="cardMarginBottom">
+            <img class='imagenIconoGris' src="../../../assets/images/iconos-sisco/Objetos/operador/informacion-automovil.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Asignar vehículo</span>
+        <hr>
+        <div [formGroup]="objetoForm" class="col-sm-12 col-md-12 col-xl-12">
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <div style="padding-left: 15px">
+                        <small class="titulo-input-dinamico">Buscar vehículo</small>
+                    </div>
+                    <app-buscador [IBuscador]="buscador" (responseBuscador)="ResponseBuscador($event)">
+                    </app-buscador>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="objetoAsignado">
+                    <div class="col-sm-12 col-md-12 col-xl-12" style="text-align: center;">
+                        <a class="a_documentos" mat-button color="primary" data-lightbox="avatar"
+                            [href]="this.url + objetoAsignado.Foto">
+                            <img style="height: 80px" class='foto-avatar-m' [src]="this.url + objetoAsignado.Foto">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-xl-12" style="text-align: center;">
+                        <p>{{objetoAsignado.Submarca}} {{objetoAsignado.Modelo}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class='row' *ngIf="objetoAsignado">
+                <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                    <mat-form-field style="width: 100%">
+                        <input formControlName="fechaAsignacion" matInput [matDatepicker]="picker"
+                            [ngModel]="fechaAsignacion" placeholder="Fecha asignación">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row' *ngIf="objetoAsignado">
+                <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                    <mat-form-field style="width: 100%">
+                        <input formControlName="odometroAsignacion" matInput placeholder="Odómetro"
+                            [ngModel]="odometroAsignacion" required>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row' *ngIf="objetoAsignado">
+                <div class="col-sm-12 col-md-12 col-xl-12" style="    padding-right: 0px;">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='GuardarObjeto()' [disabled]="!objetoForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Asignar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- div de el objeto asignado si hay alguno -->
+        <div class='row align-items-end' *ngIf="objetoVigente && !objetoAsignado" style="padding: 0px 15px;">
+            <div [formGroup]="updObjetoForm" class="col-sm-12 col-md-12 col-xl-12">
+                <div class='row justify-content-end'>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <app-viewer [IViewer]="objetoVigente.iviewerVigente">
+                        </app-viewer>
+                    </div>
+                </div>
+                <div class='row justify-content-end'>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center;">
+                        <label>
+                            {{objetoVigente.submarca}} {{objetoVigente.modelo}}
+                        </label>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                        <mat-form-field style="width: 100%">
+                            <input matInput readonly [matDatepicker]="pickerA" placeholder="Fecha asignación"
+                                [value]="objetoVigente.fechaAsignacion | slice:0:10">
+                            <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerA disabled></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="padding-right: 0px">
+                        <mat-form-field style="width: 100%">
+                            <input formControlName="fechaEntrega" matInput [matDatepicker]="picker"
+                                [readonly]="objetoVigente.fechaEntregaVigente == null ? false : true"
+                                [min]="objetoVigente.fechaAsignacion | slice:0:10"
+                                [ngModel]="objetoVigente.fechaEntregaVigente | slice:0:10" placeholder="Fecha entrega">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker
+                                [disabled]="objetoVigente.fechaEntregaVigente == null ? false : true">
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 0px">
+                        <mat-form-field style="width: 100%">
+                            <input matInput placeholder="Odómetro asignación" [value]="objetoVigente.odometroAsignacion"
+                                readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6" style="padding-right: 0px">
+                        <mat-form-field style="width: 100%">
+                            <input type="number" [min]="objetoVigente.odometroAsignacion" matInput
+                                placeholder="Odómetro entrega" formControlName="odometroEntrega"
+                                [readonly]="objetoVigente.odometroEntregaVigente > 0 ? true : false"
+                                [ngModel]="objetoVigente.odometroEntregaVigente" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class='row justify-content-end' style="padding-right: 0px">
+                    <div class="col-sm-12 col-md-6 col-xl-6"  *ngIf="objetoVigente.fechaEntregaVigente == null">
+                        <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                            (click)='ActualizarObjeto()' [disabled]="!updObjetoForm.valid">
+                            <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                            Asignar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <!-- card par ael historico de los operadores-->
+    <mat-card>
+        <div class="row cardMargin">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris'
+                    src="./assets/images/iconos-sisco/Objetos/sh_objeto-sel-card-automovil.png">
+                &nbsp;&nbsp;&nbsp;
+                <span>Vehículos asignados</span>
+                <hr>
+                <app-grid-component *ngIf="columns && operadorObjetos" [datos]="operadorObjetos"
+                    [gridOptions]="gridOptions" [columns]="columns" [columnHiding]="columnHiding" [Checkbox]="Checkbox"
+                    [Editing]="Editing" [Columnchooser]="Columnchooser" [exportExcel]="exportExcel"
+                    [searchPanel]="searchPanel" [scroll]="scroll" (datosevent)="GenerarEntrega($event)"
+                    [toolbar]="toolbar">
+                </app-grid-component>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+</div>

@@ -1,0 +1,84 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+            <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div [formGroup]="costoForm">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-xl-6">
+              <br><br>
+              <mat-form-field class="inputFullWide">
+                <mat-select (ngModelChange)="setEstado()" placeholder="Estado *" formControlName="estado"
+                  [errorStateMatcher]="matcher">
+                  <mat-option *ngFor='let estado of estados' [value]="estado.idEstado">
+                    {{estado.nombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El campo es
+                  <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="costoForm.valid && estadistica" class="col-md-6 col-lg-6 col-xl-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="widget-content p-0">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-heading">Total de Documentos</div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="widget-numbers text-primary"> {{estadistica.total}}</div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress"
+                          [matTooltip]="(estadistica.conPrecio * 100) / estadistica.total + '%'">
+                          <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="partidaPorcentaje"
+                            aria-valuemin="0" aria-valuemax="100"
+                            [style.width]="(estadistica.conPrecio * 100) / estadistica.total +'%'"></div>
+                        </div>
+                        <div class="progress-sub-label">
+                          <div class="sub-label-left">Con Precio: {{estadistica.conPrecio}}</div>
+                          <div class="sub-label-right">Sin Precio: {{estadistica.total - estadistica.conPrecio}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div *ngIf="costoForm.valid && !cargaGrid" class="col-md-12 col-lg-12 col-xl-12">
+          <app-grid-component *ngIf="columns" [Detail]="detail" [datos]="agrupadores" [datosdetail]="agrupadorDetalle"
+            [columnsdetail]="columnsdetail" [gridOptions]="gridOptions" [columns]="columns"
+            [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+            [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar"
+            [toolbardetail]="toolbardetail" (editevent)='datosUpd($event)' keyfather="idCostoAgrupador"
+            keyfilter="idCostoAgrupador">
+          </app-grid-component>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

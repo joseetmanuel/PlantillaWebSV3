@@ -1,0 +1,96 @@
+<div class="app-main__inner">
+    <div class="app-inner-layout">
+        <div class="app-inner-layout__wrapper" [ngClass]="{'open-mobile-menu' : toggleMobileSidebar}">
+            <div class="app-inner-layout__content card">
+                <div class="app-inner-layout__top-pane pr-2">
+                    <div class="pane-left">
+                        <div class="mobile-app-menu-btn">
+                            <button type="button" class="hamburger hamburger--elastic" [ngClass]="{'is-active' : toggleMobileSidebar}" (click)="toggleMobileSidebar = !toggleMobileSidebar">
+                                        <span class="hamburger-box">
+                                            <span class="hamburger-inner"></span>
+                                        </span>
+                                    </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-area-tarea" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScrollTarea()" [scrollWindow]="false">
+                    <div class="scrollbar-container">
+                        <div style="position: static;" class="ps ps--active-y" ng-reflect-disabled="false">
+                            <div class="ps-content">
+                                <div class="bg-white">
+                                    <div class="table-responsive">
+                                        <div class="text-nowrap table-lg mb-0 table table-hover align-middle">
+                                            <div *ngFor="let tarea of tareas | async">
+                                                <app-tarea [tarea]="tarea" [tipoTarea]="0" (tareaActualizada)="tareaActualizada($event)"></app-tarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-inner-layout__sidebar sidebar-tarea card">
+                <ul class="nav flex-column">
+                    <li class="pt-4 pl-3 pr-3 pb-3 nav-item">
+                        <button class="btn-pill btn-shadow btn btn-primary btn-block" routerLink="/ins-tarea">Nueva tarea</button>
+                    </li>
+                    <li class="nav-item-divider nav-item" class="nav-item-divider-blanca"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="toggleMobileSidebar = !toggleMobileSidebar; buscarStatus({id: null})">
+                            <i class="nav-link-icon"><img class="iconoTarea" src="../../../assets/images/iconos-tarea/todas.png"></i><span>Todas</span>
+                            <div *ngIf="totalTareas > 0" class="ml-auto badge badge-pill" style="background-color: #7BD3FF; color: #fff">{{totalTareas}}</div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngFor="let status of statusTarea">
+                        <a class="nav-link" (click)="toggleMobileSidebar = !toggleMobileSidebar; buscarStatus(status)">
+                            <i class="nav-link-icon">
+                                <img *ngIf="status.rutaImagen" class="iconoTarea" [src]="status.rutaImagen">
+                            </i><span>{{status.nombre}}</span>
+                            <div *ngIf="status.mostrarPildora" [style.color]="status.colorTexto" [style.background-color]="status.colorStatus" class="ml-auto badge badge-pill">{{status.total}}</div>
+                        </a>
+                    </li>
+                    <li class="nav-item-divider nav-item" class="nav-item-divider-blanca"></li>
+                    <li class="nav-item">
+                        <i class="nav-link-icon">
+                            <img class="iconoTarea" src="../../../assets/images/iconos-tarea/solicitante.png">
+                        </i><span>Solicitante</span>
+                    </li>
+                    <li class="text-center p-2 nav-item">
+                        <div>
+                            <div class="avatar-icon-wrapper" *ngFor="let solicitante of solicitantes" (click)="toggleMobileSidebar = !toggleMobileSidebar; buscarSolicitante(solicitante)">
+                                <img width="42" [src]="solicitante.urlAvatar" alt="" class="rounded-circle" [matTooltip]="solicitante.nombre" matTooltipPosition="above" matTooltipClass="TooltipInfo">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item-divider nav-item" class="nav-item-divider-blanca"></li>
+                    <li class="nav-item">
+                        <div class="scroll-area">
+                            <div class="scrollbar-container">
+                                <perfect-scrollbar ng-reflect-auto-propagation="true" class="ps-show-limits">
+                                    <div style="position: static;" class="ps ps--active-y" ng-reflect-disabled="false">
+                                        <i class="nav-link-icon"><img class="iconoTarea" src="../../../assets/images/iconos-tarea/categoria.png"></i><span>Categorías</span>
+                                        <div class="ps-content">
+                                            <button type="button" tabindex="0" class="d-flex align-items-center dropdown-item" *ngFor="let categoria of categorias" (click)="toggleMobileSidebar = !toggleMobileSidebar; buscarCategoria(categoria)">
+                                                <div class="badge ml-0 mr-3 badge-dot badge-dot-xl" [style.background-color]="categoria.color" style="color: #fff;">Dark</div>
+                                                {{categoria.titulo}}
+                                                <div *ngIf="categoria.tareas" class="ml-auto badge badge-pill">{{categoria.tareas}}</div>
+                                            </button>
+                                        </div>
+                                        <div class="ps__rail-x" style="left: 0px; bottom: -503px;">
+                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                        </div>
+                                        <div class="ps__rail-y" style="top: 503px; height: 1000px; right: 0px;">
+                                            <div class="ps__thumb-y" tabindex="0" style="top: 223px; height: 177px;"></div>
+                                        </div>
+                                    </div>
+                                </perfect-scrollbar>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

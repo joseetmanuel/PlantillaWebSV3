@@ -1,0 +1,140 @@
+<app-breadcrumbs [ruta]="breadcrumb">
+</app-breadcrumbs>
+<mat-card>
+    <mat-tab-group mat-align-tabs="center" animationDuration="500ms" #tabs (selectedTabChange)="clickTab($event)">
+        <mat-tab label="Tarea">
+            <div>
+                <app-panel-tarea>
+                </app-panel-tarea>
+            </div>
+        </mat-tab>
+        <mat-tab label="Chat">
+            <br>
+            <div class="d-none d-lg-block ">
+                <div class="container-fluid" style="padding-right: 0;padding-left:0;">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="row">
+                            <br>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <app-chatlist (solicitudSeleccionada)="solicitudSeleccionada($event)">
+                                </app-chatlist>
+                            </div>
+                            <br>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="font-size: large; text-align: center;">
+                                                {{numeroOrden}}
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="font-size: small; text-align: center;">
+                                                {{tokenSolicitud}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <app-chat [idSolicitud]="idSolicitud" [tokenSolicitud]="tokenSolicitud">
+                                        </app-chat>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-lg-none">
+                <div class="container-fluid" style="padding-right: 0;padding-left:0;">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="row">
+                            <br>
+                            <div *ngIf='!activachat' class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" (click)="clickchat()">
+                                <app-chatlist (solicitudSeleccionada)="solicitudSeleccionada($event)">
+                                </app-chatlist>
+                            </div>
+                            <br>
+                            <div *ngIf='activachat' class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                <button (click)="regresar()" class="border-0 btn-transition btn btn-outline-success">
+                                                <fa name="reply" style="font-size: 20px"></fa>
+                                              </button>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="font-size: large; text-align: center;">
+                                                {{numeroOrden}}
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="font-size: small; text-align: center;">
+                                                {{tokenSolicitud}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <app-chat [idSolicitud]="idSolicitud" [tokenSolicitud]="tokenSolicitud">
+                                        </app-chat>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Notificaciones">
+            <br>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <app-panel-notificacion>
+                </app-panel-notificacion>
+            </div>
+        </mat-tab>
+        <mat-tab label="Perfil de usuario">
+            <br>
+            <mat-card>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-2">
+                            <app-viewer [IViewer]="iViewer">
+                            </app-viewer>
+                            <app-file-upload-component [IUploadFile]="IUploadFile" (messageEvent)="ResultUploadFile($event)">
+                            </app-file-upload-component>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-10">
+                            <div [formGroup]="userForm" class="row">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <mat-form-field class="inputFullWide">
+                                        <input matInput placeholder="Apellido Paterno" maxlength='100' formControlName="apellidoP">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <mat-form-field class="inputFullWide">
+                                        <input matInput placeholder="Apellido Materno" maxlength='100' formControlName="apellidoM">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <mat-form-field class="inputFullWide">
+                                        <input matInput placeholder="Nombre" maxlength='100' formControlName="nombre">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <mat-form-field class="inputFullWide">
+                                        <input matInput placeholder="Correo" maxlength='100' formControlName="correo">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <mat-form-field class="inputFullWide">
+                                        <input matInput placeholder="telefono" maxlength='100' formControlName="telefono">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='ActualizarDatos()' [disabled]="!userForm.valid">
+                                        <i class="pe-7s-diskette btn-icon-wrapper"></i>Actualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

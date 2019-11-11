@@ -1,0 +1,76 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+  <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+  <hr>
+  <mat-card class="cardMarginBottom">
+    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datosorden.png"> &nbsp;&nbsp;&nbsp;
+    <span>Órdenes</span>
+    <hr>
+    <div [formGroup]="equipamientoForm">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-xl-6">
+          <mat-form-field class="inputFullWide">
+            <mat-select placeholder="Órdenes" formControlName="idOrden" (selectionChange)="onSelection($event)">
+              <mat-option *ngFor='let orden of ordenes'
+                [value]="orden.idOrden">
+                {{orden.descripcion}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              El campo es
+              <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <small>Zona *</small>
+          <dx-drop-down-box #dropBox2 [dataSource]="zonas" placeholder="Selecciona Zona"
+            displayExpr="descripcion" valueExpr="idContratoZona" [showClearButton]="true" [(value)]="idContratoZona"
+            (onValueChanged)="closeWindow(dropBox2)">
+            <div *dxTemplate="let data of 'content'">
+              <dx-tree-view [dataSource]="zonas" dataStructure="plain" keyExpr="idContratoZona" parentIdExpr="idPadre"
+                displayExpr="descripcion" [selectByClick]="true" selectionMode="single" noDataText="No contiene datos"
+                (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, zonas)">
+              </dx-tree-view>
+            </div>
+          </dx-drop-down-box>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+              <small>Centro de Costos *</small>
+              <div class="dx-field-value" style="width: 100%">
+                  <dx-select-box formControlName="idCosto" id="centroCostos" (onSelectionChanged) = "createTable()"
+                  placeholder="Selecciona Centro de Costo" [dataSource]="costos" displayExpr="nombre" valueExpr="idCentroCosto" value= "idCentroCosto">
+                  <div *dxTemplate="let data of costos">
+                      <div class="custom-item">
+                          <div >
+                              {{data.nombre}}
+                          </div>
+                      </div>
+                  </div>
+    
+              </dx-select-box>
+              </div>
+            </div>
+      </div>
+    </div>
+    <hr>
+    <app-grid-component *ngIf='ban' [datos]="spec" [columns]="columns"
+      [exportExcel]="exportExcel" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+      [Columnchooser]="Columnchooser" [searchPanel]="searchPanel" [scroll]="scroll"
+      (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+  </mat-card>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-xl-6">
+    <input *ngIf='none1' #archivoXml (change)="cargaXml()" accept="text/xml" type="file" style="visibility:hidden" />
+  </div>
+  <div class="col-sm-6 col-md-6 col-xl-6">
+      <input *ngIf='none2' #archivoPdf (change)="cargaPdf()"accept="application/pdf" type="file" style="visibility:hidden" />
+    </div>
+</div>

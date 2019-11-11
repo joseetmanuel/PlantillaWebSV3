@@ -1,0 +1,16 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<div>
+  <mat-card class="cardMarginBottom" *ngIf='!spinner && contratoActual'>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    </div>
+  </mat-card>
+</div>
+<mat-card class="cardMarginBottom" *ngIf="!spinner">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+    </div>
+  </div>
+</mat-card>

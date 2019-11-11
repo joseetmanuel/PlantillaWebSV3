@@ -1,0 +1,811 @@
+<div [ngClass]="{'desactivaPantalla': loading }">
+    <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+    </app-breadcrumbs>
+    <div class="row">
+        <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <app-banner-generico [IObjeto]="IBannerObjeto" *ngIf="idClase != 'Automovil'"></app-banner-generico>
+        </div>
+    </div>
+    <div class="row" *ngIf="objeto">
+        <div class=" col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="row" style="margin-right: 0;margin-left:0">
+                <mat-card *ngIf="idClase == 'Automovil'" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+                            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                <img *ngIf="objeto.nombre=='LogoCardObjeto'" class='imagenIconoGris'
+                                    [src]="objeto.path">
+                                <span *ngIf="objeto.nombre=='LogoCardObjeto'">&nbsp;&nbsp;&nbsp;</span>
+                            </div>
+                            <span>Datos del vehículo</span>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <img [src]="IObjeto.fotoPrincialUrl" style="width: 100%;" alt="Foto Automovil">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 6px;">
+                                    <p class="SubtituloBannerRojo">
+                                        {{ objeto.Marca }} {{ objeto.Submarca }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 9px;">
+                                <span class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 border-right-line-red"
+                                    style="margin: auto">
+                                    {{ objeto.Cilindros }}
+                                </span>
+                                <span class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 border-right-line-red"
+                                    style="margin: auto">
+                                    Modelo {{ objeto.modelo }}
+                                </span>
+                                <span class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="margin: auto">
+                                    {{ objeto.Combustible }}
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-12 margin-top-default sin-pad-col">
+                                <div class="row no-gutters" style="height: 100%">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <hr>
+                                        <div class="row row-gutter">
+                                            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+                                                style="text-align: center">
+                                                <img class='imagenBannerSm'
+                                                    src="../../assets/images/objeto-banner/tanque.png">
+                                            </div>
+                                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                                style="padding: 15px 0px 0px 0px;">
+                                                <div class="especs" *ngIf="objeto.attributes">
+                                                    <div>
+                                                        <span class="espec-label">Satelites</span>
+                                                        <span class="espec-text">{{ objeto.attributes.sat }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Consumo</span> <span
+                                                            class="espec-text">{{ objeto.attributes.fuelConsumption }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Ignición</span> <span
+                                                            class="espec-text">{{ objeto.attributes.ignition }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Movimiento</span> <span
+                                                            class="espec-text">{{ objeto.attributes.motion }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="especs" *ngIf="!objeto.attributes">
+                                                    <div>
+                                                        <span class="espec-label">Satelites</span>
+                                                        <span class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Consumo</span> <span
+                                                            class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Ignición</span> <span
+                                                            class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Movimiento</span> <span
+                                                            class="espec-text">--</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row row-gutter">
+                                            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+                                                style="text-align: center">
+                                                <img class='imagenBannerSm'
+                                                    src="../../assets/images/objeto-banner/voltaje.png">
+                                            </div>
+                                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                                style="padding: 15px 0px 0px 0px;" *ngIf="objeto.attributes">
+                                                <div class="especs">
+                                                    <div> <span class="espec-label">Protocolo</span> <span
+                                                            class="espec-text">{{ objeto.protocol }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Altitud</span> <span
+                                                            class="espec-text">{{ objeto.altitude }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Velocidad</span> <span
+                                                            class="espec-text">{{ objeto.speed }}</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Curso</span> <span
+                                                            class="espec-text">{{ objeto.course }}</span> </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                                style="padding: 15px 0px 0px 0px;" *ngIf="!objeto.attributes">
+                                                <div class="especs">
+                                                    <div> <span class="espec-label">Protocolo</span> <span
+                                                            class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Altitud</span> <span
+                                                            class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Velocidad</span> <span
+                                                            class="espec-text">--</span>
+                                                        <hr>
+                                                    </div>
+                                                    <div> <span class="espec-label">Curso</span> <span
+                                                            class="espec-text">--</span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+                            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                <img *ngIf="objeto.nombre=='LogoCardDocumento'" class='imagenIconoGris'
+                                    [src]="objeto.path">
+                                <span *ngIf="objeto.nombre=='LogoCardDocumento'">&nbsp;&nbsp;&nbsp;</span>
+                            </div>
+                            <span>Control documental</span>
+                            <hr>
+                            <div class="row control-documental">
+                                <div class="d-lg-none col-12 col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div *ngFor="let obj of modulo.camposClase">
+                                            <div *ngIf="obj.nombre=='Placas'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.placaIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.Placas == null}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.Placas ? './assets/images/objeto-banner/placa.png' : './assets/images/objeto-banner/placa_gris.png' ">
+                                                </a>
+                                            </div>
+                                            <div *ngIf="obj.nombre=='TarjetaCirculacion'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.tarjetaCirculacionIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.tarjetaCirculacionVigencia == null}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.tarjetaCirculacionVigencia !== null ? './assets/images/objeto-banner/circulacion.png' : './assets/images/objeto-banner/circulacion_gris.png' ">
+                                                </a>
+                                            </div>
+                                            <div *ngIf="obj.nombre=='Tenencia'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.tenenciaIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.tenenciaVigencia == null}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.tenenciaVigencia !== null ? './assets/images/objeto-banner/tenencia.png' : './assets/images/objeto-banner/tenencia_gris.png' ">
+                                                </a>
+                                            </div>
+                                            <div *ngIf="obj.nombre=='PolizaSeguro'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.seguroIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.seguroVigencia == null}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.seguroVigencia !== null ? './assets/images/objeto-banner/seguro.png' : './assets/images/objeto-banner/seguro_gris.png' ">
+                                                </a>
+                                            </div>
+                                            <div *ngIf="obj.nombre=='Verificacion'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.verificacionIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.verificacionVigencia == null}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.verificacionVigencia !== null ? './assets/images/objeto-banner/verificacion.png' : './assets/images/objeto-banner/verificacion_gris.png' ">
+                                                </a>
+                                            </div>
+                                            <div *ngIf="obj.nombre=='Multas'"
+                                                class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                                <a data-lightbox="avatar" [href]="objeto.multaIdFileUrl"
+                                                    [ngClass]="{'img-disabled': objeto.multaIdFile < 1}">
+                                                    <img class='imagenBanner'
+                                                        [src]="objeto.multaIdFile > 0 ? './assets/images/objeto-banner/multa.png' : './assets/images/objeto-banner/multa_gris.png' ">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-none d-lg-block col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='Placas'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.placaIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.Placas == null}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.Placas ? './assets/images/objeto-banner/placa.png' : './assets/images/objeto-banner/placa_gris.png' ">
+                                            </a>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Placas'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-5 col-xl-6 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Placas
+                                            </p>
+                                            <p class="datoBanner">
+                                                {{objeto.Placas}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Placas'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-4 col-xl-4 sinPadd banner-height">
+                                            <p class="datoBannerBlue" *ngIf="objeto.estatusPlaca === 'Vigente'">
+                                                Vigente
+                                            </p>
+                                            <p class="datoBannerRojo" *ngIf="objeto.estatusPlaca === 'Vencida'">
+                                                Vencida
+                                            </p>
+                                        </div>
+                                        <p *ngIf="obj.nombre=='Placas'"
+                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoBannerBlueSingle">
+                                            {{ objeto.usuarioPlacas }} | {{ objeto.fechaPlacas | date: 'dd/MM/yy' }}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='TarjetaCirculacion'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.tarjetaCirculacionIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.tarjetaCirculacionVigencia == null}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.tarjetaCirculacionVigencia !== null ? './assets/images/objeto-banner/circulacion.png' : './assets/images/objeto-banner/circulacion_gris.png' ">
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div *ngIf="obj.nombre=='TarjetaCirculacion'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-5 col-xl-6 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Tarjeta de Circulación
+                                            </p>
+                                            <p class="datoBanner">
+                                                {{objeto.estatusTarjetaCirculacion === 'Vencida' ? 'Actualizar' : 'Renovable'}}
+                                                {{objeto.tarjetaCirculacionVigencia | date: 'dd/MM/yyyy'}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='TarjetaCirculacion'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-4 col-xl-4 sinPadd banner-height">
+                                            <p class="datoBannerBlue"
+                                                *ngIf="objeto.estatusTarjetaCirculacion === 'Vigente'">
+                                                Vigente
+                                            </p>
+                                            <p class="datoBannerRojo"
+                                                *ngIf="objeto.estatusTarjetaCirculacion === 'Vencida'">
+                                                Vencida
+                                            </p>
+                                        </div>
+
+                                        <p *ngIf="obj.nombre=='TarjetaCirculacion'"
+                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoBannerBlueSingle">
+                                            {{ objeto.usuarioTarjetaCirculacion }} |
+                                            {{ objeto.fechaTarjetaCirculacion }}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='Tenencia'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.tenenciaIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.tenenciaVigencia == null}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.tenenciaVigencia !== null ? './assets/images/objeto-banner/tenencia.png' : './assets/images/objeto-banner/tenencia_gris.png' ">
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Tenencia'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-5 col-xl-6 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Tenencia
+                                            </p>
+                                            <p class="datoBanner">
+                                                {{objeto.estatusTenencia === 'Vencida' ? 'Actualizar' : 'Renovable'}}
+                                                {{objeto.tenenciaVigencia}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Tenencia'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-4 col-xl-4 sinPadd banner-height">
+                                            <p class="datoBannerBlue" *ngIf="objeto.estatusTenencia === 'Vigente'">
+                                                Vigente
+                                            </p>
+                                            <p class="datoBannerRojo" *ngIf="objeto.estatusTenencia === 'Vencida'">
+                                                Vencida
+                                            </p>
+                                        </div>
+
+                                        <p *ngIf="obj.nombre=='Tenencia'"
+                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoBannerBlueSingle">
+                                            {{ objeto.usuarioTenencia }} | {{ objeto.fechaTenencia | date: 'dd/MM/yy'}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-none d-lg-block col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='PolizaSeguro'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.seguroIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.seguroVigencia == null}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.seguroVigencia !== null ? './assets/images/objeto-banner/seguro.png' : './assets/images/objeto-banner/seguro_gris.png' ">
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div *ngIf="obj.nombre=='PolizaSeguro'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-5 col-xl-6 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Póliza de Seguro
+                                            </p>
+                                            <p class="datoBanner">
+                                                {{objeto.estatusSeguro === 'Vencida' ? 'Actualizar' : 'Renovable'}}
+                                                {{objeto.seguroVigencia}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='PolizaSeguro'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-4 col-xl-4 sinPadd banner-height">
+                                            <p class="datoBannerBlue" *ngIf="objeto.estatusSeguro === 'Vigente'">
+                                                Vigente
+                                            </p>
+                                            <p class="datoBannerRojo" *ngIf="objeto.estatusSeguro === 'Vencida'">
+                                                Vencida
+                                            </p>
+                                        </div>
+                                        <p *ngIf="obj.nombre=='PolizaSeguro'"
+                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoBannerBlueSingle">
+                                            {{ objeto.usuarioSeguro }} | {{ objeto.fechaSeguro | date: 'dd/MM/yy' }}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='Verificacion'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.verificacionIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.verificacionVigencia == null}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.verificacionVigencia !== null ? './assets/images/objeto-banner/verificacion.png' : './assets/images/objeto-banner/verificacion_gris.png' ">
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Verificacion'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-5 col-xl-6 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Verificación
+                                            </p>
+                                            <p class="datoBanner">
+                                                {{objeto.estatusVerificacion === 'Vencida' ? 'Actualizar' : 'Renovable'}}
+                                                {{objeto.verificacionVigencia}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Verificacion'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-4 col-xl-4 sinPadd banner-height">
+                                            <p class="datoBannerBlue" *ngIf="objeto.estatusVerificacion === 'Vigente'">
+                                                Vigente
+                                            </p>
+                                            <p class="datoBannerRojo" *ngIf="objeto.estatusVerificacion === 'Vencida'">
+                                                Vencida
+                                            </p>
+                                        </div>
+                                        <p *ngIf="obj.nombre=='Verificacion'"
+                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12  datoBannerBlueSingle">
+                                            {{ objeto.usuarioVerificacion }} |
+                                            {{ objeto.fechaVerificacion | date: 'dd/MM/yy' }}
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    <div class="row" *ngFor="let obj of modulo.camposClase">
+                                        <div *ngIf="obj.nombre=='Multas'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 sinPadd banner-height">
+                                            <a data-lightbox="avatar" [href]="objeto.multaIdFileUrl"
+                                                [ngClass]="{'img-disabled': objeto.multaIdFile < 1}">
+                                                <img class='imagenBanner'
+                                                    [src]="objeto.multaIdFile > 0 ? './assets/images/objeto-banner/multa.png' : './assets/images/objeto-banner/multa_gris.png' ">
+                                            </a> &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Multas'"
+                                            class="col-2 col-sm-2 col-md-2 col-lg-5 col-xl-4 sinPadd banner-height">
+                                            <p class="SubtituloBanner">
+                                                Multas
+                                            </p>
+                                            <p class="datoBanner">
+
+                                            </p>
+                                        </div>
+                                        <div *ngIf="obj.nombre=='Multas'"
+                                            class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-6 sinPadd banner-height">
+                                            <p class="datoBannerRojo">
+                                                {{objeto.multaAdeudo}}
+                                            </p>
+                                        </div>
+                                        <p *ngIf="obj.nombre=='Multas'"
+                                            class="col-12  col-sm-12 col-md-12 col-lg-12 col-xl-12 datoBannerBlueSingle">
+                                            {{ objeto.usuarioMulta }} | {{ objeto.fechaMulta | date: 'dd/MM/yy' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="d-none d-lg-block col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                    style="margin-top: 35px">
+                                    <ngx-slick-carousel *ngIf="fotosObjeto.length > 0" class="slick-slider "
+                                        #slickModal="slick-carousel" [config]="carouselConfig">
+                                        <div ngxSlickItem *ngFor="let slide of fotosObjeto">
+                                            <img [src]="slide" class="carousel-img">
+                                        </div>
+                                    </ngx-slick-carousel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+                <mat-card *ngIf="idClase == 'Automovil'"
+                    class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 margin-top-default">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+
+                            <div class="row" style="text-align: center" *ngFor="let obj of modulo.camposClase">
+                                <div *ngIf="obj.nombre=='Ubicacion' && objeto.latitude"
+                                    class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{objeto.latitude}},{{objeto.longitude}}&zoom=18&size=400x400&&scale=2&markers={{objeto.latitude}},{{objeto.longitude}}&style=feature:all|element:geometry|color:0x005383&style=feature:all|element:labels.text.fill|gamma:0.01|lightness:20&style=feature:all|element:labels.text.stroke|saturation:-31|lightness:-33|weight:2|gamma:0.8|color:0x757575|visibility:simplified&style=feature:all|element:labels.icon|visibility:off&style=feature:landscape|element:geometry|lightness:30|saturation:30&style=feature:poi|element:geometry|saturation:20&style=feature:poi.park|element:geometry|lightness:20|saturation:-20&style=feature:road|element:geometry|lightness:10|saturation:-30&style=feature:road|element:geometry.stroke|saturation:25|lightness:25&style=feature:water|element:all|lightness:-20&key=AIzaSyDiCxjgTFOg0BLrRfoz4ka1fiB8jJU2VzA"
+                                    class="map">
+                                </div>
+                                <div *ngIf="obj.nombre=='Ubicacion'"
+                                    class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <img class='imagenBanner' src="../../assets/images/objeto-banner/ubucacion.png">
+                                    Ubicación
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <div class="row" style="height: 100%">
+                                <div class="col-12 col-sm-12 margin-top-default">
+                                    <div class="row row-gutter">
+                                        <div class="col-12 col-sm-12 text-center margin-top-default">
+                                            <div class="Kilometraje" style="width: 45%; margin: auto;">
+                                                <div class="SubCaja" *ngIf="objeto.attributes">
+                                                    {{ (objeto.attributes.totalDistance) / 1000 | number : '1.0-0' }}
+                                                    KM
+                                                </div>
+                                                <div class="SubCaja" *ngIf="!objeto.attributes">
+                                                    0
+                                                    KM
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-3 margin-top-default border-right-line">
+                                            <div>
+                                                <p class="textoAzul Kilometraje-datos">
+                                                    {{ indicadores.distance / 1000 | number : '1.2-2' }}</p>
+                                                <p style="font-size: 10px; text-align: center;color: #355DC5;">km
+                                                    promedio x mes</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-3 margin-top-default border-right-line">
+                                            <div>
+                                                <p class="textoAzul Kilometraje-datos">
+                                                    {{ diasUso | number }} </p>
+                                                <p style="font-size: 10px; text-align: center;color: #355DC5;">
+                                                    días promedio de uso x mes
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-3 margin-top-default border-right-line">
+                                            <div>
+                                                <p class="textoAzul Kilometraje-datos">
+                                                    {{ obtieneDiasDesde() | number }}
+                                                </p>
+                                                <p style="font-size: 10px; text-align: center;color: #355DC5;"> día(s)
+                                                    desde el último
+                                                    recorrido</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-3 margin-top-default border-right-line">
+                                            <div>
+                                                <p class="textoAzul Kilometraje-datos" *ngIf="objeto.attributes">
+                                                    {{ (objeto.attributes.hours / 1000) / 3600 | number : '1.2-2' }}
+                                                </p>
+                                                <p style="font-size: 10px; text-align: center;color: #355DC5;">
+                                                    Horas motor
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <div *ngIf="idClase == 'Automovil'" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mobile-margin">
+            <div class="row" style="height: 100%">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 " style="padding-left: 15px;">
+                    <mat-card style="height: 100%;">
+                        <div *ngFor="let objeto of modulo.camposClase">
+                            <div *ngIf="objeto.nombre=='Alarmas'">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                            <img *ngIf="objeto.nombre=='LogoCardHabitosManejo'" class='imagenIconoGris'
+                                                [src]="objeto.path">
+                                            <span
+                                                *ngIf="objeto.nombre=='LogoCardHabitosManejo'">&nbsp;&nbsp;&nbsp;</span>
+                                        </div>
+                                        <span>Habitos de manejo</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="SubtituloBanner" style="text-align: center;">
+                                    <p>Alarmas por unidad / periodo {{ periodo }}</p>
+                                </div>
+                                <div class="row alarmas" *ngFor="let alarma of alarmas">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+                                        <p class="SubtituloBanner">{{ alarma.key }}</p>
+                                    </div>
+                                    <div class="col-10 col-sm-10 col-md-10 col-lg-7 col-xl-7">
+                                        <p>
+                                            <ngb-progressbar [type]="alarma.type" height=".3rem" [value]="alarma.value">
+                                            </ngb-progressbar>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                        <p class="SubtituloBanner">{{ alarma.value }} alarmas</p>
+                                    </div>
+                                </div>
+                                <div class="row alarmas" *ngIf="alarmas.length == 0">
+                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <p class="SubtituloBanner">Sin alarmas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none d-lg-block" *ngFor="let objeto of modulo.camposClase">
+                            <div *ngIf="objeto.nombre=='DashboardKilometros'">
+                                <div class="SubtituloBanner text-center margin-top-default">
+                                    <p>Kilometros recorridos por dia ({{ periodo }})</p>
+                                </div>
+                                <div class="card-body margin-top-default">
+                                    <div class="d-block" *ngIf="barChartData.length > 0">
+                                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                            [options]="barChartOptions" [legend]="barChartLegend"
+                                            [chartType]="barChartType">
+                                        </canvas>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12  text-center">
+                                            <div
+                                                style="width: 30px; height: 10px; background-color: #3F6AD8; display: inline-block">
+                                            </div>
+                                            <span
+                                                style="display: inline-block; font-size: 10px; margin-left: 4px;margin-right: 10px; vertical-align: middle;">Kms
+                                                por día</span>
+                                            <div
+                                                style="width: 30px; height: 10px; background-color: #F7B924; display: inline-block">
+                                            </div>
+                                            <span
+                                                style="display: inline-block; font-size: 10px; margin-left: 4px;margin-right: 10px; vertical-align: middle;">Días
+                                                Festivos</span>
+                                            <div
+                                                style="width: 30px; height: 10px; background-color: #7BD3FF; display: inline-block">
+                                            </div>
+                                            <span
+                                                style="display: inline-block; font-size: 10px; margin-left: 4px;margin-right: 10px; vertical-align: middle;">Fin
+                                                de semana</span>
+                                            <div
+                                                style="width: 30px; height: 10px; background-color: #DCE7FF; display: inline-block">
+                                            </div>
+                                            <span
+                                                style="display: inline-block; font-size: 10px; margin-left: 4px;margin-right: 10px; vertical-align: middle;">Promedio
+                                                flotillas</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-block" *ngIf="barChartData.length == 0">
+                                        <p class="SubtituloBanner">
+                                            Sin GPS
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="margin-top-default col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <mat-card>
+                <div class="row">
+                    <div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6'>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCardServicios'" class='imagenIconoGris' [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCardServicios'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <span>Catálogo de servicios</span>
+                    </div>
+                    <div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 text-right'>
+                        <mat-button-toggle-group #group="matButtonToggleGroup" (change)="validaCostoVenta(group.value)">
+                            <mat-button-toggle value="1" checked="true" class="inputFullWide">
+                                Costo
+                            </mat-button-toggle>
+                            <mat-button-toggle *ngIf='moduloVenta' value="2" class="inputFullWide"> Venta
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <br>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div style="width: 50%; display: inline-block" class="text-left">
+                                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                        <span *ngIf="objeto.nombre=='inversion'"
+                                            class="datoTelemetriaAzul font-weight-bold monto-servicios align-middle">Inversión
+                                            total: </span>
+                                        <span *ngIf="objeto.nombre=='inversion'"
+                                            class="font-weight-bold monto-servicios">
+                                            {{ totalInversion | currency }}</span>
+                                    </div>
+                                </div>
+                                <div style="width: 50%; display: inline-block;"
+                                    class="text-right datoTelemetriaAzul font-weight-bold monto-servicios">
+                                    <div *ngFor="let objeto of modulo.camposClase">
+                                        <a class="datoTelemetriaAzul" *ngIf="objeto.nombre=='agendarCita'"
+                                            routerLink="/ins-solicitud/{{IObjeto.idObjeto}}/{{IObjeto.idTipoObjeto}}/{{idClase}}/{{IObjeto.idCliente}}/{{IObjeto.rfcEmpresa}}/{{IObjeto.numeroContrato}}">
+                                            <!-- <img src="./assets/images/iconos-sisco/Objetos/agendar_cita.png"
+                                                alt="Agendar Cita" style="width: 30px"> -->
+                                            <span><i class="pe-7s-date"></i> Agendar cita</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div #contentFases style="width: 100%">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center margin-top-default"
+                                    *ngIf="fases">
+                                    <div *ngFor="let objeto of modulo.camposClase">
+
+                                        <div *ngIf="objeto.nombre=='inversion'">
+
+                                            <div class="progress" style="height: 0.5rem;">
+                                                <div class="progress-bar" role="progressbar"
+                                                    [ngStyle]="{ 'width': widthBarServicio + '%', 'background-color': fase.color}"
+                                                    aria-valuenow="widthBarServicio" height=".5rem" aria-valuemin="0"
+                                                    aria-valuemax="100" *ngFor="let fase of fases">
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div [ngStyle]="{ 'width': widthBarServicio + '%', 'color': fase.color}"
+                                                    class="text-center" style="display: inline-block"
+                                                    *ngFor="let fase of fases">
+                                                    <p *ngIf='bandCostoVenta'
+                                                        class="text-blue font-weight-bold monto-servicios">
+                                                        {{ fase.costo | currency }}
+                                                    </p>
+
+                                                    <p *ngIf='bandCostoVenta === false'
+                                                        class="text-blue font-weight-bold monto-servicios">
+                                                        {{ fase.venta | currency }}
+                                                    </p>
+                                                    <div [ngStyle]="{'cursor': fase.costo > 0 ? 'pointer' : 'auto'}">
+                                                        <span
+                                                            [ngStyle]="{'pointer-events': fase.costo > 0 ? 'auto' : 'none'}"
+                                                            (click)='redirige(fase.nombre, fase.color)' class="datoBannerBlue"
+                                                            style="vertical-align: top;">{{ fase.nombre }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 margin-top-default"
+                                style="margin-bottom: 10px;">
+                                <div *ngFor="let objeto of modulo.camposClase">
+                                    <ngx-slick-carousel *ngIf="objeto.nombre=='especialidades'" class="slick-slider"
+                                        #slickModal="slick-carousel" [config]="carouselConfigEspecialidades">
+                                        <div ngxSlickItem *ngFor="let especialidad of especialidades">
+                                            <div class="text-center datoBanner content-item-especialidades">
+                                                <p style="padding-bottom: 10px">
+                                                    {{ especialidad.especialidad }}</p>
+                                                <img src="./assets/images/provedor-banner/{{especialidad.especialidad}}.svg"
+                                                    alt="{{especialidad.especialidad}}">
+                                                <p style="margin-top: 10px">
+                                                    {{ especialidad.total | currency }}</p>
+                                                <p style="padding-top: 5px" class="datoBannerBlue">
+                                                    {{ especialidad.eventos }} eventos
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ngx-slick-carousel>
+                                    <!-- <div *ngIf="objeto.nombre=='especialidades'">
+                                        <ngx-slick-carousel class="slick-slider " #slickModal="slick-carousel" [config]="carouselConfigEspecialidades">
+                                            <div *ngFor="let especialidad of especialidades">
+                                                <div class="text-center datoBanner content-item-especialidades">
+                                                    <p style="padding-bottom: 10px">
+                                                        {{ especialidad.especialidad }}</p>
+                                                    <img src="./assets/images/provedor-banner/{{especialidad.especialidad}}.svg" alt="{{especialidad.especialidad}}">
+                                                    <p style="margin-top: 10px">
+                                                        {{ especialidad.total | currency }}</p>
+                                                    <p style="padding-top: 5px" class="datoBannerBlue">
+                                                        {{ especialidad.eventos }} eventos
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ngx-slick-carousel>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class=" d-none d-lg-block card-body col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <app-line-chart [objeto]='IObjeto' [idClase]='idClase' [bandCostoVenta]='bandCostoVenta'>
+                        </app-line-chart>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="objeto">
+        <div class="margin-top-default col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div *ngFor="let objeto of modulo.camposClase">
+                <mat-card *ngIf="objeto.nombre=='GridOrdenesActuales'">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                <img *ngIf="objeto.nombre=='LogoCardOrdenes'" class='imagenIconoGris'
+                                    [src]="objeto.path">
+                                <span *ngIf="objeto.nombre=='LogoCardOrdenes'">&nbsp;&nbsp;&nbsp;</span>
+                            </div>
+                            <span>
+                                Lista de ordenes actuales
+                            </span>
+                        </div>
+                    </div>
+                    <hr class="hr-card-grid">
+                    <app-grid-component *ngIf="servicioActual" [datos]="servicioActual" [gridOptions]="gridOptions"
+                        [columns]="columns" [Checkbox]="Checkbox" [Editing]="Editing"
+                        (datosevent)='DatosMessage($event)' (messageEvent)="EventButtonDataGrid($event)"
+                        [toolbar]="toolbar" [Color]="Color">
+                    </app-grid-component>
+
+                </mat-card>
+            </div>
+
+            <div *ngFor="let objeto of modulo.camposClase">
+                <mat-card *ngIf="objeto.nombre=='GridHistoricoOrdenes'" class="margin-top-default">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                                    <img *ngIf="objeto.nombre=='LogoCardOrdenes'" class='imagenIconoGris'
+                                        [src]="objeto.path">
+                                    <span *ngIf="objeto.nombre=='LogoCardOrdenes'">&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                                <span>
+                                    Histórico de ordenes
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr-card-grid">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <app-grid-component *ngIf="historicoOrdenes" [datos]="historicoOrdenes"
+                            [gridOptions]="gridOptionsHistorico" [columns]="columns" [Checkbox]="Checkbox"
+                            [Editing]="Editing" (datosevent)='DatosMessageHistorico($event)'
+                            (messageEvent)="EventButtonDataGridHistorico($event)" [toolbar]="toolbarHistorico"
+                            [Color]="Color">
+                        </app-grid-component>
+                    </div>
+                </mat-card>
+            </div>
+
+        </div>
+    </div>
+</div>

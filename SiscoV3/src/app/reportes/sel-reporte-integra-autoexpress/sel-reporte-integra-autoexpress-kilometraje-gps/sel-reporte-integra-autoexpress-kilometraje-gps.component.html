@@ -1,0 +1,31 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+  
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" ></app-breadcrumbs>
+  
+  <div class="col-md-12" style="margin-top: -30px">
+    <button [routerLink]="['/sel-reporte-integra-autoexpress']" class="homebuttons" >Reporte</button>
+    <button  [routerLink]="['/sel-reporte-contrato']" class="homebuttons">Contrato</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 4]" class="homebuttons">Facturación</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 2]" class="homebuttons">Seguro</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 3]" class="homebuttons">Facturación GPS</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 1]" class="homebuttons">Pagos Banco</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 5]" class="homebuttons">Gasto 1</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 6]" class="homebuttons">Gasto 2</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 7]" class="homebuttons">Gasto 3</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 8]" class="homebuttons">Gasto 4</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 9]" class="homebuttons">Gasto 5</button>
+    <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 10]" class="homebuttons">Cobrado</button>
+    <button  routerLink="/sel-reporte-integra-autoexpress-kilometraje-gps" class="homebuttons" [ngClass]="'active'">Kilometraje</button>
+  </div>
+  <div>
+    <br>
+    <mat-card>
+      <app-grid-component  [datos]="kilometrajes" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel"
+          [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+          [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="EventButtonDataGrid($event)" (datosevent)='DatosMessage($event)'
+          [toolbar]="toolbar">
+      </app-grid-component>
+    </mat-card>
+  </div>
+</div>

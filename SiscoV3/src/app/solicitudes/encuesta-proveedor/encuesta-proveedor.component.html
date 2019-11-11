@@ -1,0 +1,41 @@
+<div *ngIf='encuest'>
+    <div *ngFor='let unidad of encuest.unidad'>
+        <div *ngFor='let pregunt of unidad.encuesta'>
+            <div *ngFor='let pregunta of pregunt.preguntas; let i = index' class="row rowEn"
+                [ngClass]="{'rowBottom':i + 1 === pregunt.preguntas.length}">
+                <div class="col-sm-12 col-md-6 col-xl-6 padd">
+                    {{pregunta.descripcion}}
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6 text-right">
+                    <div class="clasificacion"
+                        (change)='ver($event, idComprobanteRecepcion, pregunta.idPregunta, unidad.idObjeto, unidad.idTipoObjeto, pregunt.idTipoCalificacion)'>
+                        <input id="{{pregunta.idPregunta}}-5-{{idComprobanteRecepcion}}" type="radio"
+                            name="{{pregunta.idPregunta}}-{{idComprobanteRecepcion}}" value="5"
+                            [checked]='5 === pregunta.respuesta'>
+                        <label for="{{pregunta.idPregunta}}-5-{{idComprobanteRecepcion}}"></label>
+
+                        <input id="{{pregunta.idPregunta}}-4-{{idComprobanteRecepcion}}" type="radio"
+                            name="{{pregunta.idPregunta}}-{{idComprobanteRecepcion}}" value="4"
+                            [checked]='4 === pregunta.respuesta'>
+                        <label for="{{pregunta.idPregunta}}-4-{{idComprobanteRecepcion}}"></label>
+
+                        <input id="{{pregunta.idPregunta}}-3-{{idComprobanteRecepcion}}" type="radio"
+                            name="{{pregunta.idPregunta}}-{{idComprobanteRecepcion}}" value="3"
+                            [checked]='3 === pregunta.respuesta'>
+                        <label for="{{pregunta.idPregunta}}-3-{{idComprobanteRecepcion}}"></label>
+
+                        <input id="{{pregunta.idPregunta}}-2-{{idComprobanteRecepcion}}" type="radio"
+                            name="{{pregunta.idPregunta}}-{{idComprobanteRecepcion}}" value="2"
+                            [checked]='2 === pregunta.respuesta'>
+                        <label for="{{pregunta.idPregunta}}-2-{{idComprobanteRecepcion}}"></label>
+
+                        <input id="{{pregunta.idPregunta}}-1-{{idComprobanteRecepcion}}" type="radio"
+                            name="{{pregunta.idPregunta}}-{{idComprobanteRecepcion}}" value="1"
+                            [checked]='1 === pregunta.respuesta'>
+                        <label for="{{pregunta.idPregunta}}-1-{{idComprobanteRecepcion}}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+input[type="radio"] {
+  display: none;
+}
+
+label:before {
+  content: " \2606";
+  color: gray;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+.rowEn {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  border-color: #d5dbdf;
+  padding-top: 10px;
+  box-shadow: 0px 0px;
+}
+
+.rowBottom {
+  border-bottom: 1px solid;
+  border-color: #d5dbdf;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+//   label:hover,
+//   label:hover ~ label:before {
+//     color: #027bff;
+//     font-size: 30px;
+//     content: " \2605";
+//   }
+
+input[type="radio"]:checked ~ label:before {
+  color: #027bff;
+  font-size: 30px;
+  content: " \2605";
+}

@@ -1,0 +1,218 @@
+mat-card
+    border: 0px solid rgba(0, 0, 0, 0.125)
+    width: 100%
+    margin-bottom: 5px
+    padding: 15px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-wrap: wrap
+    flex-direction: row
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.19) !important
+
+.TareaColumna
+    display: inline-block
+
+.TareaColumnaBarra
+    display: inline-block
+    position: relative
+    width: 1%
+    height: 50px
+
+.columnaCategoria
+    width: 5%
+
+.columnaCheck
+    width: 5%
+
+.columnaUsuario
+    width: 10%
+
+.columnaCuerpo
+    width: 53%
+
+.columnaLink
+    width: 5%
+
+.columnaAdjunto
+    width: 5%
+
+.columnaRechaza
+    width: 5%
+
+.columnaTag
+    width: 10%
+
+.TareaColumnaDrawer
+    display: block
+
+.columnaCategoriaDrawer
+    width: 30%
+
+.columnaCheckDrawer
+    width: 30%
+
+.columnaUsuarioDrawer
+    width: 40%
+
+.columnaEspacioDrawer
+    width: 10%
+
+.columnaCuerpoDrawer
+    width: 90%
+
+.columnaLinkDrawer
+    width: 25%
+
+.columnaAdjuntoDrawer
+    width: 25%
+
+.columnaRechazaDrawer
+    width: 25%
+
+.columnaTagDrawer
+    width: 25%
+
+::ng-deep .mat-checkbox-layout
+    margin-bottom: 0 !important
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background
+    background-color: #3490d3 !important
+
+::ng-deep .mat-checkbox-frame
+    border-color: #edeae8 !important
+
+.imagenTarea
+    width: 50px
+    height: 50px
+    border-radius: 50%
+    vertical-align: middle
+    margin: 0 auto
+    margin-right: 5px
+
+.imagenIcono
+    width: 30px
+    height: 30px
+    vertical-align: middle
+    margin: 0 auto
+    margin-right: 0
+
+.barraCategoria
+    position: absolute
+    width: 4px
+    height: 50%
+    border-radius: 10
+    left: 10px
+    top: 25%
+    opacity: .6
+    transition: opacity .2s
+
+.barraSeparadorI
+    position: absolute
+    width: 1px
+    height: 80%
+    border-radius: 10
+    left: 1px
+    top: 10%
+    opacity: .6
+    transition: opacity .2s
+    background-color: #DFDFDF
+
+.barraSeparadorD
+    position: absolute
+    width: 1px
+    height: 80%
+    border-radius: 10
+    left: 1px
+    top: 10%
+    opacity: .6
+    transition: opacity .2s
+    background-color: #DFDFDF
+
+.check
+    // padding: 18px 0 0 0
+
+.checkDrawer
+    // padding: 42px 0 0 0
+
+.tag
+    // height: 50px
+    // padding: 18px 0 0 0
+
+.tagDrawer
+    // height: 70px
+    text-align: center
+    // padding: 40px 0 0 0
+
+.tarea-titulo
+    font-size: 0.8rem
+    font-weight: bold
+
+.tarea-descripcion
+    font-size: 0.8rem
+    color: #6c757d
+
+.tarea-fecha
+    font-size: 0.8rem
+    color: #adb5bd
+
+.tarea-fecha-vencida
+    font-size: 0.8rem !important
+    color: #ff0000 !important
+
+.overflow
+    overflow-y: auto
+
+
+.overflow::-webkit-scrollbar 
+    width: 4px
+    border: 1px solid #d5d5d5
+
+  
+.overflow::-webkit-scrollbar-track 
+    border-radius: 0
+    background: #eeeeee
+
+  
+.overflow::-webkit-scrollbar-thumb 
+    border-radius: 0
+    background: #b0b0b0
+
+.tag-badge
+    font-weight: bold
+    padding: 5px 5px
+    margin-left: 5px
+    margin-top: 5px
+    border-radius: 1rem
+    color: #fff
+    font-size: 75%
+    width: 67px
+    text-align: center
+
+.multi-tag
+    margin-top: 5px
+
+@media (max-width: 400px)
+    .TareaColumna
+        display: block
+
+    .columnaCategoria
+        width: 30%
+
+    .columnaCheck
+        width: 30%
+
+    .columnaUsuario
+        width: 40%
+
+    .columnaCuerpo
+        width: 100%
+
+    .columnaLink
+        width: 30%
+
+    .columnaAdjunto
+        width: 30%
+
+    .columnaTag
+        width: 40%

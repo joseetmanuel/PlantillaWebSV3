@@ -1,0 +1,224 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+    <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+    
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" ></app-breadcrumbs>
+    
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div *ngIf="!false">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 col-xl-3 sinPadd">
+                            <div class="card-shadow-primary card-border text-white mb-0 card altura230Us">
+                                <div class="dropdown-menu-header">
+                                    <div class="dropdown-menu-header-inner">
+                                        <div class="menu-header-content">
+                                            <div class="avatar-icon-wrapper mb-3 avatar-icon-xl">
+                                                <div class="avatar-icon"><img src="./assets/images/avatars/3.jpg" alt="Avatar 5"></div>
+                                                <!-- <app-viewer [IViewer]="IViewer"></app-viewer> -->
+                                            </div>
+                                            <div>
+                                                <h5 class="menu-header-title textoGris" >{{usuarioComision.nombreCompleto}}</h5>
+                                                <h6 class="menu-header-subtitle textoGris" >Gerente de ventas</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center d-block card-footer">
+                                </div>
+                                <div class="IconVendedor">
+                                        <img [src]="urlImagen" alt="">
+                                        <p [style.color]="'#29468E'">{{usuarioComision.nivel}}</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- Puntos -->
+
+                        <div class="col-sm-12 col-md-2 col-lg-2 sinPadd">
+                            <div class="widget-chart widget-chart2 text-left mb-0 card-btm-border card-shadow-danger border-danger card altrura230 bottom0">
+                                <div class="widget-chat-wrapper-outer altrura230">
+                                    <div class="widget-chart-content altrura230">
+                                        <div class="widget-chart widget-chart-hover dataRepCard altrura230">
+                                            <div class="icon-wrapper rounded-circle circulo">
+                                                <div class="icon-wrapper-bg bg-danger"></div>
+                                                <img src="./assets/images/iconos-panel/acumuladas.png" class="imgTop" alt="">
+                                            </div>
+                                            <div class="descCard">
+                                                <div class="widget-numbers text-danger montos">$2,679.50</div>
+                                                <div class="widget-subheading descMonto">Puntos</div>
+                                            </div>
+                                            <div class="widget-description text-primary">
+                                                <button mat-button class="btnCanPun">
+                                                    <img src="./assets/images/iconos-sisco/disponer_rojo.png" style="width: 20px;" alt="">
+                                                    <span class="text-danger">Canjear Puntos</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comisiones disponibles -->
+                        
+                        <div class="col-sm-12 col-md-2 col-lg-2 sinPadd">
+                            <div class="widget-chart widget-chart2 text-left mb-0 card-btm-border card-shadow-primary border-primary card altrura230 bottom0">
+                                <div class="widget-chat-wrapper-outer altrura230">
+                                    <div class="widget-chart-content altrura230">
+                                        <div class="widget-chart widget-chart-hover dataRepCard altrura230">
+                                            <div class="icon-wrapper rounded-circle circulo">
+                                                <div class="icon-wrapper-bg bg-primary"></div>
+                                                <img src="./assets/images/iconos-panel/disponibles.png" class="imgTop" alt="">
+                                            </div>
+                                            <div class="descCard">
+                                                <div class="widget-numbers montos textoAzul">{{ totales.totalComisionesDisponibles | currency }}</div>
+                                                <div class="widget-subheading descMonto">Comisiones disponibles</div>
+                                            </div>
+                                            <div class="widget-description text-primary">
+                                                <button mat-button class="btnDispEfe" [routerLink]="['/sel-comisiones-disponibles-externos', idUsuarioComision ]" >
+                                                    <img src="./assets/images/iconos-sisco/disponer_azul.png" alt="">
+                                                    <span>Disponer efectivo</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- comisiones cobradas -->
+
+                        <div class="col-sm-12 col-md-2 col-lg-2 sinPadd">
+                            <div class="widget-chart widget-chart2 text-left mb-0 card-btm-border card-shadow-success border-success card altrura230 bottom0">
+                                <div class="widget-chat-wrapper-outer altrura230">
+                                    <div class="widget-chart-content altrura230">
+                                        <div class="widget-chart widget-chart-hover dataRepCard altrura230">
+                                            <div class="icon-wrapper rounded-circle circulo">
+                                                <div class="icon-wrapper-bg bg-success"></div>
+                                                <img src="./assets/images/iconos-panel/cobradas.png" class="imgTop" alt="">
+                                            </div>
+                                            <div class="descCard">
+                                                <div class="widget-numbers text-success montos">{{ totales.totalComisionesCobradas | currency }}</div>
+                                                <div class="widget-subheading descMonto">Comisiones cobradas</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Canjear puntos -->
+
+                        <div class="col-sm-12 col-md-3 col-lg-3 sinPadd">
+                            <div class="widget-chart widget-chart2 text-left mb-0 card-btm-border card-shadow-warning border-warning card altrura230 bottom0">
+                                <div class="widget-chat-wrapper-outer">
+                                    <div class="widget-chart-content">
+                                        <div class="widget-chart widget-chart-hover altura115">
+                                            <div class="widget-numbers text-info montos">{{ totales.totalVentaAcumulada | currency }}</div>
+                                            <div class="widget-subheading text-info descMonto">Venta acumulada cobrada</div>
+                                        </div>
+                                        <div class="widget-chart widget-chart-hover altura115">
+                                            <div class="widget-numbers text-warning montos">{{ totales.totalComisiones | currency }}</div>
+                                            <div class="widget-subheading descMonto">Comisiones acumuladas</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- segunda sección -->
+                    <div class="row mt-3">
+                        <!-- Comisiones del mes -->
+                        <div class="col-sm-3 col-md-3 col-xl-3 sinPadd">
+                            <div class="mb-3 card">
+                                <div class="p-2 card-body">
+                                    
+                                    <ul class="listaMontos">
+                                        <li>
+                                            <strong>Comisiones posibles</strong>
+                                            <h3 class="widget-numbers textoAzul montoLeft"><strong>{{ comisionesPosibles.totalComisiones | currency }}</strong></h3>
+                                        </li>
+                                    </ul>         
+                                    <ul class="listaMontos">
+                                        <li *ngFor="let orden of comisionesPosibles.comisiones">
+                                            <label class="descMonto">{{ orden.nombre }}</label>
+                                            <label class="monto"><strong>{{ orden.venta | currency }}</strong></label>
+                                            <div class="widget-progress-wrapper w-100">
+                                                <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                    <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="43" aria-valuemin="0"
+                                                        aria-valuemax="100" [style.width]="orden.porcentaje + '%'"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Detalle de las comisiones -->
+                        <div class="col-sm-9 col-md-9 col-xl-9 sinPadd">
+                            <!-- <app-grid-component  [datos]="comisiones" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel"
+                                [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+                                [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="EventButtonDataGrid($event)" (datosevent)='DatosMessage($event)'
+                                [toolbar]="toolbar">
+                            </app-grid-component> -->
+                            <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+                                <ngb-panel *ngFor="let acordion of comisiones; let i = index;">
+                                    <ng-template ngbPanelTitle >
+                                        <span class="card-header--title textoNegro montos" (click)="ToggleAcordion(acordion, i)">
+                                            <i *ngIf="acordion.open" class="ion ion-md-arrow-dropup mr-3"></i>
+                                            <i *ngIf="!acordion.open" class="ion ion-md-arrow-dropdown mr-3"></i>
+                                            {{ acordion.titulo }}
+                                            <div class="d-inline-block ml-3">
+                                                <label class="mr-3 textoNegro">{{ acordion.label }}</label>
+                                                <label class="widget-numbers textoMorado montos d-inline-block"><strong>{{ acordion.value | currency }}</strong></label>
+                                            </div>
+                                        </span>
+                                    </ng-template>
+                                    <ng-template ngbPanelContent>
+                                        
+                                        <!-- tabla -->
+                                        <div class="table-responsive">
+                                            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">No. Orden</th>
+                                                        <th class="text-center">Zona</th>
+                                                        <th class="text-center">Servicio</th>
+                                                        <th class="text-center">Partidas</th>
+                                                        <th class="text-center">$ Total</th>
+                                                        <th class="text-center">% Utilidad</th>
+                                                        <th class="text-center">Comision</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let detalleComision of contenido.contenido.detalleComisiones">
+                                                        <td class="text-center text-muted">{{ detalleComision.numeroOrden }}</td>
+                                                        <td class="text-center text-muted">{{ detalleComision.zona }}</td>
+                                                        <td class="text-center text-muted">{{ detalleComision.servicio }}</td>
+                                                        <td class="text-center text-muted">{{ detalleComision.numPartidas }}</td>
+                                                        <td class="text-center text-muted">{{ detalleComision.venta | currency }}</td>
+                                                        <td class="text-center text-muted">{{ detalleComision.porcentajeUtilidad }}%</td>
+                                                        <td class="text-center">
+                                                            <div class="badge badge-pill pl-2 pr-2 badge-warning chip" >{{ detalleComision.comision | currency }}</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <p class="text-right p-3">
+                                                Comisión Total <strong class="ml-3 widget-numbers text-warning montos d-inline-block">{{ contenido.contenido.comisionTotal | currency }}</strong>
+                                            </p>
+                                        </div>
+                                    </ng-template>
+                                </ngb-panel>
+                            </ngb-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

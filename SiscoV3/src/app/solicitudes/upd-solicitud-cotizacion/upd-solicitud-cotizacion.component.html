@@ -1,0 +1,101 @@
+<mat-spinner *ngIf="spinner" class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<app-banner [IObjeto]="IObjeto" *ngIf="idClase == 'Automovil' && showAppBanner"></app-banner>
+<app-banner-generico [IObjeto]="IObjeto" *ngIf="idClase != 'Automovil' && showAppBanner"></app-banner-generico>
+<div class="row" *ngIf='!spinner'>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+    <!-- <div *ngFor="let objeto of modulo.camposClase">
+      <div *ngIf="objeto.nombre=='CampoTipoPrecios'"> -->
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnAmountType(group.value)" [value]="1">
+      <mat-button-toggle value="1" checked="true"> Costo
+      </mat-button-toggle>
+      <mat-button-toggle value="2"> Venta
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <!-- </div>
+  </div> -->
+</div>
+<br />
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+      <img *ngIf="objeto.nombre=='LogoGrid'" class='imagenIconoGris' [src]="objeto.path">
+      <span *ngIf="objeto.nombre=='LogoGrid'">&nbsp;&nbsp;&nbsp;</span>
+    </div>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+      <span *ngIf="objeto.nombre=='TituloGrid'">{{objeto.label}}</span>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <app-grid-component *ngIf='partidasSolicitudGrid.Columns' [Color]="partidasSolicitudGrid.Color"
+        [datos]="partidasGridDatos" [gridOptions]="partidasSolicitudGrid.GridOptions" [columnsdetail]="columnsdetail"
+        [Detail]="partidasSolicitudGrid.Detail" [columns]="partidasSolicitudGrid.Columns"
+        [Checkbox]="partidasSolicitudGrid.Checkbox" [CheckboxDetail]="partidasSolicitudGrid.Checkbox"
+        [Editing]="partidasSolicitudGrid.Editing" [Columnchooser]="partidasSolicitudGrid.Columnchooser"
+        [searchPanel]="partidasSolicitudGrid.SearchPanel" [scroll]="partidasSolicitudGrid.Scroll"
+        [toolbar]="partidasSolicitudGrid.ToolBox" [toolbardetail]="partidasSolicitudGrid.ToolbarDetail"
+        (datosevent)="datosMessage($event)" (datosdetailevent)="datosDetailMessage($event)"
+        (editevent)="editevent($event)" (messageEvent)="receiveMessage($event)">
+      </app-grid-component>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 prices-color" style="float: right !important;">
+        <div class="d-inline" style="font-size: 16px !important;">
+          <span>Subtotal :</span>
+        </div>
+        <div class="d-inline text-right" style="font-size: 16px !important; float: right !important;">
+          <span>$ {{sumaPrecios.subTotal}}</span>
+        </div>
+        <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+        <div class="d-inline" style="font-size: 14px !important;">
+          <span>IVA :</span>
+        </div>
+        <div class="d-inline text-right" style="font-size: 14px !important; float: right !important;">
+          <span>$ {{sumaPrecios.IVA}}</span>
+        </div>
+        <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+        <div class="d-inline" style="font-size: 20px !important;">
+          <span><b>Total :</b></span>
+        </div>
+        <div class="d-inline text-right" style="font-size: 20px !important; float: right !important;">
+          <span><b>$ {{sumaPrecios.Total}}</b></span>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <br>
+</mat-card>
+<div *ngIf="muestraPartidas">
+  <mat-card class="cardMarginBottom" *ngIf='!spinnerPartidas'>
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <img *ngIf="objeto.nombre=='LogoGrid'" class='imagenIconoGris' [src]="objeto.path">
+        <span *ngIf="objeto.nombre=='LogoGrid'">&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <span *ngIf="objeto.nombre=='TituloGrid'">{{objeto.label}}</span>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <app-grid-component *ngIf="partidasPorCotizacionData" [datos]="partidasPorCotizacionData"
+          [Color]="partidasGridConfiguration.Color" [gridOptions]="partidasGridConfiguration.GridOptions"
+          [columns]="partidasGridConfiguration.Columns" [exportExcel]="partidasGridConfiguration.ExportExcel"
+          [columnHiding]="partidasGridConfiguration.ColumnHiding" [Checkbox]="partidasGridConfiguration.Checkbox"
+          [Editing]="partidasGridConfiguration.Editing" [Columnchooser]="partidasGridConfiguration.Columnchooser"
+          [toolbar]="partidasGridConfiguration.ToolBox" [searchPanel]="partidasGridConfiguration.SearchPanel"
+          [scroll]="partidasGridConfiguration.Scroll" (messageEvent)="receiveMessage($event)"
+          (datosevent)='datosMessage($event)'>
+        </app-grid-component>
+      </div>
+    </div>
+  </mat-card>
+</div>

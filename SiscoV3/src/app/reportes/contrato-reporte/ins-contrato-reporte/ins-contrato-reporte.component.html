@@ -1,0 +1,86 @@
+<div [ngClass]="{'desactivaPantalla': spinner }">
+    <mat-spinner *ngIf="spinner" class="spinner"></mat-spinner>
+
+    <div [formGroup]="contratoForm">
+        <mat-card>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+
+                        <img class='imagenIconoGris' [src]="">
+                        <span>&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div style="display: inline;">
+                        <span>Agregar contrato</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput formControlName="contrato" placeholder="Nombre del contrato *">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker" placeholder="Fecha inicio *"
+                            formControlName="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker2" placeholder="Fecha firma *"
+                            formControlName="fechaFirma">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker2></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Parque vehicular *" formControlName="parqueVehicular">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Sustituto" formControlName='sustituto'>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='AgregarContrato()' [disabled]="!contratoForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

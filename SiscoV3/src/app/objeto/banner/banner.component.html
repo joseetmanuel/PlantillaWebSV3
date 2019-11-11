@@ -1,0 +1,719 @@
+<mat-card class="cardMargin" *ngIf="objeto && IViewer !== undefined">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <img class='imagen' src="../../assets/images/iconos-sisco/sh_generales.png"> &nbsp;&nbsp;&nbsp;
+                <span>Datos de automóvil</span>
+                <a routerLink="/sel-ficha-tecnica/{{IObjeto[0].idObjeto}}/{{objeto.idTipoObjeto[0]}}/{{IObjeto[0].rfcEmpresa}}/{{IObjeto[0].idCliente}}/{{IObjeto[0].numeroContrato}}"
+                    routerLinkActive="router-link-active">
+                    <img style="width: 40px;float: right;" src="./assets/images/objeto-banner/accion.svg">
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row  HeadFull">
+        <div class="col-12 col-sm-12 col-md-12"
+            [ngClass]="{'col-lg-4 col-xl-5': tipo == 1, 'col-lg-3 col-xl-3': tipo == 2}">
+            <div class="row no-gutters" style="width:100%; margin: 0; align-items: center; height: 100%;">
+                <div class="col-12 col-sm-6 ImagenCarro"
+                    [ngClass]="{'col-md-3 col-lg-5 col-xl-5': tipo == 1, 'col-md-6 col-lg-7 col-xl-6 sinPadd': tipo == 2}">
+                    <div class="car-color">
+                        <span class="color-dot-desktop" [style.background]="objeto.Color"></span>
+                    </div>
+                    <app-viewer ngDefaultControl [IViewer]="IViewer"></app-viewer>
+                </div>
+                <div class="col-12 col-sm-6 "
+                    [ngClass]="{'col-md-9 col-lg-7 col-xl-7': tipo == 1, 'col-md-6 col-lg-5 col-xl-6 sinPadd': tipo == 2}">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="SubtituloBannerRojo">{{objeto.Marca}} {{objeto.Submarca}}</p>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 100%; align-items:center">
+                        <div class="col-lg-12 col-xl-3" style="text-align: center"
+                            [ngClass]="{'col-4 col-sm-4 col-md-1': tipo == 1, 'col-3 col-sm-2 col-md-2': tipo == 2}">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/modelo.png">
+                        </div>
+                        <div class="col-lg-12 col-xl-9"
+                            [ngClass]="{'col-8 col-sm-8 col-md-5': tipo == 1, 'col-9 col-sm-10 col-md-10': tipo == 2}">
+                            <p class="datoBannerImportant">Modelo {{objeto.Modelo}}</p>
+                        </div>
+                        <div class="col-lg-12 col-xl-3" style="text-align: center"
+                            [ngClass]="{'col-4 col-sm-4 col-md-1': tipo == 1, 'col-3 col-sm-2 col-md-2': tipo == 2}">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/cilindro.png">
+                        </div>
+                        <div class="col-lg-12 col-xl-9"
+                            [ngClass]="{'col-8 col-sm-8 col-md-5': tipo == 1, 'col-9 col-sm-10 col-md-10': tipo == 2}">
+                            <p class="datoBannerImportant">{{objeto.Cilindros}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row" style="height: 100%; align-items:center">
+                        <div class="col-lg-12 col-xl-3" style="text-align: center"
+                            [ngClass]="{'col-4 col-sm-4 col-md-1': tipo == 1, 'col-3 col-sm-2 col-md-2': tipo == 2}">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/vin.png">
+                        </div>
+                        <div class="col-lg-12 col-xl-9"
+                            [ngClass]="{'col-8 col-sm-8 col-md-5': tipo == 1, 'col-9 col-sm-10 col-md-10': tipo == 2}">
+                            <p class="datoBannerImportant">{{objeto.VIN}}</p>
+                        </div>
+                        <div class="col-lg-12 col-xl-3" style="text-align: center"
+                            [ngClass]="{'col-4 col-sm-4 col-md-1': tipo == 1, 'col-3 col-sm-2 col-md-2': tipo == 2}">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/gasolina.png">
+                        </div>
+                        <div class="col-lg-12 col-xl-9"
+                            [ngClass]="{'col-8 col-sm-8 col-md-5': tipo == 1, 'col-9 col-sm-10 col-md-10': tipo == 2}">
+                            <p class="datoBannerImportant">{{objeto.Combustible}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-7" *ngIf="tipo == 1">
+            <div class="row" style="height: 100%; align-items: center">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 vertical">
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.placaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.Placa == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.Placa !== null ? '../../assets/images/objeto-banner/placa.png' : '../../assets/images/objeto-banner/placa_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Placas
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.Placas}}
+                            </p>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusPlaca === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusPlaca === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.Placa == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.tarjetaCirculacionIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.tarjetaCirculacionVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.tarjetaCirculacionVigencia !== null ? '../../assets/images/objeto-banner/circulacion.png' : '../../assets/images/objeto-banner/circulacion_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Tarjeta de Circulación
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusTarjetaCirculacion === Vencida ? Actualizar : Renovable}}
+                                {{objeto.tarjetaCirculacionVigencia | date: 'dd/MM/yyyy' }}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusTarjetaCirculacion === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusTarjetaCirculacion === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.tarjetaCirculacionVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 vertical">
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.tenenciaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.tenenciaVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.tenenciaVigencia !== null ? '../../assets/images/objeto-banner/tenencia.png' : '../../assets/images/objeto-banner/tenencia_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Tenencia
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusTenencia === Vencida ? Actualizar : Renovable}}
+                                {{objeto.tenenciaVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusTenencia === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusTenencia === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.tenenciaVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.seguroIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.seguroVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.seguroVigencia !== null ? '../../assets/images/objeto-banner/seguro.png' : '../../assets/images/objeto-banner/seguro_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Póliza de seguro
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusSeguro === Vencida ? Actualizar : Renovable}}
+                                {{objeto.seguroVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusSeguro === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusSeguro === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.seguroVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 vertical">
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.verificacionIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.verificacionVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.verificacionVigencia !== null ? '../../assets/images/objeto-banner/verificacion.png' : '../../assets/images/objeto-banner/verificacion_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Verificación
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusVerificacion === Vencida ? Actualizar : Renovable}}
+                                {{objeto.verificacionVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusVerificacion === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusVerificacion === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.verificacionVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.multaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.multaIdFile < 1}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.multaIdFile > 0  ? '../../assets/images/objeto-banner/multa.png' : '../../assets/images/objeto-banner/multa_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-5 col-xl-4" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Multas
+                            </p>
+                            <p class="datoBanner">
+
+                            </p>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-4 col-xl-6" style="height: 45px">
+                            <p class="datoBannerRojo">
+                                {{objeto.multaAdeudo}}
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.multaIdFile < 1">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12col-sm-12 col-md-12 col-lg-5 col-xl-4 sinPadd" *ngIf="tipo == 2">
+            <div class="row no-gutters" style="height: 100%; align-items: center">
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 vertical">
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.placaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.Placa == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.Placa !== null ? '../../assets/images/objeto-banner/placa.png' : '../../assets/images/objeto-banner/placa_gris.png' ">
+                            </a>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Placas
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.Placas}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusPlaca === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusPlaca === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.Placa == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.tarjetaCirculacionIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.tarjetaCirculacionVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.tarjetaCirculacionVigencia !== null ? '../../assets/images/objeto-banner/circulacion.png' : '../../assets/images/objeto-banner/circulacion_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Tarjeta de circulación
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusTarjetaCirculacion === Vencida ? Actualizar : Renovable}}
+                                {{objeto.tarjetaCirculacionVigencia  | date: 'dd/MM/yyyy'}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusTarjetaCirculacion === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusTarjetaCirculacion === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.tarjetaCirculacionVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.tenenciaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.tenenciaVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.tenenciaVigencia !== null ? '../../assets/images/objeto-banner/tenencia.png' : '../../assets/images/objeto-banner/tenencia_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Tenencia
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusTenencia === Vencida ? Actualizar : Renovable}}
+                                {{objeto.tenenciaVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusTenencia === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusTenencia === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.tenenciaVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 vertical">
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.seguroIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.seguroVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.seguroVigencia !== null ? '../../assets/images/objeto-banner/seguro.png' : '../../assets/images/objeto-banner/seguro_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Póliza de seguro
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusSeguro === Vencida ? Actualizar : Renovable}}
+                                {{objeto.seguroVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusSeguro === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusSeguro === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.seguroVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.verificacionIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.verificacionVigencia == null}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.verificacionVigencia !== null ? '../../assets/images/objeto-banner/verificacion.png' : '../../assets/images/objeto-banner/verificacion_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-5 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Verificación
+                            </p>
+                            <p class="datoBanner">
+                                {{objeto.estatusVerificacion === Vencida ? Actualizar : Renovable}}
+                                {{objeto.verificacionVigencia}}
+                            </p>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-4 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="datoBannerBlue" *ngIf="objeto.estatusVerificacion === 'Vigente'">
+                                Vigente
+                            </p>
+                            <p class="datoBannerRojo" *ngIf="objeto.estatusVerificacion === 'Vencida'">
+                                Vencida
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.verificacionVigencia == null">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-4 col-sm-4 col-md-2 col-lg-3 col-xl-2 sinPadd" style="height: 45px">
+                            <a data-lightbox="avatar" [href]="objeto.multaIdFileUrl"
+                                [ngClass]="{'img-disabled': objeto.multaIdFile < 1}">
+                                <img class='imagenBanner'
+                                    [src]="objeto.multaIdFile > 0 ? '../../assets/images/objeto-banner/multa.png' : '../../assets/images/objeto-banner/multa_gris.png' ">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-4 col-lg-5 col-xl-4 sinPadd" style="height: 45px">
+                            <p class="SubtituloBanner">
+                                Multas
+                            </p>
+                            <p class="datoBanner">
+
+                            </p>
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-6 col-lg-4 col-xl-6 sinPadd" style="height: 45px">
+                            <p class="datoBannerRojo">
+                                {{objeto.multaAdeudo}}
+                            </p>
+                            <p class="datoBanner" *ngIf="objeto.multaIdFile < 1">
+                                    No existe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-5" *ngIf="tipo == 2">
+            <div class="row " style="height: 100%; align-items: center">
+                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 vertical">
+                    <div class="row">
+                        <div class="row row-gutter">
+                            <div class="col-12 col-sm-12 text-center margin-top-default">
+                                <div class="Kilometraje" style="width: 45%; margin: auto;">
+                                    <div class="SubCaja" *ngIf="objeto.attributes">
+                                        {{ (objeto.attributes.totalDistance) / 1000 | number : '1.0-0' }}
+                                        KM
+                                    </div>
+                                    <div class="SubCaja" *ngIf="!objeto.attributes">
+                                        0
+                                        KM
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 margin-top-default border-right-line">
+                                <div>
+                                    <p class="textoAzul Kilometraje-datos">
+                                        {{ indicadores.distance / 1000 | number : '1.2-2' }}</p>
+                                    <p style="font-size: 10px; text-align: center;color: #355DC5;">km
+                                        promedio x mes</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 margin-top-default border-right-line">
+                                <div>
+                                    <p class="textoAzul Kilometraje-datos">
+                                        {{ diasUso | number }} </p>
+                                    <p style="font-size: 10px; text-align: center;color: #355DC5;">
+                                        días promedio de uso x mes
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 margin-top-default border-right-line">
+                                <div>
+                                    <p class="textoAzul Kilometraje-datos">
+                                        {{ obtieneDiasDesde() | number }}
+                                    </p>
+                                    <p style="font-size: 10px; text-align: center;color: #355DC5;"> día(s)
+                                        desde el último
+                                        recorrido</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 margin-top-default border-right-line">
+                                <div>
+                                    <p class="textoAzul Kilometraje-datos" *ngIf="objeto.attributes">
+                                        {{ (objeto.attributes.hours / 1000) / 3600 | number : '1.2-2' }}
+                                    </p>
+                                    <p style="font-size: 10px; text-align: center;color: #355DC5;">
+                                        Horas motor
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 vertical overflow">
+                    <div class="row no-gutters">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <hr>
+                            <div class="row row-gutter">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="text-align: center">
+                                    <img class='imagenBannerSm' src="../../assets/images/objeto-banner/tanque.png">
+                                </div>
+                                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                    style="padding: 15px 0px 0px 0px;">
+                                    <div class="especs" *ngIf="objeto.attributes">
+                                        <div>
+                                            <span class="espec-label">Satelites</span>
+                                            <span class="espec-text">{{ objeto.attributes.sat }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Consumo</span> <span
+                                                class="espec-text">{{ objeto.attributes.fuelConsumption }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Ignición</span> <span
+                                                class="espec-text">{{ objeto.attributes.ignition }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Movimiento</span> <span
+                                                class="espec-text">{{ objeto.attributes.motion }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="especs" *ngIf="!objeto.attributes">
+                                        <div>
+                                            <span class="espec-label">Satelites</span>
+                                            <span class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Consumo</span> <span
+                                                class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Ignición</span> <span
+                                                class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Movimiento</span> <span
+                                                class="espec-text">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row row-gutter">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="text-align: center">
+                                    <img class='imagenBannerSm' src="../../assets/images/objeto-banner/voltaje.png">
+                                </div>
+                                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                    style="padding: 15px 0px 0px 0px;" *ngIf="objeto.attributes">
+                                    <div class="especs">
+                                        <div> <span class="espec-label">Protocolo</span> <span
+                                                class="espec-text">{{ objeto.protocol }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Altitud</span> <span
+                                                class="espec-text">{{ objeto.altitude }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Velocidad</span> <span
+                                                class="espec-text">{{ objeto.speed }}</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Curso</span> <span
+                                                class="espec-text">{{ objeto.course }}</span> </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+                                    style="padding: 15px 0px 0px 0px;" *ngIf="!objeto.attributes">
+                                    <div class="especs">
+                                        <div> <span class="espec-label">Protocolo</span> <span
+                                                class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Altitud</span> <span
+                                                class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Velocidad</span> <span
+                                                class="espec-text">--</span>
+                                            <hr>
+                                        </div>
+                                        <div> <span class="espec-label">Curso</span> <span class="espec-text">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 vertical">
+                    <div class="row " style="height: 100%; align-items: center">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?center={{latitud}},{{longitud}}&zoom=18&size=400x400&&scale=2&markers={{latitud}},{{longitud}}&style=feature:all|element:geometry|color:0x005383&style=feature:all|element:labels.text.fill|gamma:0.01|lightness:20&style=feature:all|element:labels.text.stroke|saturation:-31|lightness:-33|weight:2|gamma:0.8|color:0x757575|visibility:simplified&style=feature:all|element:labels.icon|visibility:off&style=feature:landscape|element:geometry|lightness:30|saturation:30&style=feature:poi|element:geometry|saturation:20&style=feature:poi.park|element:geometry|lightness:20|saturation:-20&style=feature:road|element:geometry|lightness:10|saturation:-30&style=feature:road|element:geometry.stroke|saturation:25|lightness:25&style=feature:water|element:all|lightness:-20&key=AIzaSyDiCxjgTFOg0BLrRfoz4ka1fiB8jJU2VzA"
+                                style="width: 100%;">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-bottom: 5px">
+                            <div class="row">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-12 col-xl-4" style="text-align: center">
+                                    <img class='imagenBanner' src="../../assets/images/objeto-banner/ubucacion.png">
+                                </div>
+                                <div class="col-8 col-sm-8 col-md-8 col-lg-12 col-xl-8 ubicacion"
+                                    style="text-align: center"> Ubicación </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Headresp" *ngIf="objeto && IViewer !== undefined">
+        <div class="col-12 col-sm-12">
+            <div class="row" style="align-items: center">
+                <div class="col-5 col-sm-5">
+                    <app-viewer ngDefaultControl [IViewer]="IViewer"></app-viewer>
+                    <div class="car-color">
+                        <span class="color-dot" [style.background]="objeto.Color"></span>
+                    </div>
+                </div>
+                <div class="col-7 col-sm-7">
+                    <div class="row">
+                        <p class="col-12 col-sm-12 SubtituloBannerRojo">{{objeto.Marca}} {{objeto.Submarca}}</p>
+                        <p class="col-12 col-sm-12" style="font-size: 13px">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/modelo.png">
+                            Modelo {{objeto.Modelo}}
+                        </p>
+                        <p class="col-12 col-sm-12" style="font-size: 13px">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/cilindro.png">
+                            {{objeto.Cilindros}}
+                        </p>
+                        <p class="col-12 col-sm-12" style="font-size: 13px">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/vin.png">
+                            {{objeto.VIN}}
+                        </p>
+                        <p class="col-12 col-sm-12" style="font-size: 13px">
+                            <img class='imagenBannerSm' src="../../assets/images/objeto-banner/gasolina.png">
+                            {{objeto.Combustible}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr *ngIf="tipo == 2">
+        <div class="col-12 col-sm-12" *ngIf="tipo == 2">
+            <div class="row">
+                <div class="col-4 col-sm-4" style="text-align: center">
+                    <img class='imagenBanner' src="../../assets/images/objeto-banner/ubucacion.png">
+                </div>
+                <div class="col-8 col-sm-8">
+                    <div class="Kilometraje">
+                        <div class="SubCaja">
+                            {{objeto.Kilometraje}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="col-12 col-sm-12">
+            <div class="row">
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.placaIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.Placa == null}">
+                        <img class='imagenBanner'
+                            [src]="objeto.Placa !== null ? '../../assets/images/objeto-banner/placa.png' : '../../assets/images/objeto-banner/placa_gris.png' ">
+                    </a>
+                </div>
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.tarjetaCirculacionIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.tarjetaCirculacionVigencia == null}">
+                        <img class='imagenBanner'
+                            [src]="objeto.tarjetaCirculacionVigencia !== null ? '../../assets/images/objeto-banner/circulacion.png' : '../../assets/images/objeto-banner/circulacion_gris.png' ">
+                    </a>
+                </div>
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.tenenciaIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.tenenciaVigencia == null}">
+                        <img class='imagenBanner'
+                            [src]="objeto.tenenciaVigencia !== null ? '../../assets/images/objeto-banner/tenencia.png' : '../../assets/images/objeto-banner/tenencia_gris.png' ">
+                    </a>
+                </div>
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.seguroIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.seguroVigencia == null}">
+                        <img class='imagenBanner'
+                            [src]="objeto.seguroVigencia !== null ? '../../assets/images/objeto-banner/seguro.png' : '../../assets/images/objeto-banner/seguro_gris.png' ">
+                    </a>
+                </div>
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.verificacionIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.verificacionVigencia == null}">
+                        <img class='imagenBanner'
+                            [src]="objeto.verificacionVigencia !== null ? '../../assets/images/objeto-banner/verificacion.png' : '../../assets/images/objeto-banner/verificacion_gris.png' ">
+                    </a>
+                </div>
+                <div class="col-2 col-sm-2">
+                    <a data-lightbox="avatar" [href]="objeto.multaIdFileUrl"
+                        [ngClass]="{'img-disabled': objeto.multaIdFile < 1}">
+                        <img class='imagenBanner'
+                            [src]="objeto.multaIdFile > 0  ? '../../assets/images/objeto-banner/multa.png' : '../../assets/images/objeto-banner/multa_gris.png' ">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</mat-card>
+<br />

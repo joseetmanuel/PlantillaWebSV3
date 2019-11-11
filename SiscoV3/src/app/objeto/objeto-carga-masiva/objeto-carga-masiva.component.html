@@ -1,0 +1,43 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <img class='imagenIconoGris'
+                src="./assets/images/iconos-sisco/Objetos/card-objeto-caga-masiva-card-automovil.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Carga masiva</span>
+        </div>
+    </div>
+    <hr>
+    <div *ngIf="columnas.length > 0">
+        <carga-masiva [columnas]="columnas" [sp]="sp" [urlApi]="urlApi" [parametrosSP]="parametrosSP"
+            [idClase]="idClase" (response)="response($event)" (reponse)="responseFileUpload($event)"
+            [acciones]="acciones">
+        </carga-masiva>
+    </div>
+</mat-card>
+<mat-card *ngIf="valid" class="cardMarginBottom">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris' src="./assets/images/iconos-sisco/lapizIcon.png">
+                &nbsp;&nbsp;&nbsp;
+                <span>Resultado de carga masiva</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <app-grid-component [datos]="datos" [gridOptions]="gridOptions" [columns]="cargaMasivaColumns"
+        [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+        [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+        (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+    <br>
+    <div class="clearfix">
+        <button type="button" (click)="Guardar()" id="next-btn"
+            class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">
+            Guardar
+        </button>
+    </div>
+</mat-card>

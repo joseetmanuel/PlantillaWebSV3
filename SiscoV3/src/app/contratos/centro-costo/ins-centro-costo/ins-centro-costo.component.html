@@ -1,0 +1,50 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+  <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+  <!-- <app-breadcrumbs urlImagen='./assets/images/iconos-sisco/clientes.png' [ruta]='ruta'></app-breadcrumbs> -->
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+  <mat-card class="cardMarginBottom" [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/costos.png">
+        &nbsp;&nbsp;&nbsp;
+        <span>Datos centro costo</span>
+      </div>
+    </div>
+    <hr>
+    <div [formGroup]="centroCostoForm">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-xl-6">
+          <mat-form-field class="inputFullWide">
+            <input matInput placeholder="Nombre *" maxlength='500' formControlName="nombre">
+            <mat-error>
+              El campo es
+              <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6">
+          <mat-form-field class="inputFullWide">
+            <input matInput placeholder="Presupuesto *" formControlName="presupuesto">
+            <mat-error>
+              El campo es
+              <strong>requerido</strong> (solo números)
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+ 
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+          <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+            (click)='insCentroCosto()' [disabled]="!centroCostoForm.valid"><i class="pe-7s-diskette btn-icon-wrapper">
+            </i>
+            Agregar
+          </button>
+        </div>
+      </div>
+      <div *ngIf='!centroCostoForm.valid'>
+        <p class="tagAviso">Los campos con * son obligatorios</p>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,36 @@
+<div [ngClass]="{'desactivaPantalla': spinner }">
+        <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+        <div class="col-md-12" style="margin-top: -30px">
+            <button [routerLink]="['/sel-reporte-integra-autoexpress']" class="homebuttons">Reporte</button>
+            <button class="homebuttons" [ngClass]="'active'">Contrato</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 4]" class="homebuttons">Facturación</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 2]" class="homebuttons">Seguro</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 3]" class="homebuttons">Facturación GPS</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 1]" class="homebuttons">Pagos Banco</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 5]" class="homebuttons">Gasto 1</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 6]" class="homebuttons">Gasto 2</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 7]" class="homebuttons">Gasto 3</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 8]" class="homebuttons">Gasto 4</button>
+            <button [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 9]" class="homebuttons">Gasto 5</button>
+            <button  [routerLink]="['/sel-reporte-integra-autoexpress-gasto', 10]" class="homebuttons">Cobrado</button>
+            <!-- <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                  <button *ngIf="objeto.nombre == 'Kilometraje'" routerLink="/sel-reporte-integra-autoexpress-kilometraje-gps" class="homebuttons">Kilometraje</button>
+                </div> -->
+        </div>
+        
+        <mat-card class="cardMarginBottom" style="margin-top: 20px;">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <app-grid-component *ngIf='gridConfiguration.Columns' [Color]="gridConfiguration.Color" [datos]="dataGrid"
+                        [gridOptions]="gridConfiguration.GridOptions" [columns]="gridConfiguration.Columns"
+                        [Checkbox]="gridConfiguration.Checkbox" [Editing]="gridConfiguration.Editing"
+                        [Columnchooser]="gridConfiguration.Columnchooser" [searchPanel]="gridConfiguration.SearchPanel"
+                        [scroll]="gridConfiguration.Scroll" [toolbar]="gridConfiguration.ToolBox"
+                        (datosevent)="datosMessage($event)"
+                        (editevent)="updateContrato($event)"
+                        (messageEvent)="receiveMessage($event)">
+                    </app-grid-component>
+                </div>
+            </div>
+        </mat-card>
+</div>

@@ -1,0 +1,49 @@
+<div class="app-inner-layout">
+    <app-search-box class="inputSearch" placeholder="Buscar solicitud" [(busquedaValor)]="solicitudBuscada">
+    </app-search-box>
+    <br>
+    <div class="scroll-area">
+        <div class="scrollbar-container">
+            <perfect-scrollbar ng-reflect-auto-propagation="true" class="ps-show-limits">
+                <div style="position: static;" class="ps ps--active-y" ng-reflect-disabled="false">
+                    <div class="ps-content">
+                        <mat-action-list>
+                            <button mat-list-item (click)="abrirChatSeleccionado(tokenSolicitud)" *ngFor="let tokenSolicitud of tokenSolicitudList | filterChat : solicitudBuscada ">
+                                <div class="avatar-icon-wrapper mr-1">
+                                    <div class="avatar-icon avatar-icon-lg rounded-circle">
+                                        <img [src]="tokenSolicitud.urlAvatar" alt="Contrato">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="row">
+                                        <div class="col-12- col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                            style="font-size: smaller">
+                                            {{tokenSolicitud.nombreUsuario}}
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                                            style="font-size: smaller">
+                                            <div class="row">
+                                                <div class="col-4 col-sm-4 col-md-6 col-lg-6 col-xl-6">
+                                                    {{tokenSolicitud.numeroOrden}}
+                                                </div>
+                                                <div class="col-8 col-sm-8 col-md-6 col-lg-6 col-xl-6">
+                                                    {{tokenSolicitud.fechaUltimaEscritura}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </mat-action-list>
+                    </div>
+                    <div class="ps__rail-x" style="left: 0px; bottom: -503px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                    </div>
+                    <div class="ps__rail-y" style="top: 503px; height: 1000px; right: 0px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 223px; height: 177px;"></div>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+    </div>
+</div>

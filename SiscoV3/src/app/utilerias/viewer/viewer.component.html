@@ -1,0 +1,230 @@
+<div *ngIf="iviewer[0].tipo == 0">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex  justify-content-center">
+                <a [href]="documento.path" data-lightbox="avatar">
+                    <img [src]="documento.path" placement="right" ngbPopover="{{documento.titulo}}" container="body" triggers="mouseenter:mouseleave" [class]="iviewer[0].size" [src]="documento.path">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="iviewer[0].tipo == 1">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex  justify-content-center">
+                <a [href]="documento.path" data-lightbox="imagen">
+                    <img placement="right" ngbPopover="{{documento.titulo}}" container="body" triggers="mouseenter:mouseleave" class="foto-imagen" [src]="documento.path">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="iviewer[0].tipo == 2">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="documento" (click)="OpenDoc(documento.path, iviewer.descarga)">
+                    <pdf-viewer placement="right" ngbPopover="{{documento.titulo}}" container="body" triggers="mouseenter:mouseleave" [src]="documento.path" [original-size]="false" [render-text]="false" [show-all]="false" style="display:block;">
+                    </pdf-viewer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="iviewer[0].tipo == 3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let carrusel of documentos">
+                        <img class="carrusel-img" [src]="carrusel.path">
+                    </ng-template>
+                </ngb-carousel>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="iviewer[0].tipo == 4">
+    <nav *ngIf="desactivador != true" class="navbar navbar-expand-lg navbar-light ">
+        <div class="totalcolor">
+            <div class="informer">
+                <h2 class="totalcount">{{total}}</h2>
+                <span class="name">Items</span>
+            </div>
+        </div>
+        <div class="countcolor oculto " name="ocultar">
+            <div class="informer">
+                <h2 class="countcount">{{contador}}</h2>
+                <span class="countname">Seleccionados</span>
+            </div>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button type="button" class="btn btn-light boton" [ngClass]="{ 'desactivador': desactivaragregar === true }" (click)="onclick('add')">Agregar</button>
+                <button type="button" class="btn btn-light boton oculto" name="ocultar" (click)="onclick('delete')">Eliminar</button>
+                <button type="button" class="btn btn-light boton oculto" name="ocultar" id="descargaimagen" (click)="downloadimage()">Descargar</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex" [ngClass]="{'justify-content-center flex-wrap' : desactivador != true, 'overflow' : desactivador === true}">
+                    <div *ngFor="let gridimagenes of doc">
+                        <!-- Checkbox -->
+                        <label *ngIf="desactivador != true" class="mycheckbox">
+                            <input type="checkbox" [(ngModel)]="gridimagenes.checked" (ngModelChange)="changed()">
+                            <span class="checkmark"></span>
+                        </label>
+                        <!-- Visualizador pdf -->
+                        <pdf-viewer *ngIf='desactivador != true && gridimagenes.extencion == "pdf" || gridimagenes.extencion == "PDF"' placement="right" [src]="gridimagenes.path" [original-size]="false" [render-text]="false" [show-all]="false" style="display:block; width: 150px; height: 205px; cursor: pointer; margin-right: 5px;"
+                            (click)="open(Gridlightbox)" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </pdf-viewer>
+                        <pdf-viewer *ngIf='desactivador === true && gridimagenes.extencion == "pdf" || gridimagenes.extencion == "PDF"' placement="right" [src]="gridimagenes.path" [original-size]="false" [render-text]="false" [show-all]="false" style="display: inline-block;width: 100px;height: 124px;cursor: pointer;overflow:hidden;margin-right: 5px;border: 1px solid gray;"
+                            (click)="open(Gridlightbox)" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </pdf-viewer>
+                        <div *ngIf='gridimagenes.extencion == "pdf"' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/pdf.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <ng-template #Gridlightbox let-c="close" let-d="dismiss">
+                            <div>
+                                <button type="button" class="close linea" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <pdf-viewer class="pdf" [src]="gridimagenes.path" [original-size]="false" [autoresize]="true">
+                                </pdf-viewer>
+                            </div>
+                        </ng-template>
+                        <!-- Visualizador imagenes -->
+                        <div *ngIf='gridimagenes.bloqueo !== true'>
+                            <a *ngIf='gridimagenes.extencion == "jpg" || gridimagenes.extencion == "jpeg" || gridimagenes.extencion == "png" || gridimagenes.extencion == "JPG" || gridimagenes.extencion == "JPEG" || gridimagenes.extencion == "PNG" ' [href]="gridimagenes.path" data-lightbox="gridimagen">
+                                <img *ngIf='gridimagenes.extencion == "jpg" || gridimagenes.extencion == "jpeg" || gridimagenes.extencion == "png" || gridimagenes.extencion == "JPG" || gridimagenes.extencion == "JPEG" || gridimagenes.extencion == "PNG" ' [ngClass]="desactivador ? 'grid-true' : 'grid'"
+                                    [src]="gridimagenes.path" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                            </a>
+                        </div>
+                        <div *ngIf='gridimagenes.bloqueo == true'>
+                            <img *ngIf='gridimagenes.extencion == "jpg" || gridimagenes.extencion == "jpeg" || gridimagenes.extencion == "png" || gridimagenes.extencion == "JPG" || gridimagenes.extencion == "JPEG" || gridimagenes.extencion == "PNG" ' [ngClass]="desactivador ? 'grid-true' : 'grid'"
+                                [src]="gridimagenes.path" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </div>
+                        <div *ngIf='gridimagenes.extencion == "jpg" || gridimagenes.extencion == "jpeg" || gridimagenes.extencion == "png" || gridimagenes.extencion == "JPG" || gridimagenes.extencion == "JPEG" || gridimagenes.extencion == "PNG" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px;" src="../../../assets/images/iconos-utilerias/imagen.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <!-- Visualizador Excel -->
+                        <a *ngIf='gridimagenes.extencion == "xlsx" || gridimagenes.extencion == "xls" || gridimagenes.extencion == "XLSX" || gridimagenes.extencion == "XLS" ' [href]="gridimagenes.path">
+                            <img *ngIf='gridimagenes.extencion == "xlsx" || gridimagenes.extencion == "xls" || gridimagenes.extencion == "XLSX" || gridimagenes.extencion == "XLS" ' [ngClass]="desactivador ? 'grid-true' : 'grid'" src="../../../assets/images/iconos-utilerias/docEXCEL.png"
+                                placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </a>
+                        <div *ngIf='gridimagenes.extencion == "xlsx" || gridimagenes.extencion == "xls" || gridimagenes.extencion == "XLSX" || gridimagenes.extencion == "XLS" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/excel.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <!-- Visualizador Word -->
+                        <a *ngIf='gridimagenes.extencion == "docx" || gridimagenes.extencion == "doc" || gridimagenes.extencion == "DOCX" || gridimagenes.extencion == "DOC" ' [href]="gridimagenes.path">
+                            <img *ngIf='gridimagenes.extencion == "docx" || gridimagenes.extencion == "doc" || gridimagenes.extencion == "DOCX" || gridimagenes.extencion == "DOC" ' [ngClass]="desactivador ? 'grid-true' : 'grid'" src="../../../assets/images/iconos-utilerias/docword.png"
+                                placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </a>
+                        <div *ngIf='gridimagenes.extencion == "docx" || gridimagenes.extencion == "doc" || gridimagenes.extencion == "DOCX" || gridimagenes.extencion == "DOC" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/word.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <!-- Visualizador Power Point -->
+                        <a *ngIf='gridimagenes.extencion == "pptx" || gridimagenes.extencion == "ppt" || gridimagenes.extencion == "PPTX" || gridimagenes.extencion == "PPT" ' [href]="gridimagenes.path">
+                            <img *ngIf='gridimagenes.extencion == "pptx" || gridimagenes.extencion == "ppt" || gridimagenes.extencion == "PPTX" || gridimagenes.extencion == "PPT" ' [ngClass]="desactivador ? 'grid-true' : 'grid'" src="../../../assets/images/iconos-utilerias/docPP.png"
+                                placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave" container="body">
+                        </a>
+                        <div *ngIf='gridimagenes.extencion == "pptx" || gridimagenes.extencion == "ppt" || gridimagenes.extencion == "PPTX" || gridimagenes.extencion == "PPT" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/pp.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <!-- Visualicador TXT -->
+                        <a *ngIf='gridimagenes.extencion == "txt" || gridimagenes.extencion == "TXT" ' [href]="gridimagenes.path">
+                            <img *ngIf='gridimagenes.extencion == "txt" || gridimagenes.extencion == "TXT"' [ngClass]="desactivador ? 'grid-true' : 'grid'" src="../../../assets/images/iconos-utilerias/doctxt.png" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave"
+                                container="body">
+                        </a>
+                        <div *ngIf='gridimagenes.extencion == "txt" || gridimagenes.extencion == "TXT" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/txt.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                        <!-- Visualizador XML -->
+                        <a *ngIf='gridimagenes.extencion == "xml" || gridimagenes.extencion == "XML" ' [href]="gridimagenes.path">
+                            <img *ngIf='gridimagenes.extencion == "xml" || gridimagenes.extencion == "XML" ' [ngClass]="desactivador ? 'grid-true' : 'grid'" src="../../../assets/images/iconos-utilerias/docXML.png" placement="top" ngbPopover="{{gridimagenes.descripcion}}" triggers="mouseenter:mouseleave"
+                                container="body">
+                        </a>
+                        <div *ngIf='gridimagenes.extencion == "xml" || gridimagenes.extencion == "XML" ' class="cont-elipsis">
+                            <div [ngClass]="desactivador ? 'elipsis-true' : 'elipsis'">{{gridimagenes.descripcion}}
+                            </div>
+                            <div class="elipsis-icon">
+                                <img width="32px" src="../../../assets/images/iconos-utilerias/XML.png">
+                            </div>
+                            <div [ngClass]="desactivador ? 'elipsis-two-true' : 'elipsis-two'">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="iviewer[0].tipo == 5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-center flex-wrap">
+                    <div *ngFor="let gridavatar of documentos; index as i; trackBy:eliminaravatar">
+                        <div class="cont-button">
+                            <img [ngClass]="{'cross-button-lg': iviewer[0].size === 'foto-avatar', 'cross-button-md': iviewer[0].size === 'foto-avatar-m', 'cross-button-sm' : iviewer[0].size === 'foto-avatar-s', 'cross-button' : iviewer[0].size === 'foto-avatar-xs' }" src="../../../assets/images/iconos-utilerias/cerrar.svg"
+                                (click)="avatarclick('deleteavatar', gridavatar); deleteAvatar(i) ">
+                        </div>
+                        <a [href]="gridavatar.path" data-lightbox="gridavatar">
+                            <img style="margin-right: 5px" [class]="iviewer[0].size" [src]="gridavatar.path">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

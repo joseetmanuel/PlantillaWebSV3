@@ -1,0 +1,28 @@
+.mat-button-toggle-checked {
+  background-color: #3f6ad8;
+  color: #fff !important;
+}
+
+.mat-button-toggle-appearance-standard {
+  color: #3f6ad8;
+}
+
+::ng-deep #blueversion .mat-form-field-underline {
+  background: #3f51b5;
+}
+::ng-deep #blueversion .mat-select-arrow {
+  color: #3f51b5;
+}
+#bluemat {
+  background: white;
+}
+#bluemat:hover {
+  background: #d6e0fb;
+}
+#bluemat.mat-active {
+  background: #d6e0fb !important;
+}
+#bluemat.mat-selected {
+  background: #d6e0fb !important;
+  color: black !important;
+}

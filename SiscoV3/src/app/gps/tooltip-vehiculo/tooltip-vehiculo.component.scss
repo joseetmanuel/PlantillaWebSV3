@@ -1,0 +1,116 @@
+::ng-deep .agm-info-window-content {
+  width: 275px !important;
+}
+
+figure {
+  img {
+      width: 100%;
+      vertical-align: middle;
+      margin: auto;
+      border-radius: 50%;
+      object-position: center;
+  }
+}
+
+/*Estilos del tooltip*/
+.tooltip-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.tooltip-fecha{
+    font-weight: 400;
+    font-size: 10px;
+}
+
+.tooltip-direccion{
+    font-size: 11px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.vehiculo-data {
+  font-weight: bold;
+}
+
+.cuadrado {
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  border: #f0f0f0;
+  border-style: solid;
+  border-width: 1px;
+  float: left;
+}
+
+.content-icons {
+  .col-2 {
+    display: inline-block;
+  }
+  .col-3 {
+    display: inline-block;
+  }
+}
+
+hr {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.border-right {
+  border-right: solid 1px;
+}
+
+.equipos {
+  font-size: 12px;
+}
+
+.drawer-button {
+  left: 25%;
+}
+
+.drawer {
+  position: fixed;
+  height: 85px;
+  -webkit-transition: height 200ms; /* For Safari 3.1 to 6.0 */
+  transition: height 200ms;
+}
+
+.vehiculo {
+  height: 250px;
+}
+
+.contrato {
+  height: 100%;
+}
+
+.ocultar {
+  display: none;
+}
+
+.button-bot {
+  bottom: 60px;
+}
+
+.placa {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.estadoauto {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.estadofecha {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+
+
+::ng-deep .mat-checkbox-layout {
+  margin-bottom: 0 !important;
+}

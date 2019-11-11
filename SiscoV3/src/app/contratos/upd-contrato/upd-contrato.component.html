@@ -1,0 +1,372 @@
+<mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+
+    <div [formGroup]="contratoForm">
+        <mat-card class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datoscontrato.png"> &nbsp;&nbsp;&nbsp;
+                    <span>Datos del contrato</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <small class="titulo-input-dinamico">Foto</small>
+                    <app-file-upload-component *ngIf='band === false' [IUploadFile]="IUploadFile" (messageEvent)="ResultUploadFile($event)">
+                    </app-file-upload-component>
+                    <app-file-upload-component *ngIf='band' [IUploadFile]="IUploadFile" (messageEvent)="ResultUploadFile($event)">
+                    </app-file-upload-component>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Número contrato *" readonly maxlength='50' formControlName="numeroContrato" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <br><br>
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre contrato *" maxlength='50' formControlName="nombre" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Empresa *" formControlName="rfcEmpresa" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let empresa of empresas' [value]="empresa.rfcEmpresa">
+                                {{empresa.nombreComercial}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" [checked]="checkedClienteFinal" (change)="validacionesToggle($event)">
+                                ¿El cliente es una empresa del grupo?
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Cliente *" formControlName="idCliente" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                {{cliente.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" *ngIf='valClienteFinal' class="inputFullWide">
+                        <mat-select placeholder="Cliente final" formControlName="idClienteFinal" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                {{cliente.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="claseActual === 'Automovil'" class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="equipamiento">
+                                ¿Requiere equipamiento?
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="mantenimiento">
+                                ¿Requiere mantenimiento?
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Estatus *" (selectionChange)='cambioEstatus($event.value)' formControlName="idEstatus" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let estatus of estatus' [value]="estatus.idEstatus">
+                                {{estatus.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker" placeholder="Fecha firma *" formControlName="fechaFirma" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf='estatusAct == "ACT"'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha inicio" formControlName="fechaInicio" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker></mat-datepicker>
+                        <div *ngIf='validaFecha'>
+                            <p class="errorFecha">
+                                La fecha de inicio es
+                                <strong>mayor</strong> a la fecha de Termino
+                            </p>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput [matDatepicker]="picker2" placeholder="Fecha termino" formControlName="fechaFin" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker2></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput (keyup)="calculaUnidad($event.target.value)" placeholder="Total unidades *" maxlength='50' formControlName="totalUnidades" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(Solo números)
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-error class='errorFecha' *ngIf='labelTotalUnidades'>
+                        El total de unidades, no puede ser menor de
+                        <strong>{{totalUnidades}}</strong>
+                    </mat-error>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Folio *" maxlength='10' formControlName="folio" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='modificarContrato()' [disabled]="!(contratoForm.valid && labelTotalUnidades === false)"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf='!contratoForm.valid'>
+                <p class="tagAviso">Los campos con * son obligatorios</p>
+            </div>
+        </mat-card>
+        <mat-card *ngIf='idClase' class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <!-- <img class='imagenIconoGris' src="./assets/images/iconos-sisco/sh_tiposunidades.png">
+                        &nbsp;&nbsp;&nbsp;
+                        <span>{{PropiedadC}}</span> -->
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                    </div>
+                    <app-sel-unidad-contrato [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato'></app-sel-unidad-contrato>
+                </div>
+                <hr>
+                <div>
+
+                </div>
+            </div>
+        </mat-card>
+        <mat-card *ngIf='idClase' class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datos_prov.png"> &nbsp;&nbsp;&nbsp;
+                    <span>Alta de proveedores contrato</span>
+                    <app-ins-proveedor-contrato [idClase]='idClase' [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato'></app-ins-proveedor-contrato>
+                </div>
+                <hr>
+            </div>
+        </mat-card>
+        <mat-card class="cardMarginBottom">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/configurador_c.png"> &nbsp;&nbsp;&nbsp;
+            <span>Configurador</span>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Tipo de operación *" formControlName="idTipoOperacion" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let operacion of tiposDeOperacion' [value]="operacion.idTipoOperacion">
+                                {{operacion.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Forma de pago" formControlName="idFormaDePago" [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let pago of formasDePago' [value]="pago.idFormaDePago">
+                                {{pago.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="manejoDePresupuesto">
+                                Manejo de presupuesto
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field *ngIf='contratoForm.controls.manejoDePresupuesto.value' class="inputFullWide">
+                        <input matInput placeholder="Presupuesto *" formControlName="presupuesto" (blur)="transformAmount()" (click)="transformAmountClean()" [(value)]="presupuestoFormatted" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="manejoDeUtilidad">
+                                Manejo de utilidad
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field color='primary' *ngIf='contratoForm.controls.manejoDeUtilidad.value' class="inputFullWide">
+                        <input matInput placeholder="% de utilidad *" formControlName="porcentajeUtilidad" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es <strong>requerido</strong> y debe estar en un rango entre 0 a 100
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="unidadSustituto">
+                                Unidad sustituto
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="geolocalizacion">
+                                Geolocalización
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="controlDeTiempo">
+                                Control de tiempo
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <br>
+                    <mat-card-content>
+                        <section class="example-section">
+                            <mat-slide-toggle color='primary' class="example-margin" formControlName="aplicaEncuesta">
+                                Aplica encuesta
+                            </mat-slide-toggle>
+                        </section>
+                    </mat-card-content>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='modificarContrato()' [disabled]="!contratoForm.valid"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card *ngIf='idClase' class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Solicitudes/tipo_solicitud_card.png"> &nbsp;&nbsp;&nbsp;
+                    <span>Tipos de solicitudes</span>
+                </div>
+            </div>
+            <hr>
+            <app-sel-tipo-solicitud [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato' [idClase]='idClase'></app-sel-tipo-solicitud>
+        </mat-card>
+    </div>
+
+</div>

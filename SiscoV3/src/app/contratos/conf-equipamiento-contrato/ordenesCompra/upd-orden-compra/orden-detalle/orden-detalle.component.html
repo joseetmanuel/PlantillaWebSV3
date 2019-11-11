@@ -1,0 +1,47 @@
+<hr>
+<div [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+    <div [formGroup]="ordenDetalleForm">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                    <dx-drop-down-box #dropBox formControlName="idTipoObjeto" valueExpr="idTipoObjeto"
+                        displayExpr="Submarca" placeholder="Selecciona la submarca" [showClearButton]="true"
+                        [dataSource]="gridDataSource" (onValueChanged)="closeWindow(dropBox)">
+        
+                        <div *dxTemplate="let data of 'content'">
+                            <dx-data-grid [dataSource]="gridDataSource"
+                                [columns]="['idTipoObjeto', 'Combustible', 'Clase', 'Marca','Submarca', 'Cilindros', 'USO', 'TotalPartidas']"
+                                [selection]="{ mode: 'single'}" [hoverStateEnabled]="true"
+                                [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+                                [scrolling]="{ mode: 'infinite' }" [height]="345"
+                                (onSelectionChanged)="onSelectionChanged($event);">
+                            </dx-data-grid>
+                        </div>
+                    </dx-drop-down-box>
+                </div>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+                <mat-form-field class="inputFullWide">
+                    <input matInput placeholder="Cantidad unidades *" formControlName="unidades">
+                    <mat-error>
+                        El campo es <strong>requerido</strong>(Solo números)
+                    </mat-error>
+                </mat-form-field>
+                <div *ngIf='etiqueta' style="font-size:13px" class="badge badge-primary">
+                    Solo puede seleccionar hasta <span class="badge badge-light">{{etiqueta.OrdenDetalleCantidad}} </span> unidades
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='insOrdenDetalle()' [disabled]="!ordenDetalleForm.valid"><i class="pe-7s-diskette btn-icon-wrapper">
+            </i>
+            Agregar
+        </button>
+            </div>
+        </div>
+    </div>
+
+    <app-grid-component [datos]="altaDetallesOrden" [columns]="columns" [exportExcel]="exportExcel" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser" [searchPanel]="searchPanel"
+        [scroll]="scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+</div>

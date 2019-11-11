@@ -1,0 +1,242 @@
+ @font-face {
+     font-family: 'NarrowBold';
+     src: url('../../../assets/fonts/ArialNarrowBold.ttf') format('truetype');
+ }
+ 
+ @font-face {
+     font-family: 'NarrowBoldItalic';
+     src: url('../../../assets/fonts/ArialNarrowBoldItalic.ttf') format('truetype');
+ }
+ 
+ @font-face {
+     font-family: 'NarrowItalic';
+     src: url('../../../assets/fonts/ArialNarrowItalic.ttf') format('truetype');
+ }
+ 
+ .header-border {
+     border: 1px solid #E3E3E4;
+     font-family: Arial, Narrow;
+     font-weight: bolder;
+     color: #4A5159;
+     padding: 10px;
+ }
+ 
+ .content-detalle {
+     margin: auto;
+     padding: 0px;
+ }
+ 
+ .content-img {
+     text-align: center
+ }
+ 
+ img.logoTaller {
+     width: 50px;
+ }
+ 
+ .SubtituloBanner {
+     color: #6D757D;
+     font-family: Arial, Helvetica, sans-serif;
+     font-weight: bold;
+     font-size: 10px !important
+ }
+ 
+ .imagen {
+     width: 40px;
+ }
+ 
+ .ImagenCarro {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+ 
+ .title {
+     font-size: 20px;
+     vertical-align: middle;
+ }
+ 
+ hr {
+     margin: 5px 0;
+ }
+ 
+ .vertical {
+     height: 80%;
+     border-left: 1px solid #F0F0F0;
+     margin: 0px;
+ }
+ 
+ .datostaller {
+     font-size: 14px;
+     font-family: 'NarrowBold';
+     padding: 1px;
+ }
+ 
+ .tituloseccion {
+     font-size: 14px;
+     font-family: 'NarrowBold';
+     text-align: center;
+ }
+ 
+ .datoscontacto {
+     font-size: 12px;
+     font-family: 'Arial Narrow';
+ }
+ 
+ .datosespecialidad {
+     font-size: 10px;
+     font-family: 'Arial Narrow';
+     margin: auto;
+     margin-bottom: 15px;
+     text-align: center;
+ }
+ 
+ .calificacion {
+     font-size: 10px;
+     font-family: 'Arial Narrow';
+ }
+ 
+ .porcentaje {
+     font-size: 14px;
+     font-family: 'NarrowBold';
+ }
+ 
+ .datossucursal {
+     font-size: 14px;
+     font-family: 'Arial Narrow';
+ }
+ 
+ .verticalprogress {
+     width: 5px;
+     min-height: 100px;
+     display: flex;
+     align-items: flex-end;
+ }
+ 
+ .cajaTop {
+     top: 20%;
+ }
+ 
+ .horizontal-bar {
+     height: 5px;
+     display: flex;
+     align-items: flex-end;
+ }
+ 
+ .verticalprogress .progress-bar {
+     width: 100%;
+     height: 0;
+     -webkit-transition: height 0.6s ease;
+     -o-transition: height 0.6s ease;
+     transition: height 0.6s ease;
+ }
+ 
+ .progress .progress-bar:last-child {
+     border-top-right-radius: 0;
+     border-bottom-right-radius: 0;
+ }
+ 
+ .green100 {
+     background-color: #179944 !important;
+ }
+ 
+ .green75 {
+     background-color: #94D248 !important;
+ }
+ 
+ .orange50 {
+     background-color: #FCB142 !important;
+ }
+ 
+ .red25 {
+     background-color: #F15339 !important;
+ }
+ 
+ .cont-button {
+     display: block;
+     position: relative;
+ }
+ 
+ .status-button {
+     position: absolute;
+     left: 15px;
+     top: -5px;
+     background: white;
+     width: 15px;
+     height: 15px;
+     border-radius: 50%;
+ }
+ 
+ .calificacion-icon {
+     height: 25px;
+     margin-right: 5px
+ }
+ 
+ .especialidades img {
+     height: 30px;
+     display: block;
+     margin-right: auto;
+     margin-left: auto;
+ }
+ 
+ .overflow {
+     overflow-y: auto;
+ }
+ 
+ .overflow::-webkit-scrollbar {
+     width: 4px;
+     border: 1px solid #d5d5d5;
+ }
+ 
+ .overflow::-webkit-scrollbar-track {
+     border-radius: 0;
+     background: #eeeeee;
+ }
+ 
+ .overflow::-webkit-scrollbar-thumb {
+     border-radius: 0;
+     background: #b0b0b0;
+ }
+ 
+ .sticky {
+     position: -webkit-sticky;
+     position: sticky;
+     top: 0;
+     background: white;
+     z-index: 1;
+ }
+ 
+ @media only screen and (min-width: 767px) {
+     .hr-block {
+         display: none;
+     }
+ }
+ 
+ @media only screen and (max-width: 767px) {
+     .off-vertical {
+         border-left: 0px;
+     }
+ }
+ 
+ @media only screen and (max-width: 720px) {
+     .datoscontacto {
+         text-align: center;
+     }
+ }
+ 
+ @media only screen and (min-width: 768px) {
+     .tall {
+         height: 170px;
+     }
+ }
+ 
+ @media only screen and (max-width: 1199px) {
+      ::ng-deep .foto-avatar {
+         width: 80px !important;
+         height: 80px !important;
+     }
+      ::ng-deep .color-dot-desktop {
+         left: 75px !important;
+         top: 20px !important;
+     }
+ }

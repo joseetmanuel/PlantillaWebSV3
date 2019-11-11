@@ -1,0 +1,48 @@
+<div class="cardHeader">
+    <div class="container">
+        <span class="float-right">
+            <mat-card-title class='icono'><i (click)='cerrar()' class="fas fa-times punter"></i></mat-card-title>
+        </span>
+        <mat-card-title>La operación no pudo ser procesada.</mat-card-title>
+    </div>
+</div>
+<mat-card-content>
+    <p class="contenido">
+        El sistema no ha funcionado correctamente, hemos recabado la información relacionada con este incidente. Para generar un ticket al equipo de soporte de clic en el botón “Enviar Informe”, daremos seguimiento a su solicitud.
+    </p>
+</mat-card-content>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <div class=" bordes tipo">
+                <mat-chip class="tipo">{{tipoMensaje}}</mat-chip>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <div class=" bordes1 tipo2">
+                <button type="button" class="mb-2 mr-2 btn btn-outline-2x btn-outline-primary btn-block"
+                    (click)='enviar()'><i class="far fa-envelope"></i> Enviar Informe</button>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <div class=" bordes1 tipo2">
+                <button type="button" class="mb-2 mr-2 btn btn-outline-2x btn-outline-primary btn-block"
+                    *ngIf='ver == 1' (click)="cambio(); panel1.toggle()">Ver más <i
+                        class="fas fa-chevron-down"></i></button>
+                <button type="button" class="mb-2 mr-2 btn btn-outline-2x btn-outline-primary btn-block"
+                    *ngIf='ver == 0' (click)="cambio(); panel1.toggle()">Ver menos <i
+                        class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-accordion>
+    <mat-expansion-panel style="margin-top: 10px;" #panel1 [hideToggle]="true">
+        <ng-template matExpansionPanelContent>
+            <div class="ex1">
+                <pre class='otra'>{{data.stack}}</pre>
+            </div>
+        </ng-template>
+    </mat-expansion-panel>
+</mat-accordion>

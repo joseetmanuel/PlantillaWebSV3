@@ -1,0 +1,311 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" urlImagen="./assets/images/iconos-sisco/talleres.png">
+</app-breadcrumbs>
+<div>
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <app-buscador [IBuscador]="buscador" (responseBuscador)="responseBuscador($event)"></app-buscador>
+            </div>
+        </div>
+        <br />
+        <div class="row" *ngIf="loadAppBanner">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <mat-spinner style="margin-left:46% !important;" *ngIf='appBannerSpinner'></mat-spinner>
+                <app-banner [IObjeto]="IObjeto" *ngIf="idClase == 'Automovil'"></app-banner>
+                <app-banner-generico [IObjeto]="IObjeto" *ngIf="idClase != 'Automovil'"></app-banner-generico>
+            </div>
+        </div>
+    </mat-card>
+    <div [formGroup]="solicitudForm">
+        <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <img *ngIf="objeto.nombre=='LogoDatoGeneral'" class='imagenIconoGris' [src]="objeto.path">
+                    <span *ngIf="objeto.nombre=='LogoDatoGeneral'">&nbsp;&nbsp;&nbsp;</span>
+                </div>
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <span *ngIf="objeto.nombre=='TituloDatoGeneral'">{{objeto.label}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class='col-sm-12 col-md-6 col-xl-6'>
+                        <mat-form-field class="inputFullWide">
+                            <input matInput formControlName="vNombreContrato" [value]="contractData?.DisplayValue"
+                                placeholder="Nombre del contrato" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select formControlName="vCentroCostos" placeholder="Centro de costos">
+                                <mat-option *ngFor='let itemCentro of centroCostosList'
+                                    [value]="itemCentro.idCentroC + ',' +itemCentro.idFolio">
+                                    CC: {{itemCentro.nombreCentroC}} - Folio: {{itemCentro.idFolio}} - Presupuesto: $
+                                    {{itemCentro.presupuesto}} - Gastado: $ {{itemCentro.gastado}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class='col-sm-12 col-md-6 col-xl-6'>
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select formControlName="vTipoSolicitud" placeholder="Tipo de cita"
+                                (selectionChange)="obtienePartidas($event.value)">
+                                <mat-option *ngFor='let tipoCita of tipoCitaList' [value]="tipoCita.idTipoSol">
+                                    {{tipoCita.nombreTipoSol}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6"
+                        *ngFor="let tipoObjeto of tipoObjetoPropiedades, let index = index">
+                        <div *ngIf="tipoObjeto.idTipoValor != 'Unico'">
+                            <div class="inputFullWide">
+                                <small class="titulo-input-dinamico"
+                                    *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                    *</small>
+                                <dx-drop-down-box #dropBox [dataSource]="tipoObjeto.arreglo"
+                                    placeholder="Selecciona {{tipoObjeto.valor}}" displayExpr="valor" valueExpr="id"
+                                    [showClearButton]="true" [(value)]="tipoObjeto.label"
+                                    (onValueChanged)="closeWindow(dropBox, tipoObjeto.idTipoValor == 'Etiqueta')">
+                                    <div *dxTemplate="let data of 'content'">
+                                        <div
+                                            *ngIf="tipoObjeto.idTipoValor == 'Agrupador' || tipoObjeto.idTipoValor == 'Catalogo'">
+                                            <dx-tree-view [dataSource]="tipoObjeto.arreglo" dataStructure="plain"
+                                                keyExpr="id" parentIdExpr="idPadre" displayExpr="valor"
+                                                [selectByClick]="true" selectionMode="single"
+                                                noDataText="No contiene datos"
+                                                (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                            </dx-tree-view>
+                                        </div>
+                                        <div *ngIf="tipoObjeto.idTipoValor == 'Etiqueta'">
+                                            <dx-tree-view [dataSource]="tipoObjeto.arreglo" dataStructure="plain"
+                                                keyExpr="id" parentIdExpr="idPadre" displayExpr="valor"
+                                                [selectByClick]="true" selectionMode="multiple"
+                                                noDataText="No contiene datos" showCheckBoxesMode="normal"
+                                                [selectNodesRecursive]="true"
+                                                (onItemSelectionChanged)="TreeView_itemSelectionChanged($event, tipoObjeto)">
+                                            </dx-tree-view>
+                                        </div>
+                                    </div>
+                                </dx-drop-down-box>
+                            </div>
+                        </div>
+                        <div *ngIf="tipoObjeto.idTipoValor == 'Unico'" class="col-md-12 col-lg-12"
+                            style="margin: auto;">
+                            <mat-form-field *ngIf="tipoObjeto.idTipoDato == 'String'" class="inputFullWide"
+                                style="width: 100%; padding-top: 10px;">
+                                <input matInput [placeholder]="tipoObjeto.valor" (keyup)="ChangePropiedad($event,index)"
+                                    (blur)="ChangePropiedad($event,index)" ([value])="tipoObjeto.valorSelected"
+                                    (change)="ChangeInput($event, index)" [required]="tipoObjeto.obligatorio">
+                            </mat-form-field>
+                            <small class="text-error" *ngIf="!tipoObjeto.valid">Campo obligatorio</small>
+
+                            <div *ngIf="tipoObjeto.idTipoDato == 'Date'" class="col-md-12 col-lg-12"
+                                style="margin: auto;">
+                                <mat-form-field>
+                                    <div class="inputFullWide">
+                                        <small class="titulo-input-dinamico">{{tipoObjeto.valor}}</small>
+                                        <dx-date-box placeholder="Indica {{tipoObjeto.valor}}"
+                                            (change)="ChangePropiedad($event,index)" [displayFormat]="'dd/MM/yyyy'"
+                                            [(value)]="tipoObjeto.valorSelected" type="date" [showClearButton]="true">
+                                        </dx-date-box>
+                                        <small class="titulo-input-dinamico"
+                                            *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                        <small class="titulo-input-dinamico"
+                                            *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                            *</small>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="tipoObjeto.idTipoDato == 'Decimal' || tipoObjeto.idTipoDato == 'Numeric'"
+                                class="col-md-12 col-lg-12" style="margin: auto;">
+                                <div class="inputFullWide">
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                        *</small>
+                                    <dx-number-box [(value)]="tipoObjeto.valorSelected"
+                                        placeholder="Indica {{tipoObjeto.valor}}" [showSpinButtons]="true"
+                                        (onValueChanged)="ChangePropiedad($event,index)"
+                                        (change)="ChangePropiedad($event,index)" [showClearButton]="true">
+                                    </dx-number-box>
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                        *</small>
+                                </div>
+                            </div>
+                            <div *ngIf="tipoObjeto.idTipoDato == 'File' || tipoObjeto.idTipoDato == 'Image'"
+                                class="col-md-12 col-lg-12" style="margin: auto;">
+                                <small class="titulo-input-dinamico"
+                                    *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                <small class="titulo-input-dinamico" *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                    *</small>
+                                <app-file-upload-component [IUploadFile]="IUploadFile"
+                                    (messageEvent)="ResultUploadFile($event, index)">
+                                </app-file-upload-component>
+                            </div>
+                            <div *ngIf="tipoObjeto.idTipoDato == 'DateTime'">
+                                <div class="inputFullWide">
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="!tipoObjeto.obligatorio">{{tipoObjeto.valor}}</small>
+                                    <small class="titulo-input-dinamico"
+                                        *ngIf="tipoObjeto.obligatorio">{{tipoObjeto.valor}}
+                                        *</small>
+                                    <dx-date-box [(value)]="tipoObjeto.valorSelected" type="datetime"
+                                        [showClearButton]="true" placeholder="Indica {{tipoObjeto.valor}}"
+                                        [showClearButton]="true" applyButtonText="Aceptar" cancelButtonText="Cancelar">
+                                    </dx-date-box>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class='col-sm-12 col-md-6 col-xl-6'>
+                        <small class="titulo-input-dinamico">Seleccione la fecha y hora: </small>
+                        <br>
+                        <div style="width: 100%;">
+                            <dx-date-box formControlName="vFecha" placeholder="Seleccione la fecha" type="date"
+                                [showClearButton]="true" pickerType="calendar" displayFormat="dd/MM/yyyy"
+                                style="display: inline-block; width:50%;" [useMaskBehavior]="true">
+                            </dx-date-box>
+                            <dx-date-box formControlName="vHora" placeholder="Seleccione la hora" type="time"
+                                [showClearButton]="true" pickerType="list" [interval]="30"
+                                style="display: inline-block; width:50%;">
+                            </dx-date-box>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <mat-form-field form class="inputFullWide">
+                            <textarea formControlName="vComentarios" matInput rows="2"
+                                placeholder="Comentarios adicionales"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </mat-card>
+        <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoPartidas'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoPartidas'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloPartidas'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnWorkshopType(group.value)"
+                        [value]="1">
+                        <mat-button-toggle value="1" checked="true"> Costo
+                        </mat-button-toggle>
+                        <mat-button-toggle value="2"> Venta
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <app-grid-component *ngIf='partidaGridConfiguration.Columns' [datos]="partidasData"
+                        [gridOptions]="partidaGridConfiguration.GridOptions"
+                        [columns]="partidaGridConfiguration.Columns"
+                        [exportExcel]="partidaGridConfiguration.ExportExcel"
+                        [columnHiding]="partidaGridConfiguration.ColumnHiding"
+                        [Checkbox]="partidaGridConfiguration.Checkbox" [Editing]="partidaGridConfiguration.Editing"
+                        [Columnchooser]="partidaGridConfiguration.Columnchooser"
+                        [toolbar]="partidaGridConfiguration.ToolBox"
+                        [searchPanel]="partidaGridConfiguration.SearchPanel" [scroll]="partidaGridConfiguration.Scroll"
+                        (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'>
+                    </app-grid-component>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <img *ngIf="objeto.nombre=='LogoSelPartidas'" class='imagenIconoGris' [src]="objeto.path">
+                    <span *ngIf="objeto.nombre=='LogoSelPartidas'">&nbsp;&nbsp;&nbsp;</span>
+                </div>
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <span *ngIf="objeto.nombre=='TituloSelPartidas'">{{objeto.label}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <app-grid-component *ngIf="partidasSelData.length > 0" [datos]="partidasSelData"
+                        [gridOptions]="partidaSelGridConfiguration.GridOptions"
+                        [columns]="partidaSelGridConfiguration.Columns"
+                        [Checkbox]="partidaSelGridConfiguration.Checkbox"
+                        [Editing]="partidaSelGridConfiguration.Editing"
+                        [searchPanel]="partidaSelGridConfiguration.SearchPanel"
+                        [Color]="partidaSelGridConfiguration.Color" [scroll]="partidaSelGridConfiguration.Scroll"
+                        (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'
+                        (editevent)="editevent($event)" [toolbar]="partidaSelGridConfiguration.ToolBox">
+                    </app-grid-component>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 prices-color" style="float: right !important;">
+                        <div class="d-inline" style="font-size: 16px !important;">
+                            <span>Subtotal :</span>
+                        </div>
+                        <div class="d-inline text-right" style="font-size: 16px !important; float: right !important;">
+                            <span>$ {{subTotal}}</span>
+                        </div>
+                        <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                        <div class="d-inline" style="font-size: 14px !important;">
+                            <span>IVA :</span>
+                        </div>
+                        <div class="d-inline text-right" style="font-size: 14px !important; float: right !important;">
+                            <span>$ {{iva}}</span>
+                        </div>
+                        <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                        <div class="d-inline" style="font-size: 20px !important;">
+                            <span><b>Total :</b></span>
+                        </div>
+                        <div class="d-inline text-right" style="font-size: 20px !important; float: right !important;">
+                            <span><b>$ {{total}}</b></span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                    <button
+                        class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form"
+                        (click)="fnAgregarNuevaSolicitud()"
+                        [disabled]="!(solicitudForm.valid && partidasSelData.length >= 1)">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Crear solicitud
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

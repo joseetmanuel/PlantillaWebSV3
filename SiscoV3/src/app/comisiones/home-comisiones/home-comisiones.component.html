@@ -1,0 +1,16 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+    <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+    
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" ></app-breadcrumbs>
+  
+    <br>
+    <div>
+      <mat-card>
+        <app-grid-component *ngIf="!this.loading" [datos]="usuariosComision" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel"
+            [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+            [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar" (editevent)="editevent($event)" 
+            (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' >
+        </app-grid-component>
+      </mat-card>
+    </div>
+  </div>

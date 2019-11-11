@@ -1,0 +1,27 @@
+<div class="app-drawer-wrapper" #drawerTarea [ngClass]="{'drawer-open' : toggleDrawer}">
+    <div class="drawer-nav-btn">
+        <button type="button" class="hamburger hamburger--elastic" [ngClass]="{'is-active' : globals.toggleDrawer}" (click)="toggleDrawer()">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+    </div>
+    <div class="drawer-content-wrapper">
+        <section class="scrollbar-container">
+            <perfect-scrollbar [autoPropagation]="true">
+                <h3 class="drawer-heading">Tareas</h3>
+                <div class="drawer-section p-0">
+                    <div class="todo-box">
+                        <ul class="todo-list-wrapper list-group list-group-flush">
+                            <li *ngFor="let tarea of tareas | async">
+                                <app-tarea [tarea]="tarea" [tipoTarea]="1"></app-tarea>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </section>
+    </div>
+</div>
+
+<div class="app-drawer-overlay" (click)="toggleDrawer()"></div>

@@ -1,0 +1,69 @@
+
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1360px;
+
+@media (min-width: $breakpoint-lg) {
+    .app-page-title {
+        padding: 20px;
+    }
+    
+    .col-lg-1 {
+        max-width: 95px;
+    }
+}
+
+@media (min-width: $breakpoint-xl) {
+    .page-title-icon{
+        padding-right: 0px;
+    }
+
+    .col-lg-1 {
+        max-width: 95px;
+    }
+}
+
+.page-title-heading{
+    padding: 0px 10px;
+}
+
+.migajas{
+    padding-left: 10px;
+}
+
+.imagenLogo {
+    width: 45px;
+    padding: 10px 0px;
+    // height: 60px;
+}
+
+.desactiva {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.subHeading {
+    padding: 3px 0 0;
+    color: gray;
+    font-size: 0.88rem;
+}
+
+.linkActivo{
+    padding: 3px 0 0;
+    color: gray;
+    font-size: 0.88rem;
+    text-decoration: none;
+}
+
+.header {
+    font-size: 1.25rem;
+    margin: 0.3rem 0 0 0;
+}
+
+.app-page-title {
+    width: auto;
+}
+
+
+.submenu {
+    font-size: 0.80rem;
+}

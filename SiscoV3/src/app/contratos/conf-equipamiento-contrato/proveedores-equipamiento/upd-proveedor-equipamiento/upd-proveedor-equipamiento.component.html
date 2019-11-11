@@ -1,0 +1,102 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+    <mat-card>
+        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datos_prov.png"> &nbsp;&nbsp;&nbsp;
+        <span>Datos del proveedor</span>
+        <hr>
+        <div [formGroup]="provedoresForm">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre" maxlength="20" formControlName="nombre">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select formControlName="rfcProveedor" placeholder="Selecciona un proveedor">
+                            <mat-option  id="bluemat" *ngFor="let proveedor of proveedores" [value]="proveedor.rfcProveedor">
+                                {{ proveedor.nombreComercial }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Cotización" formControlName="cotizacion">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(Solo números)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select formControlName="idMoneda" placeholder="Moneda">
+                            <mat-option  id="bluemat" *ngFor="let moneda of monedas" [value]="moneda.id">
+                                {{ moneda.currency }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row' *ngIf='band && idClase'>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <span>Cotización</span>
+                    <!-- <dx-file-uploader (onValueChanged)="test(cotizacion, 1)" #cotizacion uploadButtonText="Cargar" uploadedMessage="Cargado" uploadFailedMessage="Error en Carga" selectButtonText="Archivo(s)" labelText="Cotización" [multiple]="IUploadFile.multiple" accept=".pdf"
+                        uploadMode="useForm" [allowedFileExtensions]="IUploadFile.extension" [maxFileSize]="15000000"></dx-file-uploader> -->
+                    <app-file-upload-component *ngIf='bandCot === false' [IUploadFile]="IViewerCotizacion"
+                        (messageEvent)="ResultUploadFileCotizacion($event)">
+                    </app-file-upload-component>
+                    <app-file-upload-component *ngIf='bandCot' [IUploadFile]="IViewerCotizacion"
+                        (messageEvent)="ResultUploadFileCotizacion($event)">
+                    </app-file-upload-component>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <span>Factura</span>
+                    <app-file-upload-component *ngIf='bandFac === false' [IUploadFile]="IViewerFactura"
+                        (messageEvent)="ResultUploadFileFactura($event)">
+                    </app-file-upload-component>
+                    <app-file-upload-component *ngIf='bandFac' [IUploadFile]="IViewerFactura"
+                        (messageEvent)="ResultUploadFileFactura($event)">
+                    </app-file-upload-component>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='updProveedorEquipamiento()' [disabled]="(!provedoresForm.valid)">
+                        <i class="pe-7s-diskette btn-icon-wrapper"> </i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-sm-12 col-md-6 col-xl-6">
+                <app-viewer *ngIf="bandCot" [IViewer]="IViewerCotizacion" (datosevent)='datosMessage($event)' (messageEvent)="receiveMessageDoc($event)" [doc]="doc" [total]="total"></app-viewer>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+                <app-viewer *ngIf='bandFac && factura !== null' [IViewer]="IViewerFactura"
+                    (datosevent)='datosMessage($event)' (messageEvent)="receiveMessageDoc($event)" [doc]="doc"
+                    [total]="total"></app-viewer>
+            </div>
+        </div> -->
+    </mat-card>
+</div>

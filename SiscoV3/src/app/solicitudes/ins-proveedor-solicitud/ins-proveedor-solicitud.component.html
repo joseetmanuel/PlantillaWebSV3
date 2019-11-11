@@ -1,0 +1,205 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" urlImagen="./assets/images/iconos-sisco/solicitud.ins-proveedor-solicitud.breadcrum.png">
+</app-breadcrumbs>
+<app-fase-paso-solicitud *ngIf="!spinner" [rfcEmpresa]="rfcEmpresa" [idCliente]="idCliente" [numeroContrato]="numeroContrato" [idSolicitud]="numeroSolicitud" [idClase]="idClase" [idTipoSolicitud]="idTipoSolicitud" [idLogo]="idLogo"></app-fase-paso-solicitud>
+<app-banner [IObjeto]="IObjeto" *ngIf="idClase == 'Automovil' && showAppBanner"></app-banner>
+<app-banner-generico [IObjeto]="IObjeto" *ngIf="idClase != 'Automovil' && showAppBanner"></app-banner-generico>
+<div class="row" *ngIf="!spinner">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+        <div *ngFor="let objeto of modulo.camposClase">
+            <div *ngIf="objeto.nombre=='CampoTipoPrecios'">
+                <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnAmountType(group.value)" [value]="1">
+                    <mat-button-toggle value="1" checked="true"> Costo
+                    </mat-button-toggle>
+                    <mat-button-toggle value="2"> Venta
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div *ngIf="partidasDataShadow.length > 0">
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <img *ngIf="objeto.nombre=='LogoPartidas'" class='imagenIconoGris' [src]="objeto.path">
+                <span *ngIf="objeto.nombre=='LogoPartidas'">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <span *ngIf="objeto.nombre=='TituloPartidas'">{{objeto.label}}</span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <app-grid-component *ngIf='partidasGridConfiguration.Columns' [datos]="partidasDataShadow" [gridOptions]="partidasGridConfiguration.GridOptions" [columns]="partidasGridConfiguration.Columns" [exportExcel]="partidasGridConfiguration.ExportExcel" [columnHiding]="partidasGridConfiguration.ColumnHiding"
+                    [Checkbox]="partidasGridConfiguration.Checkbox" [Editing]="partidasGridConfiguration.Editing" [Columnchooser]="partidasGridConfiguration.Columnchooser" [Color]="partidasGridConfiguration.Color" [toolbar]="partidasGridConfiguration.ToolBox"
+                    [searchPanel]="partidasGridConfiguration.SearchPanel" [scroll]="partidasGridConfiguration.Scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'>
+                </app-grid-component>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<div *ngIf="showWorkshopComponents">
+    <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <img *ngIf="objeto.nombre=='LogoDatosProv'" class='imagenIconoGris' [src]="objeto.path">
+                <span *ngIf="objeto.nombre=='LogoDatosProv'">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                <span *ngIf="objeto.nombre=='TituloDatosProv'">{{objeto.label}}</span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class='col-sm-12 col-md-4 col-xl-4 text-left'>
+                <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnWorkshopType(group.value)" [value]="2">
+                    <mat-button-toggle value="1"> Por ubicacion </mat-button-toggle>
+                    <mat-button-toggle value="2" checked="true"> Por nombre del taller
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <br />
+            <div class="col-sm-12 col-md-8 col-xl-8" style="float: right !important;">
+                <app-buscador *ngIf="selected == 2" [IBuscador]="buscadorProvedor" (responseBuscador)="fnBusquedaProveedor($event)">
+                </app-buscador>
+                <mat-form-field *ngIf="selected == 1" class="inputFullWide">
+                    <input matInput placeholder="Buscar direccion" (blur)="findPlace($event.target.value)" formControlName='numeroExterior'>
+                </mat-form-field>
+            </div>
+        </div>
+        <br />
+        <agm-map [styles]="styles" #gm *ngIf="selected == 1" style="height: 350px" [latitude]="latMap" [longitude]="lngMap" (mapReady)="mapReady($event)" [zoom]="zoom">
+            <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" [iconUrl]="'./assets/images/iconos-sisco/Solicitudes/solicitud.ins-proveedor-solicitud.currentlocation.png'" (dragEnd)="currentLocationChange($event)">
+            </agm-marker>
+            <agm-marker *ngFor="let marcaTaller of ListadoMarcasTalleres" [latitude]="marcaTaller.lat" [longitude]="marcaTaller.lng" [markerDraggable]="true" [iconUrl]="{
+                    url: marcaTaller.image,
+                    scaledSize: {
+                        width: 32,
+                        height: 32
+                    }
+                }" (dragEnd)=" markerDragEndd($event)" (mouseOver)="onMouseOver(infoWindow,gm)">
+                <agm-info-window [disableAutoPan]="false" #infoWindow>
+                    {{marcaTaller.customerName}}
+                    <div>
+                        <a (click)="fnAgregaProveedorMapa(marcaTaller)" class="btn btn-attention pull-right"> Asignar
+                            <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </agm-info-window>
+            </agm-marker>
+        </agm-map>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <app-grid-component *ngIf="selected == 1" [datos]="workshopAvailableData" [gridOptions]="customerGridConfiguration.GridOptions" [columns]="customerGridConfiguration.Columns" [exportExcel]="customerGridConfiguration.ExportExcel" [columnHiding]="customerGridConfiguration.ColumnHiding"
+                    [Checkbox]="customerGridConfiguration.Checkbox" [Editing]="customerGridConfiguration.Editing" [Columnchooser]="customerGridConfiguration.Columnchooser" [Color]="customerGridConfiguration.Color" [toolbar]="customerGridConfiguration.ToolBox"
+                    [searchPanel]="customerGridConfiguration.SearchPanel" [scroll]="customerGridConfiguration.Scroll" (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)'>
+                </app-grid-component>
+            </div>
+        </div>
+    </mat-card>
+    <mat-card>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <mat-spinner style="margin-left:46% !important;" *ngIf='appBannerSpinner'></mat-spinner>
+            <div *ngIf="!appBannerSpinner && rfcProveedor != null">
+                <app-banner-proveedor-entidad *ngIf="rfcProveedor != null" [rfcProveedor]="rfcProveedor" [idProveedorEntidad]="idProveedorEntidad" (responseBannerProveedorEntidad)="fnBusquedaProveedor($event)">
+                </app-banner-proveedor-entidad>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 prices-color" style="float: right !important;">
+                    <div class="d-inline" style="font-size: 16px !important;">
+                        <span>Subtotal :</span>
+                    </div>
+                    <div class="d-inline text-right" style="font-size: 16px !important; float: right !important;">
+                        <span>$ {{sumaPrecios.subTotal}}</span>
+                    </div>
+                    <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                    <div class="d-inline" style="font-size: 14px !important;">
+                        <span>IVA :</span>
+                    </div>
+                    <div class="d-inline text-right" style="font-size: 14px !important; float: right !important;">
+                        <span>$ {{sumaPrecios.IVA}}</span>
+                    </div>
+                    <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                    <div class="d-inline" style="font-size: 20px !important;">
+                        <span><b>Total :</b></span>
+                    </div>
+                    <div class="d-inline text-right" style="font-size: 20px !important; float: right !important;">
+                        <span><b>$ {{sumaPrecios.Total}}</b></span>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                <button *ngIf="rfcProveedor != null && idProveedorEntidad != null" class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form" (click)="fnCrearCotizacion()">
+                    <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                    Crear cotizacion
+                </button>
+            </div>
+        </div>
+    </mat-card>
+    <br />
+</div>
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <img *ngIf="objeto.nombre=='LogoCotizaciones'" class='imagenIconoGris' [src]="objeto.path">
+            <span *ngIf="objeto.nombre=='LogoCotizaciones'">&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <span *ngIf="objeto.nombre=='TituloCotizaciones'">{{objeto.label}}</span>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <app-grid-component *ngIf='workshopGridConfiguration.Columns' [Color]="Color" [datos]="workshopGridData" [gridOptions]="workshopGridConfiguration.GridOptions" [keyDetalle]="keyDetalle" [columnsdetail]="columnsdetail" [Detail]="workshopGridConfiguration.Detail"
+                [columns]="workshopGridConfiguration.Columns" [Checkbox]="workshopGridConfiguration.Checkbox" [Editing]="workshopGridConfiguration.Editing" [Columnchooser]="workshopGridConfiguration.Columnchooser" [searchPanel]="workshopGridConfiguration.SearchPanel"
+                [scroll]="workshopGridConfiguration.Scroll" [toolbar]="workshopGridConfiguration.ToolBox" [toolbardetail]="toolbardetail" (datosevent)="datosMessage($event)" (datosdetailevent)="datisDetailMessage($event)" (messageEvent)="receiveMessage($event)">
+            </app-grid-component>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 prices-color" style="float: right !important;">
+                <div class="d-inline" style="font-size: 16px !important;">
+                    <span>Subtotal :</span>
+                </div>
+                <div class="d-inline text-right" style="font-size: 16px !important; float: right !important;">
+                    <span>$ {{sumaTotal.subTotal}}</span>
+                </div>
+                <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                <div class="d-inline" style="font-size: 14px !important;">
+                    <span>IVA :</span>
+                </div>
+                <div class="d-inline text-right" style="font-size: 14px !important; float: right !important;">
+                    <span>$ {{sumaTotal.IVA}}</span>
+                </div>
+                <hr style="margin-top:0.5em !important; margin-bottom:0.5em !important;">
+                <div class="d-inline" style="font-size: 20px !important;">
+                    <span><b>Total :</b></span>
+                </div>
+                <div class="d-inline text-right" style="font-size: 20px !important; float: right !important;">
+                    <span><b>$ {{sumaTotal.Total}}</b></span>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form" (click)="fnAgregarNuevaCotizacion()" [disabled]="!partidasDataShadow.length == 0">
+                <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                Guardar
+            </button>
+        </div>
+    </div>
+</mat-card>

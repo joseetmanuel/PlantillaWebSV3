@@ -1,0 +1,37 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}: <span style="font-size: 22px"
+            [style.color]="color">{{estatus}} </span></span>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12 col-md- col-lg-12 text-right">
+      <mat-button-toggle-group #group="matButtonToggleGroup" (change)="fnWorkshopType(group.value)" [value]="1">
+        <mat-button-toggle *ngIf="switchCosto" value="1" checked="true"> Costo
+        </mat-button-toggle>
+        <mat-button-toggle *ngIf="switchVenta" value="2"> Venta
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <app-grid-component *ngIf="columns" [datos]="solicitudes" [gridOptions]="gridOptions" [columns]="columns"
+        [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+        [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+        (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+      </app-grid-component>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,26 @@
+<div style="display:inline-block; width: 100%;">
+    <div style="display:inline-block; width: 90%;">
+        <span class="vertical-timeline-element-icon bounce-in">
+            <i class="badge badge-dot badge-dot-xl" [style.background-color]="notificacion.color"></i>
+        </span>
+        <div class="vertical-timeline-element-content bounce-in">
+            <div style="display:inline-block;">
+                <h3 class="timeline-title">{{notificacion.titulo}}
+                    <!-- <div class="badge badge-danger ml-2">{{notificacion.accion}}</div> -->
+                </h3>
+            </div>
+            <p>
+                {{notificacion.descripcion}}
+            </p>
+            <span class="vertical-timeline-element-date">
+                <div style="display:inline-block;">
+                    <div>{{notificacion.fecha}}</div>
+                    <div>{{notificacion.hora}}</div>
+                </div>
+            </span>
+        </div>
+    </div>
+    <!-- <div style="display:inline-block; width: 10%; vertical-align:top;">
+        <mat-checkbox (click)="marcarLeido(notificacion)" [checked]="notificacion.leido" [disabled]="notificacion.leido"></mat-checkbox>
+    </div> -->
+</div>

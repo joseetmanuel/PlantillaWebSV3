@@ -1,0 +1,39 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<mat-card class="cardMarginBottom">
+    <div class="row">
+        <div class="col-sm-12 col-md-5 col-xl-4">
+            <img class='imagenIcono'
+                src="./assets/images/iconos-sisco/Solicitudes/tipo_solicitud_card.png">&nbsp;&nbsp;&nbsp;<span
+                class="title">Queremos saber tu opinión</span>
+        </div>
+    </div>
+    <div class="row text-right">
+        <div class="col-sm-12 col-md-4 col-xl-3">
+            <p class="subTitle">Ayúdanos a mejorar</p>
+        </div>
+    </div>
+</mat-card>
+
+<div *ngIf='encuestas'>
+    <div *ngFor='let encuest of encuestas["solicitud"]; let s = index'>
+        <app-banner-proveedor-entidad [rfcProveedor]="encuest.rfcProveedor"
+            [idProveedorEntidad]="encuest.idProveedorEntidad">
+        </app-banner-proveedor-entidad>
+        <mat-card>
+            <app-encuesta-proveedor [encuest]='encuest' [idComprobanteRecepcion]='encuest.idComprobanteRecepcion'
+                (data)='getDatos($event)'></app-encuesta-proveedor>
+
+            <div class="row" *ngIf='s + 1 === encuestas["solicitud"].length'>
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='guardarEncuesta()'><i class="pe-7s-key btn-icon-wrapper">
+                        </i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+        <hr *ngIf='s + 1 < encuestas["solicitud"].length'>
+    </div>
+</div>

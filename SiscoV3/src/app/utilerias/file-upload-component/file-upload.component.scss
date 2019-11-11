@@ -1,0 +1,75 @@
+/* 
+.container{
+    margin-left: 40%;
+    margin-top: 30px;
+}
+
+.caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.option {
+    margin-top: 10px;
+}
+
+.options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    width: 300px;
+} */
+
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+}
+
+::ng-deep .dx-fileuploader-file-status-message{
+    display: none;
+}
+
+::ng-deep .dx-fileuploader-invalid .dx-fileuploader-cancel-button {
+    display: none;
+}
+
+.pdf {
+    display: block;
+}
+
+.linea:focus {
+    outline: 0;
+}
+
+.grid {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+@media only screen and (min-width: 992px) {
+    .pdf {
+        width: 400px;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .pdf {
+        width: 400px;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .pdf {
+        width: 800px;
+        overflow: hidden;
+    }
+}

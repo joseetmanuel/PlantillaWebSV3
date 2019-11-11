@@ -1,0 +1,8 @@
+<div [ngClass]="{'desactiva': loading }">
+    <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+    </app-breadcrumbs>
+    <app-form-proveedor-propio [modulo]="modulo" [tituloDireccion]="tituloDireccion" [showMaps]="false" [formValid]="true" [newProveedor]="true" (formProveedorEvent)="AgregarProveedor($event)">
+    </app-form-proveedor-propio>
+</div>

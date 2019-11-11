@@ -1,0 +1,136 @@
+<mat-card class="cardMargin">
+    <div class="container-fluid" style="padding-left: 0;padding-right:0">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <img class='imagen' src="../../../assets/images/iconos-panel/proveedor-panel-automovil.png">
+                &nbsp;&nbsp;&nbsp;
+                <span>Datos de taller</span>
+                <img style="width: 30px;float: right;" src="../../../assets/images/provedor-banner/accion.svg">
+            </div>
+        </div>
+        <hr>
+        <div class="row align-items-center" *ngIf="datos && datos.contacto">
+            <div
+                [ngClass]="especialidades ? 'col-8 col-sm-8 col-md-12 col-lg-3 col-xl-3' : 'col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4'">
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 col-xl-6 ImagenCarro" *ngIf="datos.contacto.logo">
+                        <app-viewer [IViewer]="IViewer">
+                        </app-viewer>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 col-xl-6 datostaller">
+                        <span>{{ datos.contacto.razonSocial }}</span>
+                        <p style="margin-top: 10px">RFC. {{ datos.contacto.rfcProveedor }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical tall"
+                [ngClass]="especialidades ? 'col-4 col-sm-4 col-md-6 col-lg-1 col-xl-1' : 'col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4'">
+                <div class="row">
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 tituloseccion">Contacto</p>
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoscontacto">
+                        {{ datos.contacto.personaContacto }} <br /> Tel. {{ datos.contacto.telefono }}</p>
+                </div>
+                <div class="row">
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 tituloseccion">Disponibilidad</p>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoscontacto">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="progress" style="height: 5px;">
+                                    <div aria-valuemin="0" role="progressbar" class="green100"
+                                        aria-valuenow="disponibilidad.porcentaje" aria-valuemax="100"
+                                        [style.width]="disponibilidad.porcentaje + '%' ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datoscontacto">
+                        {{ disponibilidad.cantidadTotal }}/{{ disponibilidad.cantidadDisponible }}
+                        <span style="float: right !important;">{{ disponibilidad.porcentaje }}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical tall off-vertical overflow"
+                [ngClass]="especialidades ? 'col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2' : 'col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4'"
+                *ngIf="especialidades">
+                <hr class="hr-block">
+                <div class="row">
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 tituloseccion sticky">Especialidades</p>
+                    <div *ngFor="let especialidad of especialidades" class="col-3 col-sm-3 col-md-6 col-lg-6 col-xl-6">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 especialidades">
+                                <img [src]="especialidad.ruta">
+                            </div>
+                            <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 datosespecialidad">
+                                {{ especialidad.nombre }}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="hr-block">
+            </div>
+            <div class="vertical tall off-vertical"
+                [ngClass]="especialidades ? 'col-12 col-sm-12 col-md-6 col-lg-3 col-xl-2' : 'col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4'"
+                *ngIf="especialidades">
+                <div class="row no-gutters" style="height: 100%">
+                    <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 tall off-vertical cajaTop">
+                        <div class="row align-items-center no-gutters" style="border-style: solid;"
+                            *ngIf="calificaciones && calificaciones.length > 0">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="progress verticalprogress">
+                                    <div aria-valuemin="0" role="progressbar" class="progress-bar"
+                                        [ngClass]="{'green100': porcentajeTotal >= 76, 'green75': porcentajeTotal >= 51 && porcentajeTotal <= 75, 'orange50': porcentajeTotal >= 26 && porcentajeTotal <= 50  , 'red25': porcentajeTotal <= 25}"
+                                        aria-valuenow="porcentajeTotal" aria-valuemax="100"
+                                        [style.height]="porcentajeTotal + '%' "></div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 porcentaje">
+                                {{ porcentajeTotal ? porcentajeTotal:0 }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 tall off-vertical overflow">
+                        <div class="row align-items-center no-gutters"
+                            *ngIf="calificaciones && calificaciones.length > 0">
+                            <p class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 tituloseccion sticky">Rating</p>
+                            <div class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-12"
+                                *ngFor="let calificacion of calificaciones">
+                                <div style="padding: 5px">
+                                    <div class="cont-button">
+                                        <img [src]="calificacion.aprobado ? '../../../assets/images/provedor-banner/bien.svg' : '../../../assets/images/provedor-banner/mal.svg'"
+                                            class="status-button">
+                                    </div>
+                                    <img class="calificacion-icon" [src]="calificacion.iconoURL">
+                                    <span class="calificacion">{{ calificacion.nombre }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="calificaciones && calificaciones.length === 0"
+                            class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
+                            No existen datos suficientes para evaluar al taller
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical tall off-vertical"
+                [ngClass]="especialidades ? 'col-12 col-sm-12 col-md-6 col-lg-3 col-xl-4' : 'col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4'">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-5 col-xl-4">
+                        <div class="row">
+                            <p class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-12 tituloseccion">Sucursal</p>
+                            <p class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-12 datossucursal">
+                                {{ datos.contacto.nombreComercial }}</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 align-self-center">
+                        <img style="width: 100%" [src]="datos.contacto.fotoProveedorEntidad">
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-4 align-self-center"
+                        *ngIf="datos.contacto.lat && datos.contacto.lon">
+                        <img style="width: 100%"
+                            src="https://maps.googleapis.com/maps/api/staticmap?center={{datos.contacto.lat}},{{datos.contacto.lon}}&zoom=18&size=400x400&&scale=2&markers={{datos.contacto.lat}},{{datos.contacto.lon}}&style=feature:all|element:geometry|color:0x005383&style=feature:all|element:labels.text.fill|gamma:0.01|lightness:20&style=feature:all|element:labels.text.stroke|saturation:-31|lightness:-33|weight:2|gamma:0.8|color:0x757575|visibility:simplified&style=feature:all|element:labels.icon|visibility:off&style=feature:landscape|element:geometry|lightness:30|saturation:30&style=feature:poi|element:geometry|saturation:20&style=feature:poi.park|element:geometry|lightness:20|saturation:-20&style=feature:road|element:geometry|lightness:10|saturation:-30&style=feature:road|element:geometry.stroke|saturation:25|lightness:25&style=feature:water|element:all|lightness:-20&key=AIzaSyDiCxjgTFOg0BLrRfoz4ka1fiB8jJU2VzA">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>

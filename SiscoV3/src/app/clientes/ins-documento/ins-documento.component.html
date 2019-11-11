@@ -1,0 +1,90 @@
+<div [ngClass]="{ desactiva: numero == 0 }">
+    <mat-spinner *ngIf="numero == 0" class="spinner"></mat-spinner>
+    <!-- <app-breadcrumbs urlImagen='./assets/images/iconos-sisco/clientes.png' [ruta]='ruta'></app-breadcrumbs> -->
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+
+    <div [formGroup]="clienteForm">
+        <mat-card class="cardMarginBottom" [ngClass]="{ desactiva: numero == 0 }">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datoscliente.png" />
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Datos del cliente</span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <mat-form-field class="inputFullWide" [ngClass]="{ desactiva: idCliente }">
+                        <input readonly matInput value="{{ datos?.nombre }}" placeholder="Nombre cliente *"
+                            formControlName="nombre" />
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card class="cardMarginBottom" [ngClass]="{ desactiva: numero == 0 }">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_documentos.png" />
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Datos del documento</span>
+                </div>
+            </div>
+            <hr />
+            <div [formGroup]="documentoForm">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <mat-form-field id="blueversion" class="inputFullWide">
+                            <mat-select (selectionChange)="onSelectionChanged($event.value);"
+                                formControlName="idTipoDocumento" placeholder="Selecciona un documento">
+                                <mat-option id="bluemat" *ngFor="let documento of documentosLoad"
+                                    [value]="{idTipoDocumento:documento.idTipoDocumento, descripcion:documento.descripcion}">
+                                    {{ documento.descripcion }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                El campo es
+                                <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf='band' class="col-sm-12 col-md-6 col-xl-6">
+                        <app-file-upload-component #avatar [IUploadFile]="IUploadFile"
+                            (messageEvent)="ResultUploadFile($event)">
+                        </app-file-upload-component>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="bandAgregar" class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='insDocto()' [disabled]="!documentoForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"> </i>
+                        Agregar
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                </div>
+            </div>
+        </mat-card>
+        <mat-card>
+            <div class="row cardMargin">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_documentos.png">
+                        &nbsp;&nbsp;&nbsp;
+                        <span>Documentos</span>
+                    </div>
+                </div>
+            </div>
+            <app-viewer [desactivaragregar]='desactivaragregar' [IViewer]="IViewer" (datosevent)='datosMessage($event)'
+                (messageEvent)="receiveMessageDoc($event)" [doc]="doc" [total]="total"></app-viewer>
+        </mat-card>
+    </div>
+
+</div>

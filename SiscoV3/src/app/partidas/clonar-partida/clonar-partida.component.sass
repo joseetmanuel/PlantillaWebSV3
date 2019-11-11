@@ -1,0 +1,332 @@
+// // // BOOTSTRAP 4 VARIABLES
+
+@import "../../../assets/components/bootstrap4/functions"
+@import "../../../assets/components/bootstrap4/variables"
+@import "../../../assets/components/bootstrap4/mixins"
+
+@import "../../../assets/components/icons/p7icons"
+
+// // // ArchitectUI Themes Variables
+
+@import "../../../assets/themes/layout-variables"
+
+// // // BOOTSTRAP 4 IMPORTS
+
+@import "../../../assets/components/bootstrap4/pagination"
+@import "../../../assets/components/bootstrap4/modal"
+
+// // // LAYOUT
+
+@import "../../../assets/layout/layout"
+
+// // // UTILS
+
+@import "../../../assets/utils/animate"
+
+// // // ELEMENTS
+
+@import "../../../assets/elements/loaders"
+// @import "../../../assets/elements/forms-wizard"
+// // // ELEMENTS
+
+@import "../../../assets/elements/buttons"
+
+// // // Notifications
+// @import "../../../assets/components/notifications/sweetalerts"
+// @import "../../../assets/components/notifications/toastr"
+
+@import "../../../assets/components/icons/linearicons"
+
+.forms-wizard 
+  margin: 0
+  padding: 0
+  list-style-type: none
+  width: 100%
+  display: table
+  table-layout: fixed
+  @include border-radius($border-radius)
+  border: 0
+
+  .liStep 
+    display: table-cell
+    vertical-align: middle
+    text-align: center
+    cursor: pointer
+    font-size: $font-size-lg / 1.1
+    padding: ($layout-spacer-x / 1.5) 0
+    color: $gray-500
+    position: relative
+
+    .nav-link 
+      display: block
+      padding: 0
+      color: $gray-500
+
+      &:focus,
+      &:active,
+      &:hover 
+        border-color: transparent
+        color: $gray-700 !important
+      
+
+    &::after,
+    &::before 
+      position: absolute
+      height: 4px
+      top: 50%
+      margin-top: -($layout-spacer-x / 1.5)
+      width: 50%
+      content: ""
+      background: $gray-300
+      z-index: 5
+      transition: all 0.2s
+
+    &::after 
+      left: 50%
+    
+
+    &::before 
+      left: 0
+    
+
+    &:first-child 
+      &::before 
+        @include border-left-radius(20px)
+
+    &:last-child 
+      &::after 
+        @include border-right-radius(20px)
+      
+    
+
+    em 
+      font-style: normal
+      font-size: $h4-font-size
+      background: $gray-400
+      color: $white
+      text-align: center
+      padding: 0
+      width: 40px
+      height: 40px
+      line-height: 40px
+      @include border-radius(50px)
+      display: block
+      margin: 0 auto 0.5rem
+      position: relative
+      z-index: 7
+      transition: all 0.2s
+    
+
+    &.active 
+      .nav-link 
+        color: $gray-700
+      
+
+      em 
+        background: #3F6AD8
+        color: $white
+      
+
+      &::after,
+      &::before 
+        background: #3F6AD8
+      
+    
+
+    &.done 
+      em 
+        font-family: "Linearicons-Free"
+        @extend .lnr-checkmark-circle
+        background: $success
+        overflow: hidden
+        &::before 
+          background-image: url("../../../assets/images/iconos-utilerias/verified.svg")
+          background-repeat: no-repeat
+          background-position: center center
+          background-size: 20px 20px
+          display: block
+          width: 100%
+          height: 100%
+          content: ""
+        
+      
+
+      &::after,
+      &::before 
+        background: $success
+      
+
+      &:hover 
+        color: $gray-700 !important
+  
+    &:hover 
+      color: $gray-600
+
+
+// Form Wizard Alternate
+
+.forms-wizard-alt 
+  .forms-wizard 
+    li 
+      font-size: $font-size-base
+
+      em 
+        width: 14px
+        height: 14px
+        line-height: 14px
+        text-indent: -999rem
+        border: $white solid 2px
+      
+    
+  
+
+
+.downloadTemplate 
+  text-align: center
+  img 
+    background-image: url("../../../assets/images/iconos-utilerias/download-archive.svg")
+    height: 40px
+    width: 40px
+    vertical-align: middle
+    cursor: pointer
+  
+
+  img:hover 
+    opacity: 1
+  
+
+  span 
+    display: block
+  
+
+
+.lnr-checkmark-circle:before,
+.forms-wizard li.done em:before 
+  content: attr(class)
+
+
+.content-component 
+  padding-top: 20px
+  padding-bottom: 20px
+
+
+.forms-wizard-vertical 
+  .forms-wizard 
+    display: block
+    width: 30%
+    float: left
+    padding: 0 $layout-spacer-x $layout-spacer-x 0
+
+    li 
+      display: block
+      margin: 0
+      padding: 0
+
+      &::before,
+      &::after 
+        display: none
+      
+
+      a 
+        text-align: left
+        display: flex
+        align-items: center
+        align-content: flex-start
+        padding: ($layout-spacer-x / 2)
+        margin-bottom: ($layout-spacer-x / 3)
+        @include border-radius($border-radius-lg)
+        transition: all 0.2s
+
+        em 
+          margin: 0 ($layout-spacer-x / 2) 0 0
+        
+
+        &:active,
+        &:focus,
+        &:hover 
+          background: $gray-200
+          color: $gray-700 !important
+        
+      
+
+      &.active 
+        a 
+          background: #3F6AD8
+          color: $white
+
+          &:active,
+          &:focus,
+          &:hover 
+            color: $white !important
+          
+
+          em 
+            background: rgba(255, 255, 255, 0.2)
+          
+        
+      
+    
+  
+
+  .form-wizard-content 
+    width: 70%
+    overflow: auto
+  
+
+
+span.message 
+  color: $success
+
+
+span.required 
+  color: red
+
+
+option.seleccionado 
+  color: red
+
+
+span.limpiar-seleccionados 
+  cursor: pointer
+  font-size: 20px
+  color: #3f6ad8
+
+
+.header-panel-error 
+  background: $red
+  color: $white
+  button 
+    color: $white !important
+  
+
+
+::ng-deep .mat-form-field-hide-placeholder.mat-select-placeholder 
+  color: red !important
+  &::before 
+    content: "*" !important
+  
+
+
+::ng-deep .dx-fileuploader-wrapper 
+  padding: 0
+
+
+::ng-deep .dx-fileuploader-show-file-list .dx-fileuploader-files-container 
+  padding-top: 0
+  text-align: -webkit-center
+
+
+::ng-deep .dx-fileuploader-input-wrapper 
+  padding: 5px
+
+
+::ng-deep .dx-fileuploader-input-wrapper .dx-button 
+  float: none
+
+
+::ng-deep .dx-fileuploader-file-info 
+  float: none
+
+
+::ng-deep .dx-fileuploader-input 
+  padding: 7px 80px

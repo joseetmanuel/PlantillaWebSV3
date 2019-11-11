@@ -1,0 +1,281 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="!(idCliente || rfcClienteEntidad) && breadcrumb1" [ruta]="breadcrumb1"></app-breadcrumbs>
+
+    <app-breadcrumbs *ngIf="(idCliente) && breadcrumb2" [ruta]="breadcrumb2"></app-breadcrumbs>
+
+    <app-breadcrumbs *ngIf="(rfcClienteEntidad) && breadcrumb3" [ruta]="breadcrumb3"></app-breadcrumbs>
+
+
+
+    <div [formGroup]="clienteForm">
+        <mat-card class="cardMarginBottom" [ngClass]="{'desactivaPantalla': numero == 0 }">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datoscliente.png">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Datos del cliente</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div *ngIf="!(idCliente || rfcClienteEntidad)" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <small class="titulo-input-dinamico">Foto</small>
+                    <app-file-upload-component #avatar [IUploadFile]="IUploadFile"
+                        (messageEvent)="ResultUploadFile($event)">
+                    </app-file-upload-component>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide" [ngClass]="{'desactiva': (rfcClienteEntidad || idCliente) }">
+                        <input matInput value="{{datos?.nombre}}" maxlength='250' placeholder="Nombre cliente *"
+                            formControlName="nombre" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf="!(idCliente || rfcClienteEntidad)">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='agregarCliente()' [disabled]="!clienteForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <div [formGroup]="clienteEntidadForm" *ngIf="(idCliente || rfcClienteEntidad)">
+        <mat-card [ngClass]="{'desactivaPantalla': numero == 0 }">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datosfiscales.png">
+                        &nbsp;&nbsp;&nbsp;
+                        <span>Datos fiscales</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class='col-sm-12 col-md-4 col-xl-4 text-center'>
+                    <mat-button-toggle-group #group="matButtonToggleGroup" (click)='cambio()'
+                        formControlName="tipoPersona">
+                        <mat-button-toggle value="1" class="inputFullWide"> Física </mat-button-toggle>
+                        <mat-button-toggle value="4" class="inputFullWide"> Moral </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <mat-button-toggle-group #group="matButtonToggleGroup" (change)="cambio()"
+                            [value]="1" formControlName="tipoPersona">
+                            <mat-button-toggle value="1" checked="true"> Física
+                            </mat-button-toggle>
+                            <mat-button-toggle value="4"> Moral
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div> -->
+                <div class="col-sm-12 col-md-8 col-xl-8">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre comercial *" maxlength='250'
+                            formControlName="nombreComercial" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-xl-8">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Razón social *" maxlength='250' formControlName="razonSocial"
+                            [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-4 col-xl-4" [ngClass]="{'desactiva': (rfcClienteEntidad) }">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="RFC cliente *" minlength="{{len}}" maxlength='{{len}}'
+                            formControlName="rfcCliente" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="clienteEntidadForm.controls['tipoPersona'].value === '1'">
+                            El campo es
+                            <strong>requerido</strong> máximo 13 caracteres
+                        </mat-error>
+
+                        <mat-error *ngIf="clienteEntidadForm.controls['tipoPersona'].value === '4'">
+                            El campo es
+                            <strong>requerido</strong> máximo 12 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-xl-8">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Persona contacto" maxlength='300'
+                            formControlName='personaContacto'>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Teléfono" formControlName='telefono' maxlength='100'>
+                        <mat-error>
+                            Solo se aceptan
+                            <strong>números</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Correo electrónico *" formControlName='email' maxlength='400'>
+                        <mat-error>
+                            Por favor, dar un correo electrónico válido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input maxlength='5' #cp matInput placeholder="Código postal *" (focusout)="getCp()"
+                            (keydown)="onKeydown($event)" formControlName="cp" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>(5 caracteres)
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Estado *" formControlName="estado" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input #municipio matInput placeholder="Município *" formControlName="municipio"
+                            [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Tipo asentamiento *" formControlName="tipoAsentamiento"
+                            [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let tipoAsentamiento of tipoAsentamientos'
+                                [value]="tipoAsentamiento.idTipoAsentamiento">
+                                {{tipoAsentamiento.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Asentameinto *" maxlength='500' formControlName="asentamiento"
+                            [matAutocomplete]="auto" [errorStateMatcher]="matcher">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option id="bluemat" *ngFor="let asentamiento of asentamientos"
+                                [value]="asentamiento.nombreAsentamiento">
+                                {{asentamiento.nombreAsentamiento}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-sm-12 col-md-6 col-xl-6'>
+                    <mat-form-field id="blueversion" class="inputFullWide">
+                        <mat-select placeholder="Tipo vialidad *" formControlName="tipoVialidad"
+                            [errorStateMatcher]="matcher">
+                            <mat-option id="bluemat" *ngFor='let tipoVialidad of tipoVialidades'
+                                [value]="tipoVialidad.idTipoVialidad">
+                                {{tipoVialidad.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class='col-sm-12 col-md-6 col-xl-6'>
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Vialidad *" maxlength='500' formControlName="vialidad"
+                            [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput maxlength='250' placeholder="No. Ext / Mz. Lt."
+                            formControlName='numeroExterior'>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput maxlength='250' placeholder="No. Int" formControlName='numeroInterior'>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="!(rfcClienteEntidad)">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='agregarClienteEntidad()' [disabled]="!clienteEntidadForm.valid"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Agregar
+                    </button>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="(rfcClienteEntidad)">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='modificarClienteEntidad()' [disabled]="!clienteEntidadForm.valid">
+                        <i class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf='!clienteEntidadForm.valid'>
+                <p class="tagAviso">Los campos con * son obligatorios</p>
+            </div>
+        </mat-card>
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div class="app-inner-layout chat-layout">
+    <div class="app-inner-layout__wrapper" [ngClass]="{'open-mobile-menu' : toggleMobileSidebar}" style="min-height: 50vh;">
+        <div class="app-inner-layout__content card">
+            <div class="table-responsive">
+                <div class="scroll-area-lg">
+                    <div class="scrollbar-container">
+                        <perfect-scrollbar [autoPropagation]="true" class="ps-show-limits" #scrollChat>
+                            <div class="ps ps--active-y" ng-reflect-disabled="false">
+                                <div class="ps-content">
+                                    <div class="chat-wrapper">
+                                        <div *ngFor="let chat of messageList | async">
+                                            <app-chat-box [chat]="chat">
+                                            </app-chat-box>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ps__rail-y">
+                                    <div class="ps__thumb-y" tabindex="0"></div>
+                                </div>
+                            </div>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+                <div class="app-inner-layout__bottom-pane d-block text-center">
+                    <div class="mb-0 position-relative row form-group">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <input (keydown)="onKeydown($event)" type="text" placeholder="Escribe tu mensaje y da enter para enviarlo" class="form-control-sm form-control" [(ngModel)]="mensaje">
+                        </div>
+                        <!-- <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                            <button (click)="EnviarMensaje()" style="align-content: initial;">
+                                                <img src="../../../assets/images/iconos-tarea/accion.png" style="width: 20px; height: 20px;">
+                                            </button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

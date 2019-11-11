@@ -1,0 +1,400 @@
+<div [ngClass]="{'desactivaPantalla': spinner}">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+    </app-breadcrumbs>
+    <div *ngIf="!allSolicitudes && solicitudActual">
+
+        <app-fase-paso-solicitud *ngIf="solicitudActual" [idLogo]='solicitudActual.idLogoContrato' [idClase]='idClase'
+            [idTipoSolicitud]='solicitudActual.idTipoSolicitud' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente'
+            [numeroContrato]='numeroContrato' [idSolicitud]='idSolicitud'></app-fase-paso-solicitud>
+
+        <app-banner class="cardMarginBottom" [IObjeto]="IObjeto"></app-banner>
+
+        <mat-card *ngIf="!allSolicitudes && solicitudActual && proveedorEntidades.length > 1" class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCardProveedor'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCardCardProveedor'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCardProveedor'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <app-grid-component *ngIf="columnsProveedor.length > 0" [datos]="proveedorEntidades"
+                [gridOptions]="gridOptionsProveedor" (messageEvent)="EventButtonDataGridProveedor($event)"
+                (datosevent)='DatosMessage($event)' [columns]="columnsProveedor" [Checkbox]="CheckboxProveedor"
+                [Editing]="EditingProveedor" [Columnchooser]="ColumnchooserProveedor"
+                [searchPanel]="searchPanelProveedor" [scroll]="scroll" [toolbar]="toolbarProveedor">
+            </app-grid-component>
+        </mat-card>
+
+        <div class="cardMarginBottom" *ngIf="idProveedorEntidad">
+            <app-banner-proveedor-entidad [rfcProveedor]="rfcProveedor" [idProveedorEntidad]="idProveedorEntidad">
+            </app-banner-proveedor-entidad>
+        </div>
+
+        <div class="row" *ngIf="idProveedorEntidad">
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Total</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Total facturado</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalFacturadoProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Pendiente por facturar</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalPendienteProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="showFacturasCotizaciones">
+
+            <mat-card class="cardMarginBottom">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Solicitudes/subir_factura.png">
+                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                        <span>Subir factura</span>
+                    </div>
+                </div>
+                <hr>
+                <app-file-upload-component *ngIf="showFileUpload" [IUploadFile]="IUploadFile"
+                    (messageEvent)="ResultUploadFile($event)">
+                </app-file-upload-component>
+
+            </mat-card>
+
+            <mat-card class="cardMarginBottom" *ngIf="showGrid">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCardCotizacion'" class='imagenIconoGris'
+                                [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCardCotizacion'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <span *ngIf="objeto.nombre=='TituloCardCotizaciones'">{{objeto.label}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <app-grid-component *ngIf="columnsCotizacion" [Color]="Color" [datos]="cotizaciones"
+                    [gridOptions]="gridOptionsCotizacion" [keyDetalle]="keyDetalle" [Detail]="detailCotizacion"
+                    [columns]="columnsCotizacion" [Checkbox]="CheckboxCotizacion" [Editing]="EditingCotizacion"
+                    [Columnchooser]="ColumnchooserCotizacion" [searchPanel]="searchPanelCotizacion" [scroll]="scroll"
+                    [toolbar]="toolbarCotizacion" (datosevent)="SeleccionRowMaster($event)">
+                </app-grid-component>
+
+            </mat-card>
+
+            <mat-card class="cardMarginBottom" *ngIf="showGrid && facturaActual.nombreFactura">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div style="display: inline;">
+                            <img class='imagenIconoGris'
+                                src="./assets/images/iconos-sisco/Mantenimiento/detalle_facturas.png">
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div style="display: inline;">
+                            <span>Detalle de la factura</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div class="row no-gutters detalle-factura">
+                        <div class="col-xl-4">
+                            <div class="nombre">
+                                <p class="label-detalle-factura" style="padding-top: 15px;"><span>Factura</span></p>
+                                <p>
+                                    <span class="dato-factura">{{ facturaActual.nombreFactura }}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="row no-gutters" style="height: 100%">
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto total</span></p>
+                                    <p>
+                                        <span class="dato-factura">{{ facturaActual.subTotal | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto aplicado</span></p>
+                                    <p>
+                                        <span class="dato-factura">{{ montoAplicado | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto restante</span></p>
+                                    <p>
+                                        <span
+                                            class="dato-factura">{{ facturaActual.subTotal - montoAplicado | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-3 color1">
+                                    <p class="label-detalle-factura"><span>Total de cotizaciones</span></p>
+                                    <p class="text-right">
+                                        <span class="dato-factura">{{ numeroCotizacionesSeleccionadas.length }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-3 color1">
+                                    <p class="label-detalle-factura"><span>Total de partidas</span></p>
+                                    <p class="text-right">
+                                        <span class="dato-factura">{{ partidasSeleccionadas.length }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 text-right"
+                    style="    display: inline-block; margin-top: 10px;">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='GuardarPartidas()'
+                        [disabled]="(montoAplicado === 0 || montoAplicado != facturaActual.subTotal)">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Guardar
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Proceso de carga de facturas por medio del rfcproveedor -->
+    <div *ngIf="allSolicitudes && rfcProveedor">
+        <mat-card *ngIf="proveedorEntidades.length > 1" class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCardProveedor'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCardCardProveedor'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <span *ngIf="objeto.nombre=='TituloCardProveedor'">{{objeto.label}}</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <app-grid-component *ngIf="columnsProveedor.length > 0" [datos]="proveedorEntidades"
+                [gridOptions]="gridOptionsProveedor" (messageEvent)="EventButtonDataGridProveedor($event)"
+                (datosevent)='DatosMessage($event)' [columns]="columnsProveedor" [Checkbox]="CheckboxProveedor"
+                [Editing]="EditingProveedor" [Columnchooser]="ColumnchooserProveedor"
+                [searchPanel]="searchPanelProveedor" [scroll]="scroll" [toolbar]="toolbarProveedor">
+            </app-grid-component>
+        </mat-card>
+
+        <div class="cardMarginBottom" *ngIf="idProveedorEntidad">
+            <app-banner-proveedor-entidad [rfcProveedor]="rfcProveedor" [idProveedorEntidad]="idProveedorEntidad">
+            </app-banner-proveedor-entidad>
+        </div>
+
+        <div class="row" *ngIf="idProveedorEntidad">
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Total</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Total facturado</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalFacturadoProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Pendiente por facturar</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4"> {{ totalPendienteProveedorEntidad | currency}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="showFacturasCotizaciones">
+
+            <mat-card class="cardMarginBottom">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+
+                        <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Solicitudes/subir_factura.png">
+                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                        <span>Subir factura</span>
+                    </div>
+                </div>
+                <hr>
+                <app-file-upload-component *ngIf="showFileUpload" [IUploadFile]="IUploadFile"
+                    (messageEvent)="ResultUploadFile($event)">
+                </app-file-upload-component>
+
+            </mat-card>
+
+            <mat-card class="cardMarginBottom" *ngIf="showGrid">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCardCotizacion'" class='imagenIconoGris'
+                                [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCardCotizacion'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <span *ngIf="objeto.nombre=='TituloCardCotizaciones'">{{objeto.label}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <app-grid-component *ngIf="columnsCotizacion" [Color]="Color" [datos]="cotizaciones"
+                    [gridOptions]="gridOptionsCotizacion" [keyDetalle]="keyDetalle" [Detail]="detailCotizacion"
+                    [columns]="columnsCotizacion" [Checkbox]="CheckboxCotizacion" [Editing]="EditingCotizacion"
+                    [Columnchooser]="ColumnchooserCotizacion" [searchPanel]="searchPanelCotizacion" [scroll]="scroll"
+                    (onInitialized)="onInitialized($event)"
+                    [toolbar]="toolbarCotizacion" (datosevent)="SeleccionRowMaster($event)">
+                </app-grid-component>
+
+            </mat-card>
+
+            <mat-card class="cardMarginBottom" *ngIf="showGrid && facturaActual.nombreFactura">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div style="display: inline;">
+                            <img class='imagenIconoGris'
+                                src="./assets/images/iconos-sisco/Mantenimiento/detalle_facturas.png">
+                            <span>&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div style="display: inline;">
+                            <span>Detalle de la factura</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div class="row no-gutters detalle-factura">
+                        <div class="col-xl-4">
+                            <div class="nombre">
+                                <p class="label-detalle-factura" style="padding-top: 15px;"><span>Factura</span></p>
+                                <p>
+                                    <span class="dato-factura">{{ facturaActual.nombreFactura }}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="row no-gutters" style="height: 100%">
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto total</span></p>
+                                    <p>
+                                        <span class="dato-factura">{{ facturaActual.subTotal | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto aplicado</span></p>
+                                    <p>
+                                        <span class="dato-factura">{{ montoAplicado | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-2 color1">
+                                    <p class="label-detalle-factura"><span>Monto restante</span></p>
+                                    <p>
+                                        <span
+                                            class="dato-factura">{{ facturaActual.subTotal - montoAplicado | currency }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-3 color1">
+                                    <p class="label-detalle-factura"><span>Total de cotizaciones</span></p>
+                                    <p class="text-right">
+                                        <span class="dato-factura">{{ numeroCotizacionesSeleccionadas.length }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xl-3 color1">
+                                    <p class="label-detalle-factura"><span>Total de partidas</span></p>
+                                    <p class="text-right">
+                                        <span class="dato-factura">{{ partidasSeleccionadas.length }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-12 text-right"
+                    style="    display: inline-block; margin-top: 10px;">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='GuardarPartidas()'
+                        [disabled]="(montoAplicado === 0 || montoAplicado != facturaActual.subTotal)">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Guardar
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

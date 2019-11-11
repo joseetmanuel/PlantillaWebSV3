@@ -1,0 +1,31 @@
+<div [ngClass]="{'desactivaPantalla': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+  </app-breadcrumbs>
+
+  <mat-card>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12 text-right">
+          <button routerLink="/sel-proveedor-propio"  *ngIf="contratosConMantenimiento.length > 0" class="mb-2 mr-2 btn btn-outline-2x btn-outline-success">{{modulo.camposClase[0].label}} Propios</button>
+      </div>
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+            <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <app-grid-component *ngIf="columns && proveedores" [datos]="proveedores" [gridOptions]="gridOptions" [columns]="columns"
+     [Checkbox]="Checkbox" [Editing]="Editing"
+      (messageEvent)="EventButtonDataGrid($event)" (datosevent)='DatosMessage($event)' [toolbar]="toolbar">
+    </app-grid-component>
+  </mat-card>
+</div>

@@ -1,0 +1,66 @@
+<div class="d-flex">
+    <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group" ngbDropdown placement="bottom-right" #userBoxDropDown="ngbDropdown">
+                        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle>
+              <span>
+                <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                  <img [src]="urlAvatar" alt="" class="rounded-circle">
+                </div>
+              </span>
+            </button>
+                        <div class="dropdown-menu-lg" ngbDropdownMenu>
+                            <div class="dropdown-menu-header">
+                                <div class="dropdown-menu-header-inner bg-info">
+                                    <div class="menu-header-image opacity-2 dd-header-bg-6"></div>
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <img width="42" [src]="urlAvatar" alt="" class="rounded-circle">
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">{{userName}}</div>
+                                                    <div class="widget-subheading opacity-8">{{userRol}}</div>
+                                                </div>
+                                                <div class="widget-content-right mr-2">
+                                                    <button class="btn-pill btn-shadow btn-shine btn btn-focus" (click)="CerrarSesion()">Cerrar Sesión</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-area-xs">
+                                <perfect-scrollbar [autoPropagation]="true">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item-header nav-item">Actividad</li>
+                                        <li class="nav-item-divider mb-0 nav-item"></li>
+                                        <li (click)="abrirChat()" class="nav-item" style="padding: 11px;cursor: pointer;">
+                                            <i class="pe-7s-comment pe-2x pe-fw pe-va"></i> Chat
+                                        </li>
+                                        <li class="nav-item-divider mb-0 nav-item"></li>
+                                        <li (click)="abrirPerfilUsuario()" class="nav-item" style="padding: 11px;cursor: pointer;">
+                                            <i class="pe-7s-user pe-2x pe-fw pe-va"></i> Mi cuenta
+                                        </li>
+                                    </ul>
+                                </perfect-scrollbar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content-left ml-3 header-user-info">
+                    <div class="widget-heading">{{userName}}</div>
+                    <div class="widget-subheading">{{userRol}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-btn-lg">
+        <button type="button" class="hamburger hamburger--elastic" [ngClass]="{'is-active' : globals.toggleDrawer}" (click)="toggleDrawer()">
+      <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+    </button>
+    </div>
+</div>

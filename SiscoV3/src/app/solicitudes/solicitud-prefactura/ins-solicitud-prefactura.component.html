@@ -1,0 +1,107 @@
+<div [ngClass]="{'desactivaPantalla': spinner}">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb">
+    </app-breadcrumbs>
+
+    <div *ngIf="contratoActual" [formGroup]="copadeForm">
+        <mat-card  class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCardFacturas'" class='imagenIconoGris' [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCardFacturas'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <span *ngIf="objeto.nombre=='TituloCardFacturas'">{{objeto.label}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput formControlName="agrupador" placeholder="Número estimación *">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="contratoActual.requiereCopade">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput formControlName="numeroCopade" placeholder="Número COPADE *">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="contratoActual.requiereCopade">
+                    <small class="titulo-input-dinamico" class="inputFullWide">Fecha llegada COPADE</small>
+                    <div class="inputFullWide">
+                        <dx-date-box formControlName="fechaLLegada" placeholder="Fecha llegada" type="date"
+                        [showClearButton]="true" pickerType="calendar" displayFormat="dd/MM/yyyy"
+                        [useMaskBehavior]="true" style="display: inline-block; width:50%;">
+                        </dx-date-box>
+                        <dx-date-box formControlName="horaLlegada" placeholder="Seleccione la hora" type="time"
+                            [showClearButton]="true" pickerType="list" [interval]="30"
+                            style="display: inline-block; width:50%;">
+                        </dx-date-box>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6" style="margin-top: auto">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Sub total *" formControlName="subtotal"> 
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="contratoActual.requiereCopade">
+                    <small class="titulo-input-dinamico">Subir Copade</small>
+                    <app-file-upload-component *ngIf="IUploadFile" [IUploadFile]="IUploadFile"
+                        (messageEvent)="ResultUploadFile($event)">
+                    </app-file-upload-component>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+    <mat-card class="cardMarginBottom" *ngIf="mostrarGridOrdenes && contratoActual">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <img *ngIf="objeto.nombre=='LogoCardOrdenes'" class='imagenIconoGris' [src]="objeto.path">
+                    <span *ngIf="objeto.nombre=='LogoCardOrdenes'">&nbsp;&nbsp;&nbsp;</span>
+                </div>
+                <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                    <span *ngIf="objeto.nombre=='TituloCardOrdenes'">{{objeto.label}}</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <app-grid-component *ngIf="columns.length > 0" [datos]="objetos"
+            [gridOptions]="gridOptions"
+            (datosevent)='DatosMessage($event)' [columns]="columns" [Checkbox]="Checkbox"
+            [Editing]="Editing" [Columnchooser]="Columnchooser"
+            (onInitialized)="onInitialized($event)"
+            [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar">
+        </app-grid-component>
+        <br>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                (click)='GenerarPrefactura()' [disabled]="datosevent.length < 1">
+                    <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

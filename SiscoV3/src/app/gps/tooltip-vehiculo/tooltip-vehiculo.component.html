@@ -1,0 +1,140 @@
+<div [ngClass]="{'desactivaPantalla': spinner }">
+    <mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+    <div class="row" *ngIf="!spinner">
+
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+            <br>
+            <figure>
+                <img [src]="vehiculo.foto" alt="foto">
+            </figure>
+        </div>
+        <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+            <br>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">Estatus</span>
+                </div>
+                <div class="col-8" *ngIf="vehiculo">
+                    <span *ngIf="vehiculo.desconectado == 1" class="vehiculo-data">Desconectado</span>
+                    <span *ngIf="vehiculo.desconectado == 0 && vehiculo.status == 'online'" class="vehiculo-data">Online</span>
+                    <span *ngIf="vehiculo.desconectado == 0 && vehiculo.status == 'offline'" class="vehiculo-data">Offline</span>
+                    <span *ngIf="vehiculo.desconectado == 0 && vehiculo.status == 'unknown'" class="vehiculo-data">Offline</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">Placas</span>
+                </div>
+                <div class="col-8">
+                    <span class="vehiculo-data">{{vehiculo.placa}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">Marca</span>
+                </div>
+                <div class="col-8">
+                    <span class="vehiculo-data">{{ vehiculo.marca }} {{ vehiculo.submarca }}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">VIN</span>
+                </div>
+                <div class="col-8">
+                    <span class="vehiculo-data">{{ vehiculo.VIN }}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">GPS ID</span>
+                </div>
+                <div class="col-8">
+                    <span class="vehiculo-data">{{ vehiculo.uniqueid }}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <span class="tooltip-label">Color</span>
+                </div>
+                <div class="col-8">
+                    <div [style.background-color]="vehiculo.color" class="cuadrado"></div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div class="row" *ngIf="!spinner">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <ngb-tabset *ngIf="vehiculo.operadores">
+                <ngb-tab [title]="index + 1" *ngFor="let operador of vehiculo.operadores; let index = index">
+                    <ng-template ngbTabContent>
+                        <p>
+                            <span class="font-weight-bold">Datos del conductor</span>
+                        </p>
+                        <div class="row">
+                            <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                                <figure>
+                                    <img [src]="operador.avatar" alt="avatar">
+                                </figure>
+                            </div>
+                            <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="col-12">
+                                    <span>{{ operador.PrimerNombre }} {{ operador.SegundoNombre }}
+                                        {{ operador.PrimerApellido }}
+                                        {{ operador.SegundoApellido }}</span>
+                                </div>
+                                <hr>
+                                <div class="col-12">
+                                    <span style="display: block">Tel. {{ operador.Celular }}</span>
+                                    <span>{{ operador.Email }}</span>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <hr>
+            <p>
+                <span class="tooltip-fecha">{{vehiculo.lastupdate | date: 'dd/MM/yy hh:mm'}}</span>
+                <br>
+                <span class="tooltip-direccion"> {{vehiculo.address}}</span>
+            </p>
+            <hr>
+            <div class="content-icons">
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-2 alarma-contenido">{{ vehiculo.alarmas }}</div>
+                    <div class="col-2">
+                        <i (click)="abrirRecorrido()" style="cursor: pointer" class="fa fa-play" ngdis><span></span></i>
+                    </div>
+                    <div class="col-2">
+                        <img [hidden]="vehiculo.status != 'online'" src="./assets/estadovehiculo/circ_verde.png"
+                            class="estadoauto" alt="">
+                        <img [hidden]="vehiculo.status != 'offline'" src="./assets/estadovehiculo/circ_gris.png"
+                            class="estadoauto" alt="">
+                        <img [hidden]="vehiculo.status != 'unknown'" src="./assets/estadovehiculo/circ_amarillo.png"
+                            class="estadoauto" alt="">
+                    </div>
+                    <div class="col-2">
+                        <a (click)="irDetalle()" routerLinkActive="router-link-active">
+                            <img src="./assets/estadovehiculo/accion.svg" class="estadoauto" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+</div>

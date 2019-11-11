@@ -318,6 +318,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 
     // DEMO PAGES
 
+    
     // Dashboards
 
     AnalyticsComponent,
@@ -379,6 +380,9 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ScrollableComponent,
     TooltipsPopoversComponent,
 
+    // Chart.js 
+    LineChartComponent,
+    
     // Tables
 
     RegularComponent,

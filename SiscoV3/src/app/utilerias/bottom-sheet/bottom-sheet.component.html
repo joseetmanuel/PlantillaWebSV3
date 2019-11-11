@@ -1,0 +1,8 @@
+<mat-nav-list>
+  <mat-list-item (click)="openLink(item)" *ngFor="let item of items">
+    <div mat-line class="ListItem">
+      <span>{{ item.nombre }}</span>
+      <span class="Cuadro"></span>
+    </div>
+  </mat-list-item>
+</mat-nav-list>

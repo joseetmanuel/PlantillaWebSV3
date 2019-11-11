@@ -1,0 +1,108 @@
+.desactiva {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.imagen {
+  width: 30px;
+  height: 26px;
+}
+
+.derecha {
+  position: absolute;
+  left: -10px;
+}
+
+.imagenLogo {
+  width: 65px;
+  height: 70px;
+  padding-bottom: 13px;
+  background: white;
+}
+
+.colorRuta {
+  color: black;
+  font-size: 14px;
+}
+
+.colorRuta2 {
+  font-size: 19.5px;
+}
+
+.all {
+  width: 100%;
+}
+
+.message {
+  font-size: 15px;
+  color: gray;
+}
+
+.cardMargin {
+  margin-bottom: 20px;
+}
+
+::ng-deep #blueversion .mat-form-field-underline {
+  background: #3f51b5;
+}
+::ng-deep #blueversion .mat-select-arrow {
+  color: #3f51b5;
+}
+#bluemat {
+  background: white;
+}
+#bluemat:hover {
+  background: #d6e0fb;
+}
+#bluemat.mat-active {
+  background: #d6e0fb !important;
+}
+#bluemat.mat-selected {
+  background: #d6e0fb !important;
+  color: black !important;
+}
+
+::ng-deep
+  .dx-dropdowneditor-button-visible.dx-show-clear-button
+  .dx-texteditor-input {
+  background: #eaf0ff !important;
+}
+
+::ng-deep
+  .dx-treeview
+  .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused
+  > .dx-treeview-item {
+  background-color: transparent !important;
+}
+
+::ng-deep
+  .dx-treeview
+  .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused
+  > .dx-treeview-item:hover {
+  background-color: #d6e0fb !important;
+}
+
+::ng-deep .dx-treeview .dx-treeview-node .dx-treeview-item:hover {
+  background-color: #d6e0fb !important;
+}
+
+::ng-deep
+  .dx-treeview
+  .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-focused
+  > .dx-treeview-item
+  * {
+  color: black !important;
+}
+
+::ng-deep
+  .dx-treeview-item-without-checkbox.dx-state-selected
+  > .dx-treeview-item {
+  background-color: #d6e0fb !important;
+}
+
+::ng-deep .dx-treeview-node.dx-state-selected,
+.dx-treeview
+  .dx-treeview-node:not(.dx-treeview-item-with-checkbox).dx-state-selected
+  > .dx-treeview-item {
+  background-color: #d6e0fb !important;
+}

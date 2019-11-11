@@ -1,0 +1,49 @@
+<div class="chat-box-wrapper" *ngIf="chat.propio">
+    <div>
+        <div class="avatar-icon-wrapper mr-1">
+            <div class="badge badge-bottom btn-shine">
+
+            </div>
+            <div class="avatar-icon avatar-icon-lg rounded">
+                <img [src]="chat.ulrAvatar" alt="">
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="chat-box">
+            {{chat.mensaje}}
+        </div>
+        <small class="opacity-6">
+            <fa name="calendar-alt mr-1" _nghost-c2="" ng-reflect-name="calendar-alt mr-1">
+                <i _ngcontent-c2="" aria-hidden="true" class="fa fa-calendar-alt mr-1" ng-reflect-klass="fa fa-calendar-alt mr-1" ng-reflect-ng-class="">                    
+                </i>
+            </fa> {{chat.fecha}} {{chat.nombre}}
+        </small>
+    </div>
+</div>
+<div *ngIf="!chat.propio" style="display: flex; justify-content: flex-end;">
+    <div class="chat-box-wrapper chat-box-wrapper-right">
+        <div>
+            <div class="chat-box">
+                {{chat.mensaje}}
+            </div>
+            <small class="opacity-6">
+                <fa name="calendar-alt mr-1" _nghost-c2="" ng-reflect-name="calendar-alt mr-1">
+                    <i _ngcontent-c2="" aria-hidden="true" class="fa fa-calendar-alt mr-1" ng-reflect-klass="fa fa-calendar-alt mr-1" ng-reflect-ng-class="">
+
+                    </i>
+                </fa> {{chat.fecha}}
+            </small>
+        </div>
+        <div>
+            <div class="avatar-icon-wrapper ml-1">
+                <div class="badge badge-bottom btn-shine">
+
+                </div>
+                <div class="avatar-icon avatar-icon-lg rounded">
+                    <img [src]="chat.ulrAvatar">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

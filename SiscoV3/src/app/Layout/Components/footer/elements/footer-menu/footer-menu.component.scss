@@ -1,0 +1,153 @@
+.header-box {
+  background-color: #3f6ad8;
+}
+.alert-box {
+  background-color: #e4ecff;
+  color: #4a5159 !important;
+}
+
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 10px;
+  right: 13px;
+  text-align: center;
+  z-index: 1000;
+  animation: bot-to-top 2s ease-out;
+}
+
+.menu-mobile {
+  position: fixed;
+  right: 10px;
+  padding-bottom: 20px;
+  bottom: 50px;
+  z-index: 100;
+}
+
+.menu-mobile:hover {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+a#menu-share + .menu-mobile {
+  visibility: hidden;
+}
+
+a#menu-share.active + .menu-mobile {
+  visibility: visible;
+  animation: scale-in 0.5s;
+}
+
+.scroll-size-footer {
+  height: 155px;
+  overflow-x: hidden;
+}
+
+@keyframes bot-to-top {
+  0% {
+    bottom: -40px;
+  }
+  50% {
+    bottom: 40px;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+//Estilos letras
+.span-small {
+  font-size: 0.8rem;
+  line-height: 100%;
+}
+.span-small2 {
+  font-size: 0.7rem;
+  line-height: 100%;
+  color: grey;
+}
+
+.img-contrato {
+  width: 55%;
+}
+
+.contratoClase {
+  border-bottom: 0;
+  padding-bottom: 0px;
+}
+
+.radio-activo {
+  color: #3f6ad8;
+}
+
+// Estilos de los botones de las clases de redux
+
+.btn-automovil-footer {
+  color: #3f6ad8;
+  border-color: #3f6ad8;
+}
+
+.btn-automovil-footer:hover,
+.btn-automovil-footer.active {
+  color: #fff;
+  background-color: #3f6ad8;
+  border-color: #3f6ad8;
+}
+
+.btn-papeleria-footer {
+  color: #fd7e14;
+  border-color: #fd7e14;
+}
+
+.btn-papeleria-footer:hover,
+.btn-papeleria-footer.active {
+  color: #fff;
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+}
+
+//Estilos de los iconos de las clases de redux
+
+.icon-automovil-footer {
+  margin-top: 0.3rem;
+  width: 30px;
+  height: 30px;
+  background-color: #3f6ad8;
+  -webkit-mask: url(../../../../../../assets/images/iconos-sisco/autos.svg) no-repeat center;
+  mask: url(../../../../../../assets/images/iconos-sisco/autos.svg) no-repeat center;
+}
+
+.btn-automovil-footer:hover > .icon-automovil-footer,
+.btn-automovil-footer.active > .icon-automovil-footer {
+  background-color: #fff;
+}
+
+.icon-papeleria-footer {
+  margin-top: 0.3rem;
+  width: 30px;
+  height: 30px;
+  background-color: #fd7e14;
+  -webkit-mask: url(../../../../../../assets/images/iconos-sisco/papeleria.svg) no-repeat center;
+  mask: url(../../../../../../assets/images/iconos-sisco/papeleria.svg) no-repeat center;
+}
+
+.btn-papeleria-footer:hover > .icon-papeleria-footer,
+.btn-papeleria-footer.active > .icon-papeleria-footer {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 991px) {
+  #desktop-footer {
+    display: none;
+  }
+  .mobilewidth {
+    width: 100%;
+  }
+}

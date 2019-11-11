@@ -1,0 +1,104 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-xl-12">
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+            <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+            <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div [formGroup]="pagoForm">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-xl-6">
+              <br><br>
+              <mat-form-field class="inputFullWide">
+                <mat-select (ngModelChange)="setEstado()" placeholder="Estado *" formControlName="estado"
+                  [errorStateMatcher]="matcher">
+                  <mat-option *ngFor='let estado of estados' [value]="estado.idEstado">
+                    {{estado.nombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El campo es
+                  <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-6" *ngIf="idEstado || editaEnabled">
+              <br><br>
+              <mat-form-field class="all inputFullWide">
+                <input class="text-right" matInput type="number" min='1990' max='2020' formControlName="anoFiscal"
+                  placeholder="Año Fiscal" (ngModelChange)="setAnoFiscal()">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-xl-12">
+        <app-grid-component *ngIf="columns && idEstado && !cargaGrid" [datos]="pagos" [gridOptions]="gridOptions"
+          [columns]="columns" [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+          [Columnchooser]="Columnchooser" [exportExcel]="exportExcel" [searchPanel]="searchPanel" [scroll]="scroll"
+          (messageEvent)="receiveMessage($event)" (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+        </app-grid-component>
+      </div>
+      <br><br>
+      <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12" *ngIf="!disabledEstadistica" [formGroup]="tareaForm">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
+            <p>Responsable:</p>
+            <app-buscador [IBuscador]="buscador" (responseBuscador)="responseBuscador($event)"></app-buscador>
+            <div *ngIf="usuariosAsignados">
+              <app-viewer [IViewer]="IViewer"></app-viewer>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6" style="float: right">
+            <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 row">
+              <mat-form-field class="all inputFullWide">
+                <input class="text-right" matInput [value]="totales[0].valor | currency" placeholder="Subtotal"
+                  disabled>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 row">
+              <mat-form-field class="all inputFullWide">
+                <input class="text-right" matInput type="number" min='1' max='99999' formControlName="otrosGastos"
+                  placeholder="Otros Gastos" [(ngModel)]="otrosGastos">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 row">
+              <mat-form-field class="all inputFullWide">
+                <input class="text-right" matInput
+                  [value]="totales[0].valor + (otrosGastos ? otrosGastos : 0) | currency" placeholder="Total" disabled>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form"
+              [disabled]="!responsable" (click)="solicitarPago()">
+              <i class="pe-7s-diskette btn-icon-wrapper"></i>
+              Solicitar Pago
+            </button>
+            <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right submit-form"
+              [disabled]="!responsable || !anoFiscal" (click)="Guardar()">
+              <i class="pe-7s-diskette btn-icon-wrapper"></i>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

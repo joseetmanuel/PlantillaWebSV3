@@ -1,0 +1,69 @@
+<div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme" >
+  <div class="app-header__logo ">
+    <div name="burger" class="logo-src" (click)="toggleSidebar()"></div>
+    <div class="header__pane ml-auto">
+      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+        [ngClass]="{'is-active' : globals.toggleSidebar}" (click)="toggleSidebar()">
+        <span class="hamburger-box">
+          <img src="../../../../assets/images/iconos-sisco/cross-out.png">
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="app-sidebar-content">
+    <div class="app-sidebar-scroll">
+      <perfect-scrollbar>
+        <div class="v-sidebar-menu vsm-default">
+          <div class="vsm-list">
+            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true">
+              <ngb-panel *ngFor="let item of objSeguridad" id="{{item.name}}">
+                <ng-template ngbPanelHeader *ngIf="item.caption.router">
+                  <button ngbPanelToggle class="vsm-link">
+                    <i class="vsm-icon" (click)="toggleSidebar()">
+                      <div *ngFor="let clase of item.caption?.clase">
+                        <img *ngIf="clase.idClase == idClase" [src]="clase.logoMenu">
+                      </div>
+                    </i>
+                    <div *ngFor="let clase of item.caption.clase">
+                      <span *ngIf="clase.idClase == idClase" class="vsm-title">{{clase.label}}</span>
+                    </div>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <ng-template #recursiveList let-item>
+                        <div *ngFor="let children of item.children">
+                          <div class="vsm-item" *ngIf="GetJson(children.caption)?.router">
+                            <a *ngIf="GetJson(children.caption)?.router"
+                              [routerLink]="GetJson(children.caption)?.router" class="vsm-link">
+                              <span
+                                class="vsm-title">{{GetLabelByClase(children.caption)==""?children.name:GetLabelByClase(children.caption)}}</span>
+                            </a>
+                            <div class="vsm-dropdown" *ngIf="children.children?.length > 0">
+                              <div class="vsm-list" *ngIf="children.children?.length > 0">
+                                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: children}">
+                                </ng-container>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item }">
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+      </perfect-scrollbar>
+
+
+    </div>
+  </div>
+
+</div>

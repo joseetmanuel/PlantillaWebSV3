@@ -1,0 +1,16 @@
+.logo-sisco-desktop {
+  width: 80px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.logo-empresa {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo-sisco-desktop {
+    display: none;
+  }
+}

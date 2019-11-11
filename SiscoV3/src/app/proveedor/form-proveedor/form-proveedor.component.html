@@ -1,0 +1,233 @@
+<div [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf="numero == 0" class="spinner"></mat-spinner>
+
+    <div [formGroup]="newProveedorForm">
+        <mat-card>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+                            <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                        <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                            <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6" *ngIf="!proveedorEntidad">
+                    <small class="titulo-input-dinamico">Logo</small>
+                    <app-file-upload-component *ngIf="IUploadFile" [IUploadFile]="IUploadFile" (messageEvent)="ResultUploadFile($event)">
+                    </app-file-upload-component>
+                </div>
+                <div class='col-sm-12 col-md-6 col-xl-6'>
+                    <mat-button-toggle-group #group="matButtonToggleGroup" (click)="cambioTipoPersona()" formControlName="idTipoPersona">
+                        <mat-button-toggle value="1" class="inputFullWide"> Física </mat-button-toggle>
+                        <mat-button-toggle value="2" class="inputFullWide"> Moral </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput formControlName="nombreComercial" placeholder="Nombre comercial *">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!proveedorEntidad" class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Razón social *" formControlName="razonSocial">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="RFC *" minlength="{{lengthRFC}}" maxlength='{{lengthRFC}}' formControlName="rfcProveedor" (keyup)="ReplaceForRfc($event)">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong> y de formato RFC
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Persona contacto" formControlName='personaContacto'>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Teléfono" formControlName='telefono'>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Correo electronico *" formControlName='email'>
+                        <mat-error>
+                            Por favor, da un correo válido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <ng-content></ng-content>
+
+            <div class="col-md-12 col-sm-12 col-xl 6" style="margin-top: 20px;margin-bottom: 25px;">
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6" style="padding-left: 15px;">
+                    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+                        <img *ngIf="objeto.nombre=='LogoCardDireccion'" class='imagenIconoGris' [src]="objeto.path">
+                        <span *ngIf="objeto.nombre=='LogoCardDireccion'">&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <span class="col-sm-12 col-md-6 col-xl-6">{{ tituloDireccion }}</span>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <section *ngIf="proveedorEntidad">
+                        <mat-slide-toggle color="primary" [checked]="checkedDireccionProeedor" (change)="changeSelecciontionDireccionProveedor($event)">
+                            Utilizar dirección de matriz
+                        </mat-slide-toggle>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input #cp matInput placeholder="Código postal *" (focusout)="GetCp()" (keydown)="OnKeydown($event)" formControlName="codigoPostal">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong> 5 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Estado *" formControlName="estado">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input #municipio matInput placeholder="Município *" formControlName="municipio">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide" id="blueversion">
+                        <mat-select placeholder="Tipo asentamiento *" formControlName="idTipoAsentamiento">
+                            <mat-option *ngFor='let tipoAsentamiento of tipoAsentamientos' [value]="tipoAsentamiento.idTipoAsentamiento" id="bluemat">
+                                {{tipoAsentamiento.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Asentamiento *" formControlName="asentamiento" [matAutocomplete]="auto">
+                        <mat-autocomplete (optionSelected)="changeVialidad()" #auto="matAutocomplete">
+                            <mat-option *ngFor="let asentamiento of asentamientos" [value]="asentamiento.nombreAsentamiento">
+                                {{asentamiento.nombreAsentamiento}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class='col-sm-12 col-md-6 col-xl-6'>
+                    <mat-form-field class="inputFullWide" id="blueversion">
+                        <mat-select placeholder="Tipo Vialidad *" formControlName="idTipoVialidad">
+                            <mat-option *ngFor='let tipoVialidad of tipoVialidades' [value]="tipoVialidad.idTipoVialidad" id="bluemat">
+                                {{tipoVialidad.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-sm-12 col-md-6 col-xl-6'>
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Vialidad *" (change)="changeVialidad()" formControlName="vialidad">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 col-xl-3">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="No. Ext / Mz. Lt." (change)="changeVialidad()" formControlName='numeroExterior'>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 col-xl-3">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="No. Int" formControlName='numeroInterior'>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div *ngIf="newProveedor && showMaps" style="margin-bottom: 10px;">
+                <agm-map [styles]="styles" [latitude]="latMap" [longitude]="lngMap" (mapReady)="mapReady($event)" [zoom]="zoom">
+                    <agm-marker *ngIf="lat > 0" [latitude]="lat" [longitude]="lng" [markerDraggable]=true (dragEnd)="markerDragEndd ($event)"></agm-marker>
+                </agm-map>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="newProveedor">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='AgregarProveedor()' [disabled]="!newProveedorForm.valid || !formValid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Agregar
+                    </button>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center" *ngIf="!newProveedor">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right" (click)='AgregarProveedor()' [disabled]="!newProveedorForm.valid || !formValid">
+                        <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf='!newProveedorForm.valid'>
+                <p class="tagAviso">Los campos con * son obligatorios</p>
+            </div>
+        </mat-card>
+    </div>
+</div>

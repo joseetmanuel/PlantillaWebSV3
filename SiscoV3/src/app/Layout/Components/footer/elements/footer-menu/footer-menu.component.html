@@ -1,0 +1,229 @@
+<ul class="header-megamenu nav">
+    <li class="nav-item">
+        <div class="btn-group" ngbDropdown [autoClose]="autoClose" placement="top-right"
+            #contratosDropDown="ngbDropdown">
+
+            <button type="button" [disabled]="bloquearApertura" class="btn btn-link dropdown-toggle-no-caret"
+                id="desktop-footer" ngbDropdownToggle>
+                <p style="margin-right:5px;color:#794C8A;">
+                    <img alt="" src="./assets/images/iconos-footer/estados.png" width="30" style="margin: 0 7px">
+                    <span>Estado(s):</span>
+                    <strong>
+                        <span class="badge badge-pill" style="background-color:#794C8A;color:white"
+                            *ngIf="LeyendaEstados().count > 1">{{LeyendaEstados().count}}</span>
+                        {{LeyendaEstados().label}}
+                    </strong>
+                </p>
+                <p style="margin-right:5px;color:#3F6AD8;">
+                    <img alt="" src="./assets/images/iconos-footer/gerencias.png" width="30" style="margin: 0 7px">
+                    <span>Gerencia(s):</span>
+                    <strong>
+                        <span class="badge badge-pill" style="background-color:#3F6AD8;color:white"
+                            *ngIf="LeyendaGerencias().count > 1">{{LeyendaGerencias().count}}</span>
+                        {{LeyendaGerencias().label}}
+                    </strong>
+                </p>
+                <p style="color:#FD7E14;">
+                    <img alt="" src="./assets/images/iconos-footer/contratos.png" width="30" style="margin: 0 7px">
+                    <span>Contrato(s):</span>
+                    <strong>
+                        <span class="badge badge-pill" style="background-color:#FD7E14;color:white"
+                            *ngIf="LeyendaContratos().count > 1">{{LeyendaContratos().count}}</span>
+                        {{LeyendaContratos().label}}
+                    </strong>
+                </p>
+            </button>
+
+            <div class="d-lg-none col-md-12">
+                <a class="float" id="menu-share" [ngClass]="{'active' : togglemobilefooter}"
+                    (click)="toggleMobileFooter()">
+                    <img src="../../../../../../assets/images/iconos-sisco/menu-mobile-footer.png">
+                </a>
+                <div class="menu-mobile" (click)="toggleMobileFooter()">
+                    <div>
+                        <strong
+                            style="color:#794C8A; display: inline-block;width: CALC(100% - 75px); text-align: right">
+                            <span class="badge badge-pill"
+                                *ngIf="LeyendaEstados().count > 1">{{LeyendaEstados().count}}</span>
+                            {{LeyendaEstados().label}}
+                        </strong>
+                        <div class="col dropdown-toggle-no-caret"
+                            style="display: inline-block;width: 60px; margin-right: 15px" ngbDropdownToggle>
+                            <img src="../../../../../../assets/images/iconos-sisco/estados.png">
+                        </div>
+                    </div>
+                    <div>
+                        <strong
+                            style="color:#3F6AD8; display: inline-block;width: CALC(100% - 75px); text-align: right">
+                            <span class="badge badge-pill"
+                                *ngIf="LeyendaGerencias().count > 1">{{LeyendaGerencias().count}}</span>
+                            {{LeyendaGerencias().label}}
+                        </strong>
+                        <div class="col dropdown-toggle-no-caret"
+                            style="display: inline-block;width: 60px; margin-right: 15px" ngbDropdownToggle>
+                            <img src="../../../../../../assets/images/iconos-sisco/gerencias.png">
+                        </div>
+                    </div>
+                    <div>
+                        <strong
+                            style="color:#FD7E14; display: inline-block;width: CALC(100% - 75px); text-align: right">
+                            <span class="badge badge-pill"
+                                *ngIf="LeyendaContratos().count > 1">{{LeyendaContratos().count}}</span>
+                            {{LeyendaContratos().label}}
+                        </strong>
+                        <div class="col dropdown-toggle-no-caret"
+                            style="display: inline-block;width: 60px; margin-right: 15px" ngbDropdownToggle>
+                            <img src="../../../../../../assets/images/iconos-sisco/contrato.png">
+                        </div>
+                    </div>
+                    <div>
+                        <strong
+                            style="color:#794C8A; display: inline-block;width: CALC(100% - 75px); text-align: right">
+                            <span class="badge badge-pill"></span>
+                        </strong>
+                        <div class="col dropdown-toggle-no-caret"
+                            style="display: inline-block;width: 60px; margin-right: 15px" (click)="testDropDown.open()">
+                            <img src="../../../../../../assets/images/iconos-sisco/clase.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown-menu-lg" ngbDropdownMenu
+                style="top: 0px; left: 0px; position: absolute; transform: translate(-263px, -355px);">
+                <div class="dropdown-mega-menu dropdown-mega-menu-sm mobilewidth">
+                    <div class="dropdown-menu-header">
+                        <div class="dropdown-menu-header-inner text-lighter text-center header-box">
+                            <h3>Listado de contratos disponibles</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1 col-xl-1">
+                            <app-search-box class="inputSearch" placeholder="Buscar Contrato"
+                                [(busquedaValor)]="contratoBuscado">
+                            </app-search-box>
+                        </div>
+                        <div class="col-sm-11 col-xl-11" style="padding-top: 2.5px">
+                            <div class="no-gutters row">
+                                <div class="col-sm-6 col-xl-6" style="padding: 0 3px">
+                                    <ng-multiselect-dropdown [(ngModel)]="estadosSeleccionados"
+                                        [placeholder]="'Seleccionar Estados'" [data]="estados"
+                                        [settings]="estadosSettings" (ngModelChange)="FiltraContratos()">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                                <div class="col-sm-6 col-xl-6" style="padding: 0 3px">
+                                    <ng-multiselect-dropdown [(ngModel)]="gerenciasSeleccionadas"
+                                        [placeholder]="'Seleccionar Gerencias'" [data]="gerencias"
+                                        [settings]="gerenciasSettings" (ngModelChange)="FiltraContratos()">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="grid-menu grid-menu-2col">
+                        <div style="height: auto;max-height: 300px;overflow-x: hidden; overflow-y: auto;">
+                            <div class="no-gutters row">
+                                <div class="col-sm-12 col-xl-12 custom-checkbox custom-control"
+                                    [hidden]="!multicontrato"
+                                    style="padding-left: 30px; border-bottom: 0; border-right: 0">
+                                    <input class="custom-control-input" id="selectTodo" (click)="Seleccionar()"
+                                        type="checkbox">
+                                    <label class="custom-control-label" for="selectTodo">
+                                        Seleccionar Todo
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 col-xl-6 contratoClase" style="border-right-width: 1px;"
+                                    *ngFor="let contrato of contratosFiltrados | filter : contratoBuscado:'nombre'">
+                                    <div class="row custom-radio custom-control" [hidden]="multicontrato"
+                                        style="height: 100%;align-items:center">
+                                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="border-right: 0">
+                                            <input class="custom-control-input" name="contratoRadio"
+                                                id="{{contrato.nombre}}Radio" [(ngModel)]="contratoActual" type="radio"
+                                                [value]="contrato">
+                                            <label class="custom-control-label" for="{{contrato.nombre}}Radio">
+                                                <img [src]="contrato.urlAvatar" alt="{{contrato.nombre}}"
+                                                    class="img-contrato">
+                                            </label>
+                                        </div>
+                                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="padding-top: 0px">
+                                            <span [ngClass]="{'radio-activo': contratoActual === contrato}"
+                                                class="span-small"><b>{{ contrato.nombre}}</b></span><br>
+                                            <p [ngClass]="{'radio-activo': contratoActual === contrato}"
+                                                class="span-small2">
+                                                {{ contrato.nombreCliente}}<br>
+                                                <span *ngIf="contrato.totalObjetos">{{ contrato.totalObjetos}}
+                                                    Unidades</span></p>
+                                            {{coontrato}}
+                                        </div>
+                                    </div>
+                                    <div class="row custom-checkbox custom-control" [hidden]="!multicontrato"
+                                        style="height: 100%;align-items:center">
+                                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+                                            style="border-right: 0;border-bottom: 0">
+                                            <input class="custom-control-input" id="{{contrato.nombre}}Check"
+                                                [(ngModel)]="contrato.seleccionadoCheck" type="checkbox">
+                                            <label class="custom-control-label" for="{{contrato.nombre}}Check">
+                                                <img [src]="contrato.urlAvatar" alt="{{contrato.nombre}}"
+                                                    class="img-contrato">
+                                            </label>
+                                        </div>
+                                        <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="padding-top: 0px">
+                                            <span [ngClass]="{'radio-activo': contrato.seleccionadoCheck === true}"
+                                                class="span-small"><b>{{ contrato.nombre}}</b></span><br>
+                                            <p [ngClass]="{'radio-activo': contrato.seleccionadoCheck === true}"
+                                                class="span-small2">{{ contrato.nombreCliente}}<br>
+                                                <span *ngIf="contrato.totalObjetos">{{ contrato.totalObjetos}}
+                                                    Unidades</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="alert alert-box" role="alert" *ngIf="bloquearCierre">
+                            Se debe seleccionar un contrato para continuar
+                        </div>
+                        <button class="mb-2 mr-2 btn btn-primary" [disabled]="DeshabilitaAceptar()"
+                            (click)="AceptarContratos()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item ">
+        <div class="btn-group" autoClose="autoClose" ngbDropdown #testDropDown="ngbDropdown" placement="top-right">
+            <button type="button" [disabled]="bloquearApertura" class="btn btn-link dropdown-toggle-no-caret"
+                id="desktop-footer" ngbDropdownToggle>
+                <p style="border-left: #28A745 solid;margin-bottom: 6px !important;">
+                    <img alt="" src="./assets/images/iconos-footer/clase.png" width="30"
+                        style="margin: 0 7px; cursor: pointer;">
+                </p>
+            </button>
+            <div ngbDropdownMenu>
+                <div class="scroll-size-footer">
+                    <perfect-scrollbar>
+                        <div *ngFor="let clase of clases" class="grid-menu grid-menu-2col">
+                            <div class="no-gutters row">
+                                <div class="col-sm-12">
+                                    <button
+                                        [ngClass]="{'active': claseSeleccionada === clase, 'btn-automovil-footer': clase === 'Automovil', 'btn-papeleria-footer': clase === 'Papeleria' }"
+                                        (click)="SeleccionaContratosPorClase(clase); testDropDown.close();"
+                                        class="btn-icon btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn ">
+                                        <i [ngClass]="{'icon-automovil-footer': clase === 'Automovil', 'icon-papeleria-footer': clase === 'Papeleria'}"
+                                            class=" btn-icon-wrapper mb-2"></i>{{clase}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+</ul>
+<div class="bloquearCierreDiv" *ngIf="bloquearCierre && contratosDropDown.isOpen()"></div>

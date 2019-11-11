@@ -1,0 +1,11 @@
+<div>
+  <div class="col-md-12">
+      <div class="main-card mb-3 card">
+          <div class="card-body">
+              <h5 class="card-title">Home proveedores</h5>
+              <button routerLink="/sel-proveedor"  class="mb-2 mr-2 btn btn-outline-2x btn-outline-success">{{modulo.camposClase[0].label}}</button>
+              <button routerLink="/sel-proveedor-propio"  *ngIf="contratos.length > 0" class="mb-2 mr-2 btn btn-outline-2x btn-outline-success">{{modulo.camposClase[0].label}} Propios</button>
+          </div>
+      </div>
+  </div>
+</div>

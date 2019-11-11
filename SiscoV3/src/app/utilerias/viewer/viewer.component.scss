@@ -1,0 +1,388 @@
+/**********ESTILOS IMAGEN TIPO AVATAR**********/
+
+.foto-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.foto-avatar-m {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.foto-avatar-s {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.foto-avatar-xs {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.cont-button{
+    display: block;
+    position: relative;
+}
+
+.cross-button{
+    position: absolute;
+    border-radius: 50%;
+    right: 0;
+    background: white;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.cross-button-lg{
+    position: absolute;
+    border-radius: 50%;
+    right: 0;
+    background: white;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.cross-button-md{
+    position: absolute;
+    border-radius: 50%;
+    right: 0;
+    background: white;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.cross-button-sm{
+    position: absolute;
+    border-radius: 50%;
+    right: 0;
+    background: white;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+
+
+/**********ESTILOS IMAGEN TIPO IMAGEN**********/
+
+.foto-imagen {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    margin-bottom: 10px;
+}
+
+/**********ESTILOS DOCUMENTO**********/
+
+.documento {
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+/**********ESTILOS  CARRUSEL**********/
+
+ngb-carousel {
+    background-color: black;
+    text-align: center;
+}
+
+.carrusel-img{
+    width: 600px;
+    height: 600px;
+    object-fit: contain;
+}
+
+/**********ESTILOS  GRID**********/
+
+.grid {
+    width: 150px;
+    height: 205px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.grid-true {
+    width: 100px;
+    height: 125px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.overflow{
+    overflow-x: auto;
+}
+
+.overflow::-webkit-scrollbar {
+  height: 4px;
+  border: 1px solid #d5d5d5;
+}
+
+.overflow::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: #eeeeee;
+}
+
+.overflow::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #b0b0b0;
+}
+
+
+.totalcolor {
+    background-color: #3F6AD8;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+.informer {
+    height: 70px;
+    width: 150px;
+    text-align: center;
+    color: #fff;
+}
+
+.totalcount {
+    padding-top: 15px;
+    line-height: 27px;
+    font-size: 30px;
+    margin: 0;
+}
+
+.countcolor {
+    color: #b4b4b4;
+}
+
+.countcount {
+    padding-top: 15px;
+    line-height: 27px;
+    font-size: 30px;
+    color: #b4b4b4;
+    margin: 0;
+}
+
+.countname {
+    color: #b4b4b4;
+}
+
+.boton {
+    margin-left: 5px;
+}
+
+::ng-deep .btn-light {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+::ng-deep .btn-light:hover {
+    background-color: #e6e6e6 !important;
+    border-color: #e6e6e6 !important;
+}
+
+.oculto {
+    display: none;
+}
+
+.linea:focus {
+    outline: 0;
+}
+
+.pdf {
+    width: 790;
+    overflow: hidden;
+    display: block;
+}
+
+.mycheckbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mycheckbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 12px;
+    right: 5px;
+    height: 25px;
+    width: 25px;
+    background-color: #b4b4b4;
+    z-index: 1;
+}
+
+.mycheckbox:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+.mycheckbox input:checked~.checkmark {
+    background-color: #3F6AD8;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.mycheckbox input:checked~.checkmark:after {
+    display: block;
+}
+
+.mycheckbox .checkmark:after {
+    left: 8px;
+    top: 1px;
+    width: 10px;
+    height: 20px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.cont-elipsis {
+    display: block;
+    position: relative;
+}
+
+.elipsis {
+    position: absolute;
+    bottom: 5px;
+    width: 97px;
+    right: 37px;
+    height: 20px;
+    margin-top: 5px;
+    background-color: #b4b4b4;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    color: white;
+    font-size: 12px;
+}
+
+.elipsis-true {
+    position: absolute;
+    bottom: 5px;
+    width: 48px;
+    right: 37px;
+    height: 20px;
+    margin-top: 5px;
+    background-color: #b4b4b4;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    color: white;
+    font-size: 12px;
+}
+
+.elipsis-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #b4b4b4;
+    width: 32px;
+    height: 32px;
+    border-radius: 15px 15px 0 0;
+}
+
+.elipsis-two {
+    position: absolute;
+    border-radius: 200px 0 0 0;
+    background-color: #b4b4b4;
+    width: 20px;
+    height: 20px;
+    bottom: 5px;
+    right: 134px;
+}
+
+.elipsis-two-true {
+    position: absolute;
+    border-radius: 200px 0 0 0;
+    background-color: #b4b4b4;
+    width: 20px;
+    height: 20px;
+    bottom: 5px;
+}
+
+.desactivador{
+    display: none;
+}
+
+.bloqueo {
+    pointer-events: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .informer {
+        width: 116px;
+    }
+
+    .carrusel-img{
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media only screen and (min-width: 600px) {}
+
+@media only screen and (min-width: 768px) {}
+
+@media only screen and (min-width: 992px) {}
+
+@media only screen and (min-width: 1200px) {}
+
+@media only screen and (min-width: 1440px) {
+    .carrusel-img{
+        width: 900px;
+        height: 900px;
+    }
+}

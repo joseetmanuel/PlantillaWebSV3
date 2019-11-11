@@ -1,0 +1,308 @@
+@font-face {
+  font-family: "KM";
+  src: url("../../../assets/fonts/Open24DisplaySt.ttf") format("truetype");
+}
+
+.imagen {
+  width: 30px;
+  height: 26px;
+}
+
+.imagenBanner {
+  width: 30px;
+  height: 30px;
+}
+
+.imagenBannerSm {
+  width: 20px;
+  height: 20px;
+}
+
+.SubtituloBanner {
+  color: #6d757d;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.SubtituloBannerRojo {
+  color: #d83235;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.datoBannerImportant {
+  color: #6d757d;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px !important;
+}
+
+.datoBanner {
+  color: #6d757d;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px !important;
+}
+
+.datoBannerRojo {
+  color: #d83235;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px !important;
+  font-weight: bold;
+}
+
+.datoBannerBlue {
+  color: #355dc5;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px !important;
+  font-weight: bold;
+}
+
+p {
+  margin: 0;
+}
+
+.vertical {
+  height: 80%;
+  border-left: 1px solid #f0f0f0;
+  margin: 0px;
+}
+
+hr {
+  margin: 5px 0;
+}
+
+.hr-card-grid {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ImagenCarro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-disabled {
+  pointer-events: none;
+}
+
+.Headresp {
+  display: none;
+}
+
+.Kilometraje {
+  background: #355dc5;
+  border-radius: 20px;
+  font-size: 21px;
+  text-align: center;
+  color: #fff;
+  font-family: "KM";
+}
+
+.Kilometraje-datos {
+  font-weight: bold;
+  text-align: center;
+}
+
+.car-color {
+  display: block;
+  position: relative;
+}
+
+.color-dot {
+  position: absolute;
+  border-radius: 50%;
+  right: 0;
+  top: 59px;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+}
+
+.color-dot-desktop {
+  position: absolute;
+  border-radius: 50%;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  left: 110px;
+  top: 36px;
+}
+
+.box-gps {
+  -webkit-box-shadow: 7px 7px 15px -13px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px 7px 15px -13px rgba(0, 0, 0, 0.75);
+  box-shadow: 7px 7px 15px -13px rgba(0, 0, 0, 0.75);
+}
+
+.margin-top-default {
+  margin-top: 10px;
+}
+
+.datoBannerBlueSingle {
+  color: #355dc5;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px !important;
+}
+
+.datoTelemetriaAzul {
+  color: #355dc5;
+}
+
+//  Carousel
+
+::ng-deep.slick-prev {
+  left: -7px;
+}
+
+::ng-deep.slick-next {
+  right: -7px;
+}
+
+.carousel-img {
+  width: 100%;
+  padding: 10px;
+}
+
+.slider-item {
+  background: transparent;
+}
+
+.banner-height {
+  height: 55px;
+}
+.monto-servicios {
+  font-size: 16px;
+}
+.padding-kil {
+  padding: 40px;
+}
+::ng-deep.slick-prev:before,
+::ng-deep.slick-next:before {
+  font-size: 20px !important;
+  width: 0px !important;
+  line-height: 25px !important;
+  color: #355dc5 !important;
+}
+
+.alarmas {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  p {
+    height: 0.5 rem;
+  }
+}
+
+::ng-deep.progress {
+  border-radius: 0px !important;
+}
+
+.border-right-line {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.border-right-line-red {
+  border-right: 1px solid #d83235;
+}
+
+.content-item-especialidades {
+  // padding-top: 3px;
+  // padding-left: 40px;
+  // padding-right: 40px;
+  width: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  img {
+    width: 30px;
+    margin: auto;
+  }
+}
+
+.mat-button-toggle-checked {
+  background-color: #3f6ad8;
+  color: #fff !important;
+  font-size: 15px;
+}
+
+.especs {
+  color: #20456a;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.espec-label {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 100;
+  padding-right: 10px;
+}
+
+.espec-text {
+  font-size: 12px;
+  font-weight: 600;
+  float: right;
+  margin-right: 20px;
+}
+
+.mat-button-toggle-appearance-standard {
+  color: #3f6ad8;
+  font-size: 15px;
+}
+
+.control-documental{
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.map{
+  width: 50%;
+}
+
+@media (max-width: 576px) {
+  .HeadFull {
+    display: none;
+  }
+
+  .Headresp {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .SubtituloBannerRojo {
+    font-size: 12px;
+    text-align: center;
+  }
+  .datoBannerImportant {
+    text-align: center;
+  }
+  .banner-height {
+    height: 55px;
+  }
+  .monto-servicios {
+    font-size: 14px;
+  }
+  .SubtituloBanner {
+    font-size: 8px;
+  }
+}
+
+@media only screen and (max-width: 1630px) {
+  .padding-kil {
+    padding: 29px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .control-documental {
+    border-left: none;
+  }
+  .mobile-margin{
+    margin-top: 10px;
+  }
+  .map{
+    width: 100%;
+  }
+}

@@ -1,0 +1,32 @@
+<div class="" [ngClass]="{'desactiva': loading }">
+  <mat-spinner *ngIf='loading' class="spinner"></mat-spinner>
+  
+  <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb" ></app-breadcrumbs>
+
+  <div class="col-md-12" style="margin-top: -30px">
+      <button [routerLink]="['/sel-reporte-integra-autoexpress']" class="homebuttons" >Reporte</button>
+      <button  [routerLink]="['/sel-reporte-contrato']" class="homebuttons">Contrato</button>
+    <button  (click)="enrutar(4)" class="homebuttons" [ngClass]="idTipoGasto == 4 ? 'active' : 'homebuttons'" >Facturación</button>
+    <button  (click)="enrutar(2)" class="homebuttons" [ngClass]="idTipoGasto == 2 ? 'active' : 'homebuttons'">Seguro</button>
+    <button  (click)="enrutar(3)" class="homebuttons" [ngClass]="idTipoGasto == 3 ? 'active' : 'homebuttons'">Facturación GPS</button>
+    <button  (click)="enrutar(1)" class="homebuttons" [ngClass]="idTipoGasto == 1 ? 'active' : 'homebuttons'">Pagos Banco</button>
+    <button  (click)="enrutar(5)" class="homebuttons" [ngClass]="idTipoGasto == 5 ? 'active' : 'homebuttons'">Gasto 1</button>
+    <button  (click)="enrutar(6)" class="homebuttons" [ngClass]="idTipoGasto == 6 ? 'active' : 'homebuttons'">Gasto 2</button>
+    <button  (click)="enrutar(7)" class="homebuttons" [ngClass]="idTipoGasto == 7 ? 'active' : 'homebuttons'">Gasto 3</button>
+    <button  (click)="enrutar(8)" class="homebuttons" [ngClass]="idTipoGasto == 8 ? 'active' : 'homebuttons'">Gasto 4</button>
+    <button  (click)="enrutar(9)" class="homebuttons" [ngClass]="idTipoGasto == 9 ? 'active' : 'homebuttons'">Gasto 5</button>
+    <button  (click)="enrutar(10)" class="homebuttons" [ngClass]="idTipoGasto == 10 ? 'active' : 'homebuttons'">Cobrado</button>
+    <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+      <button *ngIf="objeto.nombre == 'Kilometraje'" routerLink="/sel-reporte-integra-autoexpress-kilometraje-gps" class="homebuttons">Kilometraje</button>
+    </div>
+  </div>
+  <br>
+  <div>
+    <mat-card>
+      <app-grid-component  [datos]="reportes" [gridOptions]="gridOptions" [columns]="columns" [exportExcel]="exportExcel"
+          [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+          [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar" (editevent)="editevent($event)">
+      </app-grid-component>
+    </mat-card>
+  </div>
+</div>

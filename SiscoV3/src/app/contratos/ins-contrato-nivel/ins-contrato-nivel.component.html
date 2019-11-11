@@ -1,0 +1,62 @@
+<mat-spinner *ngIf='spinner'class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<mat-card *ngIf="!spinner && contratoActual" style="margin-bottom: 22px;">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/lapizIcon.png">
+      &nbsp;&nbsp;&nbsp;
+      <span>Datos del Contrato</span>
+    </div>
+  </div>
+  <hr>
+  <div class=row>
+    <div class='col-sm-12 col-md-6 col-xl-6 text-center'>
+      <mat-form-field class="all">
+        <input matInput [value]="contratoActual.nombre" placeholder="Contrato *" disabled>
+        <mat-error>
+          El campo es
+          <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class='col-sm-12 col-md-6 col-xl-6 text-center'>
+      <mat-form-field class="all">
+        <input matInput [value]="contratoActual.numeroContrato" placeholder="Numero de Contrato *" disabled>
+        <mat-error>
+          El campo es
+          <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-card>
+<mat-card [formGroup]="nivelForm" *ngIf="!spinner" style="margin-bottom: 22px;">
+  <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+    <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+    <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+  </div>
+  <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+    <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+  </div>
+  <hr>
+  <div class="row col-sm-12 col-md-12 col-xl-12">
+    <mat-form-field class="inputFullWide col-sm-6 col-md-6 col-xl-6">
+      <input matInput placeholder="Nivel *" maxlength='50' formControlName="nivel" [errorStateMatcher]="matcher">
+      <mat-error>
+        El campo es
+        <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+      <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+        (click)='insNivelContrato()' [disabled]="!nivelForm.valid"><i class="pe-7s-diskette btn-icon-wrapper">
+        </i>
+        Agregar
+      </button>
+    </div>
+    <div *ngIf='!nivelForm.valid'>
+      <p class="tagAviso">Los campos con * son obligatorios</p>
+    </div>
+  </div>
+</mat-card>

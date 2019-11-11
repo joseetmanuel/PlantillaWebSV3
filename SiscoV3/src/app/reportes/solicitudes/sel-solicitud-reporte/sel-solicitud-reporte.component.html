@@ -1,0 +1,80 @@
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<div>
+  <mat-card class="cardMarginBottom" *ngIf='!spinner'>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <span>Filtros</span>
+    </div>
+    <hr>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row" [formGroup]="busquedaForm">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <small>Zona *</small>
+          <dx-drop-down-box #dropBox [dataSource]="zonas" placeholder="Selecciona zona" displayExpr="descripcion"
+            valueExpr="idContratoZona" [showClearButton]="true" [(value)]="treeBoxValue"
+            (onValueChanged)="closeWindow(dropBox)">
+            <div *dxTemplate="let data of 'content'">
+              <dx-tree-view [dataSource]="zonas" dataStructure="plain" keyExpr="idContratoZona" parentIdExpr="idPadre"
+                displayExpr="descripcion" [selectByClick]="true" selectionMode="single" noDataText="No contiene datos"
+                (onItemSelectionChanged)="TreeView_itemSelectionChanged($event)">
+              </dx-tree-view>
+            </div>
+          </dx-drop-down-box>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          <div class="inputFullWide">
+            <small>Desde:</small>
+            <dx-date-box matInput formControlName="frmFechaDesde" placeholder="Fecha Desde" type="date"
+              [showClearButton]="true" pickerType="calendar" displayFormat="dd/MM/yyyy" [useMaskBehavior]="true">
+            </dx-date-box>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          <div class="inputFullWide">
+            <small>Hasta: </small>
+            <dx-date-box matInput formControlName="frmFechaHasta" placeholder="Fecha Hasta" type="date"
+              [showClearButton]="true" pickerType="calendar" displayFormat="dd/MM/yyyy" [useMaskBehavior]="true">
+            </dx-date-box>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3 col-lg-3">
+          <small>Ejecutivo *</small>
+          <dx-select-box formControlName="frmIdUsuarioBusqueda" id="centroCostos" placeholder="Selecciona ejecutivo"
+            [dataSource]="usuarios" displayExpr="Descripcion" valueExpr="Clave" [value]="Clave"
+            [showClearButton]="true">
+            <div *dxTemplate="let data of usuarios">
+              <div class="custom-item">
+                <div>
+                  {{data.nombre}}
+                </div>
+              </div>
+            </div>
+          </dx-select-box>
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2">
+          <br>
+          <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+            (click)='buscarInformacion()'><i class="pe-7s-key btn-icon-wrapper">
+            </i>
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+<div *ngIf='!spinner'>
+  <mat-card class="cardMarginBottom" *ngIf="!spinner" [formGroup]="busquedaForm">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-grid-component *ngIf='gridConfiguration.Columns' [datos]="datosReporte"
+          [gridOptions]="gridConfiguration.GridOptions" [columns]="gridConfiguration.Columns"
+          [Checkbox]="gridConfiguration.Checkbox" [Editing]="gridConfiguration.Editing"
+          [Columnchooser]="gridConfiguration.Columnchooser" [searchPanel]="gridConfiguration.SearchPanel"
+          [scroll]="gridConfiguration.Scroll" [toolbar]="gridConfiguration.ToolBox" (datosevent)="datosMessage($event)"
+          (messageEvent)="receiveMessage($event)">
+        </app-grid-component>
+      </div>
+    </div>
+  </mat-card>
+</div>

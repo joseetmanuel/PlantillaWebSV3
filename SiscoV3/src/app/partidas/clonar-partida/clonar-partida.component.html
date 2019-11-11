@@ -1,0 +1,189 @@
+<mat-spinner *ngIf='spinner' class="spinner"></mat-spinner>
+<app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+<header-tipoobjeto-automovil [idTipoObjeto]="idTipoObjeto" [idClase]="idClase"></header-tipoobjeto-automovil>
+<mat-card class="cardMarginBottom" *ngIf='!spinner'>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <img *ngIf="objeto.nombre=='LogoCard'" class='imagenIconoGris' [src]="objeto.path">
+        <span *ngIf="objeto.nombre=='LogoCard'">&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <div *ngFor="let objeto of modulo.camposClase" style="display: inline;">
+        <span *ngIf="objeto.nombre=='TituloCard'">{{objeto.label}}</span>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="tab-content">
+    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+      <div class="row content-component">
+        <div class="col-lg-12 col-md-12">
+          <div class="main-card mb-3 card">
+            <div class="card-body">
+              <div id="smartwizard" class="forms-wizard nav nav-tabs step-anchor">
+                <ul class="forms-wizard nav nav-tabs step-anchor">
+                  <li class="nav-item liStep"
+                    [ngClass]="{'done': process[0].finish && !process[0].active, 'active': process[0].active}">
+                    <a>
+                      <em (click)="active(0)">1</em>
+                      <span>Partidas</span>
+                    </a>
+                  </li>
+                  <li class="nav-item liStep"
+                    [ngClass]="{'done': process[1].finish && !process[1].active, 'active': process[1].active}">
+                    <a>
+                      <em (click)="active(1)">2</em>
+                      <span *ngIf="idClase== 'Automovil'">Tipos de unidades</span>
+                      <span *ngIf="idClase== 'Papeleria'">Tipos de artículos</span>
+                    </a>
+                  </li>
+                  <li class="nav-item liStep" [ngClass]="{'done': process[2].finish, 'active': process[2].active}">
+                    <a>
+                      <em (click)="active(2)">3</em>
+                      <span>Finalizar</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="form-wizard-content">
+                  <div id="step-1" [hidden]="!process[0].active ">
+                    <div id="accordion" class="accordion-wrapper mb-3">
+                      <div class="card">
+                        <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                          class="collapse show">
+                          <div class="card-body" *ngIf="partidas && columnsPartidas.length > 0">
+                            <app-grid-component [datos]="partidas" [gridOptions]="gridOptions"
+                              [columns]="columnsPartidas" [columnHiding]="columnHiding" [Checkbox]="Checkbox"
+                              [Editing]="Editing" [Columnchooser]="Columnchooser" [exportExcel]="exportExcel"
+                              [searchPanel]="searchPanel" [scroll]="scroll" [toolbar]="toolbar"
+                              (datosevent)='datosMessagePartidas($event)'>
+                            </app-grid-component>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="step-2" [hidden]="!process[1].active ">
+                    <div id="accordion" class="accordion-wrapper mb-3">
+                      <div class="card">
+                        <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                          class="collapse show">
+                          <div class="card-body" *ngIf="objetos">
+                            <app-grid-component [datos]="objetos" [gridOptions]="gridOptions" [columns]="columnsObjetos"
+                              [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing"
+                              [Columnchooser]="Columnchooser" [exportExcel]="exportExcel" [searchPanel]="searchPanel"
+                              [scroll]="scroll" [toolbar]="toolbar" (datosevent)='datosMessageObjetos($event)'>
+                            </app-grid-component>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="step-3" [hidden]="!process[2].active ">
+                    <div id="accordion" class="accordion-wrapper mb-3">
+                      <div class="card">
+                        <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                          class="collapse show">
+                          <div class="card-body">
+                            <div class="no-gutters row">
+                              <div class="col-md-12 col-lg-4 col-xl-4">
+                                <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                      <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                          <div class="widget-content-left">
+                                            <div class="widget-heading">Partidas seleccionadas</div>
+                                          </div>
+                                          <div class="widget-content-right">
+                                            <div class="widget-numbers text-primary">
+                                              {{selectValuesPartidas ? selectValuesPartidas.length : 0}}</div>
+                                          </div>
+                                        </div>
+                                        <div class="widget-progress-wrapper">
+                                          <div class="progress-bar-sm progress-bar-animated-alt progress"
+                                            [matTooltip]="partidaPorcentaje + '%'">
+                                            <div class="progress-bar bg-primary" role="progressbar"
+                                              aria-valuenow="partidaPorcentaje" aria-valuemin="0" aria-valuemax="100"
+                                              [style.width]="partidaPorcentaje +'%'"></div>
+                                          </div>
+                                          <div class="progress-sub-label">
+                                            <div class="sub-label-left">Total de partidas:
+                                              {{partidas ? partidas.length : 0}}</div>
+                                            <div class="sub-label-right">{{partidaPorcentaje}}%</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="col-md-12 col-lg-4 col-xl-4"></div>
+                              <div class="col-md-12 col-lg-4 col-xl-4">
+                                <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                      <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                          <div class="widget-content-left">
+                                            <div class="widget-heading">Tipos de objetos seleccionados</div>
+                                          </div>
+                                          <div class="widget-content-right">
+                                            <div class="widget-numbers text-success">
+                                              {{selectValuesObjetos ? selectValuesObjetos.length : 0}}</div>
+                                          </div>
+                                        </div>
+                                        <div class="widget-progress-wrapper">
+                                          <div class="progress-bar-sm progress-bar-animated-alt progress"
+                                            [matTooltip]="objetoPorcentaje + '%'">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                              aria-valuenow="objetoPorcentaje" aria-valuemin="0" aria-valuemax="100"
+                                              [style.width]="objetoPorcentaje +'%'"></div>
+                                          </div>
+                                          <div class="progress-sub-label">
+                                            <div class="sub-label-left">Total de tipos de objetos:
+                                              {{objetos ? objetos.length : 0}}</div>
+                                            <div class="sub-label-right">{{objetoPorcentaje}} %</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix">
+                <button type="button" (click)="next()" id="next-btn"
+                  class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                  [disabled]="!btnNextEnable" *ngIf="indexActive != 2">
+                  <i class="pe-7s-back btn-icon-wrapper" style="transform: rotateY(-200deg);"></i>
+                  Siguiente
+                </button>
+
+                <button type="button" (click)="clonarPartida()" id="next-btn"
+                  class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                  *ngIf="indexActive == 2">
+                  <i class="pe-7s-diskette btn-icon-wrapper"></i>
+                  Finalizar
+                </button>
+
+                <button type="button" (click)="previous()" id="prev-btn" *ngIf="indexActive != 0"
+                  class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-secondary float-right">
+                  <i class="pe-7s-back btn-icon-wrapper"></i>
+                  Anterior
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

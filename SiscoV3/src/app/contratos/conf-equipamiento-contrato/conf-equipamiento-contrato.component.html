@@ -1,0 +1,175 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+
+
+    <div [formGroup]="contratoForm">
+        <mat-card class="cardMarginBottom">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datoscontrato.png">
+                    &nbsp;&nbsp;&nbsp;
+                    <span>Datos del contrato</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <mat-select placeholder="Empresa *" formControlName="rfcEmpresa" [errorStateMatcher]="matcher">
+                            <mat-option *ngFor='let empresa of empresas' [value]="empresa.rfcEmpresa">
+                                {{empresa.nombreComercial}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <mat-select placeholder="Cliente *" formControlName="idCliente" [errorStateMatcher]="matcher">
+                            <mat-option *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                {{cliente.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field *ngIf='valClienteFinal' class="inputFullWide">
+                        <mat-select placeholder="Cliente final" formControlName="idClienteFinal"
+                            [errorStateMatcher]="matcher">
+                            <mat-option *ngFor='let cliente of clientes' [value]="cliente.idCliente">
+                                {{cliente.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Número contrato *" readonly maxlength='50'
+                            formControlName="numeroContrato" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre contrato *" readonly maxlength='50' formControlName="nombre"
+                            [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <mat-select placeholder="Estatus *" (selectionChange)='cambioEstatus($event.value)'
+                            formControlName="idEstatus" [errorStateMatcher]="matcher">
+                            <mat-option *ngFor='let estatus of estatus' [value]="estatus.idEstatus">
+                                {{estatus.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker3" placeholder="Fecha firma *"
+                            formControlName="fechaFirma" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker *ngIf='1 > 2' #picker3></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" *ngIf='estatusAct == "ACT"'>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker" placeholder="Fecha inicio"
+                            formControlName="fechaInicio" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker *ngIf='1 > 2' #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker2" placeholder="Fecha termino"
+                            formControlName="fechaFin" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker *ngIf='1 > 2' #picker2></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly placeholder="Total unidades *" maxlength='50'
+                            formControlName="totalUnidades" [errorStateMatcher]="matcher">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card>
+
+        <mat-card class="cardMarginBottom">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datosorden.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Listado de órdenes</span>
+            <app-sel-ordenes-compra [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato'>
+            </app-sel-ordenes-compra>
+        </mat-card>
+        <mat-card class="cardMarginBottom">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_datos_prov.png">
+            &nbsp;&nbsp;&nbsp;
+            <span>Listado de proveedores de equipamiento</span>
+            <app-sel-proveedores-equipamiento [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente'
+                [numeroContrato]='numeroContrato'></app-sel-proveedores-equipamiento>
+        </mat-card>
+        <mat-card class="cardMarginBottom">
+            <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/sh_spec.png"> &nbsp;&nbsp;&nbsp;
+            <span>Listado de SPEC</span>
+            <app-sel-spec [modulo]='modulo' [rfcEmpresa]='rfcEmpresa' [idCliente]='idCliente' [numeroContrato]='numeroContrato'>
+            </app-sel-spec>
+        </mat-card>
+    </div>
+
+</div>

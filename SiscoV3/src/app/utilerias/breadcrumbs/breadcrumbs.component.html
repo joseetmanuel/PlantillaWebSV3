@@ -1,0 +1,30 @@
+<div class="app-page-title">
+  <div class="row page-title-wrapper">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 page-title-heading">
+      <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1" >
+        <div class="page-title-icon">
+          <i class="icon"> <img class="imagenLogo " src="{{rutaIcono}}"></i>
+        </div>
+      </div>
+      <div class="migajas col-xs-12 col-sm-12 col-md-10 col-lg-8" *ngIf="rutasHijas">
+        <p class='header'>{{labelActivo}}</p>
+        <a *ngFor="let breadcrumb of rutasHijas" [routerLink]="[breadcrumb.url]" class="subHeading">
+          <i *ngIf="breadcrumb.label ==''" aria-hidden="true" class="fa fa-home">
+          </i> {{breadcrumb.label}}
+        </a>
+        <label class="linkActivo"> / {{labelActivo}}
+        </label>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1" style="font-size: 14px" *ngIf="ordenCompra" >
+        <img class='imagenIconoGris' src="{{ordenCompra.urlImagen }}">
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-1 col-lg-2 submenu" *ngIf="ordenCompra" >
+          <span> Orden de Compra </span><br>
+        <span><b>{{ordenCompra.estado}} </b></span>
+        <br>
+        <span> {{ordenCompra.ordenCompra}} </span>
+      </div>
+    </div>
+  </div>
+</div>

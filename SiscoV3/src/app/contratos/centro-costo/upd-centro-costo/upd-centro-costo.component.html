@@ -1,0 +1,152 @@
+<div *ngIf='idClase' [ngClass]="{'desactivaPantalla': numero == 0 }">
+    <mat-spinner *ngIf='numero == 0' class="spinner"></mat-spinner>
+    <!-- <app-breadcrumbs urlImagen='./assets/images/iconos-sisco/clientes.png' [ruta]='ruta'></app-breadcrumbs> -->
+    <app-breadcrumbs *ngIf="breadcrumb" [ruta]="breadcrumb"></app-breadcrumbs>
+    <mat-card class="cardMarginBottom">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Clientes/costos.png"> &nbsp;&nbsp;&nbsp;
+                <span>Datos centro costo</span>
+            </div>
+        </div>
+        <hr>
+        <div [formGroup]="centroCostoForm">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Nombre *" maxlength='500' formControlName="nombre">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput type="number" placeholder="Presupuesto *" formControlName="presupuesto">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='updCentroCosto()' [disabled]="!centroCostoForm.valid"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Modificar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf='!centroCostoForm.valid'>
+                <p class="tagAviso">Los campos con * son obligatorios</p>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="cardMarginBottom">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris' src="./assets/images/iconos-sisco/Mantenimiento/entrega.png">
+                &nbsp;&nbsp;&nbsp;
+                <span>Lista de folios</span>
+            </div>
+        </div>
+        <hr>
+        <div [formGroup]="centroCostoFoliosForm">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput placeholder="Folio *" maxlength='500' formControlName="folio">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput type="number" placeholder="Presupuesto *" maxlength='500'
+                            formControlName="presupuesto">
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker" placeholder="Fecha inicio *"
+                            formControlName="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf='validaFecha'>
+                        <p class="errorFecha">
+                            La fecha de inicio es
+                            <strong>mayor</strong> a la fecha de Termino
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <mat-form-field class="inputFullWide">
+                        <input matInput readonly [matDatepicker]="picker2" placeholder="Fecha termino *"
+                            formControlName="fechaFin">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker disabled="false" #picker2></mat-datepicker>
+                        <mat-error>
+                            El campo es
+                            <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                    <button class="mb-2 mr-2 btn-square border-0 btn-transition btn btn-outline-primary float-right"
+                        (click)='InsCentroCostoFolio()' [disabled]="!centroCostoFoliosForm.valid"><i
+                            class="pe-7s-diskette btn-icon-wrapper">
+                        </i>
+                        Agregar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf='!centroCostoFoliosForm.valid'>
+                <p class="tagAviso">Los campos con * son obligatorios</p>
+            </div>
+        </div>
+        <app-grid-component *ngIf='columnsCCFolio.length > 0 && band && centroCostoFolio' [datos]="centroCostoFolio" [columns]="columnsCCFolio" [exportExcel]="exportExcel"
+            [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+            [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)"
+            (datosevent)='datosMessage($event)' [toolbar]="toolbarCCFolio">
+        </app-grid-component>
+    </mat-card>
+
+    <mat-card class="cardMarginBottom">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+                <img class='imagenIconoGris'
+                    src="./assets/images/iconos-sisco/Mantenimiento/solicitud-sel-card-automovil.png">
+                &nbsp;&nbsp;&nbsp;
+                <span>Lista de solicitudes</span>
+            </div>
+        </div>
+        <hr>
+        <app-grid-component *ngIf='columns && band' [datos]="solicitudes" [columns]="columns" [exportExcel]="exportExcel"
+            [columnHiding]="columnHiding" [Checkbox]="Checkbox" [Editing]="Editing" [Columnchooser]="Columnchooser"
+            [searchPanel]="searchPanel" [scroll]="scroll" (messageEvent)="receiveMessage($event)"
+            (datosevent)='datosMessage($event)' [toolbar]="toolbar">
+        </app-grid-component>
+    </mat-card>
+</div>

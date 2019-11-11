@@ -1,0 +1,82 @@
+<div class="d-none d-lg-block fondo" [style.height]="scrHeight">
+    <div class="vertical-center">
+        <div class="d-none d-lg-block col-md-12 col-lg-12 col-xl-12">
+            <div class="d-none d-lg-block titulo">Panel de Control</div>
+            <div class="container-fluid d-inline-flex justify-content-center">
+                <div class="row align-items-center">
+                        <div class="row" style="margin-left: 10px">
+                            <div *ngFor="let menu of objSeguridad">
+                                <div routerLink="{{menu.caption.router}}" class="d-flex bordes main-card mb-3 card card-body"
+                                    *ngIf="menu.caption.router" [style.border-bottom-color]="menu.caption.color">
+                                    <div>
+                                        <div class="badge badge-dot badge-dot-md notificacion-red"
+                                            [ngClass]="menu.notificaciones && menu.notificaciones.totalNotificacion > 0 ? 'badge-danger': ''">
+                                            Danger</div>
+                                        <div class="badge badge-dot badge-dot-md notificacion-yellow"
+                                            [ngClass]="menu.notificaciones && menu.notificaciones.totalTarea > 0 ? 'badge-warning': ''">
+                                            Warning</div>
+                                        <div *ngFor="let clase of menu.caption.clase">
+                                            <img *ngIf="clase.idClase == idClase" class="panel-img"
+                                                [src]="clase.logoPanel">
+                                            <p style="font-size: 15px" *ngIf="clase.idClase == idClase">{{clase.label}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div>
+                <div style="position: fixed;bottom: 0px;right: 35px;" class="row text-right">
+                                <div style="position: absolute;left: -10px;top: 7px;" class="badge badge-dot badge-dot-sm  badge-danger">Danger</div>
+                                <span style="font-size: 12px;margin-right: 10px">Notificaciones</span>
+                                <div style="position: absolute;left: 78px;top: 7px;" class="badge badge-dot badge-dot-sm  badge-warning"> Warning</div>
+                                <span style="font-size: 12px">Tareas</span>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-lg-none col-md-12">
+    <div class="grid-titulo">Panel de Control</div>
+    <div class="main-card mb-3 card grid-centrado">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div *ngFor="let menu of objSeguridad" routerLink="{{menu.caption.router}}"
+                        class="col-6 col-sm-6 grid-general">
+                        <div class="row">
+                            <div class="col-12 col-sm-12" style="margin-top: 5px">
+                                <div class="badge badge-dot badge-dot-md notificaciones"
+                                    [ngClass]="menu.notificaciones && menu.notificaciones.totalNotificacion > 0 ? 'badge-danger': ''">
+                                    Danger</div>
+                                <div class="badge badge-dot badge-dot-md notificaciones"
+                                    [ngClass]="menu.notificaciones && menu.notificaciones.totalTarea > 0 ? 'badge-warning': ''">
+                                    Warning</div>
+                            </div>
+                            <div class="col-12 col-sm-12">
+                                <div *ngFor="let clase of menu.caption.clase">
+                                    <img *ngIf="clase.idClase == idClase" class="" [src]="clase.logoPanel">
+                                    <p *ngIf="clase.idClase == idClase">{{clase.label}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px" class="row text-right">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <span>Notificaciones</span>&nbsp;&nbsp;&nbsp;<div
+                                class="badge badge-dot badge-dot-md  badge-danger">
+                                Danger</div>
+
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <span>Tareas</span>&nbsp;&nbsp;&nbsp;<div
+                                class="badge badge-dot badge-dot-md  badge-warning">
+                                Warning</div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
